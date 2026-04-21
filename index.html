@@ -101,6 +101,36 @@
             cursor: pointer;
         }
 
+        /* ============ DAILY RITUAL WIDGET ============ */
+        .daily-ritual {
+            background: linear-gradient(135deg, rgba(57,255,20,0.1), rgba(255,107,107,0.05));
+            margin: 12px 16px;
+            padding: 12px 16px;
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid rgba(57,255,20,0.2);
+        }
+        .ritual-info { display: flex; align-items: center; gap: 12px; }
+        .ritual-streak {
+            background: rgba(0,0,0,0.5);
+            padding: 8px 14px;
+            border-radius: 30px;
+            text-align: center;
+        }
+        .ritual-streak-number { font-size: 24px; font-weight: bold; color: #39FF14; }
+        .ritual-streak-label { font-size: 10px; color: #888; }
+        .ritual-text { font-size: 12px; color: #ddd; }
+        .ritual-claim {
+            background: linear-gradient(135deg, #39FF14, #ff6b6b);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            color: #000;
+            cursor: pointer;
+        }
+
         /* ============ STORIES ROW ============ */
         .stories-row {
             padding: 12px 16px;
@@ -260,100 +290,23 @@
         }
         .screen.active { display: block; }
 
-        /* ============ CHAT SCREEN ============ */
-        .chat-list { display: flex; flex-direction: column; gap: 12px; }
-        .chat-item {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            background: #0f0f12;
-            padding: 12px;
-            border-radius: 20px;
-            border: 1px solid #1f1f24;
-            cursor: pointer;
-        }
-        .chat-avatar {
-            width: 52px;
-            height: 52px;
-            background: linear-gradient(135deg, #39FF14, #ff6b6b);
-            border-radius: 26px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 26px;
-        }
-        .chat-info { flex: 1; }
-        .chat-name { font-weight: 600; color: #fff; margin-bottom: 4px; }
-        .chat-preview { font-size: 12px; color: #888; }
-        .chat-meta { text-align: right; }
-        .chat-time { font-size: 10px; color: #666; }
-        .chat-streak { font-size: 12px; color: #39FF14; }
-
-        /* ============ SHOP SCREEN ============ */
-        .shop-header { margin-bottom: 16px; }
-        .search-bar {
-            background: #1a1a1e;
-            border-radius: 30px;
-            padding: 12px 16px;
-            display: flex;
-            gap: 10px;
-        }
-        .search-bar input {
-            flex: 1;
-            background: none;
-            border: none;
-            color: #fff;
-            outline: none;
-            font-size: 15px;
-        }
-        .shop-grid {
+        /* ============ SOCIAL MAP ============ */
+        .social-map {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 12px;
+            margin-top: 12px;
         }
-        .product-card {
+        .map-friend {
             background: #0f0f12;
             border-radius: 20px;
-            padding: 16px;
+            padding: 12px;
             text-align: center;
             border: 1px solid #1f1f24;
-            cursor: pointer;
-            transition: all 0.2s;
         }
-        .product-card:active { transform: scale(0.97); background: #1a1a1e; }
-        .product-emoji { font-size: 40px; margin-bottom: 8px; }
-        .product-name { font-size: 14px; font-weight: 500; margin-bottom: 4px; color: #fff; }
-        .product-price { font-size: 16px; font-weight: bold; color: #39FF14; }
-
-        /* ============ PROFILE SCREEN ============ */
-        .profile-header {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-            background: #0f0f12;
-            padding: 20px;
-            border-radius: 28px;
-            margin-bottom: 16px;
-        }
-        .profile-avatar-large {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #39FF14, #ff6b6b);
-            border-radius: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 40px;
-        }
-        .profile-stats { flex: 1; display: flex; justify-content: space-around; }
-        .stat-number { font-size: 18px; font-weight: bold; color: #fff; }
-        .stat-label { font-size: 11px; color: #888; margin-top: 4px; }
-        .profile-bio {
-            padding: 0 20px 20px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-        .profile-name { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
-        .profile-bio-text { font-size: 13px; color: #888; }
+        .map-friend-avatar { font-size: 40px; }
+        .map-friend-name { font-weight: bold; margin: 8px 0 4px; }
+        .map-friend-location { font-size: 10px; color: #39FF14; }
 
         /* ============ GLASS CARDS ============ */
         .glass-card {
@@ -375,168 +328,6 @@
             font-size: 15px;
         }
         .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-
-        /* ============ BOUNTIES ============ */
-        .bounty-card {
-            background: #0f0f12;
-            border-radius: 20px;
-            padding: 16px;
-            margin-bottom: 12px;
-            border: 1px solid #1f1f24;
-        }
-        .bounty-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-        }
-        .bounty-title { font-weight: 600; color: #fff; }
-        .bounty-reward { color: #39FF14; font-weight: bold; }
-        .bounty-desc { font-size: 12px; color: #888; margin-bottom: 12px; }
-
-        /* ============ BATTLE ============ */
-        .battle-arena {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 20px;
-            padding: 20px;
-            background: #0f0f12;
-            border-radius: 24px;
-            margin-bottom: 16px;
-        }
-        .battle-pet { text-align: center; flex: 1; }
-        .battle-pet-emoji { font-size: 60px; }
-        .battle-health {
-            height: 8px;
-            background: rgba(255,255,255,0.15);
-            border-radius: 4px;
-            margin-top: 10px;
-            overflow: hidden;
-        }
-        .battle-health-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #39FF14, #ff6b6b);
-            width: 100%;
-            border-radius: 4px;
-            transition: width 0.3s;
-        }
-        .battle-log {
-            background: rgba(0,0,0,0.5);
-            border-radius: 16px;
-            padding: 12px;
-            margin: 16px 0;
-            height: 100px;
-            overflow-y: auto;
-            font-size: 12px;
-            color: #888;
-        }
-
-        /* ============ WORLD ============ */
-        .world-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-        }
-        .world-location {
-            background: #0f0f12;
-            border-radius: 20px;
-            padding: 16px;
-            text-align: center;
-            cursor: pointer;
-            border: 1px solid #1f1f24;
-            transition: all 0.2s;
-        }
-        .world-location:active { transform: scale(0.97); background: #1a1a1e; }
-
-        /* ============ PRICE COMPARE ============ */
-        .compare-result {
-            background: #0f0f12;
-            border-radius: 20px;
-            padding: 16px;
-            margin-bottom: 12px;
-        }
-        .price-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-        .price-value { color: #39FF14; font-weight: bold; }
-
-        /* ============ MODAL MENU ============ */
-        .modal-menu {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.96);
-            backdrop-filter: blur(30px);
-            z-index: 100;
-            display: none;
-            flex-direction: column;
-            transition: opacity 0.3s;
-        }
-        .modal-menu.active { display: flex; }
-        .modal-header {
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-        .modal-content {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-        }
-        .modal-nav-item {
-            display: block;
-            padding: 14px 16px;
-            margin-bottom: 8px;
-            border-radius: 16px;
-            background: rgba(255,255,255,0.03);
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .modal-nav-item:active { background: rgba(255,255,255,0.08); transform: scale(0.98); }
-
-        /* ============ CAMERA MODAL ============ */
-        .camera-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.98);
-            backdrop-filter: blur(30px);
-            z-index: 200;
-            display: none;
-            flex-direction: column;
-        }
-        .camera-modal.active { display: flex; }
-        .camera-header {
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-        .camera-content {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-        }
-        textarea {
-            width: 100%;
-            height: 120px;
-            background: rgba(255,255,255,0.08);
-            border: none;
-            border-radius: 20px;
-            padding: 15px;
-            color: #fff;
-            font-size: 16px;
-            margin-bottom: 16px;
-            resize: none;
-        }
         .hidden { display: none; }
     </style>
 </head>
@@ -558,6 +349,21 @@
                 <div class="hud-item">⚡ <span class="value" id="energyValue">100</span></div>
                 <button class="menu-btn" id="menuBtn">☰ MENY</button>
             </div>
+        </div>
+
+        <!-- Daily Ritual Widget -->
+        <div class="daily-ritual" id="dailyRitual">
+            <div class="ritual-info">
+                <div class="ritual-streak">
+                    <div class="ritual-streak-number" id="ritualStreak">12</div>
+                    <div class="ritual-streak-label">DAGAR</div>
+                </div>
+                <div class="ritual-text">
+                    <strong>🔥 Daglig ritual</strong><br>
+                    Logga in varje dag för bonus!
+                </div>
+            </div>
+            <div class="ritual-claim" id="claimBonus">Claim</div>
         </div>
 
         <!-- Stories Row -->
@@ -582,7 +388,14 @@
         <div id="battleScreen" class="screen"><div class="glass-card"><div style="font-weight:600; margin-bottom:12px;">⚔️ BATTLE ARENA</div><div id="battleOpponents" class="grid-2"></div><div id="battleArena" class="hidden"><div id="battleContent" class="battle-arena"></div><div id="battleLog" class="battle-log"></div><div id="battleActions" class="grid-2" style="padding:16px;"></div></div></div></div>
         <div id="worldScreen" class="screen"><div class="world-grid" id="worldList"></div></div>
         <div id="compareScreen" class="screen"><div class="shop-header"><div class="search-bar"><span>🔍</span><input type="text" id="compareSearch" placeholder="Jämför priser..." onkeyup="searchCompare()"></div></div><div id="compareResults"></div></div>
-        <div id="moreScreen" class="screen"><div class="glass-card"><div style="font-weight:600; margin-bottom:16px;">📱 FLER FUNKTIONER</div><div class="grid-2"><div class="product-card" onclick="switchTab('bounties')"><div class="product-emoji">🎯</div><div>Uppdrag</div></div><div class="product-card" onclick="switchTab('battle')"><div class="product-emoji">⚔️</div><div>Battle</div></div><div class="product-card" onclick="switchTab('compare')"><div class="product-emoji">🔍</div><div>Jämför</div></div><div class="product-card" onclick="switchTab('world')"><div class="product-emoji">🌍</div><div>Utforska</div></div></div></div></div>
+
+        <!-- Social Map Screen -->
+        <div id="mapScreen" class="screen">
+            <div class="glass-card">
+                <div style="font-weight:600; margin-bottom:12px;">📍 SOCIAL KARTA</div>
+                <div id="socialMap" class="social-map"></div>
+            </div>
+        </div>
 
         <!-- Modal Menu -->
         <div id="modalMenu" class="modal-menu">
@@ -595,6 +408,7 @@
                 <div class="modal-nav-item" data-tab="profile">👤 Min profil</div>
                 <div class="modal-nav-item" data-tab="bounties">🎯 Uppdrag</div>
                 <div class="modal-nav-item" data-tab="battle">⚔️ Battle</div>
+                <div class="modal-nav-item" data-tab="map">📍 Social karta</div>
                 <div class="modal-nav-item" data-tab="compare">🔍 Jämför priser</div>
             </div>
         </div>
@@ -609,7 +423,7 @@
         <div class="bottom-nav">
             <button class="nav-item" data-tab="feed"><span class="nav-icon">🔥</span><span class="nav-label">Flöde</span></button>
             <button class="nav-item" data-tab="chat"><span class="nav-icon">💬</span><span class="nav-label">Chat</span></button>
-            <button class="nav-item" data-tab="world"><span class="nav-icon">🌍</span><span class="nav-label">Världen</span></button>
+            <button class="nav-item" data-tab="map"><span class="nav-icon">📍</span><span class="nav-label">Karta</span></button>
             <button class="nav-item" id="cameraNavBtn"><div class="nav-camera"><span>📸</span></div><span class="nav-label">Nytt</span></button>
             <button class="nav-item" data-tab="shop"><span class="nav-icon">🛍️</span><span class="nav-label">Shop</span></button>
             <button class="nav-item" data-tab="profile"><span class="nav-icon">👤</span><span class="nav-label">Min</span></button>
@@ -687,6 +501,13 @@
             { name: 'Leo', avatar: '🧑‍🎤', hasStory: true }
         ];
 
+        // ============ SOCIAL MAP ============
+        let mapFriends = [
+            { name: 'Ella', avatar: '👩‍🎤', location: 'Hemvärlden', distance: '500m' },
+            { name: 'Max', avatar: '🧑‍🚀', location: 'Shopping Plaza', distance: '1.2km' },
+            { name: 'Clara', avatar: '👩‍💻', location: 'Battle Arena', distance: '2km' }
+        ];
+
         let selectedImage = null;
         let currentTab = 'feed';
 
@@ -697,6 +518,7 @@
             document.getElementById('streakValue').innerText = user.streak;
             document.getElementById('energyValue').innerText = user.energy;
             document.getElementById('petLevel').innerText = user.petLevel;
+            document.getElementById('ritualStreak').innerText = user.streak;
             let expPercent = (user.petExp / 100) * 100;
             document.getElementById('expBar').style.width = expPercent + '%';
             document.getElementById('expText').innerText = user.petExp;
@@ -771,6 +593,14 @@
             document.getElementById('battleOpponents').innerHTML = html;
         }
 
+        function renderSocialMap() {
+            let html = '';
+            for(let f of mapFriends) {
+                html += `<div class="map-friend"><div class="map-friend-avatar">${f.avatar}</div><div class="map-friend-name">${f.name}</div><div class="map-friend-location">📍 ${f.location}</div><div style="font-size:10px; color:#888;">${f.distance}</div></div>`;
+            }
+            document.getElementById('socialMap').innerHTML = html;
+        }
+
         // ============ ACTIONS ============
         function likePost(id) { let p = posts.find(p => p.id === id); if(p) { p.likes++; document.getElementById(`likes-${id}`).innerText = p.likes; } }
         function sharePost(id) { let p = posts.find(p => p.id === id); if(p && navigator.share) navigator.share({ title: 'PETPET', text: p.content }); else if(p) alert(p.content); }
@@ -780,6 +610,22 @@
         function claimBounty(id) { let b = bounties.find(b => b.id === id); if(b) { userBounties.push(b); user.coins += b.reward; user.bountiesCompleted = (user.bountiesCompleted || 0) + 1; updateUI(); renderBounties(); alert(`✅ +${b.reward} coins!`); } }
         function createBounty() { let title = prompt('Uppdragsnamn:'); if(title){ let reward = parseInt(prompt('Belöning (coins):')); let desc = prompt('Beskrivning:'); bounties.push({ id: 'b'+Date.now(), title: title, reward: reward, desc: desc }); renderBounties(); } }
         function shareProfile() { let text = `🔥 ${user.name} - Level ${user.petLevel}!\n${user.streak} dagars streak!\n${user.coins} coins!\nLadda ner PETPET!`; if(navigator.share) navigator.share({ title: 'PETPET', text: text }); else alert(text); }
+
+        // ============ DAILY RITUAL ============
+        function claimDailyBonus() {
+            let lastClaim = localStorage.getItem('daily_claim');
+            let today = new Date().toDateString();
+            if(lastClaim === today) {
+                alert('❌ Du har redan claimat dagens bonus! Kom tillbaka imorgon.');
+                return;
+            }
+            let bonus = 50 + (user.streak * 5);
+            user.coins += bonus;
+            user.streak++;
+            localStorage.setItem('daily_claim', today);
+            updateUI();
+            alert(`✅ Daglig bonus! +${bonus} coins! Din streak är nu ${user.streak} dagar!`);
+        }
 
         // ============ BATTLE SYSTEM ============
         function startBattle(name) {
@@ -843,8 +689,8 @@
             else if(tab === 'bounties') { document.getElementById('bountiesScreen').classList.add('active'); renderBounties(); }
             else if(tab === 'battle') { document.getElementById('battleScreen').classList.add('active'); renderBattle(); }
             else if(tab === 'world') { document.getElementById('worldScreen').classList.add('active'); renderWorld(); }
+            else if(tab === 'map') { document.getElementById('mapScreen').classList.add('active'); renderSocialMap(); }
             else if(tab === 'compare') { document.getElementById('compareScreen').classList.add('active'); }
-            else if(tab === 'more') { document.getElementById('moreScreen').classList.add('active'); }
             document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
             let activeBtn = document.querySelector(`.nav-item[data-tab="${tab}"]`);
             if(activeBtn) activeBtn.classList.add('active');
@@ -864,11 +710,13 @@
             renderWorld();
             renderBounties();
             renderBattle();
+            renderSocialMap();
             switchTab('feed');
             document.getElementById('menuBtn').addEventListener('click', openModal);
             document.getElementById('closeModalBtn').addEventListener('click', closeModal);
             document.getElementById('cameraNavBtn').addEventListener('click', openCamera);
             document.getElementById('closeCameraBtn').addEventListener('click', closeCamera);
+            document.getElementById('claimBonus').addEventListener('click', claimDailyBonus);
             document.querySelectorAll('.modal-nav-item').forEach(item => {
                 item.addEventListener('click', () => { closeModal(); switchTab(item.dataset.tab); });
             });
