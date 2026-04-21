@@ -3,84 +3,695 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>PETVERSE 🔥 | En digital värld</title>
-    <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="https://emojicdn.elk.sh/🌍">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="theme-color" content="#0a0a2a">
-    <link rel="stylesheet" href="styles/main.css">
+    <title>PETPET | Din digitala värld</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(145deg, #0a0a2a 0%, #000000 100%);
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+            position: fixed;
+        }
+
+        /* App Container */
+        .app {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 20px;
+            background: rgba(10,10,20,0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(57,255,20,0.2);
+            z-index: 50;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .pet-avatar {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, #39FF14, #ff3333);
+            border-radius: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 0 15px rgba(57,255,20,0.4);
+        }
+
+        .stats {
+            display: flex;
+            gap: 12px;
+        }
+
+        .stat-badge {
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
+            padding: 6px 14px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: bold;
+            border: 1px solid rgba(57,255,20,0.3);
+        }
+
+        .stat-badge span:first-child { font-size: 14px; }
+        .stat-badge span:last-child { color: #39FF14; }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 20px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .main-content::-webkit-scrollbar { display: none; }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            display: flex;
+            background: rgba(10,10,20,0.95);
+            backdrop-filter: blur(25px);
+            padding: 10px 20px 20px;
+            border-top: 1px solid rgba(57,255,20,0.2);
+            z-index: 100;
+        }
+
+        .nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .nav-icon {
+            font-size: 26px;
+            opacity: 0.5;
+            transition: all 0.2s;
+        }
+
+        .nav-icon.active {
+            opacity: 1;
+            transform: scale(1.15);
+            filter: drop-shadow(0 0 8px #39FF14);
+        }
+
+        .nav-camera {
+            background: linear-gradient(135deg, #39FF14, #ff3333);
+            width: 56px;
+            height: 56px;
+            border-radius: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: -22px;
+            box-shadow: 0 0 25px rgba(57,255,20,0.5);
+        }
+
+        .nav-label {
+            font-size: 10px;
+            color: #888;
+        }
+
+        .nav-label.active {
+            color: #39FF14;
+        }
+
+        /* Cards */
+        .glass-card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(15px);
+            border-radius: 28px;
+            padding: 16px;
+            margin-bottom: 12px;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #39FF14, #ff3333);
+            padding: 14px 28px;
+            border-radius: 40px;
+            border: none;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        /* Feed Styles */
+        .feed-item {
+            background: rgba(255,255,255,0.05);
+            border-radius: 25px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .feed-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .feed-avatar {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #39FF14, #ff3333);
+            border-radius: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .feed-name {
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .feed-time {
+            font-size: 10px;
+            color: #888;
+        }
+
+        .feed-content {
+            font-size: 14px;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .feed-actions {
+            display: flex;
+            gap: 20px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .feed-action {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Shop Items */
+        .shop-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* Profile */
+        .profile-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-avatar-large {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #39FF14, #ff3333);
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            margin: 0 auto 15px;
+        }
+
+        .stats-row {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #39FF14;
+        }
+
+        /* Bounties */
+        .bounty-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 15px;
+            margin-bottom: 12px;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-    <!-- 3D Background -->
-    <div class="universe-bg" id="universeBg"></div>
-
-    <!-- Main App -->
     <div class="app">
         <!-- Top Bar -->
         <div class="top-bar">
             <div class="user-info">
-                <div class="user-avatar-small" id="topAvatar">🐉</div>
-                <div class="user-stats">
-                    <div class="stat-badge"><span>🔥</span><span id="topStreak">0</span></div>
-                    <div class="stat-badge"><span>💰</span><span id="topCoins">500</span></div>
-                    <div class="stat-badge"><span>⚡</span><span id="topEnergy">100</span></div>
+                <div class="pet-avatar">🐉</div>
+                <div class="stats">
+                    <div class="stat-badge"><span>💰</span><span id="coinsValue">500</span></div>
+                    <div class="stat-badge"><span>⚡</span><span id="energyValue">100</span></div>
                 </div>
             </div>
-            <div class="stat-badge" id="topLevel">Lv.1</div>
+            <div class="stat-badge" id="levelBadge">Lv.1</div>
         </div>
 
-        <!-- World Map -->
-        <div class="world-map" id="worldMapContainer">
-            <div class="map-locations" id="worldMap"></div>
-        </div>
+        <!-- Main Content -->
+        <div id="mainContent" class="main-content">
+            <!-- Feed View -->
+            <div id="feedView">
+                <div class="glass-card" style="margin-bottom: 15px;">
+                    <div style="font-weight: bold; margin-bottom: 10px;">🔥 SENASTE FRÅN VÄRLDEN</div>
+                    <div id="feedList"></div>
+                </div>
+            </div>
 
-        <!-- Main Content Area -->
-        <div id="mainContent" class="main-content"></div>
+            <!-- World View -->
+            <div id="worldView" class="hidden">
+                <div class="glass-card">
+                    <div style="font-weight: bold; margin-bottom: 15px;">🌍 UTFORSKA VÄRLDEN</div>
+                    <div id="worldLocations"></div>
+                </div>
+            </div>
+
+            <!-- Shop View -->
+            <div id="shopView" class="hidden">
+                <div class="glass-card">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                        <span style="font-weight: bold;">🛍️ SHOP</span>
+                        <span class="stat-badge">💰 <span id="shopCoins">500</span></span>
+                    </div>
+                    <div id="shopItems"></div>
+                </div>
+            </div>
+
+            <!-- Profile View -->
+            <div id="profileView" class="hidden">
+                <div class="glass-card">
+                    <div class="profile-header">
+                        <div class="profile-avatar-large">🐉</div>
+                        <div style="font-size: 20px; font-weight: bold;" id="profileName">Äventyrare</div>
+                        <div style="color: #888;">Eldraken · Level 1</div>
+                    </div>
+                    <div class="stats-row">
+                        <div class="stat"><div class="stat-value" id="profileStreak">0</div><div>Streak</div></div>
+                        <div class="stat"><div class="stat-value" id="profileMeetings">0</div><div>Möten</div></div>
+                        <div class="stat"><div class="stat-value" id="profileCoins">500</div><div>Coins</div></div>
+                    </div>
+                    <div class="stats-row">
+                        <div class="stat"><div class="stat-value" id="profileBounties">0</div><div>Uppdrag</div></div>
+                        <div class="stat"><div class="stat-value" id="profileBattles">0</div><div>Strider</div></div>
+                    </div>
+                    <button class="btn-primary" onclick="shareProfile()">📤 DELA PROFIL</button>
+                </div>
+            </div>
+
+            <!-- Camera Modal (Nytt inlägg) -->
+            <div id="cameraModal" class="hidden" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.95); z-index: 200; backdrop-filter: blur(20px);">
+                <div style="padding: 20px; display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    <button onclick="closeCamera()" style="background: none; border: none; color: #fff;">← Tillbaka</button>
+                    <span style="font-weight: bold;">📸 Nytt inlägg</span>
+                    <div style="width: 50px;"></div>
+                </div>
+                <div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px;">
+                    <textarea id="postContent" placeholder="Vad händer i din värld?" style="width: 100%; height: 150px; background: rgba(255,255,255,0.1); border: none; border-radius: 20px; padding: 15px; color: #fff; font-size: 16px; margin-bottom: 20px;"></textarea>
+                    <button class="btn-primary" onclick="createPost()">📤 Publicera</button>
+                </div>
+            </div>
+        </div>
 
         <!-- Bottom Navigation -->
         <div class="bottom-nav">
-            <button class="nav-item" data-nav="world"><span class="nav-icon">🌍</span><span class="nav-label">Världen</span></button>
-            <button class="nav-item" data-nav="feed"><span class="nav-icon">🔥</span><span class="nav-label">Flöde</span></button>
-            <button class="nav-item" data-nav="camera"><div class="nav-camera"><span>📸</span></div><span class="nav-label">Nytt</span></button>
-            <button class="nav-item" data-nav="shop"><span class="nav-icon">🛍️</span><span class="nav-label">Shop</span></button>
-            <button class="nav-item" data-nav="profile"><span class="nav-icon">👤</span><span class="nav-label">Min</span></button>
+            <button class="nav-item" onclick="switchTab('world')">
+                <span class="nav-icon" id="navWorldIcon">🌍</span>
+                <span class="nav-label" id="navWorldLabel">Världen</span>
+            </button>
+            <button class="nav-item" onclick="switchTab('feed')">
+                <span class="nav-icon" id="navFeedIcon">🔥</span>
+                <span class="nav-label" id="navFeedLabel">Flöde</span>
+            </button>
+            <button class="nav-item" onclick="openCamera()">
+                <div class="nav-camera"><span>📸</span></div>
+                <span class="nav-label">Nytt</span>
+            </button>
+            <button class="nav-item" onclick="switchTab('shop')">
+                <span class="nav-icon" id="navShopIcon">🛍️</span>
+                <span class="nav-label" id="navShopLabel">Shop</span>
+            </button>
+            <button class="nav-item" onclick="switchTab('profile')">
+                <span class="nav-icon" id="navProfileIcon">👤</span>
+                <span class="nav-label" id="navProfileLabel">Min</span>
+            </button>
         </div>
     </div>
 
-    <!-- Modals -->
-    <div id="cameraModal" class="modal hidden">
-        <div class="modal-header"><button class="btn-secondary" onclick="window.closeCamera?.()">← Tillbaka</button><span>📸 Skapa inlägg</span><div style="width:50px"></div></div>
-        <div class="modal-content" id="cameraContent"></div>
-    </div>
-    <div id="chatModal" class="modal hidden">
-        <div class="modal-header"><button class="btn-secondary" onclick="window.closeChat?.()">← Tillbaka</button><span>💬 Världschatten</span><div style="width:50px"></div></div>
-        <div class="modal-content" id="chatContent"></div>
-    </div>
-    <div id="battleModal" class="modal hidden">
-        <div class="modal-header"><button class="btn-secondary" onclick="window.closeBattle?.()">← Tillbaka</button><span>⚔️ PET BATTLE</span><div style="width:50px"></div></div>
-        <div class="modal-content" id="battleContent"></div>
-    </div>
+    <script>
+        // ============ APP STATE ============
+        let currentTab = 'feed';
+        let user = {
+            name: 'Äventyrare',
+            coins: 500,
+            energy: 100,
+            level: 1,
+            exp: 0,
+            streak: 0,
+            meetings: 0,
+            bountiesCompleted: 0,
+            battlesWon: 0
+        };
 
-    <!-- Scripts -->
-    <script src="js/utils.js"></script>
-    <script src="js/storage.js"></script>
-    <script src="js/animations.js"></script>
-    <script src="js/audio.js"></script>
-    <script src="js/pet.js"></script>
-    <script src="js/avatar.js"></script>
-    <script src="js/achievements.js"></script>
-    <script src="js/inventory.js"></script>
-    <script src="js/friends.js"></script>
-    <script src="js/quests.js"></script>
-    <script src="js/battles.js"></script>
-    <script src="js/chat.js"></script>
-    <script src="js/social.js"></script>
-    <script src="js/shop.js"></script>
-    <script src="js/bounties.js"></script>
-    <script src="js/world.js"></script>
-    <script src="js/settings.js"></script>
-    <script src="js/notifications.js"></script>
-    <script src="js/app.js"></script>
+        let posts = [
+            { id: 'p1', userName: 'Ella', userAvatar: '👩‍🎤', petEmoji: '🐉', content: 'Köpte Fire Wings till min drake! 🔥', likes: 47, timeAgo: '15 min' },
+            { id: 'p2', userName: 'Max', userAvatar: '🧑‍🚀', petEmoji: '🐺', content: 'Level 10! Min varg är nu en legend! 🎉', likes: 32, timeAgo: '1 tim' },
+            { id: 'p3', userName: 'Clara', userAvatar: '👩‍💻', petEmoji: '🦊', content: 'Hittade en legendary skin idag! ✨', likes: 89, timeAgo: '3 tim' }
+        ];
+
+        let shopItems = [
+            { id: 's1', name: '🔥 Fire Wings', emoji: '🔥', price: 200, type: 'skin' },
+            { id: 's2', name: '✨ Legendary Glow', emoji: '✨', price: 500, type: 'skin' },
+            { id: 's3', name: '⚡ XP Boost', emoji: '⚡', price: 100, type: 'powerup' },
+            { id: 's4', name: '💊 Health Potion', emoji: '💊', price: 75, type: 'consumable' }
+        ];
+
+        let worldLocations = [
+            { id: 'home', name: '🏠 Hemvärlden', active: 127, unlocked: true },
+            { id: 'shop', name: '🛍️ Shopping Plaza', active: 45, unlocked: true },
+            { id: 'bounty', name: '🎯 Uppdragstorget', active: 32, unlocked: true },
+            { id: 'arena', name: '⚔️ Battle Arena', active: 18, unlocked: true },
+            { id: 'forest', name: '🌲 MagiSkogen', active: 56, unlocked: true },
+            { id: 'mountain', name: '⛰️ Drakberget', active: 23, unlocked: false, requiredLevel: 10 }
+        ];
+
+        let bounties = [
+            { id: 'b1', title: '📸 Fota något blått', reward: 100, status: 'active' },
+            { id: 'b2', title: '🏃 Gå 5000 steg', reward: 150, status: 'active' },
+            { id: 'b3', title: '☕ Besök ett café', reward: 200, status: 'active' }
+        ];
+
+        // ============ LOAD/SAVE ============
+        function loadData() {
+            const saved = localStorage.getItem('petpet_user');
+            if (saved) {
+                user = JSON.parse(saved);
+            }
+            updateUI();
+        }
+
+        function saveData() {
+            localStorage.setItem('petpet_user', JSON.stringify(user));
+        }
+
+        function updateUI() {
+            document.getElementById('coinsValue').innerText = user.coins;
+            document.getElementById('energyValue').innerText = user.energy;
+            document.getElementById('levelBadge').innerText = `Lv.${user.level}`;
+            document.getElementById('profileName').innerText = user.name;
+            document.getElementById('profileStreak').innerText = user.streak;
+            document.getElementById('profileMeetings').innerText = user.meetings;
+            document.getElementById('profileCoins').innerText = user.coins;
+            document.getElementById('profileBounties').innerText = user.bountiesCompleted;
+            document.getElementById('profileBattles').innerText = user.battlesWon;
+            document.getElementById('shopCoins').innerText = user.coins;
+        }
+
+        // ============ FEED ============
+        function renderFeed() {
+            const container = document.getElementById('feedList');
+            if (!container) return;
+            
+            container.innerHTML = posts.map(post => `
+                <div class="feed-item">
+                    <div class="feed-header">
+                        <div class="feed-avatar">${post.userAvatar}</div>
+                        <div>
+                            <div class="feed-name">${post.userName} · ${post.petEmoji}</div>
+                            <div class="feed-time">${post.timeAgo}</div>
+                        </div>
+                    </div>
+                    <div class="feed-content">${post.content}</div>
+                    <div class="feed-actions">
+                        <button class="feed-action" onclick="likePost('${post.id}')">
+                            <span>❤️</span> <span id="likes-${post.id}">${post.likes}</span>
+                        </button>
+                        <button class="feed-action">
+                            <span>💬</span> <span>0</span>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function likePost(postId) {
+            const post = posts.find(p => p.id === postId);
+            if (post) {
+                post.likes++;
+                document.getElementById(`likes-${postId}`).innerText = post.likes;
+            }
+        }
+
+        // ============ SHOP ============
+        function renderShop() {
+            const container = document.getElementById('shopItems');
+            if (!container) return;
+            
+            container.innerHTML = shopItems.map(item => `
+                <div class="shop-item">
+                    <div>
+                        <span style="font-size: 24px; margin-right: 10px;">${item.emoji}</span>
+                        <span style="font-weight: bold;">${item.name}</span>
+                    </div>
+                    <button onclick="buyItem('${item.id}', ${item.price})" style="background: linear-gradient(135deg, #39FF14, #ff3333); border: none; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer;">
+                        ${item.price}💰
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function buyItem(itemId, price) {
+            if (user.coins >= price) {
+                user.coins -= price;
+                saveData();
+                updateUI();
+                renderShop();
+                alert(`✅ Du köpte ${shopItems.find(i => i.id === itemId).name}!`);
+            } else {
+                alert(`❌ Du har inte tillräckligt med coins! Behöver ${price - user.coins} mer.`);
+            }
+        }
+
+        // ============ WORLD ============
+        function renderWorld() {
+            const container = document.getElementById('worldLocations');
+            if (!container) return;
+            
+            container.innerHTML = worldLocations.map(loc => `
+                <div class="shop-item" style="cursor: pointer;" onclick="visitLocation('${loc.id}')">
+                    <div>
+                        <span style="font-size: 24px; margin-right: 10px;">${loc.name.split(' ')[0]}</span>
+                        <span style="font-weight: bold;">${loc.name}</span>
+                        <div style="font-size: 11px; color: #888;">👥 ${loc.active} här</div>
+                    </div>
+                    <div>
+                        ${loc.unlocked ? 
+                            '<span style="color: #39FF14;">✅ Tillgänglig</span>' : 
+                            `<span style="color: #ff9900;">🔒 Lv.${loc.requiredLevel}</span>`
+                        }
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function visitLocation(locationId) {
+            const location = worldLocations.find(l => l.id === locationId);
+            if (!location) return;
+            
+            if (!location.unlocked && location.requiredLevel > user.level) {
+                alert(`🔒 Du måste vara level ${location.requiredLevel} för att besöka ${location.name}!`);
+                return;
+            }
+            
+            // Ge belöning för besök
+            user.coins += 10;
+            user.exp += 5;
+            
+            // Level up check
+            if (user.exp >= 100) {
+                user.exp = 0;
+                user.level++;
+                alert(`🎉 LEVEL UP! Du är nu level ${user.level}!`);
+            }
+            
+            saveData();
+            updateUI();
+            alert(`✨ Du besökte ${location.name}! +10 coins, +5 XP`);
+        }
+
+        // ============ PROFILE ============
+        function shareProfile() {
+            const shareText = `🔥 ${user.name} - Level ${user.level}!\n${user.streak} dagars streak!\n${user.meetings} IRL-möten!\n${user.coins} coins!\n\nLadda ner PETPET!`;
+            if (navigator.share) {
+                navigator.share({ title: 'PETPET', text: shareText });
+            } else {
+                alert(shareText);
+            }
+        }
+
+        // ============ CAMERA / NEW POST ============
+        function openCamera() {
+            document.getElementById('cameraModal').classList.remove('hidden');
+        }
+
+        function closeCamera() {
+            document.getElementById('cameraModal').classList.add('hidden');
+            document.getElementById('postContent').value = '';
+        }
+
+        function createPost() {
+            const content = document.getElementById('postContent').value;
+            if (!content.trim()) {
+                alert('Skriv något i ditt inlägg!');
+                return;
+            }
+            
+            const newPost = {
+                id: 'p' + Date.now(),
+                userName: user.name,
+                userAvatar: '👤',
+                petEmoji: '🐉',
+                content: content,
+                likes: 0,
+                timeAgo: 'just nu'
+            };
+            
+            posts.unshift(newPost);
+            renderFeed();
+            closeCamera();
+            
+            // Belöning för att posta
+            user.coins += 5;
+            user.exp += 3;
+            saveData();
+            updateUI();
+            
+            alert('✅ Inlägg publicerat! +5 coins');
+        }
+
+        // ============ TAB NAVIGATION ============
+        function switchTab(tab) {
+            currentTab = tab;
+            
+            // Hide all views
+            document.getElementById('feedView').classList.add('hidden');
+            document.getElementById('worldView').classList.add('hidden');
+            document.getElementById('shopView').classList.add('hidden');
+            document.getElementById('profileView').classList.add('hidden');
+            
+            // Show selected view
+            if (tab === 'feed') {
+                document.getElementById('feedView').classList.remove('hidden');
+                renderFeed();
+            } else if (tab === 'world') {
+                document.getElementById('worldView').classList.remove('hidden');
+                renderWorld();
+            } else if (tab === 'shop') {
+                document.getElementById('shopView').classList.remove('hidden');
+                renderShop();
+            } else if (tab === 'profile') {
+                document.getElementById('profileView').classList.remove('hidden');
+            }
+            
+            // Update nav icons
+            const icons = ['navWorldIcon', 'navFeedIcon', 'navShopIcon', 'navProfileIcon'];
+            icons.forEach(icon => {
+                const el = document.getElementById(icon);
+                if (el) el.classList.remove('active');
+            });
+            
+            const labels = ['navWorldLabel', 'navFeedLabel', 'navShopLabel', 'navProfileLabel'];
+            labels.forEach(label => {
+                const el = document.getElementById(label);
+                if (el) el.classList.remove('active');
+            });
+            
+            if (tab === 'world') {
+                document.getElementById('navWorldIcon')?.classList.add('active');
+                document.getElementById('navWorldLabel')?.classList.add('active');
+            } else if (tab === 'feed') {
+                document.getElementById('navFeedIcon')?.classList.add('active');
+                document.getElementById('navFeedLabel')?.classList.add('active');
+            } else if (tab === 'shop') {
+                document.getElementById('navShopIcon')?.classList.add('active');
+                document.getElementById('navShopLabel')?.classList.add('active');
+            } else if (tab === 'profile') {
+                document.getElementById('navProfileIcon')?.classList.add('active');
+                document.getElementById('navProfileLabel')?.classList.add('active');
+            }
+        }
+
+        // ============ INIT ============
+        function init() {
+            loadData();
+            renderFeed();
+            renderWorld();
+            renderShop();
+            switchTab('feed');
+        }
+
+        // Exponera funktioner globalt
+        window.switchTab = switchTab;
+        window.likePost = likePost;
+        window.buyItem = buyItem;
+        window.visitLocation = visitLocation;
+        window.shareProfile = shareProfile;
+        window.openCamera = openCamera;
+        window.closeCamera = closeCamera;
+        window.createPost = createPost;
+
+        // Start app
+        init();
+    </script>
 </body>
 </html>
