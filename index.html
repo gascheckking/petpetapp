@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>PET SOCIAL 🔥</title>
+    <title>MY PET 🔥</title>
     <style>
         * {
             margin: 0;
@@ -20,27 +20,25 @@
             width: 100vw;
         }
 
-        /* App Container */
-        .app-container {
+        /* Main Container */
+        .app {
             width: 100%;
             height: 100%;
-            display: flex;
-            flex-direction: column;
+            position: relative;
             background: #000;
         }
 
-        /* TikTok-style Feed */
-        .feed-container {
-            flex: 1;
+        /* TikTok Feed */
+        .feed {
+            height: 100%;
             overflow-y: scroll;
             scroll-snap-type: y mandatory;
-            height: 100%;
             -webkit-overflow-scrolling: touch;
         }
-        .feed-container::-webkit-scrollbar {
+        .feed::-webkit-scrollbar {
             display: none;
         }
-        .feed-item {
+        .post {
             height: 100vh;
             scroll-snap-align: start;
             position: relative;
@@ -51,38 +49,43 @@
             padding: 80px 20px 100px;
         }
 
-        /* Pet Display on Feed */
-        .pet-display {
+        /* Pet Display */
+        .pet-container {
             position: absolute;
-            top: 100px;
+            top: 80px;
             right: 20px;
             text-align: center;
-            z-index: 10;
+            z-index: 20;
         }
-        .pet-emoji-large {
-            font-size: 80px;
-            filter: drop-shadow(0 0 20px rgba(57, 255, 20, 0.5));
-            animation: float 3s ease-in-out infinite;
+        .pet-avatar {
+            font-size: 90px;
+            filter: drop-shadow(0 0 20px rgba(57, 255, 20, 0.6));
+            animation: petFloat 3s ease-in-out infinite;
+            transition: all 0.3s;
         }
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+        @keyframes petFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(3deg); }
         }
         .pet-level {
             background: rgba(0,0,0,0.7);
             backdrop-filter: blur(10px);
             padding: 4px 12px;
             border-radius: 20px;
-            font-size: 12px;
+            font-size: 11px;
             color: #39FF14;
             margin-top: 8px;
             border: 1px solid rgba(57,255,20,0.3);
+            font-weight: bold;
+        }
+        .pet-name {
+            color: #fff;
+            font-size: 12px;
+            margin-top: 4px;
+            opacity: 0.8;
         }
 
         /* Post Content */
-        .post-content {
-            z-index: 5;
-        }
         .post-user {
             display: flex;
             align-items: center;
@@ -90,57 +93,64 @@
             margin-bottom: 12px;
         }
         .post-avatar {
-            width: 50px;
-            height: 50px;
+            width: 48px;
+            height: 48px;
             background: linear-gradient(135deg, #39FF14, #ff3333);
-            border-radius: 25px;
+            border-radius: 24px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 28px;
+            font-size: 26px;
         }
         .post-name {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             color: #fff;
         }
         .post-time {
-            font-size: 12px;
+            font-size: 11px;
             color: #888;
         }
         .post-text {
-            font-size: 20px;
-            font-weight: bold;
+            font-size: 18px;
+            font-weight: 500;
             color: #fff;
             margin-bottom: 16px;
+            line-height: 1.4;
             text-shadow: 0 0 10px rgba(0,0,0,0.5);
         }
-        
-        /* Action Buttons Sidebar (TikTok-style) */
-        .action-sidebar {
+        .post-image {
+            width: 100%;
+            max-height: 300px;
+            border-radius: 20px;
+            margin-top: 10px;
+            object-fit: cover;
+        }
+
+        /* Action Sidebar */
+        .actions {
             position: absolute;
             right: 15px;
             bottom: 120px;
             display: flex;
             flex-direction: column;
-            gap: 25px;
+            gap: 24px;
             z-index: 20;
         }
-        .action-side-btn {
-            align-items: center;
+        .action {
             text-align: center;
             cursor: pointer;
             transition: transform 0.2s;
         }
-        .action-side-btn:active {
-            transform: scale(0.9);
+        .action:active {
+            transform: scale(0.85);
         }
         .action-icon {
             font-size: 32px;
             filter: drop-shadow(0 0 5px rgba(0,0,0,0.5));
         }
         .action-count {
-            font-size: 12px;
+            font-size: 11px;
             color: #fff;
             margin-top: 4px;
         }
@@ -154,8 +164,8 @@
             display: flex;
             background: rgba(10,10,10,0.95);
             backdrop-filter: blur(20px);
-            padding: 12px 20px;
-            border-top: 1px solid rgba(255,255,255,0.1);
+            padding: 10px 20px 20px;
+            border-top: 1px solid rgba(255,255,255,0.08);
             z-index: 100;
         }
         .nav-item {
@@ -168,25 +178,25 @@
             border: none;
             cursor: pointer;
         }
-        .nav-emoji {
+        .nav-icon {
             font-size: 24px;
             opacity: 0.5;
             transition: all 0.2s;
         }
-        .nav-emoji.active {
+        .nav-icon.active {
             opacity: 1;
             transform: scale(1.1);
         }
         .nav-camera {
             background: linear-gradient(135deg, #39FF14, #ff3333);
-            width: 50px;
-            height: 50px;
-            border-radius: 25px;
+            width: 52px;
+            height: 52px;
+            border-radius: 26px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-top: -20px;
-            box-shadow: 0 0 20px rgba(57,255,20,0.5);
+            box-shadow: 0 0 20px rgba(57,255,20,0.4);
         }
         .nav-label {
             font-size: 10px;
@@ -196,43 +206,81 @@
             color: #39FF14;
         }
 
-        /* Camera Modal */
-        .camera-modal {
+        /* Modals */
+        .modal {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: #000;
+            background: rgba(0,0,0,0.95);
             z-index: 200;
             display: flex;
             flex-direction: column;
+            backdrop-filter: blur(20px);
         }
-        .camera-preview {
-            flex: 1;
-            background: #111;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .camera-controls {
+        .modal-header {
             padding: 20px;
             display: flex;
             justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .modal-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
         }
         .hidden {
             display: none;
         }
 
+        /* Camera Preview */
+        .camera-preview {
+            flex: 1;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .preview-img {
+            width: 100%;
+            max-height: 70vh;
+            object-fit: contain;
+        }
+        .camera-buttons {
+            padding: 20px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #39FF14, #ff3333);
+            padding: 14px 28px;
+            border-radius: 30px;
+            border: none;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .btn-secondary {
+            background: rgba(255,255,255,0.1);
+            padding: 14px 28px;
+            border-radius: 30px;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+        }
+
         /* Profile Screen */
         .profile-screen {
-            padding: 20px;
-            overflow-y: auto;
             height: 100%;
+            overflow-y: auto;
+            padding: 20px;
         }
         .profile-header {
             text-align: center;
-            padding: 40px 0;
+            padding: 30px 0;
         }
         .profile-avatar {
             width: 100px;
@@ -245,13 +293,13 @@
             font-size: 50px;
             margin: 0 auto 16px;
         }
-        .profile-stats {
+        .stats-row {
             display: flex;
             justify-content: center;
             gap: 30px;
             margin: 20px 0;
         }
-        .stat-box {
+        .stat {
             text-align: center;
         }
         .stat-value {
@@ -259,9 +307,8 @@
             font-weight: bold;
             color: #39FF14;
         }
-        .pet-card {
+        .pet-detail {
             background: rgba(255,255,255,0.05);
-            backdrop-filter: blur(10px);
             border-radius: 30px;
             padding: 20px;
             margin: 20px 0;
@@ -279,19 +326,40 @@
             background: linear-gradient(90deg, #39FF14, #ff3333);
             width: 0%;
             border-radius: 4px;
+            transition: width 0.3s;
+        }
+        .abilities {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+        .ability {
+            background: rgba(57,255,20,0.15);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            border: 1px solid rgba(57,255,20,0.3);
         }
 
         /* Nearby Screen */
         .nearby-screen {
-            padding: 20px;
-            overflow-y: auto;
             height: 100%;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        .challenge-card {
+            background: linear-gradient(135deg, rgba(57,255,20,0.1), rgba(255,51,51,0.1));
+            border-radius: 25px;
+            padding: 18px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(57,255,20,0.3);
         }
         .friends-grid {
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
-            margin-top: 20px;
         }
         .friend-card {
             background: rgba(255,255,255,0.05);
@@ -301,6 +369,10 @@
             width: calc(50% - 6px);
             text-align: center;
             cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .friend-card:active {
+            transform: scale(0.97);
         }
         .meet-btn {
             background: linear-gradient(135deg, #39FF14, #ff3333);
@@ -310,41 +382,77 @@
             font-weight: bold;
             border: none;
             margin-top: 10px;
+            cursor: pointer;
         }
 
-        /* Challenge Card */
-        .challenge-card {
-            background: linear-gradient(135deg, rgba(57,255,20,0.1), rgba(255,51,51,0.1));
+        /* Leaderboard */
+        .leaderboard {
+            margin-top: 20px;
+        }
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 15px;
+            margin-bottom: 8px;
+        }
+        .rank {
+            width: 35px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #39FF14;
+        }
+
+        /* Badges */
+        .badges-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 15px;
+        }
+        .badge {
+            background: rgba(255,255,255,0.05);
             border-radius: 20px;
-            padding: 15px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(57,255,20,0.3);
+            padding: 12px;
+            text-align: center;
+            min-width: 80px;
+        }
+        .badge.unlocked {
+            background: linear-gradient(135deg, rgba(57,255,20,0.2), rgba(255,51,51,0.2));
+            border: 1px solid rgba(57,255,20,0.5);
         }
     </style>
 </head>
 <body>
-    <div class="app-container">
-        <!-- Feed Container (TikTok Style) -->
-        <div id="feedContainer" class="feed-container"></div>
+    <div class="app">
+        <!-- Feed -->
+        <div id="feedContainer" class="feed"></div>
 
         <!-- Camera Modal -->
-        <div id="cameraModal" class="camera-modal hidden">
+        <div id="cameraModal" class="modal hidden">
+            <div class="modal-header">
+                <button class="btn-secondary" onclick="closeCamera()">Stäng</button>
+                <span style="font-weight:bold">📸 Nytt inlägg</span>
+                <div style="width:50px"></div>
+            </div>
             <div class="camera-preview" id="cameraPreview">
                 <div style="text-align:center">
-                    <div style="font-size:60px; margin-bottom:20px">📸</div>
-                    <button onclick="openCameraInput()" style="background:#39FF14; padding:12px 24px; border-radius:30px; border:none; font-weight:bold">Välj bild</button>
+                    <div style="font-size:60px; margin-bottom:20px">🐾</div>
+                    <button class="btn-primary" onclick="selectImage()">Välj bild</button>
                 </div>
             </div>
-            <div class="camera-controls">
-                <button onclick="closeCamera()" style="background:#333; padding:12px 24px; border-radius:30px; border:none; color:#fff">Stäng</button>
-                <button id="postBtn" onclick="submitPost()" style="background:#39FF14; padding:12px 24px; border-radius:30px; border:none; font-weight:bold; display:none">📤 Posta</button>
+            <div class="camera-buttons" id="postButtons" style="display:none">
+                <button class="btn-secondary" onclick="clearImage()">Ta bort</button>
+                <button class="btn-primary" onclick="submitPost()">📤 Posta</button>
             </div>
         </div>
 
         <!-- Bottom Navigation -->
         <div class="bottom-nav">
             <button class="nav-item" onclick="switchTab('feed')">
-                <span class="nav-emoji" id="navFeedEmoji">🔥</span>
+                <span class="nav-icon" id="navFeedIcon">🔥</span>
                 <span class="nav-label" id="navFeedLabel">Feed</span>
             </button>
             <button class="nav-item" onclick="openCamera()">
@@ -352,84 +460,112 @@
                 <span class="nav-label">Posta</span>
             </button>
             <button class="nav-item" onclick="switchTab('nearby')">
-                <span class="nav-emoji" id="navNearbyEmoji">📍</span>
+                <span class="nav-icon" id="navNearbyIcon">📍</span>
                 <span class="nav-label" id="navNearbyLabel">Nära</span>
             </button>
             <button class="nav-item" onclick="switchTab('profile')">
-                <span class="nav-emoji" id="navProfileEmoji">👤</span>
+                <span class="nav-icon" id="navProfileIcon">👤</span>
                 <span class="nav-label" id="navProfileLabel">Min</span>
             </button>
         </div>
     </div>
 
     <script>
-        // ============ USER DATA ============
-        let user = {
-            name: '',
-            pet: { name: 'Eldragon', emoji: '🐉', level: 1, exp: 0, abilities: ['Fire Breath', 'Fly'] },
-            streak: 0,
-            meetings: 0,
-            badges: []
+        // ============ PET DATA ============
+        const PET_TYPES = {
+            dragon: { name: 'Eldraken', emoji: '🐉', baseEmoji: '🐉', abilities: ['🔥 Fire Breath', '🪽 Fly', '⚡ Lightning'] },
+            wolf: { name: 'Skuggvarg', emoji: '🐺', baseEmoji: '🐺', abilities: ['🌙 Howl', '🏃 Hunt', '👁️ Sense'] },
+            phoenix: { name: 'Fenix', emoji: '🔥', baseEmoji: '🔥', abilities: ['✨ Rebirth', '🕊️ Fly', '❤️ Heal'] },
+            fox: { name: 'MagiRäv', emoji: '🦊', baseEmoji: '🦊', abilities: ['🌀 Charm', '⚡ Dash', '🔮 Magic'] }
         };
 
+        // ============ USER DATA ============
+        let user = {
+            id: 'user1',
+            name: '',
+            petType: 'dragon',
+            petLevel: 1,
+            petExp: 0,
+            streak: 0,
+            meetings: 0,
+            badges: [],
+            posts: []
+        };
+
+        // ============ MOCK DATA ============
         let posts = [
-            { id: '1', userName: 'Ella', userAvatar: '👩‍🎤', petEmoji: '🐉', content: 'Träffade Max idag! 🔥', likes: 47, timeAgo: '10 min' },
-            { id: '2', userName: 'Max', userAvatar: '🧑‍🚀', petEmoji: '🐺', content: 'Level up! 💀', likes: 32, timeAgo: '1 tim' },
-            { id: '3', userName: 'Clara', userAvatar: '👩‍💻', petEmoji: '🦊', content: 'Legendary skin! ✨', likes: 89, timeAgo: '3 tim' }
+            { id: 'p1', userId: 'ella', userName: 'Ella', userAvatar: '👩‍🎤', petEmoji: '🐉', content: 'Mötte Max idag! 🔥 Vår pet spelade ihop!', likes: 47, timeAgo: '15 min', image: null },
+            { id: 'p2', userId: 'max', userName: 'Max', userAvatar: '🧑‍🚀', petEmoji: '🐺', content: 'Level up! Min varg är nu level 8 💀', likes: 32, timeAgo: '1 tim', image: null },
+            { id: 'p3', userId: 'clara', userName: 'Clara', userAvatar: '👩‍💻', petEmoji: '🦊', content: 'Hittade en legendary skin! ✨', likes: 89, timeAgo: '3 tim', image: null }
         ];
 
         let friends = [
-            { name: 'Ella', avatar: '👩‍🎤', petEmoji: '🐉', distance: '500m' },
-            { name: 'Max', avatar: '🧑‍🚀', petEmoji: '🐺', distance: '1.2km' },
-            { name: 'Clara', avatar: '👩‍💻', petEmoji: '🦊', distance: '800m' },
-            { name: 'Leo', avatar: '🧑‍🎤', petEmoji: '🐱', distance: '2.1km' }
+            { id: 'ella', name: 'Ella', avatar: '👩‍🎤', petEmoji: '🐉', petLevel: 12, distance: '300m' },
+            { id: 'max', name: 'Max', avatar: '🧑‍🚀', petEmoji: '🐺', petLevel: 8, distance: '800m' },
+            { id: 'clara', name: 'Clara', avatar: '👩‍💻', petEmoji: '🦊', petLevel: 5, distance: '1.2km' },
+            { id: 'leo', name: 'Leo', avatar: '🧑‍🎤', petEmoji: '🐱', petLevel: 3, distance: '2km' }
         ];
 
-        let dailyChallenge = { text: 'Träffa 2 kompisar', progress: 0, required: 2, reward: '🔥 Fire Wings' };
+        let leaderboard = [
+            { name: 'Ella', petLevel: 12, streak: 47 },
+            { name: 'Max', petLevel: 8, streak: 32 },
+            { name: 'Clara', petLevel: 5, streak: 28 },
+            { name: 'Du', petLevel: 1, streak: 0 }
+        ];
+
+        let dailyQuest = {
+            title: 'Träffa 2 kompisar',
+            description: 'Möt vänner IRL och få din pet att växa',
+            progress: 0,
+            required: 2,
+            reward: '250 XP + 🎁 Rare Skin'
+        };
+
         let currentTab = 'feed';
         let selectedImage = null;
 
         // ============ INIT ============
         function init() {
-            const saved = localStorage.getItem('pet_user');
+            const saved = localStorage.getItem('mypet_user');
             if (saved) {
                 user = JSON.parse(saved);
             } else {
-                let name = prompt('🔥 Välkommen! Vad heter du?', 'Din vän');
-                if (name) user.name = name;
-                saveUser();
+                let name = prompt('🔥 Välkommen till MY PET!\n\nVad heter du?', 'Din vän');
+                if (name) {
+                    user.name = name;
+                    saveUser();
+                }
             }
+            updateLeaderboard();
             renderFeed();
-            if (currentTab === 'feed') document.getElementById('feedContainer').style.display = 'block';
-            updateNavActive('feed');
+            switchTab('feed');
         }
 
         function saveUser() {
-            localStorage.setItem('pet_user', JSON.stringify(user));
+            localStorage.setItem('mypet_user', JSON.stringify(user));
         }
 
-        // ============ RENDER FEED (TikTok Style) ============
+        // ============ FEED ============
         function renderFeed() {
             const container = document.getElementById('feedContainer');
             if (!container) return;
+
+            const pet = PET_TYPES[user.petType];
             
             container.innerHTML = posts.map(post => `
-                <div class="feed-item">
-                    <div class="pet-display">
-                        <div class="pet-emoji-large">${user.pet.emoji}</div>
-                        <div class="pet-level">Lv.${user.pet.level}</div>
+                <div class="post">
+                    <div class="pet-container">
+                        <div class="pet-avatar">${pet.emoji}</div>
+                        <div class="pet-level">Lv.${user.petLevel}</div>
+                        <div class="pet-name">${pet.name}</div>
                     </div>
                     
-                    <div class="action-sidebar">
-                        <div class="action-side-btn" onclick="likePost('${post.id}')">
+                    <div class="actions">
+                        <div class="action" onclick="likePost('${post.id}')">
                             <div class="action-icon">❤️</div>
                             <div class="action-count">${post.likes}</div>
                         </div>
-                        <div class="action-side-btn">
-                            <div class="action-icon">💬</div>
-                            <div class="action-count">12</div>
-                        </div>
-                        <div class="action-side-btn" onclick="sharePost()">
+                        <div class="action" onclick="sharePost('${post.id}')">
                             <div class="action-icon">📤</div>
                         </div>
                     </div>
@@ -443,25 +579,34 @@
                             </div>
                         </div>
                         <div class="post-text">${post.content}</div>
+                        ${post.image ? `<img src="${post.image}" class="post-image">` : ''}
                     </div>
                 </div>
             `).join('');
         }
 
-        function likePost(id) {
-            const post = posts.find(p => p.id === id);
+        function likePost(postId) {
+            const post = posts.find(p => p.id === postId);
             if (post) {
                 post.likes++;
                 renderFeed();
-                // Animation effect
+                // Animation feedback
                 const btn = event.currentTarget;
-                btn.style.transform = 'scale(1.3)';
+                btn.style.transform = 'scale(1.2)';
                 setTimeout(() => btn.style.transform = '', 200);
             }
         }
 
-        function sharePost() {
-            alert('📤 Dela denna post på Snap/TikTok!');
+        function sharePost(postId) {
+            const post = posts.find(p => p.id === postId);
+            if (post) {
+                const shareText = `🔥 ${post.content}\n\nMin pet är level ${user.petLevel}!\nLadda ner MY PET!`;
+                if (navigator.share) {
+                    navigator.share({ title: 'MY PET', text: shareText });
+                } else {
+                    alert(shareText);
+                }
+            }
         }
 
         // ============ CAMERA ============
@@ -472,10 +617,16 @@
         function closeCamera() {
             document.getElementById('cameraModal').classList.add('hidden');
             selectedImage = null;
-            document.getElementById('postBtn').style.display = 'none';
+            document.getElementById('cameraPreview').innerHTML = `
+                <div style="text-align:center">
+                    <div style="font-size:60px; margin-bottom:20px">🐾</div>
+                    <button class="btn-primary" onclick="selectImage()">Välj bild</button>
+                </div>
+            `;
+            document.getElementById('postButtons').style.display = 'none';
         }
 
-        function openCameraInput() {
+        function selectImage() {
             let input = document.createElement('input');
             input.type = 'file';
             input.accept = 'image/*';
@@ -484,24 +635,37 @@
                 let reader = new FileReader();
                 reader.onload = (event) => {
                     selectedImage = event.target.result;
-                    document.getElementById('cameraPreview').innerHTML = `<img src="${selectedImage}" style="width:100%; height:100%; object-fit:cover">`;
-                    document.getElementById('postBtn').style.display = 'block';
+                    document.getElementById('cameraPreview').innerHTML = `<img src="${selectedImage}" class="preview-img">`;
+                    document.getElementById('postButtons').style.display = 'flex';
                 };
                 reader.readAsDataURL(file);
             };
             input.click();
         }
 
+        function clearImage() {
+            selectedImage = null;
+            document.getElementById('cameraPreview').innerHTML = `
+                <div style="text-align:center">
+                    <div style="font-size:60px; margin-bottom:20px">🐾</div>
+                    <button class="btn-primary" onclick="selectImage()">Välj bild</button>
+                </div>
+            `;
+            document.getElementById('postButtons').style.display = 'none';
+        }
+
         function submitPost() {
             if (selectedImage) {
                 const newPost = {
                     id: Date.now().toString(),
+                    userId: user.id,
                     userName: user.name,
                     userAvatar: '👤',
-                    petEmoji: user.pet.emoji,
+                    petEmoji: PET_TYPES[user.petType].emoji,
                     content: 'Kolla in mitt äventyr! 🔥',
                     likes: 0,
-                    timeAgo: 'just nu'
+                    timeAgo: 'just nu',
+                    image: selectedImage
                 };
                 posts.unshift(newPost);
                 selectedImage = null;
@@ -511,190 +675,259 @@
             }
         }
 
-        // ============ MEET FRIENDS (IRL) ============
-        function meetFriend(name) {
+        // ============ MEET FRIENDS ============
+        function meetFriend(friendId, friendName) {
+            // Add XP
+            user.petExp += 15;
             user.meetings++;
             user.streak++;
-            user.pet.exp += 10;
             
-            if (user.pet.exp >= 100) {
-                user.pet.exp = 0;
-                user.pet.level++;
-                alert(`🎉 LEVEL UP! Din ${user.pet.name} är nu level ${user.pet.level}!`);
+            // Level up
+            let leveledUp = false;
+            if (user.petExp >= 100) {
+                user.petExp -= 100;
+                user.petLevel++;
+                leveledUp = true;
             }
             
-            dailyChallenge.progress = Math.min(dailyChallenge.progress + 1, dailyChallenge.required);
+            // Update daily quest
+            dailyQuest.progress = Math.min(dailyQuest.progress + 1, dailyQuest.required);
             
-            if (dailyChallenge.progress >= dailyChallenge.required) {
-                alert(`🔥 UTMANING KLAR! Du fick: ${dailyChallenge.reward}`);
-                dailyChallenge.progress = 0;
+            // Check quest completion
+            if (dailyQuest.progress >= dailyQuest.required) {
+                user.petExp += 250;
+                alert(`🎉 QUEST KLAR! Du fick: ${dailyQuest.reward} + 250 XP!`);
+                dailyQuest.progress = 0;
+                
+                // Check for level up after quest reward
+                if (user.petExp >= 100) {
+                    user.petExp -= 100;
+                    user.petLevel++;
+                    leveledUp = true;
+                }
+            }
+            
+            // Check for badges
+            if (user.meetings >= 10 && !user.badges.includes('social')) {
+                user.badges.push('social');
+                alert('🏆 NY BADGE! Social Butterfly - 10 IRL-möten!');
+            }
+            if (user.streak >= 7 && !user.badges.includes('streak7')) {
+                user.badges.push('streak7');
+                alert('🏆 NY BADGE! On Fire - 7 dagars streak!');
+            }
+            if (user.petLevel >= 10 && !user.badges.includes('level10')) {
+                user.badges.push('level10');
+                alert('🏆 NY BADGE! Master - Pet level 10!');
             }
             
             saveUser();
+            updateLeaderboard();
             renderNearby();
             renderProfile();
-            alert(`✅ Du mötte ${name}! +10 XP till din pet`);
+            
+            if (leveledUp) {
+                alert(`🎉 LEVEL UP! Din ${PET_TYPES[user.petType].name} är nu level ${user.petLevel}!`);
+                // Unlock new ability at certain levels
+                if (user.petLevel === 5 || user.petLevel === 10 || user.petLevel === 15) {
+                    alert(`✨ Ny ability upplåst! ${PET_TYPES[user.petType].abilities[Math.floor(user.petLevel/5)]}`);
+                }
+            }
+            
+            alert(`✅ Du mötte ${friendName}! +15 XP till din pet`);
+            renderFeed(); // Update pet level in feed
         }
 
-        // ============ RENDER NEARBY ============
+        // ============ NEARBY ============
         function renderNearby() {
             const container = document.getElementById('nearbyContainer');
             if (!container) return;
             
-            const challengePercent = (dailyChallenge.progress / dailyChallenge.required) * 100;
+            const questPercent = (dailyQuest.progress / dailyQuest.required) * 100;
             
             container.innerHTML = `
                 <div class="challenge-card">
-                    <div>⚡️ DAGENS UTMANING</div>
-                    <div style="font-weight:bold; margin:8px 0">${dailyChallenge.text}</div>
-                    <div class="exp-bar"><div class="exp-fill" style="width:${challengePercent}%"></div></div>
-                    <div style="font-size:12px; color:#39FF14">Belöning: ${dailyChallenge.reward}</div>
+                    <div style="font-size:12px; color:#39FF14">⚡️ DAGENS UTMANING</div>
+                    <div style="font-size:16px; font-weight:bold; margin:8px 0">${dailyQuest.title}</div>
+                    <div style="font-size:12px; color:#888; margin-bottom:12px">${dailyQuest.description}</div>
+                    <div class="exp-bar"><div class="exp-fill" style="width:${questPercent}%"></div></div>
+                    <div style="display:flex; justify-content:space-between; margin-top:8px">
+                        <span>${dailyQuest.progress}/${dailyQuest.required}</span>
+                        <span style="color:#39FF14">🎁 ${dailyQuest.reward}</span>
+                    </div>
                 </div>
-                <div class="friends-grid">
-                    ${friends.map(f => `
-                        <div class="friend-card" onclick="meetFriend('${f.name}')">
-                            <div style="font-size:50px">${f.avatar}</div>
-                            <div style="font-weight:bold; margin:8px 0">${f.name}</div>
-                            <div>${f.petEmoji} ${f.distance}</div>
-                            <button class="meet-btn">MÖT</button>
+                
+                <div style="margin-bottom:15px">
+                    <div style="font-weight:bold; margin-bottom:12px">📍 VÄNNER I NÄRHETEN</div>
+                    <div class="friends-grid">
+                        ${friends.map(friend => `
+                            <div class="friend-card" onclick="meetFriend('${friend.id}', '${friend.name}')">
+                                <div style="font-size:50px">${friend.avatar}</div>
+                                <div style="font-weight:bold; margin:8px 0">${friend.name}</div>
+                                <div>${friend.petEmoji} Lv.${friend.petLevel}</div>
+                                <div style="font-size:11px; color:#888; margin:5px 0">${friend.distance}</div>
+                                <button class="meet-btn">🤝 MÖT</button>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                
+                <div class="leaderboard">
+                    <div style="font-weight:bold; margin-bottom:12px">🏆 TOPPLISTA</div>
+                    ${leaderboard.map((item, idx) => `
+                        <div class="leaderboard-item">
+                            <div class="rank">${idx === 0 ? '👑' : idx === 1 ? '⭐' : idx === 2 ? '🔥' : `${idx+1}`}</div>
+                            <div style="flex:1">${item.name}</div>
+                            <div style="color:#39FF14">Lv.${item.petLevel}</div>
+                            <div style="font-size:11px; color:#888">${item.streak}d</div>
                         </div>
                     `).join('')}
                 </div>
             `;
         }
 
-        // ============ RENDER PROFILE ============
+        // ============ PROFILE ============
         function renderProfile() {
             const container = document.getElementById('profileContainer');
             if (!container) return;
             
-            const expPercent = (user.pet.exp / 100) * 100;
+            const pet = PET_TYPES[user.petType];
+            const expPercent = (user.petExp / 100) * 100;
             
             container.innerHTML = `
                 <div class="profile-header">
-                    <div class="profile-avatar">👤</div>
-                    <div style="font-size:24px; font-weight:bold; margin:8px 0">${user.name}</div>
-                    <div class="profile-stats">
-                        <div class="stat-box"><div class="stat-value">${user.streak}</div><div>Streak</div></div>
-                        <div class="stat-box"><div class="stat-value">${user.meetings}</div><div>Möten</div></div>
-                        <div class="stat-box"><div class="stat-value">${user.pet.level}</div><div>Level</div></div>
-                    </div>
+                    <div class="profile-avatar">${pet.emoji}</div>
+                    <div style="font-size:24px; font-weight:bold">${user.name}</div>
+                    <div style="color:#888">${pet.name} · Level ${user.petLevel}</div>
                 </div>
                 
-                <div class="pet-card">
-                    <div style="font-size:80px">${user.pet.emoji}</div>
-                    <div style="font-size:20px; font-weight:bold">${user.pet.name}</div>
+                <div class="stats-row">
+                    <div class="stat"><div class="stat-value">${user.streak}</div><div>Streak</div></div>
+                    <div class="stat"><div class="stat-value">${user.meetings}</div><div>Möten</div></div>
+                    <div class="stat"><div class="stat-value">${user.badges.length}</div><div>Badges</div></div>
+                </div>
+                
+                <div class="pet-detail">
+                    <div style="font-size:60px; margin-bottom:10px">${pet.emoji}</div>
                     <div class="exp-bar"><div class="exp-fill" style="width:${expPercent}%"></div></div>
-                    <div>${user.pet.exp}/100 XP till level ${user.pet.level + 1}</div>
-                    <div style="margin-top:15px">
-                        ${user.pet.abilities.map(a => `<span style="background:rgba(57,255,20,0.2); padding:4px 12px; border-radius:20px; margin:4px; display:inline-block">${a}</span>`).join('')}
+                    <div>${user.petExp}/100 XP till level ${user.petLevel + 1}</div>
+                    
+                    <div class="abilities">
+                        ${pet.abilities.map(a => `<span class="ability">${a}</span>`).join('')}
                     </div>
                 </div>
                 
-                <button onclick="shareProfile()" style="width:100%; background:rgba(255,255,255,0.1); padding:16px; border-radius:30px; border:none; color:#fff; margin-top:20px">
+                <div>
+                    <div style="font-weight:bold; margin-bottom:12px">🏆 BADGES</div>
+                    <div class="badges-grid">
+                        <div class="badge ${user.badges.includes('social') ? 'unlocked' : ''}">
+                            <div style="font-size:30px">🦋</div>
+                            <div style="font-size:11px">Social Butterfly</div>
+                        </div>
+                        <div class="badge ${user.badges.includes('streak7') ? 'unlocked' : ''}">
+                            <div style="font-size:30px">🔥</div>
+                            <div style="font-size:11px">On Fire</div>
+                        </div>
+                        <div class="badge ${user.badges.includes('level10') ? 'unlocked' : ''}">
+                            <div style="font-size:30px">👑</div>
+                            <div style="font-size:11px">Master</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button onclick="shareProfile()" style="width:100%; background:rgba(255,255,255,0.05); padding:16px; border-radius:30px; border:1px solid rgba(255,255,255,0.1); color:#fff; margin-top:20px; cursor:pointer">
                     📤 DELA PROFIL
                 </button>
             `;
         }
 
-        // ============ SWITCH TABS ============
+        function shareProfile() {
+            const pet = PET_TYPES[user.petType];
+            const shareText = `🔥 ${user.name} - ${pet.name} Level ${user.petLevel}!\n${user.streak} dagars streak!\n${user.meetings} IRL-möten!\n\nLadda ner MY PET och tävla med oss!`;
+            if (navigator.share) {
+                navigator.share({ title: 'MY PET', text: shareText });
+            } else {
+                alert(shareText);
+            }
+        }
+
+        function updateLeaderboard() {
+            const userIndex = leaderboard.findIndex(l => l.name === 'Du');
+            if (userIndex !== -1) {
+                leaderboard[userIndex] = { name: 'Du', petLevel: user.petLevel, streak: user.streak };
+            }
+            leaderboard.sort((a, b) => b.petLevel - a.petLevel);
+        }
+
+        // ============ TAB NAVIGATION ============
         function switchTab(tab) {
             currentTab = tab;
             
             // Hide all screens
             document.getElementById('feedContainer').style.display = 'none';
-            const nearbyScreen = document.getElementById('nearbyScreen');
-            const profileScreen = document.getElementById('profileScreen');
-            
-            if (!nearbyScreen) {
-                const newNearby = document.createElement('div');
-                newNearby.id = 'nearbyScreen';
-                newNearby.className = 'nearby-screen';
-                document.querySelector('.app-container').insertBefore(newNearby, document.querySelector('.bottom-nav'));
-                newNearby.innerHTML = '<div id="nearbyContainer"></div>';
-            }
-            if (!profileScreen) {
-                const newProfile = document.createElement('div');
-                newProfile.id = 'profileScreen';
-                newProfile.className = 'profile-screen';
-                document.querySelector('.app-container').insertBefore(newProfile, document.querySelector('.bottom-nav'));
-                newProfile.innerHTML = '<div id="profileContainer"></div>';
-            }
-            
             const nearbyEl = document.getElementById('nearbyScreen');
             const profileEl = document.getElementById('profileScreen');
             
-            if (nearbyEl) nearbyEl.style.display = 'none';
-            if (profileEl) profileEl.style.display = 'none';
+            // Create screens if not exist
+            if (!nearbyEl) {
+                const div = document.createElement('div');
+                div.id = 'nearbyScreen';
+                div.className = 'nearby-screen';
+                div.style.display = 'none';
+                div.innerHTML = '<div id="nearbyContainer"></div>';
+                document.querySelector('.app').insertBefore(div, document.querySelector('.bottom-nav'));
+            }
+            if (!profileEl) {
+                const div = document.createElement('div');
+                div.id = 'profileScreen';
+                div.className = 'profile-screen';
+                div.style.display = 'none';
+                div.innerHTML = '<div id="profileContainer"></div>';
+                document.querySelector('.app').insertBefore(div, document.querySelector('.bottom-nav'));
+            }
+            
+            const newNearby = document.getElementById('nearbyScreen');
+            const newProfile = document.getElementById('profileScreen');
+            
+            if (newNearby) newNearby.style.display = 'none';
+            if (newProfile) newProfile.style.display = 'none';
             
             if (tab === 'feed') {
                 document.getElementById('feedContainer').style.display = 'block';
                 renderFeed();
             }
             if (tab === 'nearby') {
-                if (nearbyEl) nearbyEl.style.display = 'block';
-                renderNearby();
+                if (newNearby) {
+                    newNearby.style.display = 'block';
+                    renderNearby();
+                }
             }
             if (tab === 'profile') {
-                if (profileEl) profileEl.style.display = 'block';
-                renderProfile();
+                if (newProfile) {
+                    newProfile.style.display = 'block';
+                    renderProfile();
+                }
             }
             
-            updateNavActive(tab);
-        }
-
-        function updateNavActive(tab) {
-            const emojis = { feed: 'navFeedEmoji', nearby: 'navNearbyEmoji', profile: 'navProfileEmoji' };
+            // Update nav icons
+            const icons = { feed: 'navFeedIcon', nearby: 'navNearbyIcon', profile: 'navProfileIcon' };
             const labels = { feed: 'navFeedLabel', nearby: 'navNearbyLabel', profile: 'navProfileLabel' };
             
-            Object.keys(emojis).forEach(t => {
-                const emoji = document.getElementById(emojis[t]);
+            Object.keys(icons).forEach(t => {
+                const icon = document.getElementById(icons[t]);
                 const label = document.getElementById(labels[t]);
-                if (emoji) emoji.classList.remove('active');
+                if (icon) icon.classList.remove('active');
                 if (label) label.classList.remove('active');
             });
             
-            if (emojis[tab]) {
-                const activeEmoji = document.getElementById(emojis[tab]);
-                const activeLabel = document.getElementById(labels[tab]);
-                if (activeEmoji) activeEmoji.classList.add('active');
-                if (activeLabel) activeLabel.classList.add('active');
-            }
+            const activeIcon = document.getElementById(icons[tab]);
+            const activeLabel = document.getElementById(labels[tab]);
+            if (activeIcon) activeIcon.classList.add('active');
+            if (activeLabel) activeLabel.classList.add('active');
         }
 
-        function shareProfile() {
-            const shareText = `🔥 ${user.name} - Level ${user.pet.level} ${user.pet.name}!\n${user.streak} dagars streak!\n${user.meetings} IRL-möten!\n\nLadda ner PET SOCIAL!`;
-            if (navigator.share) {
-                navigator.share({ title: 'PET SOCIAL', text: shareText });
-            } else {
-                alert(shareText);
-            }
-        }
-
-        // Create missing screens
-        function createScreens() {
-            if (!document.getElementById('nearbyScreen')) {
-                const div = document.createElement('div');
-                div.id = 'nearbyScreen';
-                div.className = 'nearby-screen';
-                div.style.display = 'none';
-                div.innerHTML = '<div id="nearbyContainer"></div>';
-                document.querySelector('.app-container').insertBefore(div, document.querySelector('.bottom-nav'));
-            }
-            if (!document.getElementById('profileScreen')) {
-                const div = document.createElement('div');
-                div.id = 'profileScreen';
-                div.className = 'profile-screen';
-                div.style.display = 'none';
-                div.innerHTML = '<div id="profileContainer"></div>';
-                document.querySelector('.app-container').insertBefore(div, document.querySelector('.bottom-nav'));
-            }
-        }
-
-        // Start
-        createScreens();
+        // Start app
         init();
-        switchTab('feed');
     </script>
 </body>
 </html>
