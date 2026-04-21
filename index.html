@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>PETPET | Ultimate Social Platform</title>
+    <title>PETPET | Mega Platform</title>
     <style>
-        /* ============ RESET & BASE ============ */
+        /* ============ RESET ============ */
         * {
             margin: 0;
             padding: 0;
@@ -22,7 +22,7 @@
             position: fixed;
         }
 
-        /* ============ PREMIUM BACKGROUND ============ */
+        /* ============ 3D PREMIUM BACKGROUND ============ */
         .bg-premium {
             position: fixed;
             top: 0;
@@ -55,7 +55,7 @@
             66% { transform: translate(-80px, 100px); }
         }
 
-        /* ============ APP CONTAINER ============ */
+        /* ============ APP ============ */
         .app {
             position: relative;
             z-index: 10;
@@ -73,21 +73,19 @@
             padding: 12px 20px;
             background: rgba(0,0,0,0.4);
             backdrop-filter: blur(15px);
-            font-size: 14px;
-            font-weight: 600;
-            color: #fff;
-            z-index: 30;
             border-bottom: 0.5px solid rgba(57,255,20,0.1);
+            z-index: 30;
         }
         .status-left { display: flex; gap: 8px; }
         .status-badge {
             background: rgba(57,255,20,0.15);
-            padding: 4px 10px;
+            padding: 4px 12px;
             border-radius: 20px;
             font-size: 11px;
             display: flex;
             align-items: center;
             gap: 5px;
+            backdrop-filter: blur(5px);
         }
 
         /* ============ STORIES ROW ============ */
@@ -107,11 +105,13 @@
             align-items: center;
             margin-right: 16px;
             cursor: pointer;
+            transition: transform 0.2s;
         }
+        .story-item:active { transform: scale(0.95); }
         .story-ring {
-            width: 68px;
-            height: 68px;
-            border-radius: 34px;
+            width: 70px;
+            height: 70px;
+            border-radius: 35px;
             background: linear-gradient(135deg, #39FF14, #ff3333);
             display: flex;
             align-items: center;
@@ -119,20 +119,16 @@
             margin-bottom: 6px;
         }
         .story-avatar {
-            width: 64px;
-            height: 64px;
-            border-radius: 32px;
+            width: 66px;
+            height: 66px;
+            border-radius: 33px;
             background: #1a1a1a;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 30px;
+            font-size: 32px;
         }
-        .story-name {
-            font-size: 11px;
-            color: #fff;
-            opacity: 0.8;
-        }
+        .story-name { font-size: 11px; color: #fff; opacity: 0.8; }
 
         /* ============ FEED (TIKTOK STYLE) ============ */
         .feed-container {
@@ -152,7 +148,7 @@
             padding: 80px 20px 100px;
         }
 
-        /* Floating Pet Card */
+        /* Floating Pet Card - Roblox Style */
         .pet-card {
             position: absolute;
             top: 80px;
@@ -167,8 +163,8 @@
             z-index: 20;
         }
         @keyframes floatPet {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
         }
         .pet-emoji { font-size: 55px; filter: drop-shadow(0 0 15px #39FF14); }
         .pet-level { font-size: 11px; color: #39FF14; margin-top: 5px; font-weight: bold; }
@@ -215,12 +211,12 @@
         .action-icon { font-size: 32px; filter: drop-shadow(0 0 5px rgba(0,0,0,0.5)); }
         .action-count { font-size: 11px; color: #fff; margin-top: 4px; font-weight: 500; }
 
-        /* ============ BOTTOM NAVIGATION ============ */
+        /* ============ BOTTOM NAVIGATION (WECHAT STYLE) ============ */
         .bottom-nav {
             background: rgba(15,15,20,0.95);
             backdrop-filter: blur(20px);
             border-top: 0.5px solid rgba(57,255,20,0.15);
-            padding: 8px 20px 20px;
+            padding: 8px 16px 20px;
             display: flex;
             z-index: 30;
         }
@@ -247,7 +243,9 @@
             justify-content: center;
             margin-top: -18px;
             box-shadow: 0 0 20px rgba(57,255,20,0.4);
+            transition: transform 0.2s;
         }
+        .nav-camera:active { transform: scale(0.95); }
         .nav-label { font-size: 10px; color: #888; margin-top: 2px; }
         .nav-label.active { color: #39FF14; }
 
@@ -274,7 +272,9 @@
             padding: 14px 0;
             border-bottom: 0.5px solid rgba(255,255,255,0.06);
             cursor: pointer;
+            transition: background 0.2s;
         }
+        .chat-item:active { background: rgba(255,255,255,0.03); }
         .chat-avatar {
             width: 54px;
             height: 54px;
@@ -336,7 +336,7 @@
         .product-name { font-size: 14px; font-weight: 500; margin-bottom: 4px; color: #fff; }
         .product-price { font-size: 16px; font-weight: bold; color: #39FF14; }
 
-        /* ============ PROFILE SCREEN ============ */
+        /* ============ PROFILE SCREEN (INSTAGRAM STYLE) ============ */
         .profile-header {
             padding: 20px;
             display: flex;
@@ -389,7 +389,9 @@
             padding: 16px;
             margin: 12px;
             border: 0.5px solid rgba(255,255,255,0.05);
+            transition: all 0.2s;
         }
+        .bounty-card:active { background: rgba(255,255,255,0.05); }
         .bounty-header {
             display: flex;
             justify-content: space-between;
@@ -424,6 +426,7 @@
             background: linear-gradient(90deg, #39FF14, #ff3333);
             width: 100%;
             border-radius: 4px;
+            transition: width 0.3s;
         }
         .battle-log {
             background: rgba(0,0,0,0.5);
@@ -450,6 +453,7 @@
             text-align: center;
             cursor: pointer;
             border: 0.5px solid rgba(255,255,255,0.05);
+            transition: all 0.2s;
         }
         .world-location:active { transform: scale(0.97); background: rgba(255,255,255,0.05); }
 
@@ -467,7 +471,7 @@
             border-bottom: 0.5px solid rgba(255,255,255,0.05);
         }
 
-        /* ============ COMMON ============ */
+        /* ============ COMMON COMPONENTS ============ */
         .glass-card {
             background: rgba(255,255,255,0.03);
             border-radius: 20px;
@@ -485,15 +489,22 @@
             cursor: pointer;
             width: 100%;
             color: #000;
+            transition: transform 0.2s;
         }
+        .btn-primary:active { transform: scale(0.98); }
         .btn-secondary {
             background: rgba(255,255,255,0.1);
-            padding: 12px 20px;
+            padding: 10px 20px;
             border-radius: 25px;
             border: none;
             color: #fff;
             cursor: pointer;
+            transition: background 0.2s;
         }
+        .btn-secondary:active { background: rgba(255,255,255,0.15); }
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+
+        /* ============ MODAL ============ */
         .modal {
             position: fixed;
             top: 0;
@@ -531,7 +542,6 @@
             resize: none;
         }
         .hidden { display: none; }
-        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
     </style>
 </head>
 <body>
@@ -554,18 +564,20 @@
             </div>
         </div>
 
-        <!-- Stories Row -->
+        <!-- Stories Row (Snapchat-style) -->
         <div class="stories-row" id="storiesRow"></div>
 
-        <!-- Feed Container -->
+        <!-- Feed Container (TikTok-style) -->
         <div id="feedContainer" class="feed-container"></div>
 
-        <!-- Chat Screen -->
+        <!-- ============ SCREENS ============ -->
+        
+        <!-- Chat Screen (WeChat-style) -->
         <div id="chatScreen" class="screen">
             <div class="chat-list" id="chatList"></div>
         </div>
 
-        <!-- Shop Screen -->
+        <!-- Shop Screen (E-commerce) -->
         <div id="shopScreen" class="screen">
             <div class="shop-header">
                 <div class="search-bar">
@@ -580,7 +592,7 @@
             </div>
         </div>
 
-        <!-- Profile Screen -->
+        <!-- Profile Screen (Instagram-style) -->
         <div id="profileScreen" class="screen">
             <div class="profile-header">
                 <div class="profile-avatar-large" id="profileAvatar">🐉</div>
@@ -607,7 +619,7 @@
             </div>
             <div class="glass-card">
                 <div style="font-weight: 600; margin-bottom: 12px;">🏆 BADGES</div>
-                <div style="display: flex; gap: 12px;" id="badgesList"></div>
+                <div style="display: flex; flex-wrap: wrap; gap: 12px;" id="badgesList"></div>
             </div>
             <button class="btn-primary" style="margin: 16px; width: calc(100% - 32px);" onclick="shareProfile()">📤 Dela profil</button>
         </div>
@@ -648,10 +660,23 @@
             <div class="shop-header">
                 <div class="search-bar">
                     <span>🔍</span>
-                    <input type="text" id="compareSearch" placeholder="Jämför priser på produkter...">
+                    <input type="text" id="compareSearch" placeholder="Jämför priser på produkter..." onkeyup="searchCompare()">
                 </div>
             </div>
             <div id="compareResults"></div>
+        </div>
+
+        <!-- More Screen -->
+        <div id="moreScreen" class="screen">
+            <div class="glass-card">
+                <div style="font-weight: 600; margin-bottom: 16px;">📱 FLER FUNKTIONER</div>
+                <div class="grid-2">
+                    <div class="product-card" onclick="switchTab('bounties')"><div class="product-emoji">🎯</div><div class="product-name">Uppdrag</div></div>
+                    <div class="product-card" onclick="switchTab('battle')"><div class="product-emoji">⚔️</div><div class="product-name">Battle</div></div>
+                    <div class="product-card" onclick="switchTab('compare')"><div class="product-emoji">🔍</div><div class="product-name">Jämför</div></div>
+                    <div class="product-card" onclick="switchTab('world')"><div class="product-emoji">🌍</div><div class="product-name">Utforska</div></div>
+                </div>
+            </div>
         </div>
 
         <!-- Camera Modal -->
@@ -671,7 +696,7 @@
             </div>
         </div>
 
-        <!-- Bottom Navigation -->
+        <!-- Bottom Navigation (WeChat-style with 6 icons) -->
         <div class="bottom-nav">
             <button class="nav-item" onclick="switchTab('feed')"><span class="nav-icon" id="navFeedIcon">🔥</span><span class="nav-label">Flöde</span></button>
             <button class="nav-item" onclick="switchTab('chat')"><span class="nav-icon" id="navChatIcon">💬</span><span class="nav-label">Chat</span></button>
@@ -679,19 +704,6 @@
             <button class="nav-item" onclick="openCamera()"><div class="nav-camera"><span>📸</span></div><span class="nav-label">Nytt</span></button>
             <button class="nav-item" onclick="switchTab('shop')"><span class="nav-icon" id="navShopIcon">🛍️</span><span class="nav-label">Shop</span></button>
             <button class="nav-item" onclick="switchTab('profile')"><span class="nav-icon" id="navProfileIcon">👤</span><span class="nav-label">Min</span></button>
-        </div>
-
-        <!-- Extra Navigation (More) -->
-        <div id="moreScreen" class="screen">
-            <div class="glass-card">
-                <div style="font-weight: 600; margin-bottom: 16px;">📱 FLER FUNKTIONER</div>
-                <div class="grid-2">
-                    <div class="product-card" onclick="switchTab('bounties')"><div class="product-emoji">🎯</div><div class="product-name">Uppdrag</div></div>
-                    <div class="product-card" onclick="switchTab('battle')"><div class="product-emoji">⚔️</div><div class="product-name">Battle</div></div>
-                    <div class="product-card" onclick="switchTab('compare')"><div class="product-emoji">🔍</div><div class="product-name">Jämför</div></div>
-                    <div class="product-card" onclick="switchTab('world')"><div class="product-emoji">🌍</div><div class="product-name">Utforska</div></div>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -740,8 +752,8 @@
         let chats = [
             { id: '1', name: 'Stella 🥰', avatar: '🌟', preview: 'Haha ja! 😄', time: '15 min', streak: 103, unread: true },
             { id: '2', name: 'Mackan', avatar: '👨‍💻', preview: 'Jobbar sent idag', time: '2 d', streak: 0, unread: false },
-            { id: '3', name: 'Jack ❤️', avatar: '🐶', preview: 'Vi ses imorgon!', time: '17 h', streak: 0, unread: false },
-            { id: '4', name: 'Wendela', avatar: '😂', preview: 'Hahaha bästa!', time: '5 h', streak: 143, unread: true }
+            { id: '3', name: 'Wendela', avatar: '😂', preview: 'Hahaha bästa!', time: '5 h', streak: 143, unread: true },
+            { id: '4', name: 'Jack ❤️', avatar: '🐶', preview: 'Vi ses imorgon!', time: '17 h', streak: 0, unread: false }
         ];
 
         // ============ WORLD ============
@@ -772,10 +784,10 @@
 
         // ============ STORIES ============
         let stories = [
-            { name: 'Stella', avatar: '🌟', hasStory: true },
-            { name: 'Max', avatar: '🧑‍🚀', hasStory: true },
-            { name: 'Clara', avatar: '👩‍💻', hasStory: false },
-            { name: 'Leo', avatar: '🧑‍🎤', hasStory: true }
+            { name: 'Din story', avatar: '📸', hasStory: true, isOwn: true },
+            { name: 'Stella', avatar: '🌟', hasStory: true, isOwn: false },
+            { name: 'Max', avatar: '🧑‍🚀', hasStory: true, isOwn: false },
+            { name: 'Leo', avatar: '🧑‍🎤', hasStory: true, isOwn: false }
         ];
 
         let selectedImage = null;
@@ -806,8 +818,14 @@
 
         // ============ RENDER FUNCTIONS ============
         function renderStories() {
-            let html = `<div class="story-item" onclick="openCamera()"><div class="story-ring"><div class="story-avatar">📸</div></div><div class="story-name">Din story</div></div>`;
-            stories.forEach(s => { if(s.hasStory) html += `<div class="story-item"><div class="story-ring"><div class="story-avatar">${s.avatar}</div></div><div class="story-name">${s.name}</div></div>`; });
+            let html = '';
+            for(let s of stories) {
+                if(s.isOwn) {
+                    html += `<div class="story-item" onclick="openCamera()"><div class="story-ring"><div class="story-avatar">${s.avatar}</div></div><div class="story-name">${s.name}</div></div>`;
+                } else if(s.hasStory) {
+                    html += `<div class="story-item"><div class="story-ring"><div class="story-avatar">${s.avatar}</div></div><div class="story-name">${s.name}</div></div>`;
+                }
+            }
             document.getElementById('storiesRow').innerHTML = html;
         }
 
@@ -861,7 +879,7 @@
             document.getElementById('bountiesList').innerHTML = bHtml;
             let myHtml = '';
             for(let b of userBounties) { myHtml += `<div class="bounty-card"><div class="bounty-header"><span>${b.title}</span><span class="bounty-reward">+${b.reward}💰</span></div></div>`; }
-            if(userBounties.length === 0) myHtml = '<div style="color:#888; text-align:center;">Inga uppdrag än</div>';
+            if(userBounties.length === 0) myHtml = '<div style="color:#888; text-align:center; padding:20px;">Inga uppdrag än</div>';
             document.getElementById('myBountiesList').innerHTML = myHtml;
         }
 
@@ -873,7 +891,7 @@
 
         // ============ ACTIONS ============
         function likePost(id) { let p = posts.find(p => p.id === id); if(p) { p.likes++; document.getElementById(`likes-${id}`).innerText = p.likes; } }
-        function sharePost(id) { let p = posts.find(p => p.id === id); if(p && navigator.share) navigator.share({ title: 'PETPET', text: p.content }); }
+        function sharePost(id) { let p = posts.find(p => p.id === id); if(p && navigator.share) navigator.share({ title: 'PETPET', text: p.content }); else if(p) alert(p.content); }
         function buyProduct(name, price) { if(user.coins >= price) { user.coins -= price; saveData(); renderShop(); alert(`✅ Du köpte ${name}!`); } else alert(`❌ Behöver ${price - user.coins} mer coins!`); }
         function claimCode(code) { let c = discountCodes.find(c => c.code === code); if(c && !c.used) { c.used = true; user.coins += c.reward; saveData(); renderShop(); alert(`✅ +${c.reward} coins!`); } else alert('❌ Ogiltig kod'); }
         function visitLocation(name) { let loc = worldLocations.find(l => l.name === name); if(!loc.unlocked && loc.requiredLevel > user.petLevel) { alert(`🔒 Level ${loc.requiredLevel} krävs!`); return; } user.coins += loc.reward; user.petExp += 5; if(user.petExp >= 100) { user.petExp = 0; user.petLevel++; alert(`🎉 LEVEL UP! Level ${user.petLevel}!`); } saveData(); alert(`✨ Du besökte ${name}! +${loc.reward} coins, +5 XP`); renderWorld(); }
@@ -935,6 +953,7 @@
             results += `<div class="price-row"><span>🇪🇺 eBay</span><span style="color:#39FF14;">${Math.floor(Math.random()*350)+180} kr</span></div></div>`;
             document.getElementById('compareResults').innerHTML = results;
         }
+        function searchProducts() { let search = document.getElementById('shopSearch').value.toLowerCase(); let filtered = shopItems.filter(p => p.name.toLowerCase().includes(search)); let html = ''; for(let p of filtered) { html += `<div class="product-card" onclick="buyProduct('${p.name}', ${p.price})"><div class="product-emoji">${p.emoji}</div><div class="product-name">${p.name}</div><div class="product-price">${p.price} 💰</div></div>`; } document.getElementById('shopGrid').innerHTML = html; }
 
         // ============ TAB NAVIGATION ============
         function switchTab(tab) {
@@ -948,7 +967,8 @@
             else if(tab === 'bounties') { document.getElementById('bountiesScreen').classList.add('active'); renderBounties(); }
             else if(tab === 'battle') { document.getElementById('battleScreen').classList.add('active'); renderBattle(); }
             else if(tab === 'world') { document.getElementById('worldScreen').classList.add('active'); renderWorld(); }
-            else if(tab === 'compare') { document.getElementById('compareScreen').classList.add('active'); document.getElementById('compareSearch').onkeyup = searchCompare; }
+            else if(tab === 'compare') { document.getElementById('compareScreen').classList.add('active'); }
+            else if(tab === 'more') { document.getElementById('moreScreen').classList.add('active'); }
             const icons = { feed:'navFeedIcon', chat:'navChatIcon', shop:'navShopIcon', profile:'navProfileIcon', world:'navWorldIcon' };
             Object.values(icons).forEach(i => { let el = document.getElementById(i); if(el) el.classList.remove('active'); });
             let activeIcon = document.getElementById(icons[tab] || 'navFeedIcon');
@@ -986,6 +1006,7 @@
         window.battleAttack = battleAttack;
         window.battleHeal = battleHeal;
         window.searchCompare = searchCompare;
+        window.searchProducts = searchProducts;
 
         init();
     </script>
