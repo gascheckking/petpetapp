@@ -3,664 +3,252 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>PETPET | Ultimate Social Platform</title>
+    <title>PETPET | Social Platform</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
+        :root {
+            --color-bg: #0c0817;
+            --color-card: #1c1432;
+            --color-accent-pink: #ff66aa;
+            --color-accent-teal: #00e0a0;
+            --color-accent-purple: #bb66ff;
+            --color-text-dim: #9ca3af;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background: #f5f5f5;
-            overflow: hidden;
-            height: 100vh;
-            width: 100vw;
+            background-color: var(--color-bg);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Background Effects */
+        .bg-dot-grid {
+            background-image: radial-gradient(var(--color-accent-pink) 0.5px, transparent 0.5px);
+            background-size: 15px 15px;
+            opacity: 0.05;
             position: fixed;
-        }
-
-        /* ============ APP CONTAINER ============ */
-        .app {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            background: #f5f5f5;
-        }
-
-        /* ============ STATUS BAR ============ */
-        .status-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 16px;
-            background: #ffffff;
-            border-bottom: 1px solid #e0e0e0;
-            z-index: 30;
-        }
-        .status-left { display: flex; gap: 12px; }
-        .status-badge {
-            background: #f0f0f0;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            color: #333;
-        }
-        .status-badge span:first-child { font-size: 14px; }
-        .status-badge span:last-child { color: #ff6b6b; }
-
-        /* ============ STORIES ROW ============ */
-        .stories-row {
-            padding: 12px 16px;
-            background: #ffffff;
-            border-bottom: 1px solid #f0f0f0;
-            overflow-x: auto;
-            white-space: nowrap;
-            scrollbar-width: none;
-        }
-        .stories-row::-webkit-scrollbar { display: none; }
-        .story-item {
-            display: inline-flex;
-            flex-direction: column;
-            align-items: center;
-            margin-right: 16px;
-            cursor: pointer;
-        }
-        .story-ring {
-            width: 68px;
-            height: 68px;
-            border-radius: 34px;
-            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 6px;
-        }
-        .story-avatar {
-            width: 64px;
-            height: 64px;
-            border-radius: 32px;
-            background: #e0e0e0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
-        }
-        .story-name {
-            font-size: 11px;
-            color: #666;
-        }
-
-        /* ============ FEED (TIKTOK STYLE) ============ */
-        .feed-container {
-            flex: 1;
-            overflow-y: scroll;
-            scroll-snap-type: y mandatory;
-            -webkit-overflow-scrolling: touch;
-        }
-        .feed-container::-webkit-scrollbar { display: none; }
-        .feed-item {
-            min-height: 100vh;
-            scroll-snap-align: start;
-            position: relative;
-            background: #ffffff;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 80px 20px 100px;
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        /* Pet Card */
-        .pet-card {
-            position: absolute;
-            top: 80px;
-            right: 16px;
-            background: #ffffff;
-            border-radius: 30px;
-            padding: 12px 18px;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            z-index: 20;
-        }
-        .pet-emoji { font-size: 50px; }
-        .pet-level { font-size: 12px; color: #ff6b6b; font-weight: bold; margin-top: 5px; }
-        .pet-name { font-size: 11px; color: #888; margin-top: 3px; }
-
-        /* Post Content */
-        .post-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 12px;
-        }
-        .post-avatar {
-            width: 44px;
-            height: 44px;
-            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
-            border-radius: 22px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-        }
-        .post-name { font-size: 15px; font-weight: 600; color: #333; }
-        .post-time { font-size: 11px; color: #999; }
-        .post-text { font-size: 16px; color: #333; margin-top: 8px; line-height: 1.4; }
-
-        /* Action Sidebar */
-        .action-sidebar {
-            position: absolute;
-            right: 16px;
-            bottom: 120px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            z-index: 20;
-        }
-        .action-btn {
-            text-align: center;
-            cursor: pointer;
-        }
-        .action-icon { font-size: 28px; }
-        .action-count { font-size: 11px; color: #666; margin-top: 4px; }
-
-        /* ============ BOTTOM NAVIGATION ============ */
-        .bottom-nav {
-            background: #ffffff;
-            border-top: 1px solid #e0e0e0;
-            padding: 8px 16px 20px;
-            display: flex;
-            z-index: 30;
-        }
-        .nav-item {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            background: none;
-            border: none;
-            cursor: pointer;
-        }
-        .nav-icon { font-size: 24px; opacity: 0.5; }
-        .nav-icon.active { opacity: 1; color: #ff6b6b; }
-        .nav-camera {
-            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
-            width: 52px;
-            height: 52px;
-            border-radius: 26px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: -18px;
-            box-shadow: 0 4px 15px rgba(255,107,107,0.3);
-        }
-        .nav-label { font-size: 10px; color: #999; margin-top: 2px; }
-        .nav-label.active { color: #ff6b6b; }
-
-        /* ============ SCREENS ============ */
-        .screen {
-            position: absolute;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            overflow-y: auto;
-            background: #f5f5f5;
-            display: none;
-            z-index: 15;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
         }
-        .screen.active { display: block; }
-
-        /* ============ CHAT SCREEN ============ */
-        .chat-list { padding: 16px; }
-        .chat-item {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 14px 0;
-            border-bottom: 1px solid #f0f0f0;
-            cursor: pointer;
-            background: #ffffff;
-            margin-bottom: 8px;
-            border-radius: 16px;
-            padding: 12px;
-        }
-        .chat-avatar {
-            width: 52px;
-            height: 52px;
-            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
-            border-radius: 26px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 26px;
-        }
-        .chat-info { flex: 1; }
-        .chat-name { font-weight: 600; color: #333; margin-bottom: 4px; }
-        .chat-preview { font-size: 12px; color: #999; }
-        .chat-meta { text-align: right; }
-        .chat-time { font-size: 10px; color: #999; }
-        .chat-streak { font-size: 12px; color: #ff6b6b; margin-top: 4px; }
-
-        /* ============ SHOP SCREEN ============ */
-        .shop-header {
-            padding: 16px;
-            background: #ffffff;
-            position: sticky;
+        .bg-mesh-glow {
+            position: fixed;
             top: 0;
-            z-index: 10;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.3;
         }
-        .search-bar {
-            background: #f0f0f0;
-            border-radius: 30px;
-            padding: 12px 16px;
-            display: flex;
-            gap: 10px;
+        .bg-mesh-glow::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            left: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: var(--color-accent-pink);
+            border-radius: 50%;
+            filter: blur(120px);
+            animation: glow-pink 10s infinite alternate;
         }
-        .search-bar input {
-            flex: 1;
-            background: none;
-            border: none;
-            font-size: 15px;
-            outline: none;
+        .bg-mesh-glow::after {
+            content: '';
+            position: absolute;
+            bottom: -20%;
+            right: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: var(--color-accent-teal);
+            border-radius: 50%;
+            filter: blur(120px);
+            animation: glow-teal 12s infinite alternate-reverse;
         }
-        .shop-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
+        @keyframes glow-pink {
+            from { transform: translate(0,0) scale(1); opacity: 0.3; }
+            to { transform: translate(10vw,5vh) scale(1.1); opacity: 0.5; }
+        }
+        @keyframes glow-teal {
+            from { transform: translate(0,0) scale(1); opacity: 0.3; }
+            to { transform: translate(-10vw,-5vh) scale(1.1); opacity: 0.5; }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #1a1a1e; }
+        ::-webkit-scrollbar-thumb { background: var(--color-accent-pink); border-radius: 4px; }
+
+        /* Buttons */
+        .btn-gradient {
+            background: linear-gradient(90deg, var(--color-accent-pink), var(--color-accent-purple));
+            transition: all 0.2s ease;
+        }
+        .btn-gradient:hover { opacity: 0.9; box-shadow: 0 4px 15px rgba(255,102,170,0.4); }
+        .btn-teal {
+            background: linear-gradient(90deg, var(--color-accent-teal), var(--color-accent-pink));
+        }
+        
+        /* Stats Card */
+        .stat-card {
+            background: rgba(31,41,55,0.15);
+            border: 1px solid rgba(55,65,81,0.3);
+            border-radius: 0.75rem;
+            padding: 0.5rem;
+        }
+        .nav-btn.active {
+            background: var(--color-accent-pink);
+            color: white;
+            box-shadow: 0 0 10px var(--color-accent-pink);
+        }
+        .glass-card {
+            background: rgba(31,41,55,0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .post-card {
+            background: #0f0f12;
+            border-radius: 24px;
             padding: 16px;
+            border: 1px solid #1f1f24;
         }
         .product-card {
-            background: #ffffff;
+            background: #0f0f12;
             border-radius: 20px;
             padding: 16px;
             text-align: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border: 1px solid #1f1f24;
             cursor: pointer;
+            transition: all 0.2s;
         }
-        .product-emoji { font-size: 48px; margin-bottom: 8px; }
-        .product-name { font-size: 14px; font-weight: 500; margin-bottom: 4px; color: #333; }
-        .product-price { font-size: 16px; font-weight: bold; color: #ff6b6b; }
-
-        /* ============ PROFILE SCREEN ============ */
-        .profile-header {
-            padding: 20px;
-            display: flex;
-            gap: 20px;
-            align-items: center;
-            background: #ffffff;
-        }
-        .profile-avatar-large {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
-            border-radius: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 40px;
-        }
-        .profile-stats {
-            flex: 1;
-            display: flex;
-            justify-content: space-around;
-        }
-        .stat-number { font-size: 18px; font-weight: bold; color: #333; }
-        .stat-label { font-size: 11px; color: #999; margin-top: 4px; }
-        .profile-bio {
-            padding: 16px 20px;
-            background: #ffffff;
-            border-top: 1px solid #f0f0f0;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        .profile-name { font-size: 16px; font-weight: 600; color: #333; margin-bottom: 4px; }
-        .profile-bio-text { font-size: 13px; color: #999; }
-        .glass-card {
-            background: #ffffff;
+        .product-card:active { transform: scale(0.97); background: #1a1a1e; }
+        .chat-item {
+            background: #0f0f12;
             border-radius: 20px;
-            padding: 16px;
-            margin: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-
-        /* ============ BOUNTIES ============ */
-        .bounty-card {
-            background: #ffffff;
-            border-radius: 16px;
-            padding: 16px;
-            margin: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-        .bounty-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-        }
-        .bounty-title { font-weight: 600; color: #333; }
-        .bounty-reward { color: #ff6b6b; font-weight: bold; }
-        .bounty-desc { font-size: 12px; color: #999; margin-bottom: 12px; }
-
-        /* ============ BATTLE ============ */
-        .battle-arena {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 20px;
-            padding: 20px;
-            background: #ffffff;
-            border-radius: 20px;
-            margin: 12px;
-        }
-        .battle-pet { text-align: center; flex: 1; }
-        .battle-pet-emoji { font-size: 60px; }
-        .battle-health {
-            height: 8px;
-            background: #e0e0e0;
-            border-radius: 4px;
-            margin-top: 10px;
-            overflow: hidden;
-        }
-        .battle-health-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #ff6b6b, #ffd93d);
-            width: 100%;
-        }
-        .battle-log {
-            background: #f5f5f5;
-            border-radius: 16px;
             padding: 12px;
-            margin: 12px;
-            height: 100px;
-            overflow-y: auto;
-            font-size: 12px;
-            color: #666;
+            border: 1px solid #1f1f24;
         }
-
-        /* ============ WORLD ============ */
-        .world-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            padding: 16px;
+        .modal-menu {
+            background: #1a1331;
+            backdrop-filter: blur(20px);
         }
-        .world-location {
-            background: #ffffff;
-            border-radius: 20px;
-            padding: 16px;
-            text-align: center;
-            cursor: pointer;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-
-        /* ============ COMPARE ============ */
-        .compare-result {
-            background: #ffffff;
-            border-radius: 20px;
-            padding: 16px;
-            margin: 12px;
-        }
-        .price-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        /* ============ BUTTONS ============ */
-        .btn-primary {
-            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
-            padding: 14px;
-            border-radius: 30px;
-            border: none;
-            font-weight: bold;
-            font-size: 15px;
-            cursor: pointer;
-            width: 100%;
-            color: #fff;
-        }
-        .btn-secondary {
-            background: #f0f0f0;
-            padding: 10px 20px;
-            border-radius: 25px;
-            border: none;
-            color: #666;
-            cursor: pointer;
-        }
-        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
         .hidden { display: none; }
-
-        /* ============ MODAL ============ */
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.9);
-            z-index: 100;
-            display: none;
-            flex-direction: column;
-        }
-        .modal.active { display: flex; }
-        .modal-header {
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            background: #fff;
-        }
-        .modal-content {
-            flex: 1;
-            padding: 20px;
-            background: #fff;
-            overflow-y: auto;
-        }
-        textarea {
-            width: 100%;
-            height: 120px;
-            background: #f5f5f5;
-            border: none;
-            border-radius: 20px;
-            padding: 15px;
-            font-size: 16px;
-            margin-bottom: 16px;
-            resize: none;
-        }
     </style>
 </head>
 <body>
-    <div class="app">
-        <!-- Status Bar -->
-        <div class="status-bar">
-            <div class="status-left">
-                <div class="status-badge">🐉 Lv.<span id="levelValue">5</span></div>
-                <div class="status-badge">💰 <span id="coinsValue">2500</span></div>
+    <div class="bg-dot-grid"></div>
+    <div class="bg-mesh-glow"></div>
+
+    <div class="relative z-10 flex flex-col h-screen">
+        <!-- Header -->
+        <header class="p-4 flex justify-between items-center border-b border-gray-700/50 bg-gray-900/70 backdrop-blur-sm sticky top-0 z-20">
+            <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 flex items-center justify-center text-sm font-bold shadow-lg shadow-pink-500/30">
+                    🐉
+                </div>
+                <div>
+                    <p class="text-sm font-semibold">PETPET</p>
+                    <p class="text-[10px] text-gray-400">Social Platform v3.0</p>
+                </div>
             </div>
-            <div class="status-left">
-                <div class="status-badge">🔥 <span id="streakValue">7</span></div>
-                <div class="status-badge">⚡ <span id="energyValue">100</span></div>
+            <div class="flex items-center gap-3">
+                <div class="flex gap-2 text-xs">
+                    <div class="bg-black/50 px-3 py-1 rounded-full">🐉 Lv.<span id="levelValue">5</span></div>
+                    <div class="bg-black/50 px-3 py-1 rounded-full">💰 <span id="coinsValue">2840</span></div>
+                </div>
+                <button id="menuBtn" class="px-3 py-1.5 text-white font-bold rounded-lg text-xs btn-gradient shadow-md shadow-pink-500/50">
+                    Menu
+                </button>
             </div>
-        </div>
+        </header>
 
         <!-- Stories Row -->
-        <div class="stories-row" id="storiesRow"></div>
+        <div class="stories-row px-4 py-3 overflow-x-auto whitespace-nowrap scrollbar-hide border-b border-gray-800/50" id="storiesRow"></div>
 
-        <!-- Feed Container -->
-        <div id="feedContainer" class="feed-container"></div>
+        <!-- Main Content -->
+        <main id="contentArea" class="flex-1 overflow-y-auto p-4 custom-scrollbar"></main>
 
-        <!-- ============ ALL SCREENS ============ -->
-        
-        <!-- Chat Screen -->
-        <div id="chatScreen" class="screen">
-            <div class="chat-list" id="chatList"></div>
-        </div>
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav bg-gray-900/90 backdrop-blur-md border-t border-gray-800 p-3 flex justify-around">
+            <button data-tab="feed" class="nav-btn flex flex-col items-center px-3 py-1 rounded-xl text-xs font-semibold text-gray-400 transition-all"><span data-lucide="flame" class="w-5 h-5"></span><span>Flöde</span></button>
+            <button data-tab="chat" class="nav-btn flex flex-col items-center px-3 py-1 rounded-xl text-xs font-semibold text-gray-400 transition-all"><span data-lucide="message-circle" class="w-5 h-5"></span><span>Chat</span></button>
+            <button data-tab="world" class="nav-btn flex flex-col items-center px-3 py-1 rounded-xl text-xs font-semibold text-gray-400 transition-all"><span data-lucide="globe" class="w-5 h-5"></span><span>Världen</span></button>
+            <button id="cameraBtn" class="nav-btn flex flex-col items-center px-3 py-1 rounded-xl text-xs font-semibold text-gray-400 transition-all"><span data-lucide="camera" class="w-5 h-5"></span><span>Nytt</span></button>
+            <button data-tab="shop" class="nav-btn flex flex-col items-center px-3 py-1 rounded-xl text-xs font-semibold text-gray-400 transition-all"><span data-lucide="shopping-bag" class="w-5 h-5"></span><span>Shop</span></button>
+            <button data-tab="profile" class="nav-btn flex flex-col items-center px-3 py-1 rounded-xl text-xs font-semibold text-gray-400 transition-all"><span data-lucide="user" class="w-5 h-5"></span><span>Min</span></button>
+        </nav>
 
-        <!-- Shop Screen -->
-        <div id="shopScreen" class="screen">
-            <div class="shop-header">
-                <div class="search-bar">
-                    <span>🔍</span>
-                    <input type="text" id="shopSearch" placeholder="Sök produkter..." onkeyup="searchProducts()">
+        <!-- Modal Menu (Fly-out) -->
+        <div id="modalMenu" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-lg hidden justify-end transition-opacity duration-300 opacity-0">
+            <div class="w-full h-full p-6 modal-menu shadow-2xl shadow-purple-500/50 max-w-sm ml-auto flex flex-col">
+                <div class="flex justify-between items-center mb-8 pb-4 border-b border-gray-700">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 flex items-center justify-center text-lg font-bold">🐉</div>
+                        <p class="text-lg font-bold">PETPET</p>
+                    </div>
+                    <button id="closeModalBtn" class="p-2 text-white hover:text-gray-400 transition">✕</button>
                 </div>
-            </div>
-            <div class="shop-grid" id="shopGrid"></div>
-            <div class="glass-card">
-                <div style="font-weight: 600; margin-bottom: 12px;">🎟️ RABATTKODER</div>
-                <div id="codesList"></div>
-            </div>
-        </div>
-
-        <!-- Profile Screen -->
-        <div id="profileScreen" class="screen">
-            <div class="profile-header">
-                <div class="profile-avatar-large">🐉</div>
-                <div class="profile-stats">
-                    <div class="stat-item"><div class="stat-number" id="profilePosts">24</div><div class="stat-label">Inlägg</div></div>
-                    <div class="stat-item"><div class="stat-number" id="profileFollowers">1.2K</div><div class="stat-label">Följare</div></div>
-                    <div class="stat-item"><div class="stat-number" id="profileFollowing">342</div><div class="stat-label">Följer</div></div>
-                </div>
-            </div>
-            <div class="profile-bio">
-                <div class="profile-name" id="profileName">Äventyrare</div>
-                <div class="profile-bio-text">🐉 Pet lover | Explorer | Level 5</div>
-            </div>
-            <div class="glass-card">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
-                    <span style="font-weight: 600;">✨ Mina pets</span>
-                    <span style="color: #ff6b6b;">🐉 Eldraken Lv.<span id="petLevel">5</span></span>
-                </div>
-                <div style="height: 4px; background: #f0f0f0; border-radius: 2px; overflow: hidden;">
-                    <div id="expBar" style="width: 60%; height: 100%; background: linear-gradient(90deg, #ff6b6b, #ffd93d);"></div>
-                </div>
-                <div style="font-size: 12px; color: #999; margin-top: 8px;"><span id="expText">60</span>/100 XP</div>
-                <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px;" id="abilitiesList"></div>
-            </div>
-            <button class="btn-primary" style="margin: 16px; width: calc(100% - 32px);" onclick="shareProfile()">📤 Dela profil</button>
-        </div>
-
-        <!-- Bounties Screen -->
-        <div id="bountiesScreen" class="screen">
-            <div class="glass-card">
-                <div style="font-weight: 600; margin-bottom: 12px;">🎯 AKTIVA UPPDRAG</div>
-                <div id="bountiesList"></div>
-                <button class="btn-primary" style="margin-top: 16px;" onclick="createBounty()">➕ SKAPA UPPDRAG</button>
-            </div>
-            <div class="glass-card">
-                <div style="font-weight: 600; margin-bottom: 12px;">📋 MINA UPPDRAG</div>
-                <div id="myBountiesList"></div>
-            </div>
-        </div>
-
-        <!-- Battle Screen -->
-        <div id="battleScreen" class="screen">
-            <div class="glass-card">
-                <div style="font-weight: 600; margin-bottom: 12px;">⚔️ BATTLE ARENA</div>
-                <div id="battleOpponents" class="grid-2"></div>
-                <div id="battleArena" class="hidden">
-                    <div id="battleContent" class="battle-arena"></div>
-                    <div id="battleLog" class="battle-log"></div>
-                    <div id="battleActions" class="grid-2" style="padding: 16px;"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- World Screen -->
-        <div id="worldScreen" class="screen">
-            <div class="world-grid" id="worldList"></div>
-        </div>
-
-        <!-- Compare Screen -->
-        <div id="compareScreen" class="screen">
-            <div class="shop-header">
-                <div class="search-bar">
-                    <span>🔍</span>
-                    <input type="text" id="compareSearch" placeholder="Jämför priser..." onkeyup="searchCompare()">
-                </div>
-            </div>
-            <div id="compareResults"></div>
-        </div>
-
-        <!-- More Screen -->
-        <div id="moreScreen" class="screen">
-            <div class="glass-card">
-                <div style="font-weight: 600; margin-bottom: 16px;">📱 FLER FUNKTIONER</div>
-                <div class="grid-2">
-                    <div class="product-card" onclick="switchTab('bounties')"><div class="product-emoji">🎯</div><div class="product-name">Uppdrag</div></div>
-                    <div class="product-card" onclick="switchTab('battle')"><div class="product-emoji">⚔️</div><div class="product-name">Battle</div></div>
-                    <div class="product-card" onclick="switchTab('compare')"><div class="product-emoji">🔍</div><div class="product-name">Jämför</div></div>
-                    <div class="product-card" onclick="switchTab('world')"><div class="product-emoji">🌍</div><div class="product-name">Utforska</div></div>
+                <div class="space-y-3 flex-grow">
+                    <a href="#" data-tab="feed" class="modal-nav-btn block py-3 px-2 rounded-lg hover:bg-purple-700/50 transition flex items-center space-x-2"><span data-lucide="flame" class="w-5 h-5"></span><span>Flöde</span></a>
+                    <a href="#" data-tab="chat" class="modal-nav-btn block py-3 px-2 rounded-lg hover:bg-purple-700/50 transition flex items-center space-x-2"><span data-lucide="message-circle" class="w-5 h-5"></span><span>Chat</span></a>
+                    <a href="#" data-tab="world" class="modal-nav-btn block py-3 px-2 rounded-lg hover:bg-purple-700/50 transition flex items-center space-x-2"><span data-lucide="globe" class="w-5 h-5"></span><span>Världen</span></a>
+                    <a href="#" data-tab="shop" class="modal-nav-btn block py-3 px-2 rounded-lg hover:bg-purple-700/50 transition flex items-center space-x-2"><span data-lucide="shopping-bag" class="w-5 h-5"></span><span>Shop</span></a>
+                    <a href="#" data-tab="profile" class="modal-nav-btn block py-3 px-2 rounded-lg hover:bg-purple-700/50 transition flex items-center space-x-2"><span data-lucide="user" class="w-5 h-5"></span><span>Profil</span></a>
+                    <a href="#" data-tab="bounties" class="modal-nav-btn block py-3 px-2 rounded-lg hover:bg-purple-700/50 transition flex items-center space-x-2"><span data-lucide="target" class="w-5 h-5"></span><span>Uppdrag</span></a>
+                    <a href="#" data-tab="battle" class="modal-nav-btn block py-3 px-2 rounded-lg hover:bg-purple-700/50 transition flex items-center space-x-2"><span data-lucide="sword" class="w-5 h-5"></span><span>Battle</span></a>
+                    <a href="#" data-tab="compare" class="modal-nav-btn block py-3 px-2 rounded-lg hover:bg-purple-700/50 transition flex items-center space-x-2"><span data-lucide="search" class="w-5 h-5"></span><span>Jämför priser</span></a>
                 </div>
             </div>
         </div>
 
         <!-- Camera Modal -->
-        <div id="cameraModal" class="modal">
-            <div class="modal-header">
-                <button onclick="closeCamera()" style="background: none; border: none; font-size: 16px;">← Tillbaka</button>
-                <span style="font-weight: 600;">📸 Nytt inlägg</span>
-                <div style="width: 50px;"></div>
+        <div id="cameraModal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-2xl hidden flex-col">
+            <div class="p-5 flex justify-between border-b border-gray-800"><button onclick="closeCamera()" class="text-white">← Tillbaka</button><span class="font-bold">📸 Nytt inlägg</span><div class="w-10"></div></div>
+            <div class="flex-1 p-5 overflow-y-auto">
+                <div class="text-center mb-5"><button class="btn-gradient px-6 py-3 rounded-full text-white font-bold" onclick="selectImage()">📷 Välj bild</button></div>
+                <img id="previewImage" class="hidden w-full rounded-2xl mb-4">
+                <textarea id="postContent" class="w-full bg-gray-800 border-none rounded-2xl p-4 text-white" rows="3" placeholder="Vad händer? 🔥"></textarea>
+                <button class="btn-gradient w-full py-3 rounded-full font-bold mt-4" onclick="submitPost()">📤 Publicera</button>
             </div>
-            <div class="modal-content">
-                <div style="text-align: center; margin-bottom: 20px;">
-                    <button class="btn-primary" style="width: auto; padding: 12px 24px;" onclick="selectImage()">📷 Välj bild</button>
-                </div>
-                <img id="previewImage" class="hidden" style="width: 100%; border-radius: 20px; margin-bottom: 16px;">
-                <textarea id="postContent" placeholder="Vad händer? 🔥"></textarea>
-                <button class="btn-primary" onclick="submitPost()">📤 Publicera</button>
-            </div>
-        </div>
-
-        <!-- Bottom Navigation -->
-        <div class="bottom-nav">
-            <button class="nav-item" onclick="switchTab('feed')"><span class="nav-icon" id="navFeedIcon">🔥</span><span class="nav-label">Flöde</span></button>
-            <button class="nav-item" onclick="switchTab('chat')"><span class="nav-icon" id="navChatIcon">💬</span><span class="nav-label">Chat</span></button>
-            <button class="nav-item" onclick="switchTab('world')"><span class="nav-icon" id="navWorldIcon">🌍</span><span class="nav-label">Världen</span></button>
-            <button class="nav-item" onclick="openCamera()"><div class="nav-camera"><span>📸</span></div><span class="nav-label">Nytt</span></button>
-            <button class="nav-item" onclick="switchTab('shop')"><span class="nav-icon" id="navShopIcon">🛍️</span><span class="nav-label">Shop</span></button>
-            <button class="nav-item" onclick="switchTab('profile')"><span class="nav-icon" id="navProfileIcon">👤</span><span class="nav-label">Min</span></button>
         </div>
     </div>
 
     <script>
-        // ============ USER DATA ============
-        let user = {
-            name: 'Äventyrare', petLevel: 5, petExp: 60, coins: 2500, energy: 100, streak: 7,
-            abilities: ['🔥 Fire Breath', '🪽 Fly', '⚡ Lightning']
-        };
-
-        // ============ POSTS ============
+        // ============ DATA ============
+        let user = { name: 'Äventyrare', petLevel: 5, petExp: 60, coins: 2840, energy: 100, streak: 12, abilities: ['🔥 Fire Breath', '🪽 Fly', '⚡ Lightning'] };
+        
         let posts = [
             { id: '1', userName: 'Ella', userAvatar: '👩‍🎤', petEmoji: '🐉', content: 'Köpte Fire Wings till min drake! 🔥', likes: 47, timeAgo: '15 min' },
-            { id: '2', userName: 'Max', userAvatar: '🧑‍🚀', petEmoji: '🐺', content: 'Level 10! 🎉', likes: 32, timeAgo: '1 tim' }
+            { id: '2', userName: 'Max', userAvatar: '🧑‍🚀', petEmoji: '🐺', content: 'Level 10! 🎉', likes: 32, timeAgo: '1 tim' },
+            { id: '3', userName: 'Clara', userAvatar: '👩‍💻', petEmoji: '🦊', content: 'Legendary skin! ✨', likes: 89, timeAgo: '3 tim' }
         ];
-
-        // ============ SHOP ============
+        
         let shopItems = [
             { name: '🔥 Fire Wings', emoji: '🔥', price: 199 },
             { name: '✨ Legendary Glow', emoji: '✨', price: 499 },
             { name: '⚡ XP Boost', emoji: '⚡', price: 99 },
             { name: '👑 Royal Crown', emoji: '👑', price: 799 }
         ];
+        
         let discountCodes = [
             { code: 'WELCOME10', reward: 100, used: false },
             { code: 'DRAGON50', reward: 500, used: false }
         ];
-
-        // ============ CHAT ============
+        
         let chats = [
             { name: 'Stella 🥰', avatar: '🌟', preview: 'Haha ja! 😄', time: '15 min', streak: 103 },
             { name: 'Mackan', avatar: '👨‍💻', preview: 'Jobbar sent idag', time: '2 d', streak: 0 },
             { name: 'Jack ❤️', avatar: '🐶', preview: 'Vi ses imorgon!', time: '17 h', streak: 0 }
         ];
-
-        // ============ WORLD ============
+        
         let worldLocations = [
             { name: '🏠 Hemvärlden', users: 127, unlocked: true, reward: 10 },
             { name: '🛍️ Shopping Plaza', users: 45, unlocked: true, reward: 15 },
@@ -669,29 +257,25 @@
             { name: '⚔️ Battle Arena', users: 18, unlocked: true, reward: 25 },
             { name: '⛰️ Drakberget', users: 23, unlocked: false, requiredLevel: 10, reward: 100 }
         ];
-
-        // ============ BOUNTIES ============
+        
         let bounties = [
             { id: 'b1', title: '📸 Fota något blått', reward: 100, desc: 'Hitta något blått och fota!' },
-            { id: 'b2', title: '🏃 Gå 5000 steg', reward: 150, desc: 'Visa screenshot från stegräknaren' }
+            { id: 'b2', title: '🏃 Gå 5000 steg', reward: 150, desc: 'Visa screenshot' }
         ];
         let userBounties = [];
-
-        // ============ BATTLE ============
+        
         let battleOpponents = [
             { name: 'Skogsvätte', emoji: '🌲', level: 1, hp: 50, attack: 10, reward: 50 },
             { name: 'Eldsprutare', emoji: '🔥', level: 3, hp: 80, attack: 15, reward: 100 }
         ];
         let activeBattle = null;
-
-        // ============ STORIES ============
+        
         let stories = [
             { name: 'Din story', avatar: '📸', hasStory: true },
             { name: 'Stella', avatar: '🌟', hasStory: true },
-            { name: 'Max', avatar: '🧑‍🚀', hasStory: true },
-            { name: 'Leo', avatar: '🧑‍🎤', hasStory: true }
+            { name: 'Max', avatar: '🧑‍🚀', hasStory: true }
         ];
-
+        
         let selectedImage = null;
         let currentTab = 'feed';
 
@@ -699,141 +283,115 @@
         function updateUI() {
             document.getElementById('levelValue').innerText = user.petLevel;
             document.getElementById('coinsValue').innerText = user.coins;
-            document.getElementById('streakValue').innerText = user.streak;
-            document.getElementById('petLevel').innerText = user.petLevel;
-            document.getElementById('expBar').style.width = user.petExp + '%';
-            document.getElementById('expText').innerText = user.petExp;
-            document.getElementById('abilitiesList').innerHTML = user.abilities.map(a => `<span class="status-badge">${a}</span>`).join('');
         }
 
         // ============ RENDER FUNCTIONS ============
         function renderStories() {
             let html = '';
             for(let s of stories) {
-                html += `<div class="story-item" ${s.name === 'Din story' ? 'onclick="openCamera()"' : ''}>
-                            <div class="story-ring"><div class="story-avatar">${s.avatar}</div></div>
-                            <div class="story-name">${s.name}</div>
+                html += `<div class="inline-flex flex-col items-center mr-4 cursor-pointer" onclick="openCamera()">
+                            <div class="w-[68px] h-[68px] rounded-full bg-gradient-to-r from-pink-500 to-purple-600 flex items-center justify-center mb-1"><div class="w-16 h-16 rounded-full bg-gray-800 flex items-center justify-center text-3xl">${s.avatar}</div></div>
+                            <span class="text-xs text-gray-400">${s.name}</span>
                          </div>`;
             }
             document.getElementById('storiesRow').innerHTML = html;
         }
-
+        
         function renderFeed() {
-            let html = '';
+            let html = '<div class="space-y-4">';
             for(let post of posts) {
-                html += `<div class="feed-item">
-                    <div class="pet-card"><div class="pet-emoji">🐉</div><div class="pet-level">Lv.${user.petLevel}</div><div class="pet-name">Eldraken</div></div>
-                    <div class="action-sidebar">
-                        <div class="action-btn" onclick="likePost('${post.id}')"><div class="action-icon">❤️</div><div class="action-count" id="likes-${post.id}">${post.likes}</div></div>
-                        <div class="action-btn" onclick="sharePost('${post.id}')"><div class="action-icon">📤</div></div>
-                    </div>
-                    <div class="post-content">
-                        <div class="post-header"><div class="post-avatar">${post.userAvatar}</div><div><div class="post-name">${post.userName} · ${post.petEmoji}</div><div class="post-time">${post.timeAgo}</div></div></div>
-                        <div class="post-text">${post.content}</div>
-                    </div>
-                </div>`;
+                html += `<div class="post-card"><div class="flex items-center gap-3 mb-3"><div class="w-10 h-10 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 flex items-center justify-center text-xl">${post.userAvatar}</div><div><div class="font-semibold">${post.userName} · ${post.petEmoji}</div><div class="text-xs text-gray-500">${post.timeAgo}</div></div></div><div class="text-white">${post.content}</div><div class="flex gap-6 mt-3 pt-3 border-t border-gray-800"><button class="text-sm text-gray-400 flex items-center gap-1" onclick="likePost('${post.id}')">❤️ <span id="likes-${post.id}">${post.likes}</span></button><button class="text-sm text-gray-400 flex items-center gap-1" onclick="sharePost('${post.id}')">📤 Dela</button></div></div>`;
             }
-            document.getElementById('feedContainer').innerHTML = html;
+            html += '</div>';
+            document.getElementById('contentArea').innerHTML = html;
         }
-
+        
         function renderChats() {
-            let html = '';
+            let html = '<div class="space-y-3">';
             for(let chat of chats) {
-                html += `<div class="chat-item">
-                            <div class="chat-avatar">${chat.avatar}</div>
-                            <div class="chat-info"><div class="chat-name">${chat.name}</div><div class="chat-preview">${chat.preview}</div></div>
-                            <div class="chat-meta"><div class="chat-time">${chat.time}</div>${chat.streak > 0 ? `<div class="chat-streak">🔥 ${chat.streak}</div>` : ''}</div>
-                         </div>`;
+                html += `<div class="chat-item flex items-center gap-3"><div class="w-12 h-12 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 flex items-center justify-center text-2xl">${chat.avatar}</div><div class="flex-1"><div class="font-semibold">${chat.name}</div><div class="text-xs text-gray-500">${chat.preview}</div></div><div class="text-right"><div class="text-xs text-gray-600">${chat.time}</div>${chat.streak > 0 ? `<div class="text-xs text-pink-400">🔥 ${chat.streak}</div>` : ''}</div></div>`;
             }
-            document.getElementById('chatList').innerHTML = html;
+            html += '</div>';
+            document.getElementById('contentArea').innerHTML = html;
         }
-
+        
         function renderShop() {
-            let html = '';
+            let html = `<div class="mb-4"><div class="bg-gray-800 rounded-full p-3 flex"><span class="mr-2">🔍</span><input type="text" id="shopSearch" class="flex-1 bg-transparent outline-none" placeholder="Sök produkter..." onkeyup="searchProducts()"></div></div><div class="grid grid-cols-2 gap-3">`;
             for(let p of shopItems) {
-                html += `<div class="product-card" onclick="buyProduct('${p.name}', ${p.price})">
-                            <div class="product-emoji">${p.emoji}</div>
-                            <div class="product-name">${p.name}</div>
-                            <div class="product-price">${p.price} 💰</div>
-                         </div>`;
+                html += `<div class="product-card" onclick="buyProduct('${p.name}', ${p.price})"><div class="text-5xl mb-2">${p.emoji}</div><div class="font-medium">${p.name}</div><div class="text-pink-400 font-bold">${p.price} 💰</div></div>`;
             }
-            document.getElementById('shopGrid').innerHTML = html;
-            
-            let codesHtml = '';
+            html += `</div><div class="glass-card mt-4 p-4 rounded-2xl"><div class="font-bold mb-3">🎟️ RABATTKODER</div>`;
             for(let c of discountCodes) {
-                codesHtml += `<div class="price-row"><span>${c.code}</span><button class="btn-secondary" onclick="claimCode('${c.code}')" ${c.used ? 'disabled' : ''}>Använd</button></div>`;
+                html += `<div class="flex justify-between py-2 border-b border-gray-800"><span>${c.code}</span><button class="bg-pink-600 px-4 py-1 rounded-full text-sm" onclick="claimCode('${c.code}')" ${c.used ? 'disabled' : ''}>Använd</button></div>`;
             }
-            document.getElementById('codesList').innerHTML = codesHtml;
+            html += `</div>`;
+            document.getElementById('contentArea').innerHTML = html;
         }
-
+        
         function renderWorld() {
-            let html = '';
+            let html = '<div class="grid grid-cols-2 gap-3">';
             for(let loc of worldLocations) {
-                html += `<div class="world-location" onclick="visitLocation('${loc.name}')">
-                            <div style="font-size: 32px;">${loc.name.split(' ')[0]}</div>
-                            <div style="font-weight: bold;">${loc.name}</div>
-                            <div style="font-size: 11px; color: #999;">👥 ${loc.users}</div>
-                            ${!loc.unlocked ? `<div style="color: #ff6b6b;">🔒 Lv.${loc.requiredLevel}</div>` : '<div style="color: #4CAF50;">✅ Tillgänglig</div>'}
-                         </div>`;
+                html += `<div class="bg-gray-900/50 rounded-2xl p-4 text-center cursor-pointer" onclick="visitLocation('${loc.name}')"><div class="text-4xl">${loc.name.split(' ')[0]}</div><div class="font-bold">${loc.name}</div><div class="text-xs text-gray-500">👥 ${loc.users}</div>${!loc.unlocked ? `<div class="text-pink-400 text-xs">🔒 Lv.${loc.requiredLevel}</div>` : '<div class="text-teal-400 text-xs">✅ Tillgänglig</div>'}</div>`;
             }
-            document.getElementById('worldList').innerHTML = html;
+            html += '</div>';
+            document.getElementById('contentArea').innerHTML = html;
         }
-
+        
+        function renderProfile() {
+            let html = `<div class="flex gap-5 items-center bg-gray-900/50 p-5 rounded-2xl mb-4"><div class="w-20 h-20 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 flex items-center justify-center text-4xl">🐉</div><div class="flex-1 flex justify-around"><div class="text-center"><div class="text-xl font-bold text-white">24</div><div class="text-xs text-gray-500">Inlägg</div></div><div class="text-center"><div class="text-xl font-bold text-white">1.2K</div><div class="text-xs text-gray-500">Följare</div></div><div class="text-center"><div class="text-xl font-bold text-white">342</div><div class="text-xs text-gray-500">Följer</div></div></div></div>
+            <div class="glass-card p-5 rounded-2xl"><div class="flex justify-between mb-3"><span class="font-bold">✨ Mina pets</span><span class="text-teal-400">🐉 Eldraken Lv.${user.petLevel}</span></div><div class="h-1 bg-gray-700 rounded-full overflow-hidden"><div class="w-${user.petExp}% h-full bg-gradient-to-r from-teal-400 to-pink-500"></div></div><div class="text-xs text-gray-500 mt-2">${user.petExp}/100 XP</div><div class="flex flex-wrap gap-2 mt-3">${user.abilities.map(a => `<span class="bg-gray-800 px-3 py-1 rounded-full text-xs">${a}</span>`).join('')}</div></div>
+            <button class="btn-gradient w-full py-3 rounded-full font-bold mt-4" onclick="shareProfile()">📤 Dela profil</button>`;
+            document.getElementById('contentArea').innerHTML = html;
+        }
+        
         function renderBounties() {
-            let bHtml = '';
+            let html = `<div class="space-y-3"><div class="font-bold mb-2">🎯 AKTIVA UPPDRAG</div>`;
             for(let b of bounties) {
-                bHtml += `<div class="bounty-card">
-                            <div class="bounty-header"><span class="bounty-title">${b.title}</span><span class="bounty-reward">+${b.reward}💰</span></div>
-                            <div class="bounty-desc">${b.desc}</div>
-                            <button class="btn-secondary" onclick="claimBounty('${b.id}')">🎯 Gör uppdrag</button>
-                          </div>`;
+                html += `<div class="bg-gray-900/50 rounded-2xl p-4"><div class="flex justify-between"><span class="font-bold">${b.title}</span><span class="text-teal-400">+${b.reward}💰</span></div><div class="text-sm text-gray-500">${b.desc}</div><button class="bg-pink-600 px-4 py-2 rounded-full text-sm mt-2" onclick="claimBounty('${b.id}')">🎯 Gör uppdrag</button></div>`;
             }
-            document.getElementById('bountiesList').innerHTML = bHtml;
-            
-            let myHtml = '';
-            for(let b of userBounties) {
-                myHtml += `<div class="bounty-card"><div class="bounty-header"><span>${b.title}</span><span class="bounty-reward">+${b.reward}💰</span></div></div>`;
-            }
-            if(userBounties.length === 0) myHtml = '<div style="color:#999; text-align:center; padding:20px;">Inga uppdrag än</div>';
-            document.getElementById('myBountiesList').innerHTML = myHtml;
+            html += `<div class="font-bold mt-6 mb-2">📋 MINA UPPDRAG</div>`;
+            if(userBounties.length === 0) html += '<div class="text-center text-gray-500 py-8">Inga uppdrag än</div>';
+            else for(let b of userBounties) html += `<div class="bg-gray-900/50 rounded-2xl p-4"><div class="flex justify-between"><span>${b.title}</span><span class="text-teal-400">+${b.reward}💰</span></div></div>`;
+            html += `<button class="btn-gradient w-full py-3 rounded-full font-bold mt-4" onclick="createBounty()">➕ SKAPA UPPDRAG</button></div>`;
+            document.getElementById('contentArea').innerHTML = html;
         }
-
+        
         function renderBattle() {
-            let html = '';
+            let html = `<div class="grid grid-cols-2 gap-3">`;
             for(let o of battleOpponents) {
-                html += `<div class="product-card" onclick="startBattle('${o.name}')">
-                            <div style="font-size: 40px;">${o.emoji}</div>
-                            <div style="font-weight: bold;">${o.name}</div>
-                            <div>Lv.${o.level}</div>
-                            <div style="color:#ff6b6b;">💰 ${o.reward}</div>
-                         </div>`;
+                html += `<div class="product-card" onclick="startBattle('${o.name}')"><div class="text-5xl">${o.emoji}</div><div class="font-bold">${o.name}</div><div>Lv.${o.level}</div><div class="text-teal-400">💰 ${o.reward}</div></div>`;
             }
-            document.getElementById('battleOpponents').innerHTML = html;
+            html += `</div><div id="battleArena" class="hidden mt-4"><div id="battleContent" class="flex justify-between gap-5 mb-4"></div><div id="battleLog" class="bg-gray-900/50 rounded-2xl p-3 h-24 overflow-y-auto text-sm mb-4"></div><div id="battleActions" class="grid grid-cols-2 gap-3"></div></div>`;
+            document.getElementById('contentArea').innerHTML = html;
+        }
+        
+        function renderCompare() {
+            let html = `<div class="bg-gray-800 rounded-full p-3 flex mb-4"><span class="mr-2">🔍</span><input type="text" id="compareSearch" class="flex-1 bg-transparent outline-none" placeholder="Sök produkt..." onkeyup="searchCompare()"></div><div id="compareResults"></div>`;
+            document.getElementById('contentArea').innerHTML = html;
         }
 
         // ============ ACTIONS ============
         function likePost(id) { let p = posts.find(p => p.id === id); if(p) { p.likes++; document.getElementById(`likes-${id}`).innerText = p.likes; } }
-        function sharePost(id) { let p = posts.find(p => p.id === id); if(p) alert(p.content); }
+        function sharePost(id) { let p = posts.find(p => p.id === id); if(p && navigator.share) navigator.share({ title: 'PETPET', text: p.content }); else if(p) alert(p.content); }
         function buyProduct(name, price) { if(user.coins >= price) { user.coins -= price; updateUI(); renderShop(); alert(`✅ Köpte ${name}!`); } else alert(`❌ Behöver ${price - user.coins} mer!`); }
         function claimCode(code) { let c = discountCodes.find(c => c.code === code); if(c && !c.used) { c.used = true; user.coins += c.reward; updateUI(); renderShop(); alert(`✅ +${c.reward} coins!`); } else alert('❌ Ogiltig kod'); }
         function visitLocation(name) { let loc = worldLocations.find(l => l.name === name); if(!loc.unlocked && loc.requiredLevel > user.petLevel) { alert(`🔒 Level ${loc.requiredLevel} krävs!`); return; } user.coins += loc.reward; user.petExp += 5; if(user.petExp >= 100) { user.petExp = 0; user.petLevel++; alert(`🎉 LEVEL UP! Level ${user.petLevel}!`); } updateUI(); alert(`✨ +${loc.reward} coins, +5 XP`); renderWorld(); }
         function claimBounty(id) { let b = bounties.find(b => b.id === id); if(b) { userBounties.push(b); user.coins += b.reward; updateUI(); renderBounties(); alert(`✅ +${b.reward} coins!`); } }
         function createBounty() { let title = prompt('Uppdragsnamn:'); if(title){ let reward = parseInt(prompt('Belöning:')); let desc = prompt('Beskrivning:'); bounties.push({ id: 'b'+Date.now(), title: title, reward: reward, desc: desc }); renderBounties(); } }
-        function shareProfile() { alert(`🔥 ${user.name} - Level ${user.petLevel}!`); }
-
-        // ============ BATTLE SYSTEM ============
+        function shareProfile() { let text = `🔥 ${user.name} - Level ${user.petLevel}!\n${user.streak} dagars streak!\n${user.coins} coins!`; if(navigator.share) navigator.share({ title: 'PETPET', text: text }); else alert(text); }
+        
         function startBattle(name) {
             let opp = battleOpponents.find(o => o.name === name);
             activeBattle = { opponent: opp, playerHp: 100, opponentHp: opp.hp, log: [] };
-            document.getElementById('battleOpponents').classList.add('hidden');
+            document.getElementById('battleOpponents')?.classList.add('hidden');
             document.getElementById('battleArena').classList.remove('hidden');
             updateBattleUI();
         }
         function updateBattleUI() {
             if(!activeBattle) return;
-            document.getElementById('battleContent').innerHTML = `<div class="battle-pet"><div class="battle-pet-emoji">🐉</div><div>Din pet</div><div class="battle-health"><div class="battle-health-fill" style="width:${activeBattle.playerHp}%"></div></div><div>❤️ ${activeBattle.playerHp}/100</div></div><div style="font-size:30px;">VS</div><div class="battle-pet"><div class="battle-pet-emoji">${activeBattle.opponent.emoji}</div><div>${activeBattle.opponent.name}</div><div class="battle-health"><div class="battle-health-fill" style="width:${(activeBattle.opponentHp/activeBattle.opponent.hp)*100}%"></div></div><div>❤️ ${activeBattle.opponentHp}/${activeBattle.opponent.hp}</div></div>`;
+            document.getElementById('battleContent').innerHTML = `<div class="text-center flex-1"><div class="text-6xl">🐉</div><div>Din pet</div><div class="h-2 bg-gray-700 rounded-full mt-2"><div class="h-full bg-teal-400 rounded-full" style="width:${activeBattle.playerHp}%"></div></div><div>❤️ ${activeBattle.playerHp}/100</div></div><div class="text-3xl">VS</div><div class="text-center flex-1"><div class="text-6xl">${activeBattle.opponent.emoji}</div><div>${activeBattle.opponent.name}</div><div class="h-2 bg-gray-700 rounded-full mt-2"><div class="h-full bg-pink-400 rounded-full" style="width:${(activeBattle.opponentHp/activeBattle.opponent.hp)*100}%"></div></div><div>❤️ ${activeBattle.opponentHp}/${activeBattle.opponent.hp}</div></div>`;
             document.getElementById('battleLog').innerHTML = activeBattle.log.map(l => `<div>${l}</div>`).join('');
-            document.getElementById('battleActions').innerHTML = `<button class="btn-primary" onclick="battleAttack()">⚔️ Attackera</button><button class="btn-primary" onclick="battleHeal()">💊 Heala (20⚡)</button>`;
+            document.getElementById('battleActions').innerHTML = `<button class="btn-gradient py-3 rounded-full" onclick="battleAttack()">⚔️ Attackera</button><button class="bg-gray-700 py-3 rounded-full" onclick="battleHeal()">💊 Heala (20⚡)</button>`;
         }
         function battleAttack() {
             if(!activeBattle) return;
@@ -841,93 +399,58 @@
             activeBattle.opponentHp -= dmg;
             activeBattle.log.unshift(`✨ Du gjorde ${dmg} skada!`);
             if(activeBattle.opponentHp <= 0) {
-                user.coins += activeBattle.opponent.reward;
-                updateUI();
+                user.coins += activeBattle.opponent.reward; updateUI();
                 activeBattle.log.unshift(`🎉 VINST! +${activeBattle.opponent.reward} coins!`);
-                updateBattleUI();
-                setTimeout(() => endBattle(), 2000);
+                updateBattleUI(); setTimeout(() => endBattle(), 2000);
             } else {
                 let enemyDmg = Math.floor(Math.random() * activeBattle.opponent.attack) + 10;
                 activeBattle.playerHp -= enemyDmg;
                 activeBattle.log.unshift(`💀 ${activeBattle.opponent.name} gjorde ${enemyDmg} skada!`);
-                if(activeBattle.playerHp <= 0) {
-                    activeBattle.log.unshift(`💀 FÖRLUST!`);
-                    updateBattleUI();
-                    setTimeout(() => endBattle(), 2000);
-                } else { updateBattleUI(); }
+                if(activeBattle.playerHp <= 0) { activeBattle.log.unshift(`💀 FÖRLUST!`); updateBattleUI(); setTimeout(() => endBattle(), 2000); }
+                else updateBattleUI();
             }
         }
-        function battleHeal() { if(user.energy >= 20) { user.energy -= 20; let heal = 30; activeBattle.playerHp = Math.min(100, activeBattle.playerHp + heal); activeBattle.log.unshift(`✨ Du healade ${heal} HP!`); updateUI(); updateBattleUI(); } else { alert('❌ Inte nog med energi!'); } }
-        function endBattle() { activeBattle = null; document.getElementById('battleOpponents').classList.remove('hidden'); document.getElementById('battleArena').classList.add('hidden'); renderBattle(); }
-
-        // ============ CAMERA ============
-        function openCamera() { document.getElementById('cameraModal').classList.add('active'); }
-        function closeCamera() { document.getElementById('cameraModal').classList.remove('active'); selectedImage = null; document.getElementById('previewImage').classList.add('hidden'); document.getElementById('postContent').value = ''; }
-        function selectImage() { let input = document.createElement('input'); input.type = 'file'; input.accept = 'image/*'; input.onchange = (e) => { let file = e.target.files[0]; let reader = new FileReader(); reader.onload = (ev) => { selectedImage = ev.target.result; document.getElementById('previewImage').src = selectedImage; document.getElementById('previewImage').classList.remove('hidden'); }; reader.readAsDataURL(file); }; input.click(); }
-        function submitPost() { let content = document.getElementById('postContent').value; if(!content.trim() && !selectedImage) { alert('Skriv något eller välj bild!'); return; } let newPost = { id: Date.now().toString(), userName: user.name, userAvatar: '👤', petEmoji: '🐉', content: content || 'Kolla inlägg! 🔥', likes: 0, timeAgo: 'just nu' }; posts.unshift(newPost); renderFeed(); closeCamera(); user.coins += 5; updateUI(); alert('✅ Inlägg publicerat! +5 coins'); }
-
-        // ============ PRICE COMPARE ============
-        function searchCompare() { let product = document.getElementById('compareSearch').value; if(!product) return; let results = `<div class="compare-result"><div style="font-weight: bold;">🔍 Sökresultat för "${product}"</div>`;
-            results += `<div class="price-row"><span>🛍️ Prisjakt</span><span style="color:#ff6b6b;">${Math.floor(Math.random()*500)+200} kr</span></div>`;
-            results += `<div class="price-row"><span>🎯 Tradera</span><span style="color:#ff6b6b;">${Math.floor(Math.random()*300)+150} kr</span></div>`;
-            results += `<div class="price-row"><span>📦 Amazon</span><span style="color:#ff6b6b;">${Math.floor(Math.random()*400)+250} kr</span></div>`;
+        function battleHeal() { if(user.energy >= 20) { user.energy -= 20; let heal = 30; activeBattle.playerHp = Math.min(100, activeBattle.playerHp + heal); activeBattle.log.unshift(`✨ Du healade ${heal} HP!`); updateUI(); updateBattleUI(); } else alert('❌ Inte nog med energi!'); }
+        function endBattle() { activeBattle = null; document.getElementById('battleOpponents')?.classList.remove('hidden'); document.getElementById('battleArena').classList.add('hidden'); renderBattle(); }
+        
+        function searchCompare() { let product = document.getElementById('compareSearch')?.value; if(!product) return; let results = `<div class="bg-gray-900/50 rounded-2xl p-4"><div class="font-bold">🔍 Sökresultat för "${product}"</div><div class="flex justify-between py-2 border-b border-gray-800"><span>🛍️ Prisjakt</span><span class="text-teal-400">${Math.floor(Math.random()*500)+200} kr</span></div><div class="flex justify-between py-2 border-b border-gray-800"><span>🎯 Tradera</span><span class="text-teal-400">${Math.floor(Math.random()*300)+150} kr</span></div><div class="flex justify-between py-2"><span>📦 Amazon</span><span class="text-teal-400">${Math.floor(Math.random()*400)+250} kr</span></div></div>`;
             document.getElementById('compareResults').innerHTML = results;
         }
-        function searchProducts() { let search = document.getElementById('shopSearch').value.toLowerCase(); let filtered = shopItems.filter(p => p.name.toLowerCase().includes(search)); let html = ''; for(let p of filtered) { html += `<div class="product-card" onclick="buyProduct('${p.name}', ${p.price})"><div class="product-emoji">${p.emoji}</div><div class="product-name">${p.name}</div><div class="product-price">${p.price} 💰</div></div>`; } document.getElementById('shopGrid').innerHTML = html; }
-
-        // ============ TAB NAVIGATION ============
-        function switchTab(tab) {
+        function searchProducts() { let search = document.getElementById('shopSearch')?.value.toLowerCase(); if(!search) { renderShop(); return; } let filtered = shopItems.filter(p => p.name.toLowerCase().includes(search)); let html = '<div class="grid grid-cols-2 gap-3">'; for(let p of filtered) html += `<div class="product-card" onclick="buyProduct('${p.name}', ${p.price})"><div class="text-5xl mb-2">${p.emoji}</div><div class="font-medium">${p.name}</div><div class="text-pink-400 font-bold">${p.price} 💰</div></div>`; document.getElementById('shopGrid').innerHTML = html + '</div>'; }
+        
+        function openCamera() { document.getElementById('cameraModal').classList.remove('hidden'); }
+        function closeCamera() { document.getElementById('cameraModal').classList.add('hidden'); selectedImage = null; document.getElementById('previewImage').classList.add('hidden'); document.getElementById('postContent').value = ''; }
+        function selectImage() { let input = document.createElement('input'); input.type = 'file'; input.accept = 'image/*'; input.onchange = (e) => { let file = e.target.files[0]; let reader = new FileReader(); reader.onload = (ev) => { selectedImage = ev.target.result; document.getElementById('previewImage').src = selectedImage; document.getElementById('previewImage').classList.remove('hidden'); }; reader.readAsDataURL(file); }; input.click(); }
+        function submitPost() { let content = document.getElementById('postContent').value; if(!content.trim() && !selectedImage) { alert('Skriv något eller välj bild!'); return; } let newPost = { id: Date.now().toString(), userName: user.name, userAvatar: '👤', petEmoji: '🐉', content: content || 'Kolla inlägg! 🔥', likes: 0, timeAgo: 'just nu' }; posts.unshift(newPost); renderFeed(); closeCamera(); user.coins += 5; updateUI(); alert('✅ Inlägg publicerat! +5 coins'); }
+        
+        function setActiveTab(tab) {
             currentTab = tab;
-            document.getElementById('feedContainer').style.display = 'none';
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            if(tab === 'feed') { document.getElementById('feedContainer').style.display = 'block'; renderFeed(); }
-            else if(tab === 'chat') { document.getElementById('chatScreen').classList.add('active'); renderChats(); }
-            else if(tab === 'shop') { document.getElementById('shopScreen').classList.add('active'); renderShop(); }
-            else if(tab === 'profile') { document.getElementById('profileScreen').classList.add('active'); }
-            else if(tab === 'bounties') { document.getElementById('bountiesScreen').classList.add('active'); renderBounties(); }
-            else if(tab === 'battle') { document.getElementById('battleScreen').classList.add('active'); renderBattle(); }
-            else if(tab === 'world') { document.getElementById('worldScreen').classList.add('active'); renderWorld(); }
-            else if(tab === 'compare') { document.getElementById('compareScreen').classList.add('active'); }
-            else if(tab === 'more') { document.getElementById('moreScreen').classList.add('active'); }
-            const icons = { feed:'navFeedIcon', chat:'navChatIcon', shop:'navShopIcon', profile:'navProfileIcon', world:'navWorldIcon' };
-            Object.values(icons).forEach(i => { let el = document.getElementById(i); if(el) el.classList.remove('active'); });
-            let activeIcon = document.getElementById(icons[tab] || 'navFeedIcon');
-            if(activeIcon) activeIcon.classList.add('active');
+            document.querySelectorAll('.nav-btn').forEach(btn => { btn.classList.remove('active'); btn.style.color = ''; });
+            let activeBtn = document.querySelector(`.nav-btn[data-tab="${tab}"]`);
+            if(activeBtn) { activeBtn.classList.add('active'); activeBtn.style.color = 'white'; }
+            if(tab === 'feed') renderFeed();
+            else if(tab === 'chat') renderChats();
+            else if(tab === 'shop') renderShop();
+            else if(tab === 'profile') renderProfile();
+            else if(tab === 'world') renderWorld();
+            else if(tab === 'bounties') renderBounties();
+            else if(tab === 'battle') renderBattle();
+            else if(tab === 'compare') renderCompare();
+            lucide.createIcons();
         }
 
-        // ============ INIT ============
-        function init() {
-            updateUI();
-            renderStories();
-            renderFeed();
-            renderChats();
-            renderShop();
-            renderWorld();
-            renderBounties();
-            renderBattle();
-            switchTab('feed');
-        }
+        function closeModal() { let modal = document.getElementById('modalMenu'); modal.classList.add('opacity-0'); setTimeout(() => modal.classList.add('hidden'), 300); }
+        function openModal() { let modal = document.getElementById('modalMenu'); modal.classList.remove('hidden'); setTimeout(() => modal.classList.remove('opacity-0'), 10); }
 
-        window.switchTab = switchTab;
-        window.likePost = likePost;
-        window.sharePost = sharePost;
-        window.buyProduct = buyProduct;
-        window.claimCode = claimCode;
-        window.visitLocation = visitLocation;
-        window.claimBounty = claimBounty;
-        window.createBounty = createBounty;
-        window.shareProfile = shareProfile;
-        window.openCamera = openCamera;
-        window.closeCamera = closeCamera;
-        window.selectImage = selectImage;
-        window.submitPost = submitPost;
-        window.startBattle = startBattle;
-        window.battleAttack = battleAttack;
-        window.battleHeal = battleHeal;
-        window.searchCompare = searchCompare;
-        window.searchProducts = searchProducts;
-
-        init();
+        document.querySelectorAll('.nav-btn').forEach(btn => btn.addEventListener('click', () => setActiveTab(btn.dataset.tab)));
+        document.querySelectorAll('.modal-nav-btn').forEach(btn => btn.addEventListener('click', (e) => { e.preventDefault(); closeModal(); setActiveTab(btn.dataset.tab); }));
+        document.getElementById('menuBtn').addEventListener('click', openModal);
+        document.getElementById('closeModalBtn').addEventListener('click', closeModal);
+        document.getElementById('cameraBtn').addEventListener('click', openCamera);
+        
+        updateUI();
+        renderStories();
+        setActiveTab('feed');
     </script>
 </body>
 </html>
