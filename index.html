@@ -10,296 +10,72 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#000000">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: #000;
-            overflow: hidden;
-            height: 100vh;
-            width: 100vw;
-        }
-
-        .app {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            background: #000;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #000; overflow: hidden; height: 100vh; width: 100vw; }
+        .app { width: 100%; height: 100%; position: relative; background: #000; }
 
         /* Feed */
-        .feed {
-            height: 100%;
-            overflow-y: scroll;
-            scroll-snap-type: y mandatory;
-            -webkit-overflow-scrolling: touch;
-        }
+        .feed { height: 100%; overflow-y: scroll; scroll-snap-type: y mandatory; -webkit-overflow-scrolling: touch; }
         .feed::-webkit-scrollbar { display: none; }
-        .post {
-            height: 100vh;
-            scroll-snap-align: start;
-            position: relative;
-            background: linear-gradient(135deg, #0a0a0a 0%, #000 100%);
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 80px 20px 100px;
-        }
+        .post { height: 100vh; scroll-snap-align: start; position: relative; background: linear-gradient(135deg, #0a0a0a 0%, #000 100%); display: flex; flex-direction: column; justify-content: flex-end; padding: 80px 20px 100px; }
 
         /* Pet Display */
-        .pet-container {
-            position: absolute;
-            top: 80px;
-            right: 20px;
-            text-align: center;
-            z-index: 20;
-        }
-        .pet-avatar {
-            font-size: 90px;
-            filter: drop-shadow(0 0 20px rgba(57, 255, 20, 0.6));
-            animation: petFloat 3s ease-in-out infinite;
-        }
-        @keyframes petFloat {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-12px); }
-        }
-        .pet-level {
-            background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(10px);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 11px;
-            color: #39FF14;
-            margin-top: 8px;
-            border: 1px solid rgba(57,255,20,0.3);
-        }
+        .pet-container { position: absolute; top: 80px; right: 20px; text-align: center; z-index: 20; }
+        .pet-avatar { font-size: 90px; filter: drop-shadow(0 0 20px rgba(57, 255, 20, 0.6)); animation: petFloat 3s ease-in-out infinite; }
+        @keyframes petFloat { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-12px); } }
+        .pet-level { background: rgba(0,0,0,0.7); backdrop-filter: blur(10px); padding: 4px 12px; border-radius: 20px; font-size: 11px; color: #39FF14; margin-top: 8px; border: 1px solid rgba(57,255,20,0.3); }
 
         /* Post Content */
-        .post-user {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 12px;
-        }
-        .post-avatar {
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, #39FF14, #ff3333);
-            border-radius: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 26px;
-        }
-        .post-name {
-            font-size: 16px;
-            font-weight: bold;
-            color: #fff;
-        }
-        .post-time {
-            font-size: 11px;
-            color: #888;
-        }
-        .post-text {
-            font-size: 18px;
-            font-weight: 500;
-            color: #fff;
-            margin-bottom: 16px;
-        }
+        .post-user { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+        .post-avatar { width: 48px; height: 48px; background: linear-gradient(135deg, #39FF14, #ff3333); border-radius: 24px; display: flex; align-items: center; justify-content: center; font-size: 26px; }
+        .post-name { font-size: 16px; font-weight: bold; color: #fff; }
+        .post-time { font-size: 11px; color: #888; }
+        .post-text { font-size: 18px; font-weight: 500; color: #fff; margin-bottom: 16px; }
 
         /* Action Sidebar */
-        .actions {
-            position: absolute;
-            right: 15px;
-            bottom: 120px;
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-            z-index: 20;
-        }
-        .action {
-            text-align: center;
-            cursor: pointer;
-        }
+        .actions { position: absolute; right: 15px; bottom: 120px; display: flex; flex-direction: column; gap: 24px; z-index: 20; }
+        .action { text-align: center; cursor: pointer; }
         .action:active { transform: scale(0.85); }
         .action-icon { font-size: 32px; }
         .action-count { font-size: 11px; color: #fff; margin-top: 4px; }
 
         /* Bottom Navigation */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            display: flex;
-            background: rgba(10,10,10,0.95);
-            backdrop-filter: blur(20px);
-            padding: 10px 20px 20px;
-            border-top: 1px solid rgba(255,255,255,0.08);
-            z-index: 100;
-        }
-        .nav-item {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            background: none;
-            border: none;
-            cursor: pointer;
-        }
-        .nav-icon {
-            font-size: 24px;
-            opacity: 0.5;
-        }
-        .nav-icon.active {
-            opacity: 1;
-            transform: scale(1.1);
-        }
-        .nav-camera {
-            background: linear-gradient(135deg, #39FF14, #ff3333);
-            width: 52px;
-            height: 52px;
-            border-radius: 26px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: -20px;
-            box-shadow: 0 0 20px rgba(57,255,20,0.4);
-        }
-        .nav-label {
-            font-size: 10px;
-            color: #888;
-        }
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; display: flex; background: rgba(10,10,10,0.95); backdrop-filter: blur(20px); padding: 10px 20px 20px; border-top: 1px solid rgba(255,255,255,0.08); z-index: 100; }
+        .nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; background: none; border: none; cursor: pointer; }
+        .nav-icon { font-size: 24px; opacity: 0.5; }
+        .nav-icon.active { opacity: 1; transform: scale(1.1); }
+        .nav-camera { background: linear-gradient(135deg, #39FF14, #ff3333); width: 52px; height: 52px; border-radius: 26px; display: flex; align-items: center; justify-content: center; margin-top: -20px; box-shadow: 0 0 20px rgba(57,255,20,0.4); }
+        .nav-label { font-size: 10px; color: #888; }
         .nav-label.active { color: #39FF14; }
 
         /* Modals */
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.95);
-            z-index: 200;
-            display: flex;
-            flex-direction: column;
-            backdrop-filter: blur(20px);
-        }
-        .modal-header {
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-        .modal-content {
-            flex: 1;
-            overflow-y: auto;
-            padding: 20px;
-        }
+        .modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.95); z-index: 200; display: flex; flex-direction: column; backdrop-filter: blur(20px); }
+        .modal-header { padding: 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .modal-content { flex: 1; overflow-y: auto; padding: 20px; }
         .hidden { display: none; }
 
-        /* Shop Styles */
-        .shop-item {
-            background: rgba(255,255,255,0.05);
-            border-radius: 25px;
-            padding: 15px;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        .discount-badge {
-            background: #ff3333;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 10px;
-            font-weight: bold;
-        }
-        .shop-btn {
-            background: linear-gradient(135deg, #39FF14, #ff3333);
-            padding: 8px 20px;
-            border-radius: 20px;
-            border: none;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .code-box {
-            background: #1a1a1a;
-            padding: 12px;
-            border-radius: 15px;
-            text-align: center;
-            margin-top: 10px;
-        }
-
-        /* IRL Shops */
-        .shop-card {
-            background: linear-gradient(135deg, rgba(57,255,20,0.1), rgba(255,51,51,0.1));
-            border-radius: 25px;
-            padding: 15px;
-            margin-bottom: 12px;
-            border: 1px solid rgba(57,255,20,0.3);
-        }
-
-        /* Profile */
-        .profile-screen, .nearby-screen, .shop-screen {
-            height: 100%;
-            overflow-y: auto;
-            padding: 20px;
-        }
-        .profile-header {
-            text-align: center;
-            padding: 30px 0;
-        }
-        .profile-avatar {
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(135deg, #39FF14, #ff3333);
-            border-radius: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 50px;
-            margin: 0 auto 16px;
-        }
-        .stats-row {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin: 20px 0;
-        }
-        .stat-value {
-            font-size: 28px;
-            font-weight: bold;
-            color: #39FF14;
-        }
-        .exp-bar {
-            height: 8px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 4px;
-            margin: 15px 0;
-            overflow: hidden;
-        }
-        .exp-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #39FF14, #ff3333);
-            width: 0%;
-        }
-        .btn-primary {
-            background: linear-gradient(135deg, #39FF14, #ff3333);
-            padding: 14px 28px;
-            border-radius: 30px;
-            border: none;
-            font-weight: bold;
-            cursor: pointer;
-            width: 100%;
-        }
+        /* Shop & Bounty Styles */
+        .shop-item, .bounty-card { background: rgba(255,255,255,0.05); border-radius: 25px; padding: 15px; margin-bottom: 12px; display: flex; align-items: center; gap: 15px; }
+        .shop-btn, .bounty-btn { background: linear-gradient(135deg, #39FF14, #ff3333); padding: 8px 20px; border-radius: 20px; border: none; font-weight: bold; cursor: pointer; }
+        .code-box { background: #1a1a1a; padding: 12px; border-radius: 15px; text-align: center; margin-top: 10px; }
+        .shop-card, .claim-card { background: linear-gradient(135deg, rgba(57,255,20,0.1), rgba(255,51,51,0.1)); border-radius: 25px; padding: 15px; margin-bottom: 12px; border: 1px solid rgba(57,255,20,0.3); }
+        
+        /* Profile, Nearby, Bounties Screens */
+        .profile-screen, .nearby-screen, .bounties-screen, .shop-screen { height: 100%; overflow-y: auto; padding: 20px; }
+        .profile-header { text-align: center; padding: 30px 0; }
+        .profile-avatar { width: 100px; height: 100px; background: linear-gradient(135deg, #39FF14, #ff3333); border-radius: 50px; display: flex; align-items: center; justify-content: center; font-size: 50px; margin: 0 auto 16px; }
+        .stats-row { display: flex; justify-content: center; gap: 30px; margin: 20px 0; }
+        .stat-value { font-size: 28px; font-weight: bold; color: #39FF14; }
+        .exp-bar { height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; margin: 15px 0; overflow: hidden; }
+        .exp-fill { height: 100%; background: linear-gradient(90deg, #39FF14, #ff3333); width: 0%; }
+        .btn-primary { background: linear-gradient(135deg, #39FF14, #ff3333); padding: 14px 28px; border-radius: 30px; border: none; font-weight: bold; cursor: pointer; width: 100%; }
+        .btn-secondary { background: rgba(255,255,255,0.1); padding: 10px 20px; border-radius: 25px; border: none; color: #fff; cursor: pointer; }
+        .friends-grid { display: flex; flex-wrap: wrap; gap: 12px; }
+        .friend-card { background: rgba(255,255,255,0.05); border-radius: 25px; padding: 15px; width: calc(50% - 6px); text-align: center; cursor: pointer; }
+        .claim-status { font-size: 11px; padding: 4px 8px; border-radius: 12px; display: inline-block; margin-top: 8px; }
+        .status-approved { background: #39FF14; color: #000; }
+        .status-pending { background: #ff9900; color: #000; }
+        .status-rejected { background: #ff3333; color: #fff; }
     </style>
 </head>
 <body>
@@ -310,7 +86,7 @@
         <!-- Shop Modal -->
         <div id="shopModal" class="modal hidden">
             <div class="modal-header">
-                <button class="btn-secondary" onclick="closeShop()" style="background:none; color:#fff; border:none">Stäng</button>
+                <button class="btn-secondary" onclick="closeShop()">Stäng</button>
                 <span style="font-weight:bold">🛍️ MY PET SHOP</span>
                 <div style="width:50px"></div>
             </div>
@@ -320,7 +96,7 @@
         <!-- Camera Modal -->
         <div id="cameraModal" class="modal hidden">
             <div class="modal-header">
-                <button class="btn-secondary" onclick="closeCamera()" style="background:none; color:#fff; border:none">Stäng</button>
+                <button class="btn-secondary" onclick="closeCamera()">Stäng</button>
                 <span style="font-weight:bold">📸 Nytt inlägg</span>
                 <div style="width:50px"></div>
             </div>
@@ -330,33 +106,18 @@
                     <button class="btn-primary" onclick="selectImage()">Välj bild</button>
                 </div>
                 <div id="postButtons" style="display:none; margin-top:20px; width:100%">
-                    <button class="btn-primary" onclick="submitPost()" style="margin-top:10px">📤 Posta</button>
+                    <button class="btn-primary" onclick="submitPost()">📤 Posta</button>
                 </div>
             </div>
         </div>
 
         <!-- Bottom Navigation -->
         <div class="bottom-nav">
-            <button class="nav-item" onclick="switchTab('feed')">
-                <span class="nav-icon" id="navFeedIcon">🔥</span>
-                <span class="nav-label" id="navFeedLabel">Feed</span>
-            </button>
-            <button class="nav-item" onclick="switchTab('shop')">
-                <span class="nav-icon" id="navShopIcon">🛍️</span>
-                <span class="nav-label" id="navShopLabel">Shop</span>
-            </button>
-            <button class="nav-item" onclick="openCamera()">
-                <div class="nav-camera"><span>📸</span></div>
-                <span class="nav-label">Posta</span>
-            </button>
-            <button class="nav-item" onclick="switchTab('nearby')">
-                <span class="nav-icon" id="navNearbyIcon">📍</span>
-                <span class="nav-label" id="navNearbyLabel">Nära</span>
-            </button>
-            <button class="nav-item" onclick="switchTab('profile')">
-                <span class="nav-icon" id="navProfileIcon">👤</span>
-                <span class="nav-label" id="navProfileLabel">Min</span>
-            </button>
+            <button class="nav-item" onclick="switchTab('feed')"><span class="nav-icon" id="navFeedIcon">🔥</span><span class="nav-label" id="navFeedLabel">Feed</span></button>
+            <button class="nav-item" onclick="switchTab('shop')"><span class="nav-icon" id="navShopIcon">🛍️</span><span class="nav-label" id="navShopLabel">Shop</span></button>
+            <button class="nav-item" onclick="openCamera()"><div class="nav-camera"><span>📸</span></div><span class="nav-label">Posta</span></button>
+            <button class="nav-item" onclick="switchTab('bounties')"><span class="nav-icon" id="navBountiesIcon">🎯</span><span class="nav-label" id="navBountiesLabel">Bounties</span></button>
+            <button class="nav-item" onclick="switchTab('profile')"><span class="nav-icon" id="navProfileIcon">👤</span><span class="nav-label" id="navProfileLabel">Min</span></button>
         </div>
     </div>
 
@@ -370,33 +131,30 @@
 
         // ============ USER DATA ============
         let user = {
-            id: 'user1',
-            name: '',
-            petType: 'dragon',
-            petLevel: 1,
-            petExp: 0,
-            coins: 500,
-            streak: 0,
-            meetings: 0,
-            badges: [],
-            collectedCodes: []
+            id: 'user1', name: '', petType: 'dragon', petLevel: 1, petExp: 0, coins: 500,
+            streak: 0, meetings: 0, badges: [], collectedCodes: []
         };
 
         // ============ SHOP DATA ============
         let shopItems = [
-            { id: 'skin1', name: '🔥 Fire Wings', price: 200, emoji: '🔥', type: 'skin', discount: null },
-            { id: 'skin2', name: '✨ Legendary Glow', price: 500, emoji: '✨', type: 'skin', discount: null },
-            { id: 'item1', name: 'XP Boost x2', price: 100, emoji: '⚡', type: 'powerup', discount: null }
+            { id: 'skin1', name: '🔥 Fire Wings', price: 200, emoji: '🔥' },
+            { id: 'skin2', name: '✨ Legendary Glow', price: 500, emoji: '✨' },
+            { id: 'item1', name: '⚡ XP Boost x2', price: 100, emoji: '⚡' }
         ];
-
         let discountCodes = [
-            { code: 'MYPET20', discount: 20, expires: '2026-05-01', partner: 'Svenska Spel' },
-            { code: 'WELCOME10', discount: 10, expires: '2026-12-31', partner: 'Welcome Deal' }
+            { code: 'MYPET20', discount: 20, partner: 'Svenska Spel' },
+            { code: 'WELCOME10', discount: 10, partner: 'Welcome Deal' }
+        ];
+        let irlShops = [
+            { name: '🐉 Drake Spelbutik', address: 'Tumba Centrum', distance: '500m', discount: '15% rabatt med DRAGON15' },
+            { name: '🦊 MagiRäv Café', address: 'Skärholmen', distance: '1.2km', discount: 'Gratis kaffe' }
         ];
 
-        let irlShops = [
-            { name: '🐉 Drake Spelbutik', address: 'Tumba Centrum', distance: '500m', discount: '15% på allt med koden DRAGON15' },
-            { name: '🦊 MagiRäv Café', address: 'Skärholmen', distance: '1.2km', discount: 'Gratis kaffe vid köp' }
+        // ============ BOUNTIES DATA ============
+        let bounties = [
+            { id: 'b1', title: '📸 Fota något blått', description: 'Hitta något blått, fota och ladda upp! Bevis krävs.', reward: 100, rewardType: 'coins', creator: 'Ella', expires: '2026-06-01', claims: [], status: 'active' },
+            { id: 'b2', title: '🏃 Gå 5000 steg', description: 'Visa en screenshot från stegräknaren.', reward: 150, rewardType: 'coins', creator: 'Max', expires: '2026-06-15', claims: [], status: 'active' },
+            { id: 'b3', title: '☕ Besök ett café', description: 'Fota dig på ett café med en kopp kaffe.', reward: 200, rewardType: 'coins', creator: 'MY PET', expires: '2026-07-01', claims: [], status: 'active' }
         ];
 
         // ============ MOCK DATA ============
@@ -404,7 +162,6 @@
             { id: 'p1', userName: 'Ella', userAvatar: '👩‍🎤', petEmoji: '🐉', content: 'Köpte Fire Wings till min drake! 🔥', likes: 47, timeAgo: '15 min' },
             { id: 'p2', userName: 'Max', userAvatar: '🧑‍🚀', petEmoji: '🐺', content: 'Level 10! 🎉', likes: 32, timeAgo: '1 tim' }
         ];
-
         let friends = [
             { name: 'Ella', avatar: '👩‍🎤', petEmoji: '🐉', distance: '300m' },
             { name: 'Max', avatar: '🧑‍🚀', petEmoji: '🐺', distance: '800m' }
@@ -412,24 +169,21 @@
 
         let currentTab = 'feed';
         let selectedImage = null;
+        let pendingClaim = null;
 
         // ============ INIT ============
         function init() {
             const saved = localStorage.getItem('mypet_user');
-            if (saved) {
-                user = JSON.parse(saved);
-            } else {
+            if (saved) { user = JSON.parse(saved); }
+            else {
                 let name = prompt('🔥 Välkommen till MY PET WORLD!\n\nVad heter du?', 'Din vän');
-                if (name) {
-                    user.name = name;
-                    saveUser();
-                }
+                if (name) { user.name = name; saveUser(); }
             }
             renderFeed();
             switchTab('feed');
         }
-
         function saveUser() { localStorage.setItem('mypet_user', JSON.stringify(user)); }
+        function saveBounties() { localStorage.setItem('mypet_bounties', JSON.stringify(bounties)); }
 
         // ============ FEED ============
         function renderFeed() {
@@ -438,150 +192,106 @@
             const pet = PET_TYPES[user.petType];
             container.innerHTML = posts.map(post => `
                 <div class="post">
-                    <div class="pet-container">
-                        <div class="pet-avatar">${pet.emoji}</div>
-                        <div class="pet-level">Lv.${user.petLevel}</div>
-                    </div>
-                    <div class="actions">
-                        <div class="action" onclick="likePost('${post.id}')">
-                            <div class="action-icon">❤️</div>
-                            <div class="action-count">${post.likes}</div>
-                        </div>
-                    </div>
-                    <div class="post-content">
-                        <div class="post-user">
-                            <div class="post-avatar">${post.userAvatar}</div>
-                            <div><div class="post-name">${post.userName} · ${post.petEmoji}</div><div class="post-time">${post.timeAgo}</div></div>
-                        </div>
-                        <div class="post-text">${post.content}</div>
-                    </div>
+                    <div class="pet-container"><div class="pet-avatar">${pet.emoji}</div><div class="pet-level">Lv.${user.petLevel}</div></div>
+                    <div class="actions"><div class="action" onclick="likePost('${post.id}')"><div class="action-icon">❤️</div><div class="action-count">${post.likes}</div></div></div>
+                    <div class="post-content"><div class="post-user"><div class="post-avatar">${post.userAvatar}</div><div><div class="post-name">${post.userName} · ${post.petEmoji}</div><div class="post-time">${post.timeAgo}</div></div></div><div class="post-text">${post.content}</div></div>
                 </div>
             `).join('');
         }
-
-        function likePost(id) {
-            let post = posts.find(p => p.id === id);
-            if (post) { post.likes++; renderFeed(); }
-        }
+        function likePost(id) { let post = posts.find(p => p.id === id); if (post) { post.likes++; renderFeed(); } }
 
         // ============ SHOP ============
         function renderShop() {
             const container = document.getElementById('shopContent');
             if (!container) return;
             container.innerHTML = `
-                <div style="margin-bottom:20px">
-                    <div style="display:flex; justify-content:space-between; align-items:center">
-                        <span style="font-size:24px; font-weight:bold">💰 ${user.coins} coins</span>
-                        <span style="background:#39FF14; padding:4px 12px; border-radius:20px; color:#000; font-weight:bold">Lv.${user.petLevel}</span>
-                    </div>
-                </div>
-                
-                <div style="margin-bottom:25px">
-                    <div style="font-weight:bold; margin-bottom:12px">🎟️ RABATTKODER</div>
-                    ${discountCodes.map(code => `
-                        <div class="code-box">
-                            <div style="font-weight:bold">${code.code}</div>
-                            <div>${code.discount}% rabatt · ${code.partner}</div>
-                            <button class="shop-btn" style="margin-top:8px" onclick="claimCode('${code.code}')">Använd kod</button>
-                        </div>
-                    `).join('')}
-                </div>
-                
-                <div style="margin-bottom:25px">
-                    <div style="font-weight:bold; margin-bottom:12px">🛍️ SHOP</div>
-                    ${shopItems.map(item => `
-                        <div class="shop-item">
-                            <div style="font-size:40px">${item.emoji}</div>
-                            <div style="flex:1"><div style="font-weight:bold">${item.name}</div><div style="font-size:11px; color:#888">${item.price} coins</div></div>
-                            <button class="shop-btn" onclick="buyItem('${item.id}', ${item.price})">Köp</button>
-                        </div>
-                    `).join('')}
-                </div>
-                
-                <div>
-                    <div style="font-weight:bold; margin-bottom:12px">🏪 IRL SHOPS (SPELA IN)</div>
-                    ${irlShops.map(shop => `
-                        <div class="shop-card">
-                            <div style="font-weight:bold">${shop.name}</div>
-                            <div style="font-size:12px; color:#888">${shop.address} · ${shop.distance}</div>
-                            <div style="font-size:12px; color:#39FF14; margin:8px 0">${shop.discount}</div>
-                            <button class="shop-btn" onclick="visitShop('${shop.name}')">🎮 Spela in</button>
-                        </div>
-                    `).join('')}
-                </div>
+                <div style="margin-bottom:20px"><div style="display:flex; justify-content:space-between"><span style="font-size:24px; font-weight:bold">💰 ${user.coins} coins</span><span style="background:#39FF14; padding:4px 12px; border-radius:20px; color:#000; font-weight:bold">Lv.${user.petLevel}</span></div></div>
+                <div style="margin-bottom:25px"><div style="font-weight:bold; margin-bottom:12px">🎟️ RABATTKODER</div>${discountCodes.map(code => `<div class="code-box"><div style="font-weight:bold">${code.code}</div><div>${code.discount}% rabatt · ${code.partner}</div><button class="shop-btn" style="margin-top:8px" onclick="claimCode('${code.code}')">Använd kod</button></div>`).join('')}</div>
+                <div style="margin-bottom:25px"><div style="font-weight:bold; margin-bottom:12px">🛍️ SHOP</div>${shopItems.map(item => `<div class="shop-item"><div style="font-size:40px">${item.emoji}</div><div style="flex:1"><div style="font-weight:bold">${item.name}</div><div style="font-size:11px; color:#888">${item.price} coins</div></div><button class="shop-btn" onclick="buyItem('${item.id}', ${item.price})">Köp</button></div>`).join('')}</div>
+                <div><div style="font-weight:bold; margin-bottom:12px">🏪 IRL SHOPS</div>${irlShops.map(shop => `<div class="shop-card"><div style="font-weight:bold">${shop.name}</div><div style="font-size:12px; color:#888">${shop.address} · ${shop.distance}</div><div style="font-size:12px; color:#39FF14; margin:8px 0">${shop.discount}</div><button class="shop-btn" onclick="visitShop('${shop.name}')">🎮 Spela in</button></div>`).join('')}</div>
             `;
         }
+        function buyItem(itemId, price) { if (user.coins >= price) { user.coins -= price; saveUser(); alert(`✅ Du köpte ${shopItems.find(i => i.id === itemId).name}!`); renderShop(); } else { alert(`❌ Du har inte tillräckligt med coins! (${user.coins}/${price})`); } }
+        function claimCode(code) { if (user.collectedCodes.includes(code)) { alert('❌ Du har redan använt denna kod!'); return; } user.coins += 100; user.collectedCodes.push(code); saveUser(); alert(`✅ Kod ${code} inlöst! Du fick 100 coins!`); renderShop(); }
+        function visitShop(shopName) { user.coins += 50; user.meetings++; saveUser(); alert(`🎮 Du besökte ${shopName}! +50 coins och XP!`); renderShop(); renderProfile(); }
+        function openShop() { renderShop(); document.getElementById('shopModal').classList.remove('hidden'); }
+        function closeShop() { document.getElementById('shopModal').classList.add('hidden'); }
 
-        function buyItem(itemId, price) {
-            if (user.coins >= price) {
-                user.coins -= price;
-                saveUser();
-                alert(`✅ Du köpte ${shopItems.find(i => i.id === itemId).name}!`);
-                renderShop();
-            } else {
-                alert(`❌ Du har inte tillräckligt med coins! (${user.coins}/${price})`);
-            }
-        }
-
-        function claimCode(code) {
-            if (user.collectedCodes.includes(code)) {
-                alert('❌ Du har redan använt denna kod!');
-                return;
-            }
-            const discount = discountCodes.find(c => c.code === code);
-            if (discount) {
-                user.coins += 100;
-                user.collectedCodes.push(code);
-                saveUser();
-                alert(`✅ Kod ${code} inlöst! Du fick 100 coins!`);
-                renderShop();
-            }
-        }
-
-        function visitShop(shopName) {
-            user.coins += 50;
-            user.meetings++;
-            saveUser();
-            alert(`🎮 Du besökte ${shopName}! +50 coins och din pet fick XP!`);
-            renderShop();
-            renderNearby();
-            renderProfile();
-        }
-
-        // ============ NEARBY ============
-        function meetFriend(name) {
-            user.meetings++;
-            user.streak++;
-            user.petExp += 15;
-            if (user.petExp >= 100) {
-                user.petExp = 0;
-                user.petLevel++;
-                alert(`🎉 LEVEL UP! Din pet är nu level ${user.petLevel}!`);
-            }
-            saveUser();
-            renderNearby();
-            renderProfile();
-            alert(`✅ Du mötte ${name}! +15 XP till din pet`);
-        }
-
-        function renderNearby() {
-            const container = document.getElementById('nearbyContainer');
+        // ============ BOUNTIES ============
+        function renderBounties() {
+            const container = document.getElementById('bountiesContainer');
             if (!container) return;
             container.innerHTML = `
-                <div style="margin-bottom:20px">
-                    <div style="font-weight:bold; margin-bottom:12px">📍 VÄNNER I NÄRHETEN</div>
-                    <div class="friends-grid" style="display:flex; flex-wrap:wrap; gap:12px">
-                        ${friends.map(f => `
-                            <div class="friend-card" style="background:rgba(255,255,255,0.05); border-radius:25px; padding:15px; width:calc(50% - 6px); text-align:center; cursor:pointer" onclick="meetFriend('${f.name}')">
-                                <div style="font-size:50px">${f.avatar}</div>
-                                <div style="font-weight:bold">${f.name}</div>
-                                <div>${f.petEmoji} · ${f.distance}</div>
-                                <button class="shop-btn" style="margin-top:10px">🤝 MÖT</button>
-                            </div>
-                        `).join('')}
+                <div style="margin-bottom:20px"><div style="display:flex; justify-content:space-between"><span style="font-size:20px; font-weight:bold">🎯 AKTIVA BOUNTIES</span><span style="background:#39FF14; padding:4px 12px; border-radius:20px; color:#000; font-weight:bold">💰 ${user.coins} coins</span></div></div>
+                ${bounties.filter(b => b.status === 'active').map(bounty => `
+                    <div class="bounty-card" style="flex-direction:column; align-items:flex-start">
+                        <div style="display:flex; justify-content:space-between; width:100%"><span style="font-weight:bold; font-size:16px">${bounty.title}</span><span style="color:#39FF14; font-weight:bold">+${bounty.reward} ${bounty.rewardType === 'coins' ? 'coins' : bounty.rewardType}</span></div>
+                        <div style="font-size:12px; color:#888; margin:5px 0">${bounty.description}</div>
+                        <div style="font-size:10px; color:#555">Skapad av: ${bounty.creator} · Exp: ${bounty.expires}</div>
+                        <button class="bounty-btn" style="margin-top:10px" onclick="claimBounty('${bounty.id}')">🎯 Gör bounty</button>
                     </div>
-                </div>
+                `).join('')}
+                <div style="margin-top:25px"><button class="btn-primary" onclick="createBounty()">➕ SKAPA EGEN BOUNTY</button></div>
             `;
+        }
+        function claimBounty(bountyId) {
+            let bounty = bounties.find(b => b.id === bountyId);
+            if (!bounty) return;
+            pendingClaim = bounty;
+            let input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.onchange = (e) => {
+                let file = e.target.files[0];
+                let reader = new FileReader();
+                reader.onload = (event) => {
+                    let proofImage = event.target.result;
+                    let description = prompt('Beskriv din claim (valfritt):', 'Jag gjorde utmaningen!');
+                    let claim = {
+                        id: Date.now().toString(), bountyId: bounty.id, userId: user.id, userName: user.name,
+                        proofImage: proofImage, description: description || '', timestamp: new Date().toISOString(), status: 'pending'
+                    };
+                    bounty.claims.push(claim);
+                    saveBounties();
+                    alert(`✅ Din claim är inskickad! Väntar på verifiering från bounty-skaparen.`);
+                    renderBounties();
+                    renderMyClaims();
+                };
+                reader.readAsDataURL(file);
+            };
+            input.click();
+        }
+        function createBounty() {
+            let title = prompt('Vad heter bounty?', '📸 Fota något coolt');
+            if (!title) return;
+            let description = prompt('Beskriv vad man ska göra:', 'Fota och ladda upp bevis');
+            if (!description) return;
+            let reward = parseInt(prompt('Belöning i coins:', '100'));
+            if (isNaN(reward)) return;
+            let newBounty = {
+                id: 'b' + Date.now(), title: title, description: description, reward: reward, rewardType: 'coins',
+                creator: user.name, expires: new Date(Date.now() + 30*24*60*60*1000).toISOString().split('T')[0],
+                claims: [], status: 'active'
+            };
+            bounties.push(newBounty);
+            saveBounties();
+            alert(`✅ Bounty "${title}" skapad! Belöning: ${reward} coins`);
+            renderBounties();
+        }
+        function renderMyClaims() {
+            const container = document.getElementById('myClaimsContainer');
+            if (!container) return;
+            let myClaims = [];
+            bounties.forEach(bounty => { bounty.claims.forEach(claim => { if (claim.userId === user.id) myClaims.push({ ...claim, bountyTitle: bounty.title, reward: bounty.reward }); }); });
+            if (myClaims.length === 0) { container.innerHTML = '<div style="color:#555; text-align:center">Inga claims än</div>'; return; }
+            container.innerHTML = myClaims.map(claim => `
+                <div class="claim-card">
+                    <div style="font-weight:bold">${claim.bountyTitle}</div>
+                    <div style="font-size:12px; color:#888">${claim.description || 'Ingen beskrivning'}</div>
+                    <div><span class="claim-status ${claim.status === 'approved' ? 'status-approved' : claim.status === 'rejected' ? 'status-rejected' : 'status-pending'}">${claim.status === 'approved' ? '✅ Godkänd' : claim.status === 'rejected' ? '❌ Avslagen' : '⏳ Väntar'}</span></div>
+                    ${claim.status === 'approved' ? `<div style="color:#39FF14; margin-top:5px">+${claim.reward} coins!</div>` : ''}
+                </div>
+            `).join('');
         }
 
         // ============ PROFILE ============
@@ -591,89 +301,46 @@
             const pet = PET_TYPES[user.petType];
             const expPercent = (user.petExp / 100) * 100;
             container.innerHTML = `
-                <div class="profile-header">
-                    <div class="profile-avatar">${pet.emoji}</div>
-                    <div style="font-size:24px; font-weight:bold">${user.name}</div>
-                    <div style="color:#888">${pet.name} · Level ${user.petLevel}</div>
-                </div>
-                <div class="stats-row">
-                    <div class="stat"><div class="stat-value">${user.streak}</div><div>Streak</div></div>
-                    <div class="stat"><div class="stat-value">${user.meetings}</div><div>Möten</div></div>
-                    <div class="stat"><div class="stat-value">${user.coins}</div><div>Coins</div></div>
-                </div>
-                <div class="pet-detail" style="background:rgba(255,255,255,0.05); border-radius:30px; padding:20px; text-align:center">
-                    <div class="exp-bar"><div class="exp-fill" style="width:${expPercent}%"></div></div>
-                    <div>${user.petExp}/100 XP till level ${user.petLevel + 1}</div>
-                    <div class="abilities" style="display:flex; gap:8px; justify-content:center; margin-top:15px">
-                        ${pet.abilities.map(a => `<span style="background:rgba(57,255,20,0.15); padding:6px 14px; border-radius:20px; font-size:12px">${a}</span>`).join('')}
-                    </div>
-                </div>
-                <button class="btn-primary" style="margin-top:20px" onclick="shareProfile()">📤 DELA PROFIL</button>
+                <div class="profile-header"><div class="profile-avatar">${pet.emoji}</div><div style="font-size:24px; font-weight:bold">${user.name}</div><div style="color:#888">${pet.name} · Level ${user.petLevel}</div></div>
+                <div class="stats-row"><div class="stat"><div class="stat-value">${user.streak}</div><div>Streak</div></div><div class="stat"><div class="stat-value">${user.meetings}</div><div>Möten</div></div><div class="stat"><div class="stat-value">${user.coins}</div><div>Coins</div></div></div>
+                <div class="pet-detail" style="background:rgba(255,255,255,0.05); border-radius:30px; padding:20px; text-align:center"><div class="exp-bar"><div class="exp-fill" style="width:${expPercent}%"></div></div><div>${user.petExp}/100 XP till level ${user.petLevel + 1}</div><div class="abilities" style="display:flex; gap:8px; justify-content:center; margin-top:15px">${pet.abilities.map(a => `<span style="background:rgba(57,255,20,0.15); padding:6px 14px; border-radius:20px; font-size:12px">${a}</span>`).join('')}</div></div>
+                <div style="margin:20px 0"><div style="font-weight:bold; margin-bottom:12px">📋 MINA CLAIMS</div><div id="myClaimsContainer"></div></div>
+                <button class="btn-primary" onclick="shareProfile()">📤 DELA PROFIL</button>
             `;
+            renderMyClaims();
         }
-
-        function shareProfile() {
-            const pet = PET_TYPES[user.petType];
-            const shareText = `🔥 ${user.name} - ${pet.name} Level ${user.petLevel}!\n${user.streak} dagars streak!\n${user.meetings} IRL-möten!\nLadda ner MY PET WORLD!`;
-            if (navigator.share) navigator.share({ title: 'MY PET', text: shareText });
-            else alert(shareText);
-        }
+        function shareProfile() { const pet = PET_TYPES[user.petType]; const shareText = `🔥 ${user.name} - ${pet.name} Level ${user.petLevel}! ${user.streak} dagars streak! Ladda ner MY PET WORLD!`; if (navigator.share) navigator.share({ title: 'MY PET', text: shareText }); else alert(shareText); }
 
         // ============ CAMERA ============
         function openCamera() { document.getElementById('cameraModal').classList.remove('hidden'); }
         function closeCamera() { document.getElementById('cameraModal').classList.add('hidden'); selectedImage = null; document.getElementById('postButtons').style.display = 'none'; }
-        function selectImage() {
-            let input = document.createElement('input');
-            input.type = 'file';
-            input.accept = 'image/*';
-            input.onchange = (e) => {
-                let file = e.target.files[0];
-                let reader = new FileReader();
-                reader.onload = (event) => {
-                    selectedImage = event.target.result;
-                    document.getElementById('postButtons').style.display = 'block';
-                };
-                reader.readAsDataURL(file);
-            };
-            input.click();
-        }
-        function submitPost() {
-            if (selectedImage) {
-                const newPost = { id: Date.now().toString(), userName: user.name, userAvatar: '👤', petEmoji: PET_TYPES[user.petType].emoji, content: 'Kolla in mitt äventyr! 🔥', likes: 0, timeAgo: 'just nu' };
-                posts.unshift(newPost);
-                selectedImage = null;
-                closeCamera();
-                renderFeed();
-                switchTab('feed');
-            }
-        }
+        function selectImage() { let input = document.createElement('input'); input.type = 'file'; input.accept = 'image/*'; input.onchange = (e) => { let file = e.target.files[0]; let reader = new FileReader(); reader.onload = (event) => { selectedImage = event.target.result; document.getElementById('postButtons').style.display = 'block'; }; reader.readAsDataURL(file); }; input.click(); }
+        function submitPost() { if (selectedImage) { const newPost = { id: Date.now().toString(), userName: user.name, userAvatar: '👤', petEmoji: PET_TYPES[user.petType].emoji, content: 'Kolla in mitt äventyr! 🔥', likes: 0, timeAgo: 'just nu' }; posts.unshift(newPost); selectedImage = null; closeCamera(); renderFeed(); switchTab('feed'); } }
 
-        function openShop() { renderShop(); document.getElementById('shopModal').classList.remove('hidden'); }
-        function closeShop() { document.getElementById('shopModal').classList.add('hidden'); }
+        // ============ NEARBY ============
+        function meetFriend(name) { user.meetings++; user.streak++; user.petExp += 15; if (user.petExp >= 100) { user.petExp = 0; user.petLevel++; alert(`🎉 LEVEL UP! Din pet är nu level ${user.petLevel}!`); } saveUser(); renderProfile(); alert(`✅ Du mötte ${name}! +15 XP till din pet`); }
+        function renderNearby() { const container = document.getElementById('nearbyContainer'); if (!container) return; container.innerHTML = `<div style="margin-bottom:20px"><div style="font-weight:bold; margin-bottom:12px">📍 VÄNNER I NÄRHETEN</div><div class="friends-grid">${friends.map(f => `<div class="friend-card" onclick="meetFriend('${f.name}')"><div style="font-size:50px">${f.avatar}</div><div style="font-weight:bold">${f.name}</div><div>${f.petEmoji} · ${f.distance}</div><button class="shop-btn" style="margin-top:10px">🤝 MÖT</button></div>`).join('')}</div></div>`; }
 
         // ============ TAB NAVIGATION ============
         function switchTab(tab) {
             currentTab = tab;
             document.getElementById('feedContainer').style.display = 'none';
-            const nearbyEl = document.getElementById('nearbyScreen');
-            const profileEl = document.getElementById('profileScreen');
-            const shopEl = document.getElementById('shopScreen');
-            if (!nearbyEl) { const div = document.createElement('div'); div.id = 'nearbyScreen'; div.className = 'nearby-screen'; div.style.display = 'none'; div.innerHTML = '<div id="nearbyContainer"></div>'; document.querySelector('.app').insertBefore(div, document.querySelector('.bottom-nav')); }
-            if (!profileEl) { const div = document.createElement('div'); div.id = 'profileScreen'; div.className = 'profile-screen'; div.style.display = 'none'; div.innerHTML = '<div id="profileContainer"></div>'; document.querySelector('.app').insertBefore(div, document.querySelector('.bottom-nav')); }
-            const newNearby = document.getElementById('nearbyScreen');
-            const newProfile = document.getElementById('profileScreen');
-            if (newNearby) newNearby.style.display = 'none';
-            if (newProfile) newProfile.style.display = 'none';
+            const createScreen = (id, className, contentId) => { if (!document.getElementById(id)) { const div = document.createElement('div'); div.id = id; div.className = className; div.style.display = 'none'; div.innerHTML = `<div id="${contentId}"></div>`; document.querySelector('.app').insertBefore(div, document.querySelector('.bottom-nav')); } return document.getElementById(id); };
+            createScreen('nearbyScreen', 'nearby-screen', 'nearbyContainer');
+            createScreen('profileScreen', 'profile-screen', 'profileContainer');
+            createScreen('bountiesScreen', 'bounties-screen', 'bountiesContainer');
+            const nearby = document.getElementById('nearbyScreen'), profile = document.getElementById('profileScreen'), bounties = document.getElementById('bountiesScreen');
+            if (nearby) nearby.style.display = 'none'; if (profile) profile.style.display = 'none'; if (bounties) bounties.style.display = 'none';
             if (tab === 'feed') { document.getElementById('feedContainer').style.display = 'block'; renderFeed(); }
-            if (tab === 'nearby') { if (newNearby) { newNearby.style.display = 'block'; renderNearby(); } }
-            if (tab === 'profile') { if (newProfile) { newProfile.style.display = 'block'; renderProfile(); } }
+            if (tab === 'nearby') { if (nearby) { nearby.style.display = 'block'; renderNearby(); } }
+            if (tab === 'profile') { if (profile) { profile.style.display = 'block'; renderProfile(); } }
+            if (tab === 'bounties') { if (bounties) { bounties.style.display = 'block'; renderBounties(); } }
             if (tab === 'shop') { openShop(); return; }
-            const icons = { feed: 'navFeedIcon', nearby: 'navNearbyIcon', profile: 'navProfileIcon', shop: 'navShopIcon' };
-            const labels = { feed: 'navFeedLabel', nearby: 'navNearbyLabel', profile: 'navProfileLabel', shop: 'navShopLabel' };
+            const icons = { feed: 'navFeedIcon', nearby: 'navNearbyIcon', profile: 'navProfileIcon', bounties: 'navBountiesIcon', shop: 'navShopIcon' };
+            const labels = { feed: 'navFeedLabel', nearby: 'navNearbyLabel', profile: 'navProfileLabel', bounties: 'navBountiesLabel', shop: 'navShopLabel' };
             Object.keys(icons).forEach(t => { const icon = document.getElementById(icons[t]); const label = document.getElementById(labels[t]); if (icon) icon.classList.remove('active'); if (label) label.classList.remove('active'); });
             const activeIcon = document.getElementById(icons[tab]); const activeLabel = document.getElementById(labels[tab]);
-            if (activeIcon) activeIcon.classList.add('active');
-            if (activeLabel) activeLabel.classList.add('active');
+            if (activeIcon) activeIcon.classList.add('active'); if (activeLabel) activeLabel.classList.add('active');
         }
 
         init();
