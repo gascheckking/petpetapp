@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>MY PET 🔥</title>
+    <title>MY PET WORLD 🔥</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="https://emojicdn.elk.sh/🐉">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#000000">
     <style>
         * {
             margin: 0;
@@ -20,7 +25,6 @@
             width: 100vw;
         }
 
-        /* Main Container */
         .app {
             width: 100%;
             height: 100%;
@@ -28,16 +32,14 @@
             background: #000;
         }
 
-        /* TikTok Feed */
+        /* Feed */
         .feed {
             height: 100%;
             overflow-y: scroll;
             scroll-snap-type: y mandatory;
             -webkit-overflow-scrolling: touch;
         }
-        .feed::-webkit-scrollbar {
-            display: none;
-        }
+        .feed::-webkit-scrollbar { display: none; }
         .post {
             height: 100vh;
             scroll-snap-align: start;
@@ -61,11 +63,10 @@
             font-size: 90px;
             filter: drop-shadow(0 0 20px rgba(57, 255, 20, 0.6));
             animation: petFloat 3s ease-in-out infinite;
-            transition: all 0.3s;
         }
         @keyframes petFloat {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-12px) rotate(3deg); }
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
         }
         .pet-level {
             background: rgba(0,0,0,0.7);
@@ -76,13 +77,6 @@
             color: #39FF14;
             margin-top: 8px;
             border: 1px solid rgba(57,255,20,0.3);
-            font-weight: bold;
-        }
-        .pet-name {
-            color: #fff;
-            font-size: 12px;
-            margin-top: 4px;
-            opacity: 0.8;
         }
 
         /* Post Content */
@@ -116,15 +110,6 @@
             font-weight: 500;
             color: #fff;
             margin-bottom: 16px;
-            line-height: 1.4;
-            text-shadow: 0 0 10px rgba(0,0,0,0.5);
-        }
-        .post-image {
-            width: 100%;
-            max-height: 300px;
-            border-radius: 20px;
-            margin-top: 10px;
-            object-fit: cover;
         }
 
         /* Action Sidebar */
@@ -140,20 +125,10 @@
         .action {
             text-align: center;
             cursor: pointer;
-            transition: transform 0.2s;
         }
-        .action:active {
-            transform: scale(0.85);
-        }
-        .action-icon {
-            font-size: 32px;
-            filter: drop-shadow(0 0 5px rgba(0,0,0,0.5));
-        }
-        .action-count {
-            font-size: 11px;
-            color: #fff;
-            margin-top: 4px;
-        }
+        .action:active { transform: scale(0.85); }
+        .action-icon { font-size: 32px; }
+        .action-count { font-size: 11px; color: #fff; margin-top: 4px; }
 
         /* Bottom Navigation */
         .bottom-nav {
@@ -181,7 +156,6 @@
         .nav-icon {
             font-size: 24px;
             opacity: 0.5;
-            transition: all 0.2s;
         }
         .nav-icon.active {
             opacity: 1;
@@ -202,9 +176,7 @@
             font-size: 10px;
             color: #888;
         }
-        .nav-label.active {
-            color: #39FF14;
-        }
+        .nav-label.active { color: #39FF14; }
 
         /* Modals */
         .modal {
@@ -231,49 +203,52 @@
             overflow-y: auto;
             padding: 20px;
         }
-        .hidden {
-            display: none;
-        }
+        .hidden { display: none; }
 
-        /* Camera Preview */
-        .camera-preview {
-            flex: 1;
-            background: #000;
+        /* Shop Styles */
+        .shop-item {
+            background: rgba(255,255,255,0.05);
+            border-radius: 25px;
+            padding: 15px;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
-            justify-content: center;
-        }
-        .preview-img {
-            width: 100%;
-            max-height: 70vh;
-            object-fit: contain;
-        }
-        .camera-buttons {
-            padding: 20px;
-            display: flex;
             gap: 15px;
-            justify-content: center;
         }
-        .btn-primary {
+        .discount-badge {
+            background: #ff3333;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+        .shop-btn {
             background: linear-gradient(135deg, #39FF14, #ff3333);
-            padding: 14px 28px;
-            border-radius: 30px;
+            padding: 8px 20px;
+            border-radius: 20px;
             border: none;
             font-weight: bold;
-            font-size: 16px;
             cursor: pointer;
         }
-        .btn-secondary {
-            background: rgba(255,255,255,0.1);
-            padding: 14px 28px;
-            border-radius: 30px;
-            border: none;
-            color: #fff;
-            cursor: pointer;
+        .code-box {
+            background: #1a1a1a;
+            padding: 12px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 10px;
         }
 
-        /* Profile Screen */
-        .profile-screen {
+        /* IRL Shops */
+        .shop-card {
+            background: linear-gradient(135deg, rgba(57,255,20,0.1), rgba(255,51,51,0.1));
+            border-radius: 25px;
+            padding: 15px;
+            margin-bottom: 12px;
+            border: 1px solid rgba(57,255,20,0.3);
+        }
+
+        /* Profile */
+        .profile-screen, .nearby-screen, .shop-screen {
             height: 100%;
             overflow-y: auto;
             padding: 20px;
@@ -299,20 +274,10 @@
             gap: 30px;
             margin: 20px 0;
         }
-        .stat {
-            text-align: center;
-        }
         .stat-value {
             font-size: 28px;
             font-weight: bold;
             color: #39FF14;
-        }
-        .pet-detail {
-            background: rgba(255,255,255,0.05);
-            border-radius: 30px;
-            padding: 20px;
-            margin: 20px 0;
-            text-align: center;
         }
         .exp-bar {
             height: 8px;
@@ -325,103 +290,15 @@
             height: 100%;
             background: linear-gradient(90deg, #39FF14, #ff3333);
             width: 0%;
-            border-radius: 4px;
-            transition: width 0.3s;
         }
-        .abilities {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            justify-content: center;
-            margin-top: 15px;
-        }
-        .ability {
-            background: rgba(57,255,20,0.15);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 12px;
-            border: 1px solid rgba(57,255,20,0.3);
-        }
-
-        /* Nearby Screen */
-        .nearby-screen {
-            height: 100%;
-            overflow-y: auto;
-            padding: 20px;
-        }
-        .challenge-card {
-            background: linear-gradient(135deg, rgba(57,255,20,0.1), rgba(255,51,51,0.1));
-            border-radius: 25px;
-            padding: 18px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(57,255,20,0.3);
-        }
-        .friends-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-        .friend-card {
-            background: rgba(255,255,255,0.05);
-            backdrop-filter: blur(10px);
-            border-radius: 25px;
-            padding: 15px;
-            width: calc(50% - 6px);
-            text-align: center;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-        .friend-card:active {
-            transform: scale(0.97);
-        }
-        .meet-btn {
+        .btn-primary {
             background: linear-gradient(135deg, #39FF14, #ff3333);
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
+            padding: 14px 28px;
+            border-radius: 30px;
             border: none;
-            margin-top: 10px;
-            cursor: pointer;
-        }
-
-        /* Leaderboard */
-        .leaderboard {
-            margin-top: 20px;
-        }
-        .leaderboard-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px;
-            background: rgba(255,255,255,0.03);
-            border-radius: 15px;
-            margin-bottom: 8px;
-        }
-        .rank {
-            width: 35px;
-            font-size: 18px;
             font-weight: bold;
-            color: #39FF14;
-        }
-
-        /* Badges */
-        .badges-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-top: 15px;
-        }
-        .badge {
-            background: rgba(255,255,255,0.05);
-            border-radius: 20px;
-            padding: 12px;
-            text-align: center;
-            min-width: 80px;
-        }
-        .badge.unlocked {
-            background: linear-gradient(135deg, rgba(57,255,20,0.2), rgba(255,51,51,0.2));
-            border: 1px solid rgba(57,255,20,0.5);
+            cursor: pointer;
+            width: 100%;
         }
     </style>
 </head>
@@ -430,22 +307,31 @@
         <!-- Feed -->
         <div id="feedContainer" class="feed"></div>
 
+        <!-- Shop Modal -->
+        <div id="shopModal" class="modal hidden">
+            <div class="modal-header">
+                <button class="btn-secondary" onclick="closeShop()" style="background:none; color:#fff; border:none">Stäng</button>
+                <span style="font-weight:bold">🛍️ MY PET SHOP</span>
+                <div style="width:50px"></div>
+            </div>
+            <div class="modal-content" id="shopContent"></div>
+        </div>
+
         <!-- Camera Modal -->
         <div id="cameraModal" class="modal hidden">
             <div class="modal-header">
-                <button class="btn-secondary" onclick="closeCamera()">Stäng</button>
+                <button class="btn-secondary" onclick="closeCamera()" style="background:none; color:#fff; border:none">Stäng</button>
                 <span style="font-weight:bold">📸 Nytt inlägg</span>
                 <div style="width:50px"></div>
             </div>
-            <div class="camera-preview" id="cameraPreview">
+            <div class="modal-content" style="display:flex; flex-direction:column; align-items:center; justify-content:center">
                 <div style="text-align:center">
                     <div style="font-size:60px; margin-bottom:20px">🐾</div>
                     <button class="btn-primary" onclick="selectImage()">Välj bild</button>
                 </div>
-            </div>
-            <div class="camera-buttons" id="postButtons" style="display:none">
-                <button class="btn-secondary" onclick="clearImage()">Ta bort</button>
-                <button class="btn-primary" onclick="submitPost()">📤 Posta</button>
+                <div id="postButtons" style="display:none; margin-top:20px; width:100%">
+                    <button class="btn-primary" onclick="submitPost()" style="margin-top:10px">📤 Posta</button>
+                </div>
             </div>
         </div>
 
@@ -454,6 +340,10 @@
             <button class="nav-item" onclick="switchTab('feed')">
                 <span class="nav-icon" id="navFeedIcon">🔥</span>
                 <span class="nav-label" id="navFeedLabel">Feed</span>
+            </button>
+            <button class="nav-item" onclick="switchTab('shop')">
+                <span class="nav-icon" id="navShopIcon">🛍️</span>
+                <span class="nav-label" id="navShopLabel">Shop</span>
             </button>
             <button class="nav-item" onclick="openCamera()">
                 <div class="nav-camera"><span>📸</span></div>
@@ -473,10 +363,9 @@
     <script>
         // ============ PET DATA ============
         const PET_TYPES = {
-            dragon: { name: 'Eldraken', emoji: '🐉', baseEmoji: '🐉', abilities: ['🔥 Fire Breath', '🪽 Fly', '⚡ Lightning'] },
-            wolf: { name: 'Skuggvarg', emoji: '🐺', baseEmoji: '🐺', abilities: ['🌙 Howl', '🏃 Hunt', '👁️ Sense'] },
-            phoenix: { name: 'Fenix', emoji: '🔥', baseEmoji: '🔥', abilities: ['✨ Rebirth', '🕊️ Fly', '❤️ Heal'] },
-            fox: { name: 'MagiRäv', emoji: '🦊', baseEmoji: '🦊', abilities: ['🌀 Charm', '⚡ Dash', '🔮 Magic'] }
+            dragon: { name: 'Eldraken', emoji: '🐉', abilities: ['🔥 Fire Breath', '🪽 Fly', '⚡ Lightning'] },
+            wolf: { name: 'Skuggvarg', emoji: '🐺', abilities: ['🌙 Howl', '🏃 Hunt', '👁️ Sense'] },
+            phoenix: { name: 'Fenix', emoji: '🔥', abilities: ['✨ Rebirth', '🕊️ Fly', '❤️ Heal'] }
         };
 
         // ============ USER DATA ============
@@ -486,40 +375,40 @@
             petType: 'dragon',
             petLevel: 1,
             petExp: 0,
+            coins: 500,
             streak: 0,
             meetings: 0,
             badges: [],
-            posts: []
+            collectedCodes: []
         };
+
+        // ============ SHOP DATA ============
+        let shopItems = [
+            { id: 'skin1', name: '🔥 Fire Wings', price: 200, emoji: '🔥', type: 'skin', discount: null },
+            { id: 'skin2', name: '✨ Legendary Glow', price: 500, emoji: '✨', type: 'skin', discount: null },
+            { id: 'item1', name: 'XP Boost x2', price: 100, emoji: '⚡', type: 'powerup', discount: null }
+        ];
+
+        let discountCodes = [
+            { code: 'MYPET20', discount: 20, expires: '2026-05-01', partner: 'Svenska Spel' },
+            { code: 'WELCOME10', discount: 10, expires: '2026-12-31', partner: 'Welcome Deal' }
+        ];
+
+        let irlShops = [
+            { name: '🐉 Drake Spelbutik', address: 'Tumba Centrum', distance: '500m', discount: '15% på allt med koden DRAGON15' },
+            { name: '🦊 MagiRäv Café', address: 'Skärholmen', distance: '1.2km', discount: 'Gratis kaffe vid köp' }
+        ];
 
         // ============ MOCK DATA ============
         let posts = [
-            { id: 'p1', userId: 'ella', userName: 'Ella', userAvatar: '👩‍🎤', petEmoji: '🐉', content: 'Mötte Max idag! 🔥 Vår pet spelade ihop!', likes: 47, timeAgo: '15 min', image: null },
-            { id: 'p2', userId: 'max', userName: 'Max', userAvatar: '🧑‍🚀', petEmoji: '🐺', content: 'Level up! Min varg är nu level 8 💀', likes: 32, timeAgo: '1 tim', image: null },
-            { id: 'p3', userId: 'clara', userName: 'Clara', userAvatar: '👩‍💻', petEmoji: '🦊', content: 'Hittade en legendary skin! ✨', likes: 89, timeAgo: '3 tim', image: null }
+            { id: 'p1', userName: 'Ella', userAvatar: '👩‍🎤', petEmoji: '🐉', content: 'Köpte Fire Wings till min drake! 🔥', likes: 47, timeAgo: '15 min' },
+            { id: 'p2', userName: 'Max', userAvatar: '🧑‍🚀', petEmoji: '🐺', content: 'Level 10! 🎉', likes: 32, timeAgo: '1 tim' }
         ];
 
         let friends = [
-            { id: 'ella', name: 'Ella', avatar: '👩‍🎤', petEmoji: '🐉', petLevel: 12, distance: '300m' },
-            { id: 'max', name: 'Max', avatar: '🧑‍🚀', petEmoji: '🐺', petLevel: 8, distance: '800m' },
-            { id: 'clara', name: 'Clara', avatar: '👩‍💻', petEmoji: '🦊', petLevel: 5, distance: '1.2km' },
-            { id: 'leo', name: 'Leo', avatar: '🧑‍🎤', petEmoji: '🐱', petLevel: 3, distance: '2km' }
+            { name: 'Ella', avatar: '👩‍🎤', petEmoji: '🐉', distance: '300m' },
+            { name: 'Max', avatar: '🧑‍🚀', petEmoji: '🐺', distance: '800m' }
         ];
-
-        let leaderboard = [
-            { name: 'Ella', petLevel: 12, streak: 47 },
-            { name: 'Max', petLevel: 8, streak: 32 },
-            { name: 'Clara', petLevel: 5, streak: 28 },
-            { name: 'Du', petLevel: 1, streak: 0 }
-        ];
-
-        let dailyQuest = {
-            title: 'Träffa 2 kompisar',
-            description: 'Möt vänner IRL och få din pet att växa',
-            progress: 0,
-            required: 2,
-            reward: '250 XP + 🎁 Rare Skin'
-        };
 
         let currentTab = 'feed';
         let selectedImage = null;
@@ -530,102 +419,209 @@
             if (saved) {
                 user = JSON.parse(saved);
             } else {
-                let name = prompt('🔥 Välkommen till MY PET!\n\nVad heter du?', 'Din vän');
+                let name = prompt('🔥 Välkommen till MY PET WORLD!\n\nVad heter du?', 'Din vän');
                 if (name) {
                     user.name = name;
                     saveUser();
                 }
             }
-            updateLeaderboard();
             renderFeed();
             switchTab('feed');
         }
 
-        function saveUser() {
-            localStorage.setItem('mypet_user', JSON.stringify(user));
-        }
+        function saveUser() { localStorage.setItem('mypet_user', JSON.stringify(user)); }
 
         // ============ FEED ============
         function renderFeed() {
             const container = document.getElementById('feedContainer');
             if (!container) return;
-
             const pet = PET_TYPES[user.petType];
-            
             container.innerHTML = posts.map(post => `
                 <div class="post">
                     <div class="pet-container">
                         <div class="pet-avatar">${pet.emoji}</div>
                         <div class="pet-level">Lv.${user.petLevel}</div>
-                        <div class="pet-name">${pet.name}</div>
                     </div>
-                    
                     <div class="actions">
                         <div class="action" onclick="likePost('${post.id}')">
                             <div class="action-icon">❤️</div>
                             <div class="action-count">${post.likes}</div>
                         </div>
-                        <div class="action" onclick="sharePost('${post.id}')">
-                            <div class="action-icon">📤</div>
-                        </div>
                     </div>
-                    
                     <div class="post-content">
                         <div class="post-user">
                             <div class="post-avatar">${post.userAvatar}</div>
-                            <div>
-                                <div class="post-name">${post.userName} · ${post.petEmoji}</div>
-                                <div class="post-time">${post.timeAgo}</div>
-                            </div>
+                            <div><div class="post-name">${post.userName} · ${post.petEmoji}</div><div class="post-time">${post.timeAgo}</div></div>
                         </div>
                         <div class="post-text">${post.content}</div>
-                        ${post.image ? `<img src="${post.image}" class="post-image">` : ''}
                     </div>
                 </div>
             `).join('');
         }
 
-        function likePost(postId) {
-            const post = posts.find(p => p.id === postId);
-            if (post) {
-                post.likes++;
-                renderFeed();
-                // Animation feedback
-                const btn = event.currentTarget;
-                btn.style.transform = 'scale(1.2)';
-                setTimeout(() => btn.style.transform = '', 200);
+        function likePost(id) {
+            let post = posts.find(p => p.id === id);
+            if (post) { post.likes++; renderFeed(); }
+        }
+
+        // ============ SHOP ============
+        function renderShop() {
+            const container = document.getElementById('shopContent');
+            if (!container) return;
+            container.innerHTML = `
+                <div style="margin-bottom:20px">
+                    <div style="display:flex; justify-content:space-between; align-items:center">
+                        <span style="font-size:24px; font-weight:bold">💰 ${user.coins} coins</span>
+                        <span style="background:#39FF14; padding:4px 12px; border-radius:20px; color:#000; font-weight:bold">Lv.${user.petLevel}</span>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom:25px">
+                    <div style="font-weight:bold; margin-bottom:12px">🎟️ RABATTKODER</div>
+                    ${discountCodes.map(code => `
+                        <div class="code-box">
+                            <div style="font-weight:bold">${code.code}</div>
+                            <div>${code.discount}% rabatt · ${code.partner}</div>
+                            <button class="shop-btn" style="margin-top:8px" onclick="claimCode('${code.code}')">Använd kod</button>
+                        </div>
+                    `).join('')}
+                </div>
+                
+                <div style="margin-bottom:25px">
+                    <div style="font-weight:bold; margin-bottom:12px">🛍️ SHOP</div>
+                    ${shopItems.map(item => `
+                        <div class="shop-item">
+                            <div style="font-size:40px">${item.emoji}</div>
+                            <div style="flex:1"><div style="font-weight:bold">${item.name}</div><div style="font-size:11px; color:#888">${item.price} coins</div></div>
+                            <button class="shop-btn" onclick="buyItem('${item.id}', ${item.price})">Köp</button>
+                        </div>
+                    `).join('')}
+                </div>
+                
+                <div>
+                    <div style="font-weight:bold; margin-bottom:12px">🏪 IRL SHOPS (SPELA IN)</div>
+                    ${irlShops.map(shop => `
+                        <div class="shop-card">
+                            <div style="font-weight:bold">${shop.name}</div>
+                            <div style="font-size:12px; color:#888">${shop.address} · ${shop.distance}</div>
+                            <div style="font-size:12px; color:#39FF14; margin:8px 0">${shop.discount}</div>
+                            <button class="shop-btn" onclick="visitShop('${shop.name}')">🎮 Spela in</button>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function buyItem(itemId, price) {
+            if (user.coins >= price) {
+                user.coins -= price;
+                saveUser();
+                alert(`✅ Du köpte ${shopItems.find(i => i.id === itemId).name}!`);
+                renderShop();
+            } else {
+                alert(`❌ Du har inte tillräckligt med coins! (${user.coins}/${price})`);
             }
         }
 
-        function sharePost(postId) {
-            const post = posts.find(p => p.id === postId);
-            if (post) {
-                const shareText = `🔥 ${post.content}\n\nMin pet är level ${user.petLevel}!\nLadda ner MY PET!`;
-                if (navigator.share) {
-                    navigator.share({ title: 'MY PET', text: shareText });
-                } else {
-                    alert(shareText);
-                }
+        function claimCode(code) {
+            if (user.collectedCodes.includes(code)) {
+                alert('❌ Du har redan använt denna kod!');
+                return;
             }
+            const discount = discountCodes.find(c => c.code === code);
+            if (discount) {
+                user.coins += 100;
+                user.collectedCodes.push(code);
+                saveUser();
+                alert(`✅ Kod ${code} inlöst! Du fick 100 coins!`);
+                renderShop();
+            }
+        }
+
+        function visitShop(shopName) {
+            user.coins += 50;
+            user.meetings++;
+            saveUser();
+            alert(`🎮 Du besökte ${shopName}! +50 coins och din pet fick XP!`);
+            renderShop();
+            renderNearby();
+            renderProfile();
+        }
+
+        // ============ NEARBY ============
+        function meetFriend(name) {
+            user.meetings++;
+            user.streak++;
+            user.petExp += 15;
+            if (user.petExp >= 100) {
+                user.petExp = 0;
+                user.petLevel++;
+                alert(`🎉 LEVEL UP! Din pet är nu level ${user.petLevel}!`);
+            }
+            saveUser();
+            renderNearby();
+            renderProfile();
+            alert(`✅ Du mötte ${name}! +15 XP till din pet`);
+        }
+
+        function renderNearby() {
+            const container = document.getElementById('nearbyContainer');
+            if (!container) return;
+            container.innerHTML = `
+                <div style="margin-bottom:20px">
+                    <div style="font-weight:bold; margin-bottom:12px">📍 VÄNNER I NÄRHETEN</div>
+                    <div class="friends-grid" style="display:flex; flex-wrap:wrap; gap:12px">
+                        ${friends.map(f => `
+                            <div class="friend-card" style="background:rgba(255,255,255,0.05); border-radius:25px; padding:15px; width:calc(50% - 6px); text-align:center; cursor:pointer" onclick="meetFriend('${f.name}')">
+                                <div style="font-size:50px">${f.avatar}</div>
+                                <div style="font-weight:bold">${f.name}</div>
+                                <div>${f.petEmoji} · ${f.distance}</div>
+                                <button class="shop-btn" style="margin-top:10px">🤝 MÖT</button>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // ============ PROFILE ============
+        function renderProfile() {
+            const container = document.getElementById('profileContainer');
+            if (!container) return;
+            const pet = PET_TYPES[user.petType];
+            const expPercent = (user.petExp / 100) * 100;
+            container.innerHTML = `
+                <div class="profile-header">
+                    <div class="profile-avatar">${pet.emoji}</div>
+                    <div style="font-size:24px; font-weight:bold">${user.name}</div>
+                    <div style="color:#888">${pet.name} · Level ${user.petLevel}</div>
+                </div>
+                <div class="stats-row">
+                    <div class="stat"><div class="stat-value">${user.streak}</div><div>Streak</div></div>
+                    <div class="stat"><div class="stat-value">${user.meetings}</div><div>Möten</div></div>
+                    <div class="stat"><div class="stat-value">${user.coins}</div><div>Coins</div></div>
+                </div>
+                <div class="pet-detail" style="background:rgba(255,255,255,0.05); border-radius:30px; padding:20px; text-align:center">
+                    <div class="exp-bar"><div class="exp-fill" style="width:${expPercent}%"></div></div>
+                    <div>${user.petExp}/100 XP till level ${user.petLevel + 1}</div>
+                    <div class="abilities" style="display:flex; gap:8px; justify-content:center; margin-top:15px">
+                        ${pet.abilities.map(a => `<span style="background:rgba(57,255,20,0.15); padding:6px 14px; border-radius:20px; font-size:12px">${a}</span>`).join('')}
+                    </div>
+                </div>
+                <button class="btn-primary" style="margin-top:20px" onclick="shareProfile()">📤 DELA PROFIL</button>
+            `;
+        }
+
+        function shareProfile() {
+            const pet = PET_TYPES[user.petType];
+            const shareText = `🔥 ${user.name} - ${pet.name} Level ${user.petLevel}!\n${user.streak} dagars streak!\n${user.meetings} IRL-möten!\nLadda ner MY PET WORLD!`;
+            if (navigator.share) navigator.share({ title: 'MY PET', text: shareText });
+            else alert(shareText);
         }
 
         // ============ CAMERA ============
-        function openCamera() {
-            document.getElementById('cameraModal').classList.remove('hidden');
-        }
-
-        function closeCamera() {
-            document.getElementById('cameraModal').classList.add('hidden');
-            selectedImage = null;
-            document.getElementById('cameraPreview').innerHTML = `
-                <div style="text-align:center">
-                    <div style="font-size:60px; margin-bottom:20px">🐾</div>
-                    <button class="btn-primary" onclick="selectImage()">Välj bild</button>
-                </div>
-            `;
-            document.getElementById('postButtons').style.display = 'none';
-        }
-
+        function openCamera() { document.getElementById('cameraModal').classList.remove('hidden'); }
+        function closeCamera() { document.getElementById('cameraModal').classList.add('hidden'); selectedImage = null; document.getElementById('postButtons').style.display = 'none'; }
         function selectImage() {
             let input = document.createElement('input');
             input.type = 'file';
@@ -635,38 +631,15 @@
                 let reader = new FileReader();
                 reader.onload = (event) => {
                     selectedImage = event.target.result;
-                    document.getElementById('cameraPreview').innerHTML = `<img src="${selectedImage}" class="preview-img">`;
-                    document.getElementById('postButtons').style.display = 'flex';
+                    document.getElementById('postButtons').style.display = 'block';
                 };
                 reader.readAsDataURL(file);
             };
             input.click();
         }
-
-        function clearImage() {
-            selectedImage = null;
-            document.getElementById('cameraPreview').innerHTML = `
-                <div style="text-align:center">
-                    <div style="font-size:60px; margin-bottom:20px">🐾</div>
-                    <button class="btn-primary" onclick="selectImage()">Välj bild</button>
-                </div>
-            `;
-            document.getElementById('postButtons').style.display = 'none';
-        }
-
         function submitPost() {
             if (selectedImage) {
-                const newPost = {
-                    id: Date.now().toString(),
-                    userId: user.id,
-                    userName: user.name,
-                    userAvatar: '👤',
-                    petEmoji: PET_TYPES[user.petType].emoji,
-                    content: 'Kolla in mitt äventyr! 🔥',
-                    likes: 0,
-                    timeAgo: 'just nu',
-                    image: selectedImage
-                };
+                const newPost = { id: Date.now().toString(), userName: user.name, userAvatar: '👤', petEmoji: PET_TYPES[user.petType].emoji, content: 'Kolla in mitt äventyr! 🔥', likes: 0, timeAgo: 'just nu' };
                 posts.unshift(newPost);
                 selectedImage = null;
                 closeCamera();
@@ -675,258 +648,34 @@
             }
         }
 
-        // ============ MEET FRIENDS ============
-        function meetFriend(friendId, friendName) {
-            // Add XP
-            user.petExp += 15;
-            user.meetings++;
-            user.streak++;
-            
-            // Level up
-            let leveledUp = false;
-            if (user.petExp >= 100) {
-                user.petExp -= 100;
-                user.petLevel++;
-                leveledUp = true;
-            }
-            
-            // Update daily quest
-            dailyQuest.progress = Math.min(dailyQuest.progress + 1, dailyQuest.required);
-            
-            // Check quest completion
-            if (dailyQuest.progress >= dailyQuest.required) {
-                user.petExp += 250;
-                alert(`🎉 QUEST KLAR! Du fick: ${dailyQuest.reward} + 250 XP!`);
-                dailyQuest.progress = 0;
-                
-                // Check for level up after quest reward
-                if (user.petExp >= 100) {
-                    user.petExp -= 100;
-                    user.petLevel++;
-                    leveledUp = true;
-                }
-            }
-            
-            // Check for badges
-            if (user.meetings >= 10 && !user.badges.includes('social')) {
-                user.badges.push('social');
-                alert('🏆 NY BADGE! Social Butterfly - 10 IRL-möten!');
-            }
-            if (user.streak >= 7 && !user.badges.includes('streak7')) {
-                user.badges.push('streak7');
-                alert('🏆 NY BADGE! On Fire - 7 dagars streak!');
-            }
-            if (user.petLevel >= 10 && !user.badges.includes('level10')) {
-                user.badges.push('level10');
-                alert('🏆 NY BADGE! Master - Pet level 10!');
-            }
-            
-            saveUser();
-            updateLeaderboard();
-            renderNearby();
-            renderProfile();
-            
-            if (leveledUp) {
-                alert(`🎉 LEVEL UP! Din ${PET_TYPES[user.petType].name} är nu level ${user.petLevel}!`);
-                // Unlock new ability at certain levels
-                if (user.petLevel === 5 || user.petLevel === 10 || user.petLevel === 15) {
-                    alert(`✨ Ny ability upplåst! ${PET_TYPES[user.petType].abilities[Math.floor(user.petLevel/5)]}`);
-                }
-            }
-            
-            alert(`✅ Du mötte ${friendName}! +15 XP till din pet`);
-            renderFeed(); // Update pet level in feed
-        }
-
-        // ============ NEARBY ============
-        function renderNearby() {
-            const container = document.getElementById('nearbyContainer');
-            if (!container) return;
-            
-            const questPercent = (dailyQuest.progress / dailyQuest.required) * 100;
-            
-            container.innerHTML = `
-                <div class="challenge-card">
-                    <div style="font-size:12px; color:#39FF14">⚡️ DAGENS UTMANING</div>
-                    <div style="font-size:16px; font-weight:bold; margin:8px 0">${dailyQuest.title}</div>
-                    <div style="font-size:12px; color:#888; margin-bottom:12px">${dailyQuest.description}</div>
-                    <div class="exp-bar"><div class="exp-fill" style="width:${questPercent}%"></div></div>
-                    <div style="display:flex; justify-content:space-between; margin-top:8px">
-                        <span>${dailyQuest.progress}/${dailyQuest.required}</span>
-                        <span style="color:#39FF14">🎁 ${dailyQuest.reward}</span>
-                    </div>
-                </div>
-                
-                <div style="margin-bottom:15px">
-                    <div style="font-weight:bold; margin-bottom:12px">📍 VÄNNER I NÄRHETEN</div>
-                    <div class="friends-grid">
-                        ${friends.map(friend => `
-                            <div class="friend-card" onclick="meetFriend('${friend.id}', '${friend.name}')">
-                                <div style="font-size:50px">${friend.avatar}</div>
-                                <div style="font-weight:bold; margin:8px 0">${friend.name}</div>
-                                <div>${friend.petEmoji} Lv.${friend.petLevel}</div>
-                                <div style="font-size:11px; color:#888; margin:5px 0">${friend.distance}</div>
-                                <button class="meet-btn">🤝 MÖT</button>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-                
-                <div class="leaderboard">
-                    <div style="font-weight:bold; margin-bottom:12px">🏆 TOPPLISTA</div>
-                    ${leaderboard.map((item, idx) => `
-                        <div class="leaderboard-item">
-                            <div class="rank">${idx === 0 ? '👑' : idx === 1 ? '⭐' : idx === 2 ? '🔥' : `${idx+1}`}</div>
-                            <div style="flex:1">${item.name}</div>
-                            <div style="color:#39FF14">Lv.${item.petLevel}</div>
-                            <div style="font-size:11px; color:#888">${item.streak}d</div>
-                        </div>
-                    `).join('')}
-                </div>
-            `;
-        }
-
-        // ============ PROFILE ============
-        function renderProfile() {
-            const container = document.getElementById('profileContainer');
-            if (!container) return;
-            
-            const pet = PET_TYPES[user.petType];
-            const expPercent = (user.petExp / 100) * 100;
-            
-            container.innerHTML = `
-                <div class="profile-header">
-                    <div class="profile-avatar">${pet.emoji}</div>
-                    <div style="font-size:24px; font-weight:bold">${user.name}</div>
-                    <div style="color:#888">${pet.name} · Level ${user.petLevel}</div>
-                </div>
-                
-                <div class="stats-row">
-                    <div class="stat"><div class="stat-value">${user.streak}</div><div>Streak</div></div>
-                    <div class="stat"><div class="stat-value">${user.meetings}</div><div>Möten</div></div>
-                    <div class="stat"><div class="stat-value">${user.badges.length}</div><div>Badges</div></div>
-                </div>
-                
-                <div class="pet-detail">
-                    <div style="font-size:60px; margin-bottom:10px">${pet.emoji}</div>
-                    <div class="exp-bar"><div class="exp-fill" style="width:${expPercent}%"></div></div>
-                    <div>${user.petExp}/100 XP till level ${user.petLevel + 1}</div>
-                    
-                    <div class="abilities">
-                        ${pet.abilities.map(a => `<span class="ability">${a}</span>`).join('')}
-                    </div>
-                </div>
-                
-                <div>
-                    <div style="font-weight:bold; margin-bottom:12px">🏆 BADGES</div>
-                    <div class="badges-grid">
-                        <div class="badge ${user.badges.includes('social') ? 'unlocked' : ''}">
-                            <div style="font-size:30px">🦋</div>
-                            <div style="font-size:11px">Social Butterfly</div>
-                        </div>
-                        <div class="badge ${user.badges.includes('streak7') ? 'unlocked' : ''}">
-                            <div style="font-size:30px">🔥</div>
-                            <div style="font-size:11px">On Fire</div>
-                        </div>
-                        <div class="badge ${user.badges.includes('level10') ? 'unlocked' : ''}">
-                            <div style="font-size:30px">👑</div>
-                            <div style="font-size:11px">Master</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <button onclick="shareProfile()" style="width:100%; background:rgba(255,255,255,0.05); padding:16px; border-radius:30px; border:1px solid rgba(255,255,255,0.1); color:#fff; margin-top:20px; cursor:pointer">
-                    📤 DELA PROFIL
-                </button>
-            `;
-        }
-
-        function shareProfile() {
-            const pet = PET_TYPES[user.petType];
-            const shareText = `🔥 ${user.name} - ${pet.name} Level ${user.petLevel}!\n${user.streak} dagars streak!\n${user.meetings} IRL-möten!\n\nLadda ner MY PET och tävla med oss!`;
-            if (navigator.share) {
-                navigator.share({ title: 'MY PET', text: shareText });
-            } else {
-                alert(shareText);
-            }
-        }
-
-        function updateLeaderboard() {
-            const userIndex = leaderboard.findIndex(l => l.name === 'Du');
-            if (userIndex !== -1) {
-                leaderboard[userIndex] = { name: 'Du', petLevel: user.petLevel, streak: user.streak };
-            }
-            leaderboard.sort((a, b) => b.petLevel - a.petLevel);
-        }
+        function openShop() { renderShop(); document.getElementById('shopModal').classList.remove('hidden'); }
+        function closeShop() { document.getElementById('shopModal').classList.add('hidden'); }
 
         // ============ TAB NAVIGATION ============
         function switchTab(tab) {
             currentTab = tab;
-            
-            // Hide all screens
             document.getElementById('feedContainer').style.display = 'none';
             const nearbyEl = document.getElementById('nearbyScreen');
             const profileEl = document.getElementById('profileScreen');
-            
-            // Create screens if not exist
-            if (!nearbyEl) {
-                const div = document.createElement('div');
-                div.id = 'nearbyScreen';
-                div.className = 'nearby-screen';
-                div.style.display = 'none';
-                div.innerHTML = '<div id="nearbyContainer"></div>';
-                document.querySelector('.app').insertBefore(div, document.querySelector('.bottom-nav'));
-            }
-            if (!profileEl) {
-                const div = document.createElement('div');
-                div.id = 'profileScreen';
-                div.className = 'profile-screen';
-                div.style.display = 'none';
-                div.innerHTML = '<div id="profileContainer"></div>';
-                document.querySelector('.app').insertBefore(div, document.querySelector('.bottom-nav'));
-            }
-            
+            const shopEl = document.getElementById('shopScreen');
+            if (!nearbyEl) { const div = document.createElement('div'); div.id = 'nearbyScreen'; div.className = 'nearby-screen'; div.style.display = 'none'; div.innerHTML = '<div id="nearbyContainer"></div>'; document.querySelector('.app').insertBefore(div, document.querySelector('.bottom-nav')); }
+            if (!profileEl) { const div = document.createElement('div'); div.id = 'profileScreen'; div.className = 'profile-screen'; div.style.display = 'none'; div.innerHTML = '<div id="profileContainer"></div>'; document.querySelector('.app').insertBefore(div, document.querySelector('.bottom-nav')); }
             const newNearby = document.getElementById('nearbyScreen');
             const newProfile = document.getElementById('profileScreen');
-            
             if (newNearby) newNearby.style.display = 'none';
             if (newProfile) newProfile.style.display = 'none';
-            
-            if (tab === 'feed') {
-                document.getElementById('feedContainer').style.display = 'block';
-                renderFeed();
-            }
-            if (tab === 'nearby') {
-                if (newNearby) {
-                    newNearby.style.display = 'block';
-                    renderNearby();
-                }
-            }
-            if (tab === 'profile') {
-                if (newProfile) {
-                    newProfile.style.display = 'block';
-                    renderProfile();
-                }
-            }
-            
-            // Update nav icons
-            const icons = { feed: 'navFeedIcon', nearby: 'navNearbyIcon', profile: 'navProfileIcon' };
-            const labels = { feed: 'navFeedLabel', nearby: 'navNearbyLabel', profile: 'navProfileLabel' };
-            
-            Object.keys(icons).forEach(t => {
-                const icon = document.getElementById(icons[t]);
-                const label = document.getElementById(labels[t]);
-                if (icon) icon.classList.remove('active');
-                if (label) label.classList.remove('active');
-            });
-            
-            const activeIcon = document.getElementById(icons[tab]);
-            const activeLabel = document.getElementById(labels[tab]);
+            if (tab === 'feed') { document.getElementById('feedContainer').style.display = 'block'; renderFeed(); }
+            if (tab === 'nearby') { if (newNearby) { newNearby.style.display = 'block'; renderNearby(); } }
+            if (tab === 'profile') { if (newProfile) { newProfile.style.display = 'block'; renderProfile(); } }
+            if (tab === 'shop') { openShop(); return; }
+            const icons = { feed: 'navFeedIcon', nearby: 'navNearbyIcon', profile: 'navProfileIcon', shop: 'navShopIcon' };
+            const labels = { feed: 'navFeedLabel', nearby: 'navNearbyLabel', profile: 'navProfileLabel', shop: 'navShopLabel' };
+            Object.keys(icons).forEach(t => { const icon = document.getElementById(icons[t]); const label = document.getElementById(labels[t]); if (icon) icon.classList.remove('active'); if (label) label.classList.remove('active'); });
+            const activeIcon = document.getElementById(icons[tab]); const activeLabel = document.getElementById(labels[tab]);
             if (activeIcon) activeIcon.classList.add('active');
             if (activeLabel) activeLabel.classList.add('active');
         }
 
-        // Start app
         init();
     </script>
 </body>
