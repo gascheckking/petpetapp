@@ -3,31 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>PETPET — Everything Platform</title>
+<title>PETPET — Allt-i-ett plattformen</title>
 <style>
-/* ============ ULTIMATE PLATFORM DESIGN ============ */
-@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap');
 
 :root {
     --bg: #0a0a0c;
     --bg-card: #0f0f12;
     --bg-elevated: #121216;
-    --border: rgba(255,255,255,0.06);
+    --border: rgba(255,255,255,0.05);
     --border-light: rgba(255,255,255,0.03);
     --accent: #39FF14;
-    --accent-dim: rgba(57,255,20,0.12);
+    --accent-dim: rgba(57,255,20,0.08);
     --accent-pink: #ff3cac;
     --accent-blue: #00f0ff;
     --gold: #FFD700;
     --text: #e8e8f0;
     --text-secondary: #8a8a99;
     --text-muted: #555566;
-    --radius-sm: 8px;
-    --radius-md: 12px;
-    --radius-lg: 16px;
-    --radius-xl: 20px;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --radius-xl: 18px;
     --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    --shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -40,20 +38,21 @@ body {
     height: 100vh;
     width: 100vw;
     position: fixed;
-    line-height: 1.5;
+    font-size: 13px;
+    line-height: 1.4;
 }
 
-/* Premium Background */
-.bg-premium {
+/* Background */
+.bg {
     position: fixed;
     inset: 0;
     z-index: 0;
-    background: radial-gradient(ellipse 80% 60% at 30% 20%, rgba(57,255,20,0.04), transparent 60%),
-                radial-gradient(ellipse 60% 50% at 80% 80%, rgba(0,240,255,0.03), transparent 60%),
+    background: radial-gradient(ellipse 80% 60% at 30% 20%, rgba(57,255,20,0.03), transparent 60%),
+                radial-gradient(ellipse 60% 50% at 80% 80%, rgba(0,240,255,0.02), transparent 60%),
                 var(--bg);
 }
 
-/* App Container */
+/* App */
 .app {
     position: relative;
     z-index: 10;
@@ -67,7 +66,7 @@ body {
 
 /* ============ TOP BAR ============ */
 .top-bar {
-    padding: 12px 16px;
+    padding: 10px 16px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -77,46 +76,46 @@ body {
     flex-shrink: 0;
 }
 .logo {
-    font-size: 18px;
-    font-weight: 700;
+    font-size: 15px;
+    font-weight: 600;
     background: linear-gradient(135deg, var(--accent), var(--accent-blue));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 .stats-group {
     display: flex;
-    gap: 8px;
+    gap: 6px;
 }
 .stat-pill {
     background: var(--bg-card);
     border: 1px solid var(--border);
-    padding: 4px 10px;
-    border-radius: 40px;
-    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 30px;
+    font-size: 10px;
     font-weight: 500;
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 3px;
 }
 .stat-pill .value { color: var(--accent); font-weight: 600; }
 .menu-btn {
-    width: 34px;
-    height: 34px;
+    width: 30px;
+    height: 30px;
     background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: 10px;
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    font-size: 14px;
 }
-.menu-btn:active { transform: scale(0.95); }
 
 /* ============ QUICK ACTIONS ============ */
 .quick-actions {
-    padding: 10px 16px;
+    padding: 8px 16px;
     display: flex;
-    gap: 12px;
+    gap: 8px;
     overflow-x: auto;
     scrollbar-width: none;
     flex-shrink: 0;
@@ -126,23 +125,23 @@ body {
 .quick-btn {
     background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: 40px;
-    padding: 8px 16px;
-    font-size: 12px;
+    border-radius: 30px;
+    padding: 5px 12px;
+    font-size: 10px;
     font-weight: 500;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
     white-space: nowrap;
     cursor: pointer;
 }
-.quick-btn:active { transform: scale(0.96); background: var(--bg-elevated); }
+.quick-btn:active { transform: scale(0.96); }
 
-/* ============ STORIES ROW ============ */
+/* ============ STORIES ============ */
 .stories-row {
-    padding: 12px 16px;
+    padding: 10px 16px;
     display: flex;
-    gap: 14px;
+    gap: 12px;
     overflow-x: auto;
     scrollbar-width: none;
     flex-shrink: 0;
@@ -153,13 +152,13 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
+    gap: 3px;
     cursor: pointer;
     flex-shrink: 0;
 }
 .story-ring {
-    width: 62px;
-    height: 62px;
+    width: 52px;
+    height: 52px;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--accent), var(--accent-pink));
     padding: 2px;
@@ -169,16 +168,16 @@ body {
 }
 .story-ring.seen { background: var(--bg-card); border: 2px solid var(--border); }
 .story-inner {
-    width: 56px;
-    height: 56px;
+    width: 46px;
+    height: 46px;
     border-radius: 50%;
     background: var(--bg-card);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 26px;
+    font-size: 22px;
 }
-.story-name { font-size: 10px; color: var(--text-secondary); max-width: 62px; text-align: center; overflow: hidden; text-overflow: ellipsis; }
+.story-name { font-size: 9px; color: var(--text-secondary); max-width: 52px; text-align: center; overflow: hidden; text-overflow: ellipsis; }
 
 /* ============ MAIN CONTENT ============ */
 .main-content {
@@ -190,10 +189,10 @@ body {
     position: absolute;
     inset: 0;
     overflow-y: auto;
-    padding: 16px;
+    padding: 12px;
     display: none;
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
     scrollbar-width: thin;
 }
 .view.active { display: flex; }
@@ -203,67 +202,64 @@ body {
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--radius-xl);
-    padding: 16px;
+    padding: 12px;
 }
 .card-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
 .card-title {
-    font-size: 12px;
+    font-size: 10px;
     font-weight: 600;
     letter-spacing: 0.5px;
     text-transform: uppercase;
     color: var(--text-muted);
 }
 .card-link {
-    font-size: 11px;
+    font-size: 10px;
     color: var(--accent);
     cursor: pointer;
 }
 
-/* ============ BOUNTY CARD (MAIN FOCUS) ============ */
+/* ============ BOUNTY CARD ============ */
 .bounty-card {
     background: linear-gradient(135deg, var(--bg-elevated), var(--bg-card));
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    padding: 16px;
-    margin-bottom: 12px;
+    padding: 12px;
+    margin-bottom: 8px;
     cursor: pointer;
-    transition: all 0.2s;
 }
-.bounty-card:active { transform: scale(0.98); border-color: rgba(57,255,20,0.2); }
 .bounty-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
-.bounty-title { font-size: 15px; font-weight: 700; }
+.bounty-title { font-size: 13px; font-weight: 600; }
 .bounty-reward {
-    font-size: 16px;
-    font-weight: 700;
+    font-size: 13px;
+    font-weight: 600;
     color: var(--gold);
 }
 .bounty-reward.sek { color: var(--accent); }
-.bounty-desc { font-size: 12px; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.4; }
+.bounty-desc { font-size: 11px; color: var(--text-secondary); margin-bottom: 8px; }
 .bounty-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 11px;
+    font-size: 10px;
     color: var(--text-muted);
 }
-.bounty-deadline { display: flex; align-items: center; gap: 4px; }
 .bounty-do-btn {
     background: var(--accent-dim);
     border: 1px solid rgba(57,255,20,0.2);
-    padding: 6px 16px;
-    border-radius: 40px;
-    font-size: 11px;
-    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 30px;
+    font-size: 10px;
+    font-weight: 500;
     color: var(--accent);
     cursor: pointer;
 }
@@ -276,28 +272,29 @@ body {
     overflow: hidden;
 }
 .post-header {
-    padding: 14px 14px 0;
+    padding: 10px 12px 0;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
 }
 .post-avatar {
-    width: 42px;
-    height: 42px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--accent), var(--accent-pink));
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 20px;
+    font-size: 18px;
+    cursor: pointer;
 }
-.post-name { font-size: 14px; font-weight: 600; }
-.post-time { font-size: 10px; color: var(--text-muted); }
-.post-content { padding: 10px 14px; font-size: 13px; color: var(--text-secondary); }
+.post-name { font-size: 12px; font-weight: 600; cursor: pointer; }
+.post-time { font-size: 9px; color: var(--text-muted); }
+.post-content { padding: 8px 12px; font-size: 12px; color: var(--text-secondary); }
 .post-actions {
-    padding: 10px 14px 14px;
+    padding: 8px 12px 10px;
     display: flex;
-    gap: 20px;
+    gap: 16px;
     border-top: 1px solid var(--border-light);
 }
 .action-btn {
@@ -305,9 +302,9 @@ body {
     border: none;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 5px;
     color: var(--text-muted);
-    font-size: 12px;
+    font-size: 11px;
     cursor: pointer;
 }
 
@@ -315,11 +312,11 @@ body {
 .search-bar {
     background: var(--bg-elevated);
     border: 1px solid var(--border);
-    border-radius: 40px;
-    padding: 10px 16px;
+    border-radius: 30px;
+    padding: 8px 12px;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
 }
 .search-bar input {
     flex: 1;
@@ -327,156 +324,170 @@ body {
     border: none;
     outline: none;
     color: var(--text);
-    font-size: 14px;
+    font-size: 12px;
 }
 .product-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+    gap: 8px;
 }
 .product-card {
     background: var(--bg-elevated);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    padding: 14px;
+    padding: 10px;
     text-align: center;
     cursor: pointer;
 }
-.product-card:active { transform: scale(0.97); }
-.product-emoji { font-size: 32px; margin-bottom: 6px; }
-.product-name { font-size: 13px; font-weight: 600; }
-.product-price { font-size: 12px; color: var(--accent); font-weight: 600; margin-top: 4px; }
+.product-emoji { font-size: 28px; margin-bottom: 4px; }
+.product-name { font-size: 11px; font-weight: 500; }
+.product-price { font-size: 10px; color: var(--accent); font-weight: 500; margin-top: 3px; }
 
-/* ============ CHAT LIST ============ */
+/* ============ CHAT ============ */
 .chat-item {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 12px 0;
+    gap: 10px;
+    padding: 10px 0;
     border-bottom: 1px solid var(--border-light);
     cursor: pointer;
 }
 .chat-avatar {
-    width: 48px;
-    height: 48px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
     background: var(--bg-elevated);
     border: 1px solid var(--border);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 22px;
+    font-size: 20px;
 }
 .chat-info { flex: 1; }
-.chat-name { font-size: 14px; font-weight: 600; }
-.chat-preview { font-size: 11px; color: var(--text-muted); }
-.chat-streak { font-size: 10px; color: #ff4444; margin-top: 2px; }
+.chat-name { font-size: 13px; font-weight: 600; }
+.chat-preview { font-size: 10px; color: var(--text-muted); }
+.chat-streak { font-size: 9px; color: #ff4444; }
 
-/* ============ PROFILE ============ */
-.profile-hero {
-    text-align: center;
-    background: linear-gradient(135deg, rgba(57,255,20,0.04), rgba(0,240,255,0.02));
-    border: 1px solid var(--border);
-    border-radius: var(--radius-xl);
-    padding: 20px;
+/* ============ PROFILE (TikTok/Insta style) ============ */
+.profile-header {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    margin-bottom: 16px;
 }
-.profile-avatar {
-    width: 72px;
-    height: 72px;
-    margin: 0 auto 10px;
-    background: linear-gradient(135deg, var(--accent), var(--accent-pink));
+.profile-avatar-lg {
+    width: 64px;
+    height: 64px;
     border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent-pink));
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 36px;
+    font-size: 32px;
 }
-.profile-name { font-size: 18px; font-weight: 700; }
+.profile-info { flex: 1; }
+.profile-name-lg { font-size: 16px; font-weight: 700; margin-bottom: 2px; }
+.profile-handle { font-size: 10px; color: var(--text-muted); }
+.profile-bio { font-size: 11px; color: var(--text-secondary); margin: 8px 0 12px; }
 .profile-stats {
     display: flex;
-    justify-content: center;
     gap: 24px;
-    margin: 16px 0;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-light);
 }
-.stat-item { text-align: center; }
-.stat-number { font-size: 16px; font-weight: 700; }
-.stat-label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; }
-.xp-bar {
-    height: 4px;
+.stat { text-align: center; }
+.stat-num { font-size: 14px; font-weight: 700; }
+.stat-label { font-size: 9px; color: var(--text-muted); text-transform: uppercase; }
+.profile-actions {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+.follow-btn {
+    background: var(--accent);
+    border: none;
+    border-radius: 30px;
+    padding: 8px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #000;
+    cursor: pointer;
+    flex: 1;
+}
+.message-btn {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    padding: 8px 16px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text);
+    cursor: pointer;
+}
+.xp-bar-sm {
+    height: 3px;
     background: var(--bg-elevated);
     border-radius: 2px;
     overflow: hidden;
-    margin: 12px 0 8px;
+    margin: 10px 0;
 }
-.xp-fill {
+.xp-fill-sm {
     height: 100%;
     background: linear-gradient(90deg, var(--accent), var(--accent-blue));
     border-radius: 2px;
     transition: width 0.3s;
-}
-.abilities-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    justify-content: center;
-    margin-top: 12px;
-}
-.ability-tag {
-    background: var(--accent-dim);
-    border: 1px solid rgba(57,255,20,0.15);
-    padding: 4px 10px;
-    border-radius: 40px;
-    font-size: 10px;
 }
 
 /* ============ MAP ============ */
 .map-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    gap: 8px;
 }
 .map-friend {
     background: var(--bg-elevated);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    padding: 12px;
+    padding: 10px;
     text-align: center;
 }
-.friend-avatar { font-size: 32px; margin-bottom: 6px; }
-.friend-name { font-size: 13px; font-weight: 600; }
-.friend-location { font-size: 10px; color: var(--accent-blue); margin: 4px 0; }
+.friend-avatar { font-size: 28px; margin-bottom: 4px; }
+.friend-name { font-size: 12px; font-weight: 600; }
+.friend-location { font-size: 9px; color: var(--accent-blue); margin: 3px 0; }
 
 /* ============ WORLD ============ */
 .world-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+    gap: 8px;
 }
 .world-location {
     background: var(--bg-elevated);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    padding: 14px;
+    padding: 10px;
     text-align: center;
     cursor: pointer;
 }
 .world-location.locked { opacity: 0.5; }
-.world-emoji { font-size: 28px; margin-bottom: 6px; }
-.world-name { font-size: 13px; font-weight: 600; }
-.world-users { font-size: 10px; color: var(--text-muted); }
+.world-emoji { font-size: 24px; margin-bottom: 4px; }
+.world-name { font-size: 11px; font-weight: 500; }
+.world-users { font-size: 9px; color: var(--text-muted); }
 
 /* ============ COMPARE ============ */
 .compare-result {
     background: var(--bg-elevated);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    padding: 14px;
+    padding: 10px;
 }
 .price-row {
     display: flex;
     justify-content: space-between;
-    padding: 10px 0;
+    padding: 8px 0;
     border-bottom: 1px solid var(--border-light);
+    font-size: 11px;
 }
 .price-row:last-child { border-bottom: none; }
 .best-price { color: var(--accent); font-weight: 600; }
@@ -485,40 +496,39 @@ body {
 .battle-opponents {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+    gap: 8px;
 }
 .opponent-card {
     background: var(--bg-elevated);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    padding: 12px;
+    padding: 10px;
     text-align: center;
     cursor: pointer;
 }
-.opponent-emoji { font-size: 32px; }
-.opponent-name { font-size: 12px; font-weight: 600; margin: 6px 0 2px; }
-.opponent-reward { font-size: 10px; color: var(--accent); }
+.opponent-emoji { font-size: 28px; }
+.opponent-name { font-size: 11px; font-weight: 500; margin: 4px 0 2px; }
+.opponent-reward { font-size: 9px; color: var(--accent); }
 
 /* ============ BUTTONS ============ */
 .btn-primary {
     background: linear-gradient(135deg, var(--accent), #00c853);
     border: none;
-    border-radius: 48px;
-    padding: 12px;
+    border-radius: 40px;
+    padding: 10px;
     font-weight: 600;
-    font-size: 13px;
+    font-size: 12px;
     color: #000;
     cursor: pointer;
     width: 100%;
 }
-.btn-primary:active { transform: scale(0.98); }
 .btn-secondary {
     background: var(--bg-elevated);
     border: 1px solid var(--border);
-    border-radius: 48px;
-    padding: 10px;
+    border-radius: 40px;
+    padding: 8px;
     font-weight: 500;
-    font-size: 12px;
+    font-size: 11px;
     color: var(--text);
     cursor: pointer;
     width: 100%;
@@ -529,7 +539,7 @@ body {
     background: rgba(15,15,18,0.95);
     backdrop-filter: blur(20px);
     border-top: 1px solid var(--border);
-    padding: 8px 12px 20px;
+    padding: 6px 12px 16px;
     display: flex;
     flex-shrink: 0;
 }
@@ -538,26 +548,26 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 3px;
+    gap: 2px;
     background: none;
     border: none;
     cursor: pointer;
     color: var(--text-muted);
 }
-.nav-icon { font-size: 20px; }
-.nav-label { font-size: 9px; font-weight: 500; text-transform: uppercase; }
+.nav-icon { font-size: 18px; }
+.nav-label { font-size: 8px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.3px; }
 .nav-item.active .nav-icon { color: var(--accent); transform: scale(1.05); }
 .nav-item.active .nav-label { color: var(--accent); }
 .nav-camera {
     background: linear-gradient(135deg, var(--accent), var(--accent-blue));
-    width: 48px;
-    height: 48px;
-    border-radius: 24px;
+    width: 44px;
+    height: 44px;
+    border-radius: 22px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: -14px;
-    box-shadow: 0 0 15px rgba(57,255,20,0.3);
+    margin-top: -12px;
+    box-shadow: 0 0 12px rgba(57,255,20,0.3);
 }
 
 /* ============ MODALS ============ */
@@ -571,7 +581,7 @@ body {
     align-items: flex-end;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.25s;
+    transition: opacity 0.2s;
 }
 .modal-overlay.open { opacity: 1; pointer-events: all; }
 .modal-sheet {
@@ -579,28 +589,28 @@ body {
     max-width: 480px;
     margin: 0 auto;
     background: var(--bg-card);
-    border-radius: 28px 28px 0 0;
+    border-radius: 24px 24px 0 0;
     border: 1px solid var(--border);
     border-bottom: none;
-    padding: 20px;
+    padding: 16px;
     transform: translateY(100%);
     transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
 }
 .modal-overlay.open .modal-sheet { transform: translateY(0); }
-.modal-handle { width: 40px; height: 4px; background: var(--border); border-radius: 2px; margin: 0 auto 16px; }
+.modal-handle { width: 32px; height: 3px; background: var(--border); border-radius: 2px; margin: 0 auto 12px; }
 .modal-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 8px;
+    gap: 6px;
 }
 .modal-item {
     background: var(--bg-elevated);
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
-    padding: 12px;
+    padding: 10px;
     text-align: center;
     cursor: pointer;
-    font-size: 13px;
+    font-size: 11px;
     font-weight: 500;
 }
 
@@ -615,7 +625,7 @@ body {
     align-items: flex-end;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.25s;
+    transition: opacity 0.2s;
 }
 .camera-overlay.open { opacity: 1; pointer-events: all; }
 .camera-sheet {
@@ -623,9 +633,9 @@ body {
     max-width: 480px;
     margin: 0 auto;
     background: var(--bg-card);
-    border-radius: 28px 28px 0 0;
+    border-radius: 24px 24px 0 0;
     border: 1px solid var(--border);
-    padding: 20px;
+    padding: 16px;
     transform: translateY(100%);
     transition: transform 0.3s;
 }
@@ -634,14 +644,14 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 }
 .camera-close {
     background: var(--bg-elevated);
     border: 1px solid var(--border);
     border-radius: 50%;
-    width: 34px;
-    height: 34px;
+    width: 30px;
+    height: 30px;
     cursor: pointer;
 }
 .post-textarea {
@@ -649,13 +659,13 @@ body {
     background: var(--bg-elevated);
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
-    padding: 12px;
+    padding: 10px;
     color: var(--text);
-    font-size: 14px;
+    font-size: 12px;
     resize: none;
-    margin: 16px 0;
+    margin: 12px 0;
 }
-.post-preview { width: 100%; border-radius: var(--radius-md); margin-bottom: 16px; display: none; }
+.post-preview { width: 100%; border-radius: var(--radius-md); margin-bottom: 12px; display: none; }
 
 /* ============ AI CHAT ============ */
 .ai-chat-window {
@@ -670,42 +680,42 @@ body {
 }
 .ai-chat-window.open { transform: translateY(0); }
 .ai-chat-header {
-    padding: 14px;
+    padding: 12px;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     border-bottom: 1px solid var(--border);
 }
 .ai-chat-back {
     background: none;
     border: none;
-    font-size: 22px;
+    font-size: 20px;
     color: var(--text);
     cursor: pointer;
 }
 .ai-chat-avatar {
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--accent-blue), var(--accent-pink));
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 20px;
+    font-size: 18px;
 }
 .ai-messages {
     flex: 1;
     overflow-y: auto;
-    padding: 16px;
+    padding: 12px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
 }
 .msg {
     max-width: 85%;
-    padding: 10px 14px;
-    border-radius: 18px;
-    font-size: 13px;
+    padding: 8px 12px;
+    border-radius: 16px;
+    font-size: 11px;
 }
 .msg.user {
     align-self: flex-end;
@@ -718,24 +728,24 @@ body {
     border: 1px solid var(--border);
 }
 .ai-input-row {
-    padding: 12px;
+    padding: 10px;
     display: flex;
-    gap: 8px;
+    gap: 6px;
     border-top: 1px solid var(--border);
 }
 .ai-input {
     flex: 1;
     background: var(--bg-elevated);
     border: 1px solid var(--border);
-    border-radius: 40px;
-    padding: 10px 14px;
+    border-radius: 30px;
+    padding: 8px 12px;
     color: var(--text);
     outline: none;
-    font-size: 13px;
+    font-size: 11px;
 }
 .ai-send {
-    width: 40px;
-    height: 40px;
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--accent), var(--accent-blue));
     border: none;
@@ -745,14 +755,14 @@ body {
 /* ============ TOAST ============ */
 .toast {
     position: fixed;
-    bottom: 90px;
+    bottom: 80px;
     left: 50%;
     transform: translateX(-50%) translateY(20px);
     background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: 48px;
-    padding: 8px 18px;
-    font-size: 12px;
+    border-radius: 40px;
+    padding: 6px 14px;
+    font-size: 11px;
     font-weight: 500;
     z-index: 999;
     opacity: 0;
@@ -766,7 +776,7 @@ body {
 </style>
 </head>
 <body>
-<div class="bg-premium"></div>
+<div class="bg"></div>
 
 <div class="app">
     <!-- TOP BAR -->
@@ -781,68 +791,79 @@ body {
         <button class="menu-btn" id="menuBtn">☰</button>
     </div>
 
-    <!-- QUICK ACTIONS (TikTok/Insta style) -->
+    <!-- QUICK ACTIONS -->
     <div class="quick-actions">
-        <div class="quick-btn" onclick="showToast('✨ Sökfunktion kommer!', 'success')">🔍 Sök</div>
-        <div class="quick-btn" onclick="showToast('🎁 Dagens bonus!', 'success')">🎁 Bonus</div>
+        <div class="quick-btn" onclick="showToast('🔍 Sökfunktion kommer!', 'success')">🔍 Sök</div>
+        <div class="quick-btn" onclick="claimDailyBonus()">🎁 Bonus</div>
         <div class="quick-btn" onclick="switchView('bounties')">🎯 Uppdrag</div>
         <div class="quick-btn" onclick="switchView('shop')">🛍️ Butik</div>
         <div class="quick-btn" onclick="switchView('map')">📍 Nära dig</div>
         <div class="quick-btn" onclick="openAIChat()">🤖 AI Hjälp</div>
+        <div class="quick-btn" onclick="switchView('compare')">🔍 Jämför</div>
     </div>
 
-    <!-- STORIES (Snapchat style) -->
+    <!-- STORIES -->
     <div class="stories-row" id="storiesRow"></div>
 
     <!-- MAIN CONTENT -->
     <div class="main-content">
-        <!-- FEED VIEW (TikTok/Instagram) -->
+        <!-- FEED VIEW -->
         <div class="view active" id="view-feed"></div>
 
-        <!-- BOUNTIES VIEW (Main focus - paid missions) -->
+        <!-- BOUNTIES VIEW -->
         <div class="view" id="view-bounties">
             <div class="card-header"><div class="card-title">🎯 AKTIVA UPPDRAG</div><div class="card-link" onclick="showCreateBountyModal()">+ Skapa</div></div>
             <div id="bountiesList"></div>
         </div>
 
-        <!-- SHOP VIEW (E-commerce) -->
+        <!-- SHOP VIEW -->
         <div class="view" id="view-shop">
             <div class="search-bar"><span>🔍</span><input id="shopSearch" placeholder="Sök produkter..." oninput="filterShop(this.value)"></div>
             <div class="product-grid" id="shopGrid"></div>
-            <div class="card"><div class="card-header"><div class="card-title">🎟️ Rabattkoder</div></div><div id="codesList"></div></div>
+            <div class="card"><div class="card-header"><div class="card-title">🎟️ RABATTKODER</div></div><div id="codesList"></div></div>
         </div>
 
-        <!-- CHAT VIEW (WeChat style) -->
+        <!-- CHAT VIEW -->
         <div class="view" id="view-chat">
-            <div class="card"><div class="card-header"><div class="card-title">💬 Meddelanden</div></div><div id="chatList"></div></div>
-            <div class="card" style="cursor:pointer;" id="aiChatTrigger"><div style="display:flex; align-items:center; gap:10px;"><div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#00f0ff,#ff3cac);display:flex;align-items:center;justify-content:center;font-size:20px;">🤖</div><div><div style="font-weight:600;">PetPal AI</div><div style="font-size:11px;color:var(--text-muted);">Fråga vad som helst</div></div><div style="margin-left:auto;background:var(--accent-dim);padding:4px 10px;border-radius:40px;font-size:9px;font-weight:600;color:var(--accent);">AI</div></div></div>
+            <div class="card"><div class="card-header"><div class="card-title">💬 MEDDELANDEN</div></div><div id="chatList"></div></div>
+            <div class="card" style="cursor:pointer;" id="aiChatTrigger"><div style="display:flex; align-items:center; gap:8px;"><div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#00f0ff,#ff3cac);display:flex;align-items:center;justify-content:center;font-size:18px;">🤖</div><div><div style="font-weight:600;">PetPal AI</div><div style="font-size:9px;color:var(--text-muted);">Fråga vad som helst</div></div><div style="margin-left:auto;background:var(--accent-dim);padding:2px 8px;border-radius:30px;font-size:8px;font-weight:600;color:var(--accent);">AI</div></div></div>
         </div>
 
-        <!-- PROFILE VIEW -->
+        <!-- PROFILE VIEW (TikTok/Insta style) -->
         <div class="view" id="view-profile">
-            <div class="profile-hero">
-                <div class="profile-avatar">🐉</div>
-                <div class="profile-name" id="profileName">Äventyrare</div>
-                <div class="profile-stats">
-                    <div class="stat-item"><div class="stat-number">24</div><div class="stat-label">INLÄGG</div></div>
-                    <div class="stat-item"><div class="stat-number">1.2K</div><div class="stat-label">FÖLJARE</div></div>
-                    <div class="stat-item"><div class="stat-number">342</div><div class="stat-label">FÖLJER</div></div>
+            <div class="profile-header">
+                <div class="profile-avatar-lg">🐉</div>
+                <div class="profile-info">
+                    <div class="profile-name-lg" id="profileName">Äventyrare</div>
+                    <div class="profile-handle">@petpet_user</div>
                 </div>
-                <div class="xp-bar"><div class="xp-fill" id="xpBar" style="width:60%"></div></div>
-                <div style="font-size:10px;color:var(--text-muted);"><span id="xpVal">60</span>/100 XP</div>
-                <div class="abilities-list" id="abilitiesList"></div>
             </div>
-            <button class="btn-primary" onclick="shareProfile()">📤 Dela profil</button>
+            <div class="profile-bio" id="profileBio">🐉 Pet lover | Explorer | Level 5</div>
+            <div class="profile-stats">
+                <div class="stat"><div class="stat-num">24</div><div class="stat-label">Inlägg</div></div>
+                <div class="stat"><div class="stat-num" id="followersCount">1.2K</div><div class="stat-label">Följare</div></div>
+                <div class="stat"><div class="stat-num" id="followingCount">342</div><div class="stat-label">Följer</div></div>
+            </div>
+            <div class="profile-actions">
+                <button class="follow-btn" id="followBtn" onclick="toggleFollow()">Följ</button>
+                <button class="message-btn" onclick="showToast('💬 Meddelande skickat!', 'success')">Meddelande</button>
+            </div>
+            <div class="card">
+                <div class="card-header"><div class="card-title">🐉 ELDRAKEN</div><div class="card-link">Lv.<span id="petLevel">5</span></div></div>
+                <div class="xp-bar-sm"><div class="xp-fill-sm" id="xpBar" style="width:60%"></div></div>
+                <div style="font-size:9px;color:var(--text-muted);"><span id="xpVal">60</span>/100 XP</div>
+                <div class="abilities-list" id="abilitiesList" style="display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;"></div>
+            </div>
         </div>
 
         <!-- MAP VIEW -->
         <div class="view" id="view-map">
-            <div class="card"><div class="card-header"><div class="card-title">📍 Vänner online</div></div><div class="map-grid" id="mapGrid"></div></div>
+            <div class="card"><div class="card-header"><div class="card-title">📍 VÄNNER ONLINE</div></div><div class="map-grid" id="mapGrid"></div></div>
         </div>
 
         <!-- WORLD VIEW -->
         <div class="view" id="view-world">
-            <div class="card-header"><div class="card-title">🌍 Utforska</div></div>
+            <div class="card-header"><div class="card-title">🌍 UTFORSKA</div></div>
             <div class="world-grid" id="worldGrid"></div>
         </div>
 
@@ -854,8 +875,8 @@ body {
 
         <!-- BATTLE VIEW -->
         <div class="view" id="view-battle">
-            <div id="battlePicker"><div class="card-header"><div class="card-title">⚔️ Välj motståndare</div></div><div class="battle-opponents" id="opponentsGrid"></div></div>
-            <div id="battleArena" style="display:none;"><div class="card"><div id="battleHero" style="display:flex;justify-content:space-between;align-items:center;gap:16px;"></div><div id="battleLog" style="background:var(--bg-elevated);border-radius:var(--radius-md);padding:10px;height:80px;overflow-y:auto;font-size:11px;margin:12px 0;"></div><div id="battleActions" style="display:flex;gap:8px;"></div></div></div>
+            <div id="battlePicker"><div class="card-header"><div class="card-title">⚔️ VÄLJ MOTSTÅNDARE</div></div><div class="battle-opponents" id="opponentsGrid"></div></div>
+            <div id="battleArena" style="display:none;"><div class="card"><div id="battleHero" style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px;"></div><div id="battleLog" style="background:var(--bg-elevated);border-radius:var(--radius-md);padding:8px;height:70px;overflow-y:auto;font-size:10px;margin:10px 0;"></div><div id="battleActions" style="display:flex;gap:6px;"></div></div></div>
         </div>
     </div>
 
@@ -864,7 +885,7 @@ body {
         <button class="nav-item active" data-view="feed"><div class="nav-icon">🔥</div><div class="nav-label">Flöde</div></button>
         <button class="nav-item" data-view="bounties"><div class="nav-icon">🎯</div><div class="nav-label">Uppdrag</div></button>
         <button class="nav-item" data-view="shop"><div class="nav-icon">🛍️</div><div class="nav-label">Shop</div></button>
-        <button class="nav-cam-btn" id="cameraBtn"><div class="nav-camera">📸</div><div class="nav-label" style="font-size:9px;margin-top:4px;">Nytt</div></button>
+        <button class="nav-cam-btn" id="cameraBtn"><div class="nav-camera">📸</div><div class="nav-label" style="font-size:8px;margin-top:3px;">Nytt</div></button>
         <button class="nav-item" data-view="chat"><div class="nav-icon">💬</div><div class="nav-label">Chat</div></button>
         <button class="nav-item" data-view="map"><div class="nav-icon">📍</div><div class="nav-label">Karta</div></button>
         <button class="nav-item" data-view="profile"><div class="nav-icon">👤</div><div class="nav-label">Profil</div></button>
@@ -872,20 +893,20 @@ body {
 </div>
 
 <!-- MODAL MENU -->
-<div class="modal-overlay" id="modalOverlay"><div class="modal-sheet"><div class="modal-handle"></div><div class="modal-logo" style="font-size:18px;font-weight:700;margin-bottom:16px;">PETPET</div><div class="modal-grid" id="modalGrid"></div></div></div>
+<div class="modal-overlay" id="modalOverlay"><div class="modal-sheet"><div class="modal-handle"></div><div class="modal-logo" style="font-size:14px;font-weight:600;margin-bottom:12px;">PETPET</div><div class="modal-grid" id="modalGrid"></div></div></div>
 
 <!-- CAMERA OVERLAY -->
-<div class="camera-overlay" id="camOverlay"><div class="camera-sheet"><div class="camera-header"><div class="camera-title">📸 Nytt inlägg</div><button class="camera-close" id="camClose">✕</button></div><button class="btn-secondary" onclick="pickImage()">🖼️ Välj bild</button><img id="postPreview" class="post-preview"><textarea class="post-textarea" id="postContent" placeholder="Vad händer? 🔥" rows="3"></textarea><button class="btn-primary" onclick="publishPost()">📤 Publicera</button></div></div>
+<div class="camera-overlay" id="camOverlay"><div class="camera-sheet"><div class="camera-header"><div class="camera-title">📸 Nytt inlägg</div><button class="camera-close" id="camClose">✕</button></div><button class="btn-secondary" onclick="pickImage()">🖼️ Välj bild</button><img id="postPreview" class="post-preview"><textarea class="post-textarea" id="postContent" placeholder="Vad händer? 🔥" rows="2"></textarea><button class="btn-primary" onclick="publishPost()">📤 Publicera</button></div></div>
 
 <!-- AI CHAT WINDOW -->
-<div class="ai-chat-window" id="aiChatWindow"><div class="ai-chat-header"><button class="ai-chat-back" id="aiChatBack">←</button><div class="ai-chat-avatar">🤖</div><div><div style="font-weight:600;">PetPal AI</div><div style="font-size:10px;color:var(--accent);">● Online</div></div></div><div class="ai-messages" id="aiMessages"><div class="msg ai">Hej! 👋 Jag är PetPal AI. Fråga om tips, uppdrag, pets eller hjälp!</div></div><div class="ai-input-row"><input class="ai-input" id="aiInput" placeholder="Skriv ett meddelande..."><button class="ai-send" id="aiSendBtn">➤</button></div></div>
+<div class="ai-chat-window" id="aiChatWindow"><div class="ai-chat-header"><button class="ai-chat-back" id="aiChatBack">←</button><div class="ai-chat-avatar">🤖</div><div><div style="font-weight:600;">PetPal AI</div><div style="font-size:9px;color:var(--accent);">● Online</div></div></div><div class="ai-messages" id="aiMessages"><div class="msg ai">Hej! 👋 Jag är PetPal AI. Fråga om tips, uppdrag, pets eller hjälp!</div></div><div class="ai-input-row"><input class="ai-input" id="aiInput" placeholder="Skriv ett meddelande..."><button class="ai-send" id="aiSendBtn">➤</button></div></div>
 
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
 
 <script>
 // ============ STATE ==========
-let STATE = { level: 5, exp: 60, coins: 2840, energy: 100, streak: 12, abilities: ['🔥 Fire Breath', '🪽 Fly', '⚡ Lightning'], likedPosts: new Set(), battleActive: null, totalEarned: 1240 };
+let STATE = { level: 5, exp: 60, coins: 2840, energy: 100, streak: 12, abilities: ['🔥 Fire Breath', '🪽 Fly', '⚡ Lightning'], likedPosts: new Set(), battleActive: null, following: false, followers: 1200, followingCount: 342 };
 
 // ============ DATA ==========
 let POSTS = [
@@ -919,12 +940,11 @@ let MAP_FRIENDS = [
     {ava:'👩‍💻',name:'Clara',loc:'Battle Arena',dist:'2km',online:false}
 ];
 
-// BOUNTIES WITH REAL MONEY (SEK)
+// BOUNTIES WITH REAL MONEY
 let BOUNTIES = [
-    {id:'b1',title:'📸 Fota produkt på Ica',desc:'Gå till Ica och fota den nya produkten',rewardSEK:50,rewardCoins:100,deadline:'3 dagar',company:'Ica',status:'active',doers:127},
-    {id:'b2',title:'🎥 TikTok med vår produkt',desc:'Spela in en TikTok med vår dryck',rewardSEK:500,rewardCoins:500,deadline:'7 dagar',company:'Fun Beverages',status:'active',doers:23},
-    {id:'b3',title:'✍️ Skriv recension',desc:'Recensera restaurang X på Google',rewardSEK:20,rewardCoins:30,deadline:'2 dagar',company:'Restaurang X',status:'active',doers:89},
-    {id:'b4',title:'📦 Testa ny produkt',desc:'Få gratis produkt + betalt för feedback',rewardSEK:150,rewardCoins:200,deadline:'14 dagar',company:'Startup Co',status:'active',doers:45}
+    {id:'b1',title:'📸 Fota produkt på Ica',desc:'Gå till Ica och fota den nya produkten',rewardSEK:50,rewardCoins:100,deadline:'3 dagar',company:'Ica',doers:127},
+    {id:'b2',title:'🎥 TikTok med vår produkt',desc:'Spela in en TikTok med vår dryck',rewardSEK:500,rewardCoins:500,deadline:'7 dagar',company:'Fun Bev',doers:23},
+    {id:'b3',title:'✍️ Skriv recension',desc:'Recensera restaurang X',rewardSEK:20,rewardCoins:30,deadline:'2 dagar',company:'Restaurang X',doers:89}
 ];
 let userBounties = [];
 
@@ -942,7 +962,7 @@ const MENU_ITEMS = [
 function $(id){ return document.getElementById(id); }
 function showToast(msg, type='success'){
     const t = $('toast'); t.textContent = msg; t.className = `toast show ${type}`;
-    setTimeout(()=>t.className='toast', 2500);
+    setTimeout(()=>t.className='toast', 2000);
 }
 function updateHUD(){
     $('lvl').textContent = STATE.level;
@@ -951,7 +971,8 @@ function updateHUD(){
     $('energy').textContent = STATE.energy;
     $('xpBar').style.width = STATE.exp + '%';
     $('xpVal').textContent = STATE.exp;
-    $('abilitiesList').innerHTML = STATE.abilities.map(a=>`<div class="ability-tag">${a}</div>`).join('');
+    $('petLevel').textContent = STATE.level;
+    $('abilitiesList').innerHTML = STATE.abilities.map(a=>`<span class="stat-pill" style="background:var(--accent-dim);padding:2px 8px;font-size:9px;">${a}</span>`).join('');
 }
 function gainCoins(amount, el){ STATE.coins += amount; updateHUD(); saveState(); if(el) showToast(`+${amount}💰`); }
 function gainXP(amount){
@@ -959,11 +980,13 @@ function gainXP(amount){
     if(STATE.exp >= 100){ STATE.exp -= 100; STATE.level++; showToast(`🎉 LEVEL ${STATE.level}!`); }
     updateHUD(); saveState();
 }
-function saveState(){ localStorage.setItem('petpet_state', JSON.stringify({level:STATE.level,exp:STATE.exp,coins:STATE.coins,energy:STATE.energy,streak:STATE.streak,likedPosts:[...STATE.likedPosts],userBounties,bounties:BOUNTIES,codes:CODES,posts:POSTS})); }
+function saveState(){ localStorage.setItem('petpet_state', JSON.stringify({level:STATE.level,exp:STATE.exp,coins:STATE.coins,energy:STATE.energy,streak:STATE.streak,likedPosts:[...STATE.likedPosts],userBounties,bounties:BOUNTIES,codes:CODES,posts:POSTS,followers:STATE.followers,followingCount:STATE.followingCount})); }
 function loadState(){
     const s = localStorage.getItem('petpet_state');
     if(s){ const d = JSON.parse(s);
         STATE.level = d.level ?? 5; STATE.exp = d.exp ?? 60; STATE.coins = d.coins ?? 2840; STATE.energy = d.energy ?? 100; STATE.streak = d.streak ?? 12;
+        STATE.followers = d.followers ?? 1200;
+        STATE.followingCount = d.followingCount ?? 342;
         if(d.likedPosts) STATE.likedPosts = new Set(d.likedPosts);
         if(d.userBounties) userBounties = d.userBounties;
         if(d.bounties) BOUNTIES.splice(0, BOUNTIES.length, ...d.bounties);
@@ -971,6 +994,19 @@ function loadState(){
         if(d.posts) POSTS.splice(0, POSTS.length, ...d.posts);
     }
     updateHUD();
+    document.getElementById('followersCount').innerText = STATE.followers >= 1000 ? (STATE.followers/1000).toFixed(1)+'K' : STATE.followers;
+    document.getElementById('followingCount').innerText = STATE.followingCount >= 1000 ? (STATE.followingCount/1000).toFixed(1)+'K' : STATE.followingCount;
+    const followBtn = document.getElementById('followBtn');
+    if(followBtn) followBtn.textContent = STATE.following ? 'Följer' : 'Följ';
+}
+
+function toggleFollow(){
+    STATE.following = !STATE.following;
+    if(STATE.following){ STATE.followers++; showToast(`✅ Du följer nu!`, 'success'); }
+    else{ STATE.followers--; showToast(`❌ Slutade följa`, 'error'); }
+    document.getElementById('followersCount').innerText = STATE.followers >= 1000 ? (STATE.followers/1000).toFixed(1)+'K' : STATE.followers;
+    document.getElementById('followBtn').textContent = STATE.following ? 'Följer' : 'Följ';
+    saveState();
 }
 
 function renderStories(){
@@ -979,29 +1015,30 @@ function renderStories(){
 function viewStory(name){ const s = STORIES.find(x=>x.name===name); if(s) s.seen=true; renderStories(); showToast(`👁️ ${name}s story`); saveState(); }
 
 function renderFeed(){
-    $('view-feed').innerHTML = POSTS.map(p=>`<div class="post-card"><div class="post-header"><div class="post-avatar">${p.ava}</div><div><div class="post-name">${p.user}</div><div class="post-time">${p.t}</div></div></div><div class="post-content">${p.text}</div><div class="post-actions"><button class="action-btn" onclick="toggleLike('${p.id}',this)">❤️ <span id="lc-${p.id}">${p.likes}</span></button><button class="action-btn" onclick="sharePost('${p.id}')">📤 Dela</button></div></div>`).join('');
+    $('view-feed').innerHTML = POSTS.map(p=>`<div class="post-card"><div class="post-header"><div class="post-avatar" onclick="viewProfile('${p.user}')">${p.ava}</div><div><div class="post-name" onclick="viewProfile('${p.user}')">${p.user}</div><div class="post-time">${p.t}</div></div></div><div class="post-content">${p.text}</div><div class="post-actions"><button class="action-btn" onclick="toggleLike('${p.id}',this)">❤️ <span id="lc-${p.id}">${p.likes}</span></button><button class="action-btn" onclick="sharePost('${p.id}')">📤 Dela</button></div></div>`).join('');
 }
 function toggleLike(id,btn){ const p = POSTS.find(x=>x.id===id); if(STATE.likedPosts.has(id)){ STATE.likedPosts.delete(id); p.likes--; btn.classList.remove('liked'); }else{ STATE.likedPosts.add(id); p.likes++; btn.classList.add('liked'); showToast('❤️ Gillade!'); } $(`lc-${id}`).textContent = p.likes; saveState(); }
 function sharePost(id){ const p = POSTS.find(x=>x.id===id); if(navigator.share) navigator.share({title:'PETPET',text:p.text}); else showToast('📋 Kopierat!'); }
+function viewProfile(name){ showToast(`👤 Profil: ${name}`, 'success'); switchView('profile'); }
 
 function renderBounties(){
-    $('bountiesList').innerHTML = BOUNTIES.map(b=>`<div class="bounty-card" onclick="doBounty('${b.id}',this)"><div class="bounty-header"><span class="bounty-title">${b.title}</span><span class="bounty-reward sek">${b.rewardSEK} SEK</span></div><div class="bounty-desc">${b.desc}</div><div class="bounty-footer"><span>👥 ${b.doers} gjort</span><span class="bounty-deadline">⏰ ${b.deadline}</span><button class="bounty-do-btn">🎯 Gör uppdrag</button></div></div>`).join('');
+    $('bountiesList').innerHTML = BOUNTIES.map(b=>`<div class="bounty-card" onclick="doBounty('${b.id}',this)"><div class="bounty-header"><span class="bounty-title">${b.title}</span><span class="bounty-reward sek">${b.rewardSEK} SEK</span></div><div class="bounty-desc">${b.desc}</div><div class="bounty-footer"><span>👥 ${b.doers} gjort</span><span>⏰ ${b.deadline}</span><button class="bounty-do-btn">🎯 Gör</button></div></div>`).join('');
 }
-function doBounty(id,el){ const b = BOUNTIES.find(x=>x.id===id); if(!b) return; userBounties.push(b); BOUNTIES.splice(BOUNTIES.indexOf(b),1); gainCoins(b.rewardCoins, el); gainXP(15); STATE.totalEarned = (STATE.totalEarned || 0) + b.rewardSEK; showToast(`✅ Uppdrag klart! +${b.rewardSEK} SEK, +${b.rewardCoins}💰`); renderBounties(); saveState(); }
-function showCreateBountyModal(){ const title = prompt('Uppdragsnamn:'); if(!title) return; const rewardSEK = parseInt(prompt('Belöning i SEK:'))||50; const desc = prompt('Beskrivning:'); BOUNTIES.push({id:'b'+Date.now(),title,desc,rewardSEK,rewardCoins:Math.floor(rewardSEK*2),deadline:'7 dagar',company:'Användare',status:'active',doers:0}); renderBounties(); showToast('✅ Uppdrag skapat!'); saveState(); }
+function doBounty(id,el){ const b = BOUNTIES.find(x=>x.id===id); if(!b) return; userBounties.push(b); BOUNTIES.splice(BOUNTIES.indexOf(b),1); gainCoins(b.rewardCoins, el); gainXP(15); showToast(`✅ Uppdrag klart! +${b.rewardSEK} SEK, +${b.rewardCoins}💰`); renderBounties(); saveState(); }
+function showCreateBountyModal(){ const title = prompt('Uppdragsnamn:'); if(!title) return; const rewardSEK = parseInt(prompt('Belöning i SEK:'))||50; const desc = prompt('Beskrivning:'); BOUNTIES.push({id:'b'+Date.now(),title,desc,rewardSEK,rewardCoins:Math.floor(rewardSEK*2),deadline:'7 dagar',company:'Användare',doers:0}); renderBounties(); showToast('✅ Uppdrag skapat!'); saveState(); }
 
 function renderShop(){ $('shopGrid').innerHTML = SHOP_ITEMS.map(p=>`<div class="product-card" onclick="buyItem('${p.id}',this)"><div class="product-emoji">${p.emoji}</div><div class="product-name">${p.name}</div><div class="product-price">${p.price}💰</div></div>`).join('');
-    $('codesList').innerHTML = CODES.map(c=>`<div class="code-row"><span>${c.code}</span><span>+${c.reward}💰</span><button class="btn-secondary" style="padding:4px 12px;width:auto;" onclick="useCode('${c.code}',this)" ${c.used?'disabled':''}>Använd</button></div>`).join('');
+    $('codesList').innerHTML = CODES.map(c=>`<div class="card" style="margin-top:8px;padding:8px;display:flex;justify-content:space-between;"><span style="font-size:11px;">${c.code}</span><span style="font-size:10px;color:var(--accent);">+${c.reward}💰</span><button class="btn-secondary" style="padding:2px 8px;width:auto;font-size:9px;" onclick="useCode('${c.code}',this)" ${c.used?'disabled':''}>Använd</button></div>`).join('');
 }
 function filterShop(q){ renderShop(SHOP_ITEMS.filter(p=>p.name.toLowerCase().includes(q.toLowerCase()))); }
 function buyItem(id,el){ const p = SHOP_ITEMS.find(x=>x.id===id); if(STATE.coins < p.price){ showToast(`❌ Behöver ${p.price-STATE.coins} mer!`,'error'); return; } STATE.coins -= p.price; updateHUD(); saveState(); showToast(`✅ Köpte ${p.name}!`); }
 function useCode(code,btn){ const c = CODES.find(x=>x.code===code); if(c.used) return; c.used=true; gainCoins(c.reward,btn); showToast(`🎟️ +${c.reward}💰`); renderShop(); saveState(); }
 
-function renderChat(){ $('chatList').innerHTML = CHATS.map(c=>`<div class="chat-item" onclick="openChatWith('${c.name}')"><div class="chat-avatar">${c.ava}</div><div class="chat-info"><div class="chat-name">${c.name}</div><div class="chat-preview">${c.prev}</div>${c.streak>0?`<div class="chat-streak">🔥 ${c.streak}</div>`:''}</div><div class="chat-meta" style="font-size:10px;color:var(--text-muted);">${c.time}</div></div>`).join(''); }
+function renderChat(){ $('chatList').innerHTML = CHATS.map(c=>`<div class="chat-item" onclick="openChatWith('${c.name}')"><div class="chat-avatar">${c.ava}</div><div class="chat-info"><div class="chat-name">${c.name}</div><div class="chat-preview">${c.prev}</div>${c.streak>0?`<div class="chat-streak">🔥 ${c.streak}</div>`:''}</div><div style="font-size:9px;color:var(--text-muted);">${c.time}</div></div>`).join(''); }
 function openChatWith(name){ showToast(`💬 Chatt med ${name}`); }
 
-function renderMap(){ $('mapGrid').innerHTML = MAP_FRIENDS.map(f=>`<div class="map-friend"><div class="friend-avatar">${f.ava}</div><div class="friend-name">${f.name}</div><div class="friend-location">📍 ${f.loc}</div><div style="width:6px;height:6px;border-radius:50%;background:${f.online?'var(--accent)':'var(--text-muted)'};margin:6px auto 0;"></div></div>`).join(''); }
-function renderWorld(){ $('worldGrid').innerHTML = LOCATIONS.map(l=>`<div class="world-location ${l.locked&&STATE.level<(l.reqLvl||0)?'locked':''}" onclick="visitLoc('${l.name}')"><div class="world-emoji">${l.emoji}</div><div class="world-name">${l.name}</div><div class="world-users">👥 ${l.users}</div><div class="world-reward">${l.locked&&STATE.level<(l.reqLvl||0)?`🔒 Lv.${l.reqLvl}`:`+${l.coins}💰`}</div></div>`).join(''); }
+function renderMap(){ $('mapGrid').innerHTML = MAP_FRIENDS.map(f=>`<div class="map-friend"><div class="friend-avatar">${f.ava}</div><div class="friend-name">${f.name}</div><div class="friend-location">📍 ${f.loc}</div><div style="width:6px;height:6px;border-radius:50%;background:${f.online?'var(--accent)':'var(--text-muted)'};margin:5px auto 0;"></div></div>`).join(''); }
+function renderWorld(){ $('worldGrid').innerHTML = LOCATIONS.map(l=>`<div class="world-location ${l.locked&&STATE.level<(l.reqLvl||0)?'locked':''}" onclick="visitLoc('${l.name}')"><div class="world-emoji">${l.emoji}</div><div class="world-name">${l.name}</div><div class="world-users">👥 ${l.users}</div><div class="world-reward" style="font-size:9px;color:var(--accent);">${l.locked&&STATE.level<(l.reqLvl||0)?`🔒 Lv.${l.reqLvl}`:`+${l.coins}💰`}</div></div>`).join(''); }
 function visitLoc(name){ const l = LOCATIONS.find(x=>x.name===name); if(l.locked && STATE.level<(l.reqLvl||0)){ showToast(`🔒 Level ${l.reqLvl} krävs!`,'error'); return; } gainCoins(l.coins); gainXP(l.xp); showToast(`✨ +${l.coins}💰`); }
 
 let compareTimeout;
@@ -1011,16 +1048,14 @@ function runCompare(val){
     compareTimeout = setTimeout(()=>{
         const base = Math.floor(Math.random()*400)+150;
         const results = [{store:'🛍️ Prisjakt',price:base+Math.floor(Math.random()*100)},{store:'🎯 Tradera',price:base+Math.floor(Math.random()*80)-20},{store:'📦 Amazon',price:base+Math.floor(Math.random()*120)}].sort((a,b)=>a.price-b.price);
-        $('compareResults').innerHTML = `<div class="compare-result"><div class="card-header" style="margin-bottom:8px;"><div class="card-title">🔍 ${val}</div></div>${results.map((r,i)=>`<div class="price-row"><span>${r.store}</span><span class="${i===0?'best-price':''}">${r.price} kr</span></div>`).join('')}</div>`;
+        $('compareResults').innerHTML = `<div class="compare-result"><div class="card-header" style="margin-bottom:6px;"><div class="card-title">🔍 ${val}</div></div>${results.map((r,i)=>`<div class="price-row"><span>${r.store}</span><span class="${i===0?'best-price':''}">${r.price} kr</span></div>`).join('')}</div>`;
     },400);
 }
-
-function shareProfile(){ const txt = `🔥 Jag är Level ${STATE.level} på PETPET! ${STATE.streak} dagars streak!`; if(navigator.share) navigator.share({title:'PETPET',text:txt}); else showToast('📋 Profil kopierad!'); }
 
 // ============ BATTLE ==========
 function renderBattle(){ $('opponentsGrid').innerHTML = OPPONENTS.map(o=>`<div class="opponent-card" onclick="startBattle('${o.name}')"><div class="opponent-emoji">${o.emoji}</div><div class="opponent-name">${o.name}</div><div class="opponent-reward">+${o.reward}💰</div></div>`).join(''); $('battlePicker').style.display='block'; $('battleArena').style.display='none'; }
 function startBattle(name){ const opp = OPPONENTS.find(o=>o.name===name); STATE.battleActive = {opp:{...opp,hp:60}, playerHp:100, log:[]}; $('battlePicker').style.display='none'; $('battleArena').style.display='block'; updateBattleUI(); }
-function updateBattleUI(){ const b = STATE.battleActive; $('battleHero').innerHTML = `<div><div class="battle-emoji">🐉</div><div>❤️ ${b.playerHp}/100</div></div><div style="font-size:20px;">VS</div><div><div class="battle-emoji">${b.opp.emoji}</div><div>❤️ ${b.opp.hp}/${b.opp.hp}</div></div>`; $('battleLog').innerHTML = b.log.slice(0,6).map(l=>`<div>${l}</div>`).join(''); $('battleActions').innerHTML = `<button class="btn-primary" onclick="battleAttack()">⚔️ Attack</button><button class="btn-secondary" onclick="battleHeal()">💊 Heal (20⚡)</button><button class="btn-secondary" onclick="endBattle()">🏳️ Ge upp</button>`; }
+function updateBattleUI(){ const b = STATE.battleActive; $('battleHero').innerHTML = `<div style="text-align:center;"><div>🐉</div><div>❤️ ${b.playerHp}/100</div></div><div style="font-size:18px;">VS</div><div style="text-align:center;"><div>${b.opp.emoji}</div><div>❤️ ${b.opp.hp}/${b.opp.hp}</div></div>`; $('battleLog').innerHTML = b.log.slice(0,6).map(l=>`<div>${l}</div>`).join(''); $('battleActions').innerHTML = `<button class="btn-primary" onclick="battleAttack()">⚔️ Attack</button><button class="btn-secondary" onclick="battleHeal()">💊 Heal (20⚡)</button><button class="btn-secondary" onclick="endBattle()">🏳️ Ge upp</button>`; }
 function battleAttack(){ const b = STATE.battleActive; const dmg = Math.floor(Math.random()*25)+15; b.opp.hp = Math.max(0, b.opp.hp - dmg); b.log.unshift(`⚔️ ${dmg} skada!`); if(b.opp.hp<=0){ gainCoins(b.opp.reward); gainXP(10); showToast(`🏆 VINST! +${b.opp.reward}💰`); endBattle(); return; } const edm = Math.floor(Math.random()*b.opp.atk)+8; b.playerHp = Math.max(0, b.playerHp - edm); b.log.unshift(`💀 ${b.opp.name} slog ${edm}!`); if(b.playerHp<=0){ showToast('💀 Förlust!','error'); endBattle(); return; } updateBattleUI(); }
 function battleHeal(){ const b = STATE.battleActive; if(STATE.energy<20){ showToast('❌ Inte nog med energi!','error'); return; } STATE.energy-=20; updateHUD(); b.playerHp = Math.min(100, b.playerHp+35); b.log.unshift(`✅ Healade 35 HP!`); updateBattleUI(); saveState(); }
 function endBattle(){ STATE.battleActive=null; renderBattle(); }
@@ -1040,7 +1075,7 @@ function sendAI(){
     addMsg(msg, 'user');
     const loadEl = addMsg('✦ Tänker...', 'ai loading');
     setTimeout(()=>{
-        const replies = [`💡 Tips! Gör betalda uppdrag för att tjäna riktiga pengar!`, `⚔️ I battle: använd Heal när du har låg HP!`, `🔥 Din streak är ${STATE.streak} dagar!`, `🐉 Din pet är level ${STATE.level}! Fortsätt så!`, `📍 Kolla kartan – se var dina vänner är!`, `💰 Du har tjänat ${STATE.totalEarned || 0} SEK på uppdrag!`];
+        const replies = [`💡 Tips! Gör betalda uppdrag för att tjäna riktiga pengar!`, `⚔️ I battle: använd Heal när du har låg HP!`, `🔥 Din streak är ${STATE.streak} dagar!`, `🐉 Din pet är level ${STATE.level}! Fortsätt så!`, `📍 Kolla kartan – se var dina vänner är!`];
         loadEl.textContent = replies[Math.floor(Math.random()*replies.length)];
         loadEl.classList.remove('loading');
     }, 800);
@@ -1058,6 +1093,19 @@ function publishPost(){
     $('camOverlay').classList.remove('open'); $('postContent').value=''; selectedImg=null; $('postPreview').style.display='none';
     gainCoins(5); renderFeed(); saveState(); showToast('✅ Publicerat! +5 coins');
     switchView('feed');
+}
+
+// ============ DAILY BONUS ==========
+function claimDailyBonus(){
+    const today = new Date().toDateString();
+    const last = localStorage.getItem('pp_daily');
+    if(last===today){ showToast('❌ Kom tillbaka imorgon!','error'); return; }
+    localStorage.setItem('pp_daily', today);
+    const bonus = 50 + STATE.streak * 5;
+    STATE.streak++;
+    gainCoins(bonus);
+    showToast(`🎉 Daglig bonus! +${bonus} coins`);
+    saveState();
 }
 
 // ============ VIEW SWITCHING ==========
@@ -1084,19 +1132,6 @@ $('menuBtn').addEventListener('click', ()=>$('modalOverlay').classList.add('open
 $('modalOverlay').addEventListener('click', e=>{ if(e.target===$('modalOverlay')) $('modalOverlay').classList.remove('open'); });
 $('modalGrid').innerHTML = MENU_ITEMS.map(m=>`<div class="modal-item" data-view="${m.view}">${m.label}</div>`).join('');
 document.querySelectorAll('.modal-item').forEach(item=>{ item.addEventListener('click', ()=>{ $('modalOverlay').classList.remove('open'); switchView(item.dataset.view); }); });
-
-// ============ DAILY BONUS ==========
-document.querySelector('.quick-btn[onclick*="Bonus"]')?.addEventListener('click', function(){
-    const today = new Date().toDateString();
-    const last = localStorage.getItem('pp_daily');
-    if(last===today){ showToast('❌ Kom tillbaka imorgon!','error'); return; }
-    localStorage.setItem('pp_daily', today);
-    const bonus = 50 + STATE.streak * 5;
-    STATE.streak++;
-    gainCoins(bonus, this);
-    showToast(`🎉 Daglig bonus! +${bonus} coins`);
-    saveState();
-});
 
 // ============ ENERGY REGEN ==========
 setInterval(()=>{ if(STATE.energy<100){ STATE.energy = Math.min(100, STATE.energy+5); updateHUD(); saveState(); } }, 60000);
