@@ -3,32 +3,31 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>PETPET — Social Platform</title>
+<title>PETPET — Everything Platform</title>
 <style>
-/* ============ PREMIUM DESIGN v2.0 ============ */
+/* ============ ULTIMATE PLATFORM DESIGN ============ */
 @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap');
 
 :root {
     --bg: #0a0a0c;
-    --bg-elevated: #0f0f12;
-    --bg-card: #121216;
+    --bg-card: #0f0f12;
+    --bg-elevated: #121216;
     --border: rgba(255,255,255,0.06);
-    --border-light: rgba(255,255,255,0.04);
+    --border-light: rgba(255,255,255,0.03);
     --accent: #39FF14;
     --accent-dim: rgba(57,255,20,0.12);
-    --accent-glow: rgba(57,255,20,0.15);
     --accent-pink: #ff3cac;
     --accent-blue: #00f0ff;
+    --gold: #FFD700;
     --text: #e8e8f0;
     --text-secondary: #8a8a99;
     --text-muted: #555566;
-    --radius-sm: 12px;
-    --radius-md: 16px;
-    --radius-lg: 20px;
-    --radius-xl: 24px;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
     --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    --shadow-sm: 0 2px 8px rgba(0,0,0,0.4);
-    --shadow-md: 0 4px 16px rgba(0,0,0,0.5);
+    --shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -53,14 +52,6 @@ body {
                 radial-gradient(ellipse 60% 50% at 80% 80%, rgba(0,240,255,0.03), transparent 60%),
                 var(--bg);
 }
-.bg-premium::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(255,255,255,0.01) 1px, rgba(255,255,255,0.01) 2px);
-    background-size: 100% 40px;
-    pointer-events: none;
-}
 
 /* App Container */
 .app {
@@ -76,11 +67,11 @@ body {
 
 /* ============ TOP BAR ============ */
 .top-bar {
-    padding: 16px 20px 12px;
+    padding: 12px 16px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: rgba(10,10,12,0.7);
+    background: rgba(10,10,12,0.85);
     backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border);
     flex-shrink: 0;
@@ -88,7 +79,6 @@ body {
 .logo {
     font-size: 18px;
     font-weight: 700;
-    letter-spacing: -0.3px;
     background: linear-gradient(135deg, var(--accent), var(--accent-blue));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -100,89 +90,53 @@ body {
 .stat-pill {
     background: var(--bg-card);
     border: 1px solid var(--border);
-    padding: 4px 12px;
+    padding: 4px 10px;
     border-radius: 40px;
+    font-size: 11px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.stat-pill .value { color: var(--accent); font-weight: 600; }
+.menu-btn {
+    width: 34px;
+    height: 34px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.menu-btn:active { transform: scale(0.95); }
+
+/* ============ QUICK ACTIONS ============ */
+.quick-actions {
+    padding: 10px 16px;
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    flex-shrink: 0;
+    border-bottom: 1px solid var(--border-light);
+}
+.quick-actions::-webkit-scrollbar { display: none; }
+.quick-btn {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 40px;
+    padding: 8px 16px;
     font-size: 12px;
     font-weight: 500;
     display: flex;
     align-items: center;
-    gap: 5px;
-    color: var(--text-secondary);
-}
-.stat-pill .value {
-    color: var(--accent);
-    font-weight: 600;
-}
-.menu-btn {
-    width: 36px;
-    height: 36px;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
+    gap: 6px;
+    white-space: nowrap;
     cursor: pointer;
-    transition: all 0.2s;
 }
-.menu-btn:active { background: var(--bg-elevated); transform: scale(0.95); }
-
-/* ============ DAILY CARD ============ */
-.daily-card {
-    margin: 12px 16px 0;
-    background: linear-gradient(135deg, rgba(57,255,20,0.06), rgba(0,240,255,0.03));
-    border: 1px solid var(--border-light);
-    border-radius: var(--radius-lg);
-    padding: 12px 16px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-.daily-left {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-.streak-circle {
-    background: var(--accent-dim);
-    border-radius: 48px;
-    padding: 8px 16px;
-    text-align: center;
-    border: 1px solid rgba(57,255,20,0.2);
-}
-.streak-number {
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--accent);
-    font-family: monospace;
-    line-height: 1;
-}
-.streak-label {
-    font-size: 9px;
-    color: var(--text-muted);
-    letter-spacing: 0.5px;
-}
-.daily-text {
-    font-size: 12px;
-    color: var(--text-secondary);
-}
-.daily-text strong {
-    color: var(--accent);
-    font-weight: 600;
-}
-.claim-button {
-    background: linear-gradient(135deg, var(--accent), #00c853);
-    border: none;
-    padding: 8px 18px;
-    border-radius: 40px;
-    font-weight: 600;
-    font-size: 12px;
-    color: #000;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-.claim-button:active { transform: scale(0.96); }
+.quick-btn:active { transform: scale(0.96); background: var(--bg-elevated); }
 
 /* ============ STORIES ROW ============ */
 .stories-row {
@@ -192,19 +146,20 @@ body {
     overflow-x: auto;
     scrollbar-width: none;
     flex-shrink: 0;
+    border-bottom: 1px solid var(--border-light);
 }
 .stories-row::-webkit-scrollbar { display: none; }
 .story-item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
     cursor: pointer;
     flex-shrink: 0;
 }
 .story-ring {
-    width: 64px;
-    height: 64px;
+    width: 62px;
+    height: 62px;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--accent), var(--accent-pink));
     padding: 2px;
@@ -214,23 +169,16 @@ body {
 }
 .story-ring.seen { background: var(--bg-card); border: 2px solid var(--border); }
 .story-inner {
-    width: 58px;
-    height: 58px;
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
     background: var(--bg-card);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 28px;
+    font-size: 26px;
 }
-.story-name {
-    font-size: 10px;
-    color: var(--text-secondary);
-    max-width: 64px;
-    text-align: center;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
+.story-name { font-size: 10px; color: var(--text-secondary); max-width: 62px; text-align: center; overflow: hidden; text-overflow: ellipsis; }
 
 /* ============ MAIN CONTENT ============ */
 .main-content {
@@ -255,13 +203,13 @@ body {
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--radius-xl);
-    padding: 20px;
+    padding: 16px;
 }
 .card-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 }
 .card-title {
     font-size: 12px;
@@ -276,51 +224,80 @@ body {
     cursor: pointer;
 }
 
+/* ============ BOUNTY CARD (MAIN FOCUS) ============ */
+.bounty-card {
+    background: linear-gradient(135deg, var(--bg-elevated), var(--bg-card));
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.bounty-card:active { transform: scale(0.98); border-color: rgba(57,255,20,0.2); }
+.bounty-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+}
+.bounty-title { font-size: 15px; font-weight: 700; }
+.bounty-reward {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--gold);
+}
+.bounty-reward.sek { color: var(--accent); }
+.bounty-desc { font-size: 12px; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.4; }
+.bounty-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    color: var(--text-muted);
+}
+.bounty-deadline { display: flex; align-items: center; gap: 4px; }
+.bounty-do-btn {
+    background: var(--accent-dim);
+    border: 1px solid rgba(57,255,20,0.2);
+    padding: 6px 16px;
+    border-radius: 40px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--accent);
+    cursor: pointer;
+}
+
 /* ============ FEED POST ============ */
 .post-card {
     background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: var(--radius-xl);
+    border-radius: var(--radius-lg);
     overflow: hidden;
 }
 .post-header {
-    padding: 16px 16px 0;
+    padding: 14px 14px 0;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
 }
 .post-avatar {
-    width: 44px;
-    height: 44px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--accent), var(--accent-pink));
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 22px;
+    font-size: 20px;
 }
-.post-meta { flex: 1; }
-.post-name { font-size: 14px; font-weight: 600; color: var(--text); }
-.post-time { font-size: 11px; color: var(--text-muted); }
-.post-pet-badge {
-    background: var(--accent-dim);
-    border: 1px solid rgba(57,255,20,0.15);
-    padding: 4px 12px;
-    border-radius: 40px;
-    font-size: 11px;
-    font-weight: 500;
-    color: var(--accent);
-}
-.post-content {
-    padding: 12px 16px;
-    font-size: 14px;
-    line-height: 1.5;
-    color: var(--text-secondary);
-}
+.post-name { font-size: 14px; font-weight: 600; }
+.post-time { font-size: 10px; color: var(--text-muted); }
+.post-content { padding: 10px 14px; font-size: 13px; color: var(--text-secondary); }
 .post-actions {
-    padding: 12px 16px 16px;
+    padding: 10px 14px 14px;
     display: flex;
-    gap: 24px;
+    gap: 20px;
     border-top: 1px solid var(--border-light);
 }
 .action-btn {
@@ -330,76 +307,15 @@ body {
     align-items: center;
     gap: 6px;
     color: var(--text-muted);
-    font-size: 13px;
+    font-size: 12px;
     cursor: pointer;
-    padding: 4px 0;
-}
-.action-btn.liked { color: var(--accent-pink); }
-
-/* ============ PROFILE ============ */
-.profile-hero {
-    text-align: center;
-    background: linear-gradient(135deg, rgba(57,255,20,0.04), rgba(0,240,255,0.02));
-    border: 1px solid var(--border);
-    border-radius: var(--radius-xl);
-    padding: 24px;
-}
-.profile-avatar {
-    width: 80px;
-    height: 80px;
-    margin: 0 auto 12px;
-    background: linear-gradient(135deg, var(--accent), var(--accent-pink));
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 40px;
-}
-.profile-name { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
-.profile-handle { font-size: 12px; color: var(--text-muted); margin-bottom: 16px; }
-.profile-stats {
-    display: flex;
-    justify-content: center;
-    gap: 32px;
-    margin-bottom: 16px;
-}
-.stat-item { text-align: center; }
-.stat-number { font-size: 18px; font-weight: 700; color: var(--text); }
-.stat-label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; }
-.xp-bar {
-    height: 6px;
-    background: var(--bg-elevated);
-    border-radius: 3px;
-    overflow: hidden;
-    margin: 12px 0 8px;
-}
-.xp-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--accent), var(--accent-blue));
-    border-radius: 3px;
-    transition: width 0.3s;
-}
-.abilities-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    justify-content: center;
-    margin-top: 16px;
-}
-.ability-tag {
-    background: var(--accent-dim);
-    border: 1px solid rgba(57,255,20,0.15);
-    padding: 4px 12px;
-    border-radius: 40px;
-    font-size: 11px;
-    font-weight: 500;
 }
 
 /* ============ SHOP ============ */
 .search-bar {
     background: var(--bg-elevated);
     border: 1px solid var(--border);
-    border-radius: 48px;
+    border-radius: 40px;
     padding: 10px 16px;
     display: flex;
     align-items: center;
@@ -422,95 +338,96 @@ body {
     background: var(--bg-elevated);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    padding: 16px;
+    padding: 14px;
     text-align: center;
     cursor: pointer;
-    transition: all 0.2s;
 }
-.product-card:active { transform: scale(0.97); border-color: rgba(57,255,20,0.3); }
-.product-emoji { font-size: 36px; margin-bottom: 8px; }
-.product-name { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
-.product-price { font-size: 12px; color: var(--accent); font-weight: 600; }
-.code-row {
+.product-card:active { transform: scale(0.97); }
+.product-emoji { font-size: 32px; margin-bottom: 6px; }
+.product-name { font-size: 13px; font-weight: 600; }
+.product-price { font-size: 12px; color: var(--accent); font-weight: 600; margin-top: 4px; }
+
+/* ============ CHAT LIST ============ */
+.chat-item {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    gap: 12px;
     padding: 12px 0;
     border-bottom: 1px solid var(--border-light);
-}
-.code-row:last-child { border-bottom: none; }
-
-/* ============ BATTLE ============ */
-.battle-opponents {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-}
-.opponent-card {
-    background: var(--bg-elevated);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 16px;
-    text-align: center;
     cursor: pointer;
 }
-.opponent-card:active { transform: scale(0.96); }
-.opponent-emoji { font-size: 40px; margin-bottom: 8px; }
-.opponent-name { font-size: 13px; font-weight: 600; }
-.opponent-level { font-size: 11px; color: var(--text-muted); margin: 4px 0; }
-.opponent-reward { font-size: 11px; color: var(--accent); font-weight: 600; }
-.battle-arena {
+.chat-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
     background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+}
+.chat-info { flex: 1; }
+.chat-name { font-size: 14px; font-weight: 600; }
+.chat-preview { font-size: 11px; color: var(--text-muted); }
+.chat-streak { font-size: 10px; color: #ff4444; margin-top: 2px; }
+
+/* ============ PROFILE ============ */
+.profile-hero {
+    text-align: center;
+    background: linear-gradient(135deg, rgba(57,255,20,0.04), rgba(0,240,255,0.02));
     border: 1px solid var(--border);
     border-radius: var(--radius-xl);
     padding: 20px;
 }
-.battle-hero {
+.profile-avatar {
+    width: 72px;
+    height: 72px;
+    margin: 0 auto 10px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-pink));
+    border-radius: 50%;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    gap: 20px;
-    margin-bottom: 20px;
+    justify-content: center;
+    font-size: 36px;
 }
-.battle-fighter { text-align: center; flex: 1; }
-.battle-emoji { font-size: 52px; }
-.battle-hp-bar { height: 6px; background: var(--bg-card); border-radius: 3px; margin: 8px 0 4px; overflow: hidden; }
-.battle-hp-fill { height: 100%; background: linear-gradient(90deg, #ff4444, var(--accent-pink)); border-radius: 3px; transition: width 0.2s; }
-.battle-log {
-    background: var(--bg-card);
-    border-radius: var(--radius-md);
-    padding: 12px;
-    height: 100px;
-    overflow-y: auto;
-    font-size: 12px;
-    font-family: monospace;
-    margin-bottom: 16px;
+.profile-name { font-size: 18px; font-weight: 700; }
+.profile-stats {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin: 16px 0;
 }
-.battle-actions {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-}
-
-/* ============ WORLD ============ */
-.world-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-}
-.world-location {
+.stat-item { text-align: center; }
+.stat-number { font-size: 16px; font-weight: 700; }
+.stat-label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; }
+.xp-bar {
+    height: 4px;
     background: var(--bg-elevated);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 16px;
-    text-align: center;
-    cursor: pointer;
+    border-radius: 2px;
+    overflow: hidden;
+    margin: 12px 0 8px;
 }
-.world-location.locked { opacity: 0.5; }
-.world-emoji { font-size: 32px; margin-bottom: 8px; }
-.world-name { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
-.world-users { font-size: 11px; color: var(--text-muted); }
-.world-reward { font-size: 11px; margin-top: 8px; color: var(--accent); }
+.xp-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-blue));
+    border-radius: 2px;
+    transition: width 0.3s;
+}
+.abilities-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+    margin-top: 12px;
+}
+.ability-tag {
+    background: var(--accent-dim);
+    border: 1px solid rgba(57,255,20,0.15);
+    padding: 4px 10px;
+    border-radius: 40px;
+    font-size: 10px;
+}
 
 /* ============ MAP ============ */
 .map-grid {
@@ -522,37 +439,38 @@ body {
     background: var(--bg-elevated);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    padding: 14px;
+    padding: 12px;
     text-align: center;
 }
-.friend-avatar { font-size: 36px; margin-bottom: 8px; }
-.friend-name { font-size: 14px; font-weight: 600; }
-.friend-location { font-size: 11px; color: var(--accent-blue); margin: 4px 0; }
-.friend-distance { font-size: 10px; color: var(--text-muted); }
+.friend-avatar { font-size: 32px; margin-bottom: 6px; }
+.friend-name { font-size: 13px; font-weight: 600; }
+.friend-location { font-size: 10px; color: var(--accent-blue); margin: 4px 0; }
 
-/* ============ BOUNTIES ============ */
-.bounty-card {
+/* ============ WORLD ============ */
+.world-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+.world-location {
     background: var(--bg-elevated);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    padding: 16px;
-    margin-bottom: 12px;
+    padding: 14px;
+    text-align: center;
+    cursor: pointer;
 }
-.bounty-header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 8px;
-}
-.bounty-title { font-weight: 600; }
-.bounty-reward { color: var(--accent); font-weight: 600; }
-.bounty-desc { font-size: 12px; color: var(--text-muted); margin-bottom: 12px; }
+.world-location.locked { opacity: 0.5; }
+.world-emoji { font-size: 28px; margin-bottom: 6px; }
+.world-name { font-size: 13px; font-weight: 600; }
+.world-users { font-size: 10px; color: var(--text-muted); }
 
 /* ============ COMPARE ============ */
 .compare-result {
     background: var(--bg-elevated);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    padding: 16px;
+    padding: 14px;
 }
 .price-row {
     display: flex;
@@ -563,27 +481,44 @@ body {
 .price-row:last-child { border-bottom: none; }
 .best-price { color: var(--accent); font-weight: 600; }
 
+/* ============ BATTLE ============ */
+.battle-opponents {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+.opponent-card {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 12px;
+    text-align: center;
+    cursor: pointer;
+}
+.opponent-emoji { font-size: 32px; }
+.opponent-name { font-size: 12px; font-weight: 600; margin: 6px 0 2px; }
+.opponent-reward { font-size: 10px; color: var(--accent); }
+
 /* ============ BUTTONS ============ */
 .btn-primary {
     background: linear-gradient(135deg, var(--accent), #00c853);
     border: none;
     border-radius: 48px;
-    padding: 14px;
+    padding: 12px;
     font-weight: 600;
-    font-size: 14px;
+    font-size: 13px;
     color: #000;
     cursor: pointer;
     width: 100%;
-    transition: all 0.2s;
 }
 .btn-primary:active { transform: scale(0.98); }
 .btn-secondary {
     background: var(--bg-elevated);
     border: 1px solid var(--border);
     border-radius: 48px;
-    padding: 12px;
+    padding: 10px;
     font-weight: 500;
-    font-size: 13px;
+    font-size: 12px;
     color: var(--text);
     cursor: pointer;
     width: 100%;
@@ -594,7 +529,7 @@ body {
     background: rgba(15,15,18,0.95);
     backdrop-filter: blur(20px);
     border-top: 1px solid var(--border);
-    padding: 8px 16px 20px;
+    padding: 8px 12px 20px;
     display: flex;
     flex-shrink: 0;
 }
@@ -603,27 +538,26 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
+    gap: 3px;
     background: none;
     border: none;
     cursor: pointer;
     color: var(--text-muted);
-    transition: all 0.2s;
 }
-.nav-icon { font-size: 22px; }
-.nav-label { font-size: 9px; font-weight: 500; letter-spacing: 0.3px; text-transform: uppercase; }
+.nav-icon { font-size: 20px; }
+.nav-label { font-size: 9px; font-weight: 500; text-transform: uppercase; }
 .nav-item.active .nav-icon { color: var(--accent); transform: scale(1.05); }
 .nav-item.active .nav-label { color: var(--accent); }
 .nav-camera {
     background: linear-gradient(135deg, var(--accent), var(--accent-blue));
-    width: 52px;
-    height: 52px;
-    border-radius: 26px;
+    width: 48px;
+    height: 48px;
+    border-radius: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: -18px;
-    box-shadow: 0 0 20px rgba(57,255,20,0.3);
+    margin-top: -14px;
+    box-shadow: 0 0 15px rgba(57,255,20,0.3);
 }
 
 /* ============ MODALS ============ */
@@ -631,7 +565,7 @@ body {
     position: fixed;
     inset: 0;
     z-index: 100;
-    background: rgba(0,0,0,0.8);
+    background: rgba(0,0,0,0.85);
     backdrop-filter: blur(12px);
     display: flex;
     align-items: flex-end;
@@ -653,7 +587,7 @@ body {
     transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
 }
 .modal-overlay.open .modal-sheet { transform: translateY(0); }
-.modal-handle { width: 40px; height: 4px; background: var(--border); border-radius: 2px; margin: 0 auto 20px; }
+.modal-handle { width: 40px; height: 4px; background: var(--border); border-radius: 2px; margin: 0 auto 16px; }
 .modal-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -663,10 +597,10 @@ body {
     background: var(--bg-elevated);
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
-    padding: 14px;
+    padding: 12px;
     text-align: center;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 500;
 }
 
@@ -675,7 +609,7 @@ body {
     position: fixed;
     inset: 0;
     z-index: 100;
-    background: rgba(0,0,0,0.9);
+    background: rgba(0,0,0,0.95);
     backdrop-filter: blur(20px);
     display: flex;
     align-items: flex-end;
@@ -693,22 +627,21 @@ body {
     border: 1px solid var(--border);
     padding: 20px;
     transform: translateY(100%);
-    transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    transition: transform 0.3s;
 }
 .camera-overlay.open .camera-sheet { transform: translateY(0); }
 .camera-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
-.camera-title { font-size: 18px; font-weight: 600; }
 .camera-close {
     background: var(--bg-elevated);
     border: 1px solid var(--border);
     border-radius: 50%;
-    width: 36px;
-    height: 36px;
+    width: 34px;
+    height: 34px;
     cursor: pointer;
 }
 .post-textarea {
@@ -716,7 +649,7 @@ body {
     background: var(--bg-elevated);
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
-    padding: 14px;
+    padding: 12px;
     color: var(--text);
     font-size: 14px;
     resize: none;
@@ -737,23 +670,28 @@ body {
 }
 .ai-chat-window.open { transform: translateY(0); }
 .ai-chat-header {
-    padding: 16px;
+    padding: 14px;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     border-bottom: 1px solid var(--border);
-    background: rgba(10,10,12,0.95);
 }
-.ai-chat-back { background: none; border: none; font-size: 24px; color: var(--text); cursor: pointer; }
+.ai-chat-back {
+    background: none;
+    border: none;
+    font-size: 22px;
+    color: var(--text);
+    cursor: pointer;
+}
 .ai-chat-avatar {
-    width: 44px;
-    height: 44px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--accent-blue), var(--accent-pink));
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 22px;
+    font-size: 20px;
 }
 .ai-messages {
     flex: 1;
@@ -761,18 +699,18 @@ body {
     padding: 16px;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
 }
 .msg {
     max-width: 85%;
-    padding: 12px 16px;
-    border-radius: 20px;
-    font-size: 14px;
+    padding: 10px 14px;
+    border-radius: 18px;
+    font-size: 13px;
 }
 .msg.user {
     align-self: flex-end;
-    background: linear-gradient(135deg, rgba(57,255,20,0.15), rgba(0,240,255,0.08));
-    border: 1px solid rgba(57,255,20,0.2);
+    background: linear-gradient(135deg, rgba(57,255,20,0.12), rgba(0,240,255,0.08));
+    border: 1px solid rgba(57,255,20,0.15);
 }
 .msg.ai {
     align-self: flex-start;
@@ -780,24 +718,24 @@ body {
     border: 1px solid var(--border);
 }
 .ai-input-row {
-    padding: 12px 16px;
+    padding: 12px;
     display: flex;
     gap: 8px;
     border-top: 1px solid var(--border);
-    background: rgba(10,10,12,0.95);
 }
 .ai-input {
     flex: 1;
     background: var(--bg-elevated);
     border: 1px solid var(--border);
     border-radius: 40px;
-    padding: 12px 16px;
+    padding: 10px 14px;
     color: var(--text);
     outline: none;
+    font-size: 13px;
 }
 .ai-send {
-    width: 44px;
-    height: 44px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--accent), var(--accent-blue));
     border: none;
@@ -813,8 +751,8 @@ body {
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 48px;
-    padding: 10px 20px;
-    font-size: 13px;
+    padding: 8px 18px;
+    font-size: 12px;
     font-weight: 500;
     z-index: 999;
     opacity: 0;
@@ -825,10 +763,6 @@ body {
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 .toast.success { border-color: var(--accent); color: var(--accent); }
 .toast.error { border-color: var(--accent-pink); color: var(--accent-pink); }
-
-/* ============ UTILITIES ============ */
-.hidden { display: none; }
-.spacer { height: 8px; }
 </style>
 </head>
 <body>
@@ -847,169 +781,162 @@ body {
         <button class="menu-btn" id="menuBtn">☰</button>
     </div>
 
-    <!-- DAILY CARD -->
-    <div class="daily-card">
-        <div class="daily-left">
-            <div class="streak-circle">
-                <div class="streak-number" id="dailyStreak">12</div>
-                <div class="streak-label">DAGAR</div>
-            </div>
-            <div class="daily-text"><strong>🔥 Daglig bonus</strong><br>Logga in varje dag</div>
-        </div>
-        <button class="claim-button" id="claimBtn">CLAIM</button>
+    <!-- QUICK ACTIONS (TikTok/Insta style) -->
+    <div class="quick-actions">
+        <div class="quick-btn" onclick="showToast('✨ Sökfunktion kommer!', 'success')">🔍 Sök</div>
+        <div class="quick-btn" onclick="showToast('🎁 Dagens bonus!', 'success')">🎁 Bonus</div>
+        <div class="quick-btn" onclick="switchView('bounties')">🎯 Uppdrag</div>
+        <div class="quick-btn" onclick="switchView('shop')">🛍️ Butik</div>
+        <div class="quick-btn" onclick="switchView('map')">📍 Nära dig</div>
+        <div class="quick-btn" onclick="openAIChat()">🤖 AI Hjälp</div>
     </div>
 
-    <!-- STORIES -->
+    <!-- STORIES (Snapchat style) -->
     <div class="stories-row" id="storiesRow"></div>
 
     <!-- MAIN CONTENT -->
     <div class="main-content">
-        <!-- FEED VIEW -->
+        <!-- FEED VIEW (TikTok/Instagram) -->
         <div class="view active" id="view-feed"></div>
-        <!-- CHAT VIEW -->
-        <div class="view" id="view-chat">
-            <div class="card"><div class="card-header"><div class="card-title">Meddelanden</div></div><div id="chatList"></div></div>
-            <div class="card" style="cursor:pointer;" id="aiChatTrigger">
-                <div style="display:flex; align-items:center; gap:12px;">
-                    <div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#00f0ff,#ff3cac);display:flex;align-items:center;justify-content:center;font-size:24px;">🤖</div>
-                    <div><div style="font-weight:600;">PetPal AI</div><div style="font-size:12px;color:var(--text-muted);">Din smarta kompis</div></div>
-                    <div style="margin-left:auto;background:var(--accent-dim);padding:4px 12px;border-radius:40px;font-size:10px;font-weight:600;color:var(--accent);">AI</div>
-                </div>
-            </div>
+
+        <!-- BOUNTIES VIEW (Main focus - paid missions) -->
+        <div class="view" id="view-bounties">
+            <div class="card-header"><div class="card-title">🎯 AKTIVA UPPDRAG</div><div class="card-link" onclick="showCreateBountyModal()">+ Skapa</div></div>
+            <div id="bountiesList"></div>
         </div>
-        <!-- SHOP VIEW -->
+
+        <!-- SHOP VIEW (E-commerce) -->
         <div class="view" id="view-shop">
             <div class="search-bar"><span>🔍</span><input id="shopSearch" placeholder="Sök produkter..." oninput="filterShop(this.value)"></div>
             <div class="product-grid" id="shopGrid"></div>
             <div class="card"><div class="card-header"><div class="card-title">🎟️ Rabattkoder</div></div><div id="codesList"></div></div>
         </div>
+
+        <!-- CHAT VIEW (WeChat style) -->
+        <div class="view" id="view-chat">
+            <div class="card"><div class="card-header"><div class="card-title">💬 Meddelanden</div></div><div id="chatList"></div></div>
+            <div class="card" style="cursor:pointer;" id="aiChatTrigger"><div style="display:flex; align-items:center; gap:10px;"><div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#00f0ff,#ff3cac);display:flex;align-items:center;justify-content:center;font-size:20px;">🤖</div><div><div style="font-weight:600;">PetPal AI</div><div style="font-size:11px;color:var(--text-muted);">Fråga vad som helst</div></div><div style="margin-left:auto;background:var(--accent-dim);padding:4px 10px;border-radius:40px;font-size:9px;font-weight:600;color:var(--accent);">AI</div></div></div>
+        </div>
+
         <!-- PROFILE VIEW -->
         <div class="view" id="view-profile">
             <div class="profile-hero">
                 <div class="profile-avatar">🐉</div>
                 <div class="profile-name" id="profileName">Äventyrare</div>
-                <div class="profile-handle">@petpet_user · 🐉 Eldraken</div>
                 <div class="profile-stats">
                     <div class="stat-item"><div class="stat-number">24</div><div class="stat-label">INLÄGG</div></div>
                     <div class="stat-item"><div class="stat-number">1.2K</div><div class="stat-label">FÖLJARE</div></div>
                     <div class="stat-item"><div class="stat-number">342</div><div class="stat-label">FÖLJER</div></div>
                 </div>
                 <div class="xp-bar"><div class="xp-fill" id="xpBar" style="width:60%"></div></div>
-                <div style="font-size:11px;color:var(--text-muted);"><span id="xpVal">60</span>/100 XP</div>
+                <div style="font-size:10px;color:var(--text-muted);"><span id="xpVal">60</span>/100 XP</div>
                 <div class="abilities-list" id="abilitiesList"></div>
             </div>
             <button class="btn-primary" onclick="shareProfile()">📤 Dela profil</button>
         </div>
-        <!-- BOUNTIES VIEW -->
-        <div class="view" id="view-bounties">
-            <div class="card-header"><div class="card-title">🎯 Aktiva uppdrag</div></div>
-            <div id="bountiesList"></div>
-            <button class="btn-primary" onclick="createBounty()">➕ Skapa uppdrag</button>
-            <div class="card-header" style="margin-top:8px;"><div class="card-title">📋 Mina uppdrag</div></div>
-            <div id="myBountiesList"></div>
-        </div>
-        <!-- BATTLE VIEW -->
-        <div class="view" id="view-battle">
-            <div id="battlePicker"><div class="card-header"><div class="card-title">⚔️ Välj motståndare</div></div><div class="battle-opponents" id="opponentsGrid"></div></div>
-            <div id="battleArena" style="display:none;"><div class="battle-arena"><div class="battle-hero" id="battleHero"></div><div class="battle-log" id="battleLog"></div><div class="battle-actions" id="battleActions"></div></div></div>
-        </div>
-        <!-- WORLD VIEW -->
-        <div class="view" id="view-world">
-            <div class="card-header"><div class="card-title">🌍 Utforska världen</div></div>
-            <div class="world-grid" id="worldGrid"></div>
-        </div>
+
         <!-- MAP VIEW -->
         <div class="view" id="view-map">
             <div class="card"><div class="card-header"><div class="card-title">📍 Vänner online</div></div><div class="map-grid" id="mapGrid"></div></div>
         </div>
+
+        <!-- WORLD VIEW -->
+        <div class="view" id="view-world">
+            <div class="card-header"><div class="card-title">🌍 Utforska</div></div>
+            <div class="world-grid" id="worldGrid"></div>
+        </div>
+
         <!-- COMPARE VIEW -->
         <div class="view" id="view-compare">
             <div class="search-bar"><span>🔍</span><input id="compareInput" placeholder="Sök produkt..." oninput="runCompare(this.value)"></div>
             <div id="compareResults"></div>
         </div>
+
+        <!-- BATTLE VIEW -->
+        <div class="view" id="view-battle">
+            <div id="battlePicker"><div class="card-header"><div class="card-title">⚔️ Välj motståndare</div></div><div class="battle-opponents" id="opponentsGrid"></div></div>
+            <div id="battleArena" style="display:none;"><div class="card"><div id="battleHero" style="display:flex;justify-content:space-between;align-items:center;gap:16px;"></div><div id="battleLog" style="background:var(--bg-elevated);border-radius:var(--radius-md);padding:10px;height:80px;overflow-y:auto;font-size:11px;margin:12px 0;"></div><div id="battleActions" style="display:flex;gap:8px;"></div></div></div>
+        </div>
     </div>
 
-    <!-- BOTTOM NAV -->
+    <!-- BOTTOM NAV (7 tabs) -->
     <div class="bottom-nav">
         <button class="nav-item active" data-view="feed"><div class="nav-icon">🔥</div><div class="nav-label">Flöde</div></button>
+        <button class="nav-item" data-view="bounties"><div class="nav-icon">🎯</div><div class="nav-label">Uppdrag</div></button>
+        <button class="nav-item" data-view="shop"><div class="nav-icon">🛍️</div><div class="nav-label">Shop</div></button>
+        <button class="nav-cam-btn" id="cameraBtn"><div class="nav-camera">📸</div><div class="nav-label" style="font-size:9px;margin-top:4px;">Nytt</div></button>
         <button class="nav-item" data-view="chat"><div class="nav-icon">💬</div><div class="nav-label">Chat</div></button>
         <button class="nav-item" data-view="map"><div class="nav-icon">📍</div><div class="nav-label">Karta</div></button>
-        <button class="nav-cam-btn" id="cameraBtn"><div class="nav-camera">📸</div><div class="nav-label" style="font-size:9px;margin-top:4px;">Nytt</div></button>
-        <button class="nav-item" data-view="shop"><div class="nav-icon">🛍️</div><div class="nav-label">Shop</div></button>
         <button class="nav-item" data-view="profile"><div class="nav-icon">👤</div><div class="nav-label">Profil</div></button>
     </div>
 </div>
 
 <!-- MODAL MENU -->
-<div class="modal-overlay" id="modalOverlay"><div class="modal-sheet"><div class="modal-handle"></div><div class="modal-logo" style="font-size:20px;font-weight:700;margin-bottom:16px;">PETPET</div><div class="modal-grid" id="modalGrid"></div></div></div>
+<div class="modal-overlay" id="modalOverlay"><div class="modal-sheet"><div class="modal-handle"></div><div class="modal-logo" style="font-size:18px;font-weight:700;margin-bottom:16px;">PETPET</div><div class="modal-grid" id="modalGrid"></div></div></div>
 
 <!-- CAMERA OVERLAY -->
 <div class="camera-overlay" id="camOverlay"><div class="camera-sheet"><div class="camera-header"><div class="camera-title">📸 Nytt inlägg</div><button class="camera-close" id="camClose">✕</button></div><button class="btn-secondary" onclick="pickImage()">🖼️ Välj bild</button><img id="postPreview" class="post-preview"><textarea class="post-textarea" id="postContent" placeholder="Vad händer? 🔥" rows="3"></textarea><button class="btn-primary" onclick="publishPost()">📤 Publicera</button></div></div>
 
 <!-- AI CHAT WINDOW -->
-<div class="ai-chat-window" id="aiChatWindow"><div class="ai-chat-header"><button class="ai-chat-back" id="aiChatBack">←</button><div class="ai-chat-avatar">🤖</div><div><div style="font-weight:600;">PetPal AI</div><div style="font-size:11px;color:var(--accent);">● Online</div></div></div><div class="ai-messages" id="aiMessages"><div class="msg ai">Hej! 👋 Jag är PetPal AI. Fråga mig om tips, strategier eller vad som helst!</div></div><div class="ai-input-row"><input class="ai-input" id="aiInput" placeholder="Skriv ett meddelande..."><button class="ai-send" id="aiSendBtn">➤</button></div></div>
+<div class="ai-chat-window" id="aiChatWindow"><div class="ai-chat-header"><button class="ai-chat-back" id="aiChatBack">←</button><div class="ai-chat-avatar">🤖</div><div><div style="font-weight:600;">PetPal AI</div><div style="font-size:10px;color:var(--accent);">● Online</div></div></div><div class="ai-messages" id="aiMessages"><div class="msg ai">Hej! 👋 Jag är PetPal AI. Fråga om tips, uppdrag, pets eller hjälp!</div></div><div class="ai-input-row"><input class="ai-input" id="aiInput" placeholder="Skriv ett meddelande..."><button class="ai-send" id="aiSendBtn">➤</button></div></div>
 
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
 
 <script>
 // ============ STATE ==========
-let STATE = { level: 5, exp: 60, coins: 2840, energy: 100, streak: 12, abilities: ['🔥 Fire Breath', '🪽 Fly', '⚡ Lightning'], likedPosts: new Set(), battleActive: null };
+let STATE = { level: 5, exp: 60, coins: 2840, energy: 100, streak: 12, abilities: ['🔥 Fire Breath', '🪽 Fly', '⚡ Lightning'], likedPosts: new Set(), battleActive: null, totalEarned: 1240 };
 
 // ============ DATA ==========
 let POSTS = [
-    {id:'p1',user:'Ella',ava:'👩‍🎤',pet:'🐉',lvl:7,text:'Köpte Fire Wings till min drake! 🔥 Nu kan den flyga!',likes:47,t:'15 min'},
-    {id:'p2',user:'Max',ava:'🧑‍🚀',pet:'🐺',lvl:10,text:'Level 10! Min varg är nu en legend! 🎉',likes:132,t:'1 tim'},
-    {id:'p3',user:'Clara',ava:'👩‍💻',pet:'🦊',lvl:6,text:'Legendary skin! ✨',likes:89,t:'3 tim'},
-    {id:'p4',user:'Leo',ava:'🧑‍🎤',pet:'🐻',lvl:4,text:'Klarade första battlet! 💪',likes:23,t:'5 tim'},
-    {id:'p5',user:'Wendela',ava:'😂',pet:'🐱',lvl:3,text:'Hittade en hemlig grotta! 🗺️',likes:61,t:'8 tim'}
+    {id:'p1',user:'Ella',ava:'👩‍🎤',pet:'🐉',lvl:7,text:'Köpte Fire Wings till min drake! 🔥',likes:47,t:'15 min'},
+    {id:'p2',user:'Max',ava:'🧑‍🚀',pet:'🐺',lvl:10,text:'Level 10! 🎉',likes:132,t:'1 tim'},
+    {id:'p3',user:'Clara',ava:'👩‍💻',pet:'🦊',lvl:6,text:'Legendary skin! ✨',likes:89,t:'3 tim'}
 ];
 let SHOP_ITEMS = [
     {id:'s1',emoji:'🔥',name:'Fire Wings',price:199},{id:'s2',emoji:'✨',name:'Legendary Glow',price:499},
-    {id:'s3',emoji:'⚡',name:'XP Boost',price:99},{id:'s4',emoji:'👑',name:'Royal Crown',price:799},
-    {id:'s5',emoji:'💊',name:'Health Potion',price:49},{id:'s6',emoji:'🎨',name:'Custom Skin',price:299}
+    {id:'s3',emoji:'⚡',name:'XP Boost',price:99},{id:'s4',emoji:'👑',name:'Royal Crown',price:799}
 ];
 let CODES = [{code:'WELCOME10',reward:100,used:false},{code:'DRAGON50',reward:500,used:false},{code:'PETPET25',reward:250,used:false}];
 let CHATS = [
     {name:'Stella 🥰',ava:'🌟',prev:'Haha ja! 😄',time:'15 min',streak:103,unread:true},
     {name:'Mackan',ava:'👨‍💻',prev:'Jobbar sent idag',time:'2 d',streak:0,unread:false},
-    {name:'Jack ❤️',ava:'🐶',prev:'Vi ses imorgon!',time:'17 h',streak:0,unread:true},
-    {name:'Wendela',ava:'😂',prev:'Hahaha bästa!',time:'5 h',streak:143,unread:false}
+    {name:'Jack ❤️',ava:'🐶',prev:'Vi ses imorgon!',time:'17 h',streak:0,unread:true}
 ];
 let STORIES = [
-    {name:'Din story',ava:'📸',seen:false},{name:'Stella',ava:'🌟',seen:false},
-    {name:'Max',ava:'🧑‍🚀',seen:true},{name:'Leo',ava:'🧑‍🎤',seen:false},
-    {name:'Clara',ava:'👩‍💻',seen:false},{name:'Wendela',ava:'😂',seen:true}
+    {name:'Din story',ava:'📸',seen:false},{name:'Stella',ava:'🌟',seen:false},{name:'Max',ava:'🧑‍🚀',seen:true},{name:'Leo',ava:'🧑‍🎤',seen:false}
 ];
 let LOCATIONS = [
     {emoji:'🏠',name:'Hemvärlden',users:127,locked:false,coins:10,xp:5},
     {emoji:'🛍️',name:'Shopping Plaza',users:45,locked:false,coins:15,xp:8},
-    {emoji:'🎯',name:'Uppdragstorget',users:32,locked:false,coins:20,xp:10},
     {emoji:'⚔️',name:'Battle Arena',users:18,locked:false,coins:25,xp:12},
     {emoji:'🌲',name:'MagiSkogen',users:56,locked:false,coins:30,xp:15},
     {emoji:'⛰️',name:'Drakberget',users:23,locked:true,reqLvl:10,coins:100,xp:50}
 ];
-let BOUNTIES = [
-    {id:'b1',title:'📸 Fota något blått',reward:100,desc:'Hitta något blått!'},
-    {id:'b2',title:'🏃 Gå 5000 steg',reward:150,desc:'Visa screenshot'},
-    {id:'b3',title:'☕ Besök ett café',reward:200,desc:'Fota dig på café'}
-];
-let userBounties = [];
-let OPPONENTS = [
-    {emoji:'🌲',name:'Skogsvätte',level:1,hp:60,maxHp:60,atk:12,reward:50},
-    {emoji:'🔥',name:'Eldsprutare',level:3,hp:100,maxHp:100,atk:18,reward:120},
-    {emoji:'❄️',name:'Isdemon',level:5,hp:150,maxHp:150,atk:25,reward:220}
-];
 let MAP_FRIENDS = [
     {ava:'👩‍🎤',name:'Ella',loc:'Hemvärlden',dist:'500m',online:true},
     {ava:'🧑‍🚀',name:'Max',loc:'Shopping Plaza',dist:'1.2km',online:true},
-    {ava:'👩‍💻',name:'Clara',loc:'Battle Arena',dist:'2km',online:false},
-    {ava:'🧑‍🎤',name:'Leo',loc:'MagiSkogen',dist:'3.5km',online:true}
+    {ava:'👩‍💻',name:'Clara',loc:'Battle Arena',dist:'2km',online:false}
 ];
+
+// BOUNTIES WITH REAL MONEY (SEK)
+let BOUNTIES = [
+    {id:'b1',title:'📸 Fota produkt på Ica',desc:'Gå till Ica och fota den nya produkten',rewardSEK:50,rewardCoins:100,deadline:'3 dagar',company:'Ica',status:'active',doers:127},
+    {id:'b2',title:'🎥 TikTok med vår produkt',desc:'Spela in en TikTok med vår dryck',rewardSEK:500,rewardCoins:500,deadline:'7 dagar',company:'Fun Beverages',status:'active',doers:23},
+    {id:'b3',title:'✍️ Skriv recension',desc:'Recensera restaurang X på Google',rewardSEK:20,rewardCoins:30,deadline:'2 dagar',company:'Restaurang X',status:'active',doers:89},
+    {id:'b4',title:'📦 Testa ny produkt',desc:'Få gratis produkt + betalt för feedback',rewardSEK:150,rewardCoins:200,deadline:'14 dagar',company:'Startup Co',status:'active',doers:45}
+];
+let userBounties = [];
+
+let OPPONENTS = [
+    {emoji:'🌲',name:'Skogsvätte',level:1,hp:60,atk:12,reward:50},
+    {emoji:'🔥',name:'Eldsprutare',level:3,hp:100,atk:18,reward:120}
+];
+
 const MENU_ITEMS = [
-    {view:'feed',label:'🔥 Flöde'},{view:'chat',label:'💬 Chat'},{view:'world',label:'🌍 Världen'},
-    {view:'shop',label:'🛍️ Shop'},{view:'profile',label:'👤 Profil'},{view:'bounties',label:'🎯 Uppdrag'},
-    {view:'battle',label:'⚔️ Battle'},{view:'map',label:'📍 Karta'},{view:'compare',label:'🔍 Jämför'}
+    {view:'feed',label:'🔥 Flöde'},{view:'bounties',label:'🎯 Uppdrag'},{view:'shop',label:'🛍️ Shop'},
+    {view:'chat',label:'💬 Chat'},{view:'world',label:'🌍 Världen'},{view:'map',label:'📍 Karta'},
+    {view:'profile',label:'👤 Profil'},{view:'battle',label:'⚔️ Battle'},{view:'compare',label:'🔍 Jämför'}
 ];
 
 function $(id){ return document.getElementById(id); }
@@ -1022,16 +949,11 @@ function updateHUD(){
     $('coins').textContent = STATE.coins.toLocaleString();
     $('streak').textContent = STATE.streak;
     $('energy').textContent = STATE.energy;
-    $('dailyStreak').textContent = STATE.streak;
     $('xpBar').style.width = STATE.exp + '%';
     $('xpVal').textContent = STATE.exp;
     $('abilitiesList').innerHTML = STATE.abilities.map(a=>`<div class="ability-tag">${a}</div>`).join('');
 }
-function gainCoins(amount, el){
-    STATE.coins += amount; updateHUD();
-    if(el){ const r = el.getBoundingClientRect(); const burst = document.createElement('div'); burst.className = 'coin-burst'; burst.textContent = `+${amount}💰`; burst.style.left = r.left+r.width/2+'px'; burst.style.top = r.top+'px'; document.body.appendChild(burst); setTimeout(()=>burst.remove(),800); }
-    saveState();
-}
+function gainCoins(amount, el){ STATE.coins += amount; updateHUD(); saveState(); if(el) showToast(`+${amount}💰`); }
 function gainXP(amount){
     STATE.exp += amount;
     if(STATE.exp >= 100){ STATE.exp -= 100; STATE.level++; showToast(`🎉 LEVEL ${STATE.level}!`); }
@@ -1040,8 +962,7 @@ function gainXP(amount){
 function saveState(){ localStorage.setItem('petpet_state', JSON.stringify({level:STATE.level,exp:STATE.exp,coins:STATE.coins,energy:STATE.energy,streak:STATE.streak,likedPosts:[...STATE.likedPosts],userBounties,bounties:BOUNTIES,codes:CODES,posts:POSTS})); }
 function loadState(){
     const s = localStorage.getItem('petpet_state');
-    if(s){
-        const d = JSON.parse(s);
+    if(s){ const d = JSON.parse(s);
         STATE.level = d.level ?? 5; STATE.exp = d.exp ?? 60; STATE.coins = d.coins ?? 2840; STATE.energy = d.energy ?? 100; STATE.streak = d.streak ?? 12;
         if(d.likedPosts) STATE.likedPosts = new Set(d.likedPosts);
         if(d.userBounties) userBounties = d.userBounties;
@@ -1058,82 +979,30 @@ function renderStories(){
 function viewStory(name){ const s = STORIES.find(x=>x.name===name); if(s) s.seen=true; renderStories(); showToast(`👁️ ${name}s story`); saveState(); }
 
 function renderFeed(){
-    $('view-feed').innerHTML = POSTS.map((p,i)=>`<div class="post-card"><div class="post-header"><div class="post-ava">${p.ava}</div><div class="post-meta"><div class="post-name">${p.user}</div><div class="post-time">${p.t} · ${p.pet} Lv.${p.lvl}</div></div><div class="post-pet-badge">${p.pet} Lv.${p.lvl}</div></div><div class="post-content">${p.text}</div><div class="post-actions"><button class="action-btn ${STATE.likedPosts.has(p.id)?'liked':''}" onclick="toggleLike('${p.id}',this)">❤️ <span id="lc-${p.id}">${p.likes}</span></button><button class="action-btn" onclick="sharePost('${p.id}')">📤 Dela</button></div></div>`).join('');
+    $('view-feed').innerHTML = POSTS.map(p=>`<div class="post-card"><div class="post-header"><div class="post-avatar">${p.ava}</div><div><div class="post-name">${p.user}</div><div class="post-time">${p.t}</div></div></div><div class="post-content">${p.text}</div><div class="post-actions"><button class="action-btn" onclick="toggleLike('${p.id}',this)">❤️ <span id="lc-${p.id}">${p.likes}</span></button><button class="action-btn" onclick="sharePost('${p.id}')">📤 Dela</button></div></div>`).join('');
 }
-function toggleLike(id,btn){
-    const p = POSTS.find(x=>x.id===id);
-    if(STATE.likedPosts.has(id)){ STATE.likedPosts.delete(id); p.likes--; btn.classList.remove('liked'); }
-    else{ STATE.likedPosts.add(id); p.likes++; btn.classList.add('liked'); showToast('❤️ Gillade!'); }
-    $(`lc-${id}`).textContent = p.likes; saveState();
-}
+function toggleLike(id,btn){ const p = POSTS.find(x=>x.id===id); if(STATE.likedPosts.has(id)){ STATE.likedPosts.delete(id); p.likes--; btn.classList.remove('liked'); }else{ STATE.likedPosts.add(id); p.likes++; btn.classList.add('liked'); showToast('❤️ Gillade!'); } $(`lc-${id}`).textContent = p.likes; saveState(); }
 function sharePost(id){ const p = POSTS.find(x=>x.id===id); if(navigator.share) navigator.share({title:'PETPET',text:p.text}); else showToast('📋 Kopierat!'); }
 
-function renderChat(){ $('chatList').innerHTML = CHATS.map(c=>`<div class="code-row" style="cursor:pointer;" onclick="openChatWith('${c.name}')"><div><div style="font-weight:600;">${c.name}</div><div style="font-size:12px;color:var(--text-muted);">${c.prev}</div></div><div style="text-align:right;"><div style="font-size:10px;color:var(--text-muted);">${c.time}</div>${c.streak>0?`<div style="font-size:10px;color:#ff4444;">🔥 ${c.streak}</div>`:''}</div></div>`).join(''); }
-function openChatWith(name){ const c = CHATS.find(x=>x.name===name); if(c) c.unread=false; renderChat(); showToast(`💬 Chatt med ${name}`); saveState(); }
+function renderBounties(){
+    $('bountiesList').innerHTML = BOUNTIES.map(b=>`<div class="bounty-card" onclick="doBounty('${b.id}',this)"><div class="bounty-header"><span class="bounty-title">${b.title}</span><span class="bounty-reward sek">${b.rewardSEK} SEK</span></div><div class="bounty-desc">${b.desc}</div><div class="bounty-footer"><span>👥 ${b.doers} gjort</span><span class="bounty-deadline">⏰ ${b.deadline}</span><button class="bounty-do-btn">🎯 Gör uppdrag</button></div></div>`).join('');
+}
+function doBounty(id,el){ const b = BOUNTIES.find(x=>x.id===id); if(!b) return; userBounties.push(b); BOUNTIES.splice(BOUNTIES.indexOf(b),1); gainCoins(b.rewardCoins, el); gainXP(15); STATE.totalEarned = (STATE.totalEarned || 0) + b.rewardSEK; showToast(`✅ Uppdrag klart! +${b.rewardSEK} SEK, +${b.rewardCoins}💰`); renderBounties(); saveState(); }
+function showCreateBountyModal(){ const title = prompt('Uppdragsnamn:'); if(!title) return; const rewardSEK = parseInt(prompt('Belöning i SEK:'))||50; const desc = prompt('Beskrivning:'); BOUNTIES.push({id:'b'+Date.now(),title,desc,rewardSEK,rewardCoins:Math.floor(rewardSEK*2),deadline:'7 dagar',company:'Användare',status:'active',doers:0}); renderBounties(); showToast('✅ Uppdrag skapat!'); saveState(); }
 
-function renderShop(items=SHOP_ITEMS){ $('shopGrid').innerHTML = items.map(p=>`<div class="product-card" onclick="buyItem('${p.id}',this)"><div class="product-emoji">${p.emoji}</div><div class="product-name">${p.name}</div><div class="product-price">${p.price} 💰</div></div>`).join('');
+function renderShop(){ $('shopGrid').innerHTML = SHOP_ITEMS.map(p=>`<div class="product-card" onclick="buyItem('${p.id}',this)"><div class="product-emoji">${p.emoji}</div><div class="product-name">${p.name}</div><div class="product-price">${p.price}💰</div></div>`).join('');
     $('codesList').innerHTML = CODES.map(c=>`<div class="code-row"><span>${c.code}</span><span>+${c.reward}💰</span><button class="btn-secondary" style="padding:4px 12px;width:auto;" onclick="useCode('${c.code}',this)" ${c.used?'disabled':''}>Använd</button></div>`).join('');
 }
 function filterShop(q){ renderShop(SHOP_ITEMS.filter(p=>p.name.toLowerCase().includes(q.toLowerCase()))); }
-function buyItem(id,el){ const p = SHOP_ITEMS.find(x=>x.id===id); if(STATE.coins < p.price){ showToast(`❌ Behöver ${p.price-STATE.coins} mer!`,'error'); return; } STATE.coins -= p.price; updateHUD(); saveState(); gainCoins(-p.price,el); showToast(`✅ Köpte ${p.name}!`); }
-function useCode(code,btn){ const c = CODES.find(x=>x.code===code); if(c.used) return; c.used=true; gainCoins(c.reward,btn); showToast(`🎟️ +${c.reward} coins!`); renderShop(); saveState(); }
+function buyItem(id,el){ const p = SHOP_ITEMS.find(x=>x.id===id); if(STATE.coins < p.price){ showToast(`❌ Behöver ${p.price-STATE.coins} mer!`,'error'); return; } STATE.coins -= p.price; updateHUD(); saveState(); showToast(`✅ Köpte ${p.name}!`); }
+function useCode(code,btn){ const c = CODES.find(x=>x.code===code); if(c.used) return; c.used=true; gainCoins(c.reward,btn); showToast(`🎟️ +${c.reward}💰`); renderShop(); saveState(); }
 
-function renderWorld(){ $('worldGrid').innerHTML = LOCATIONS.map(l=>`<div class="world-location ${l.locked&&STATE.level<(l.reqLvl||0)?'locked':''}" onclick="visitLoc('${l.name}')"><div class="world-emoji">${l.emoji}</div><div class="world-name">${l.name}</div><div class="world-users">👥 ${l.users}</div><div class="world-reward">${l.locked&&STATE.level<(l.reqLvl||0)?`🔒 Lv.${l.reqLvl}`:`+${l.coins}💰 +${l.xp}XP`}</div></div>`).join(''); }
-function visitLoc(name){ const l = LOCATIONS.find(x=>x.name===name); if(l.locked && STATE.level<(l.reqLvl||0)){ showToast(`🔒 Level ${l.reqLvl} krävs!`,'error'); return; } gainCoins(l.coins); gainXP(l.xp); showToast(`✨ +${l.coins}💰 +${l.xp}XP`); }
+function renderChat(){ $('chatList').innerHTML = CHATS.map(c=>`<div class="chat-item" onclick="openChatWith('${c.name}')"><div class="chat-avatar">${c.ava}</div><div class="chat-info"><div class="chat-name">${c.name}</div><div class="chat-preview">${c.prev}</div>${c.streak>0?`<div class="chat-streak">🔥 ${c.streak}</div>`:''}</div><div class="chat-meta" style="font-size:10px;color:var(--text-muted);">${c.time}</div></div>`).join(''); }
+function openChatWith(name){ showToast(`💬 Chatt med ${name}`); }
 
-function renderBounties(){ $('bountiesList').innerHTML = BOUNTIES.map(b=>`<div class="bounty-card"><div class="bounty-header"><span class="bounty-title">${b.title}</span><span class="bounty-reward">+${b.reward}💰</span></div><div class="bounty-desc">${b.desc}</div><button class="btn-secondary" style="margin-top:8px;" onclick="doBounty('${b.id}',this)">🎯 Gör uppdrag</button></div>`).join('');
-    $('myBountiesList').innerHTML = userBounties.length===0?'<div style="color:var(--text-muted);text-align:center;padding:20px;">Inga uppdrag än</div>':userBounties.map(b=>`<div class="bounty-card"><div class="bounty-header"><span>${b.title}</span><span style="color:var(--accent);">✅ Klar</span></div></div>`).join('');
-}
-function doBounty(id,el){ const b = BOUNTIES.find(x=>x.id===id); if(!b) return; userBounties.push(b); BOUNTIES.splice(BOUNTIES.indexOf(b),1); gainCoins(b.reward,el); gainXP(10); showToast(`🎯 +${b.reward}💰`); renderBounties(); saveState(); }
-function createBounty(){ const title = prompt('Uppdragsnamn:'); if(!title) return; const reward = parseInt(prompt('Belöning:'))||50; const desc = prompt('Beskrivning:'); BOUNTIES.push({id:'b'+Date.now(),title,reward,desc}); renderBounties(); showToast('✅ Uppdrag skapat!'); saveState(); }
-
-function renderBattle(){ $('opponentsGrid').innerHTML = OPPONENTS.map(o=>`<div class="opponent-card" onclick="startBattle('${o.name}')"><div class="opponent-emoji">${o.emoji}</div><div class="opponent-name">${o.name}</div><div class="opponent-level">Lv.${o.level}</div><div class="opponent-reward">+${o.reward}💰</div></div>`).join(''); $('battlePicker').style.display='block'; $('battleArena').style.display='none'; }
-function startBattle(name){
-    const opp = OPPONENTS.find(o=>o.name===name);
-    STATE.battleActive = {opp:{...opp,hp:opp.maxHp}, playerHp:100, log:[]};
-    $('battlePicker').style.display='none'; $('battleArena').style.display='block';
-    updateBattleUI();
-}
-function updateBattleUI(){
-    const b = STATE.battleActive;
-    $('battleHero').innerHTML = `<div class="battle-fighter"><div class="battle-emoji">🐉</div><div>Din pet</div><div class="battle-hp-bar"><div class="battle-hp-fill" style="width:${b.playerHp}%"></div></div><div>❤️ ${b.playerHp}/100</div></div><div style="font-size:24px;">VS</div><div class="battle-fighter"><div class="battle-emoji">${b.opp.emoji}</div><div>${b.opp.name}</div><div class="battle-hp-bar"><div class="battle-hp-fill" style="width:${(b.opp.hp/b.opp.maxHp)*100}%"></div></div><div>❤️ ${b.opp.hp}/${b.opp.maxHp}</div></div>`;
-    $('battleLog').innerHTML = b.log.slice(0,6).map(l=>`<div>${l}</div>`).join('');
-    $('battleActions').innerHTML = `<button class="btn-primary" onclick="battleAttack()">⚔️ Attackera</button><button class="btn-secondary" onclick="battleHeal()">💊 Heala (20⚡)</button><button class="btn-secondary" onclick="battleSpecial()">✨ Special (30⚡)</button><button class="btn-secondary" onclick="endBattle()">🏳️ Ge upp</button>`;
-}
-function battleAttack(){
-    const b = STATE.battleActive; const dmg = Math.floor(Math.random()*30)+15;
-    b.opp.hp = Math.max(0, b.opp.hp - dmg);
-    b.log.unshift(`⚔️ Du gjorde ${dmg} skada!`);
-    if(b.opp.hp<=0){ battleWin(); return; }
-    const edm = Math.floor(Math.random()*b.opp.atk)+8;
-    b.playerHp = Math.max(0, b.playerHp - edm);
-    b.log.unshift(`💀 ${b.opp.name} slog ${edm} tillbaka!`);
-    if(b.playerHp<=0){ battleLose(); return; }
-    updateBattleUI();
-}
-function battleHeal(){
-    const b = STATE.battleActive;
-    if(STATE.energy<20){ showToast('❌ Inte nog med energi!','error'); return; }
-    STATE.energy-=20; updateHUD();
-    b.playerHp = Math.min(100, b.playerHp+35);
-    b.log.unshift(`✅ Du healade 35 HP!`);
-    updateBattleUI(); saveState();
-}
-function battleSpecial(){
-    const b = STATE.battleActive;
-    if(STATE.energy<30){ showToast('❌ Inte nog med energi!','error'); return; }
-    STATE.energy-=30; updateHUD();
-    const dmg = Math.floor(Math.random()*50)+40;
-    b.opp.hp = Math.max(0, b.opp.hp - dmg);
-    b.log.unshift(`✨ SPECIAL! ${dmg} skada!`);
-    if(b.opp.hp<=0){ battleWin(); return; }
-    updateBattleUI(); saveState();
-}
-function battleWin(){ const b = STATE.battleActive; gainCoins(b.opp.reward); gainXP(20); showToast(`🏆 VINST! +${b.opp.reward}💰`); setTimeout(endBattle,1500); }
-function battleLose(){ showToast('💀 Förlust!','error'); setTimeout(endBattle,1500); }
-function endBattle(){ STATE.battleActive=null; renderBattle(); }
-
-function renderMap(){ $('mapGrid').innerHTML = MAP_FRIENDS.map(f=>`<div class="map-friend"><div class="friend-avatar">${f.ava}</div><div class="friend-name">${f.name}</div><div class="friend-location">📍 ${f.loc}</div><div class="friend-distance">${f.dist}</div><div style="width:8px;height:8px;border-radius:50%;background:${f.online?'var(--accent)':'var(--text-muted)'};margin:4px auto 0;"></div></div>`).join(''); }
+function renderMap(){ $('mapGrid').innerHTML = MAP_FRIENDS.map(f=>`<div class="map-friend"><div class="friend-avatar">${f.ava}</div><div class="friend-name">${f.name}</div><div class="friend-location">📍 ${f.loc}</div><div style="width:6px;height:6px;border-radius:50%;background:${f.online?'var(--accent)':'var(--text-muted)'};margin:6px auto 0;"></div></div>`).join(''); }
+function renderWorld(){ $('worldGrid').innerHTML = LOCATIONS.map(l=>`<div class="world-location ${l.locked&&STATE.level<(l.reqLvl||0)?'locked':''}" onclick="visitLoc('${l.name}')"><div class="world-emoji">${l.emoji}</div><div class="world-name">${l.name}</div><div class="world-users">👥 ${l.users}</div><div class="world-reward">${l.locked&&STATE.level<(l.reqLvl||0)?`🔒 Lv.${l.reqLvl}`:`+${l.coins}💰`}</div></div>`).join(''); }
+function visitLoc(name){ const l = LOCATIONS.find(x=>x.name===name); if(l.locked && STATE.level<(l.reqLvl||0)){ showToast(`🔒 Level ${l.reqLvl} krävs!`,'error'); return; } gainCoins(l.coins); gainXP(l.xp); showToast(`✨ +${l.coins}💰`); }
 
 let compareTimeout;
 function runCompare(val){
@@ -1141,19 +1010,28 @@ function runCompare(val){
     if(!val.trim()){ $('compareResults').innerHTML=''; return; }
     compareTimeout = setTimeout(()=>{
         const base = Math.floor(Math.random()*400)+150;
-        const results = [{store:'🛍️ Prisjakt',price:base+Math.floor(Math.random()*100)},{store:'🎯 Tradera',price:base+Math.floor(Math.random()*80)-20},{store:'📦 Amazon',price:base+Math.floor(Math.random()*120)},{store:'🇪🇺 eBay',price:base+Math.floor(Math.random()*90)-10}].sort((a,b)=>a.price-b.price);
-        $('compareResults').innerHTML = `<div class="compare-result"><div class="card-header" style="margin-bottom:12px;"><div class="card-title">🔍 ${val}</div></div>${results.map((r,i)=>`<div class="price-row"><span>${r.store}</span><span class="${i===0?'best-price':''}">${r.price} kr</span></div>`).join('')}</div>`;
+        const results = [{store:'🛍️ Prisjakt',price:base+Math.floor(Math.random()*100)},{store:'🎯 Tradera',price:base+Math.floor(Math.random()*80)-20},{store:'📦 Amazon',price:base+Math.floor(Math.random()*120)}].sort((a,b)=>a.price-b.price);
+        $('compareResults').innerHTML = `<div class="compare-result"><div class="card-header" style="margin-bottom:8px;"><div class="card-title">🔍 ${val}</div></div>${results.map((r,i)=>`<div class="price-row"><span>${r.store}</span><span class="${i===0?'best-price':''}">${r.price} kr</span></div>`).join('')}</div>`;
     },400);
 }
 
 function shareProfile(){ const txt = `🔥 Jag är Level ${STATE.level} på PETPET! ${STATE.streak} dagars streak!`; if(navigator.share) navigator.share({title:'PETPET',text:txt}); else showToast('📋 Profil kopierad!'); }
 
+// ============ BATTLE ==========
+function renderBattle(){ $('opponentsGrid').innerHTML = OPPONENTS.map(o=>`<div class="opponent-card" onclick="startBattle('${o.name}')"><div class="opponent-emoji">${o.emoji}</div><div class="opponent-name">${o.name}</div><div class="opponent-reward">+${o.reward}💰</div></div>`).join(''); $('battlePicker').style.display='block'; $('battleArena').style.display='none'; }
+function startBattle(name){ const opp = OPPONENTS.find(o=>o.name===name); STATE.battleActive = {opp:{...opp,hp:60}, playerHp:100, log:[]}; $('battlePicker').style.display='none'; $('battleArena').style.display='block'; updateBattleUI(); }
+function updateBattleUI(){ const b = STATE.battleActive; $('battleHero').innerHTML = `<div><div class="battle-emoji">🐉</div><div>❤️ ${b.playerHp}/100</div></div><div style="font-size:20px;">VS</div><div><div class="battle-emoji">${b.opp.emoji}</div><div>❤️ ${b.opp.hp}/${b.opp.hp}</div></div>`; $('battleLog').innerHTML = b.log.slice(0,6).map(l=>`<div>${l}</div>`).join(''); $('battleActions').innerHTML = `<button class="btn-primary" onclick="battleAttack()">⚔️ Attack</button><button class="btn-secondary" onclick="battleHeal()">💊 Heal (20⚡)</button><button class="btn-secondary" onclick="endBattle()">🏳️ Ge upp</button>`; }
+function battleAttack(){ const b = STATE.battleActive; const dmg = Math.floor(Math.random()*25)+15; b.opp.hp = Math.max(0, b.opp.hp - dmg); b.log.unshift(`⚔️ ${dmg} skada!`); if(b.opp.hp<=0){ gainCoins(b.opp.reward); gainXP(10); showToast(`🏆 VINST! +${b.opp.reward}💰`); endBattle(); return; } const edm = Math.floor(Math.random()*b.opp.atk)+8; b.playerHp = Math.max(0, b.playerHp - edm); b.log.unshift(`💀 ${b.opp.name} slog ${edm}!`); if(b.playerHp<=0){ showToast('💀 Förlust!','error'); endBattle(); return; } updateBattleUI(); }
+function battleHeal(){ const b = STATE.battleActive; if(STATE.energy<20){ showToast('❌ Inte nog med energi!','error'); return; } STATE.energy-=20; updateHUD(); b.playerHp = Math.min(100, b.playerHp+35); b.log.unshift(`✅ Healade 35 HP!`); updateBattleUI(); saveState(); }
+function endBattle(){ STATE.battleActive=null; renderBattle(); }
+
 // ============ AI CHAT ==========
 const aiWindow = $('aiChatWindow');
-$('aiChatTrigger').addEventListener('click', ()=>aiWindow.classList.add('open'));
-$('aiChatBack').addEventListener('click', ()=>aiWindow.classList.remove('open'));
-$('aiSendBtn').addEventListener('click', sendAI);
-$('aiInput').addEventListener('keypress', e=>{ if(e.key==='Enter') sendAI(); });
+function openAIChat(){ aiWindow.classList.add('open'); }
+$('aiChatTrigger')?.addEventListener('click', openAIChat);
+$('aiChatBack')?.addEventListener('click', ()=>aiWindow.classList.remove('open'));
+$('aiSendBtn')?.addEventListener('click', sendAI);
+$('aiInput')?.addEventListener('keypress', e=>{ if(e.key==='Enter') sendAI(); });
 function addMsg(txt, type){ const el = document.createElement('div'); el.className = `msg ${type}`; el.textContent = txt; $('aiMessages').appendChild(el); $('aiMessages').scrollTop = $('aiMessages').scrollHeight; return el; }
 function sendAI(){
     const msg = $('aiInput').value.trim();
@@ -1162,7 +1040,7 @@ function sendAI(){
     addMsg(msg, 'user');
     const loadEl = addMsg('✦ Tänker...', 'ai loading');
     setTimeout(()=>{
-        const replies = [`💡 Tips! Gör dagliga bounties för extra coins!`, `⚔️ I battle: använd Special när motståndaren har låg HP!`, `🔥 Din streak är ${STATE.streak} dagar!`, `🐉 Din pet är level ${STATE.level}!`, `📍 Kolla kartan – se var dina vänner är!`];
+        const replies = [`💡 Tips! Gör betalda uppdrag för att tjäna riktiga pengar!`, `⚔️ I battle: använd Heal när du har låg HP!`, `🔥 Din streak är ${STATE.streak} dagar!`, `🐉 Din pet är level ${STATE.level}! Fortsätt så!`, `📍 Kolla kartan – se var dina vänner är!`, `💰 Du har tjänat ${STATE.totalEarned || 0} SEK på uppdrag!`];
         loadEl.textContent = replies[Math.floor(Math.random()*replies.length)];
         loadEl.classList.remove('loading');
     }, 800);
@@ -1190,13 +1068,14 @@ function switchView(view){
     const btn = document.querySelector(`.nav-item[data-view="${view}"]`);
     if(btn) btn.classList.add('active');
     if(view==='feed') renderFeed();
-    if(view==='chat') renderChat();
-    if(view==='shop') renderShop();
-    if(view==='world') renderWorld();
     if(view==='bounties') renderBounties();
-    if(view==='battle') renderBattle();
+    if(view==='shop') renderShop();
+    if(view==='chat') renderChat();
+    if(view==='world') renderWorld();
     if(view==='map') renderMap();
+    if(view==='battle') renderBattle();
     if(view==='profile') updateHUD();
+    if(view==='compare') $('compareResults').innerHTML='';
 }
 document.querySelectorAll('.nav-item[data-view]').forEach(btn=>btn.addEventListener('click', ()=>switchView(btn.dataset.view)));
 
@@ -1207,7 +1086,7 @@ $('modalGrid').innerHTML = MENU_ITEMS.map(m=>`<div class="modal-item" data-view=
 document.querySelectorAll('.modal-item').forEach(item=>{ item.addEventListener('click', ()=>{ $('modalOverlay').classList.remove('open'); switchView(item.dataset.view); }); });
 
 // ============ DAILY BONUS ==========
-$('claimBtn').addEventListener('click', function(){
+document.querySelector('.quick-btn[onclick*="Bonus"]')?.addEventListener('click', function(){
     const today = new Date().toDateString();
     const last = localStorage.getItem('pp_daily');
     if(last===today){ showToast('❌ Kom tillbaka imorgon!','error'); return; }
