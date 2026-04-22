@@ -3,973 +3,1226 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>PETPET | Ultimate Social Platform</title>
+<title>PETPET — Social Platform</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
+/* ============ PREMIUM DESIGN v2.0 ============ */
+@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap');
 
 :root {
-    --neon: #39FF14;
-    --neon2: #ff3cac;
-    --neon3: #00f0ff;
-    --gold: #FFD700;
-    --bg: #070709;
-    --bg2: #0d0d12;
-    --bg3: #141418;
+    --bg: #0a0a0c;
+    --bg-elevated: #0f0f12;
+    --bg-card: #121216;
     --border: rgba(255,255,255,0.06);
+    --border-light: rgba(255,255,255,0.04);
+    --accent: #39FF14;
+    --accent-dim: rgba(57,255,20,0.12);
+    --accent-glow: rgba(57,255,20,0.15);
+    --accent-pink: #ff3cac;
+    --accent-blue: #00f0ff;
     --text: #e8e8f0;
-    --muted: #555566;
-    --font: 'Syne', sans-serif;
-    --mono: 'JetBrains Mono', monospace;
+    --text-secondary: #8a8a99;
+    --text-muted: #555566;
+    --radius-sm: 12px;
+    --radius-md: 16px;
+    --radius-lg: 20px;
+    --radius-xl: 24px;
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.4);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.5);
 }
 
-* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
-html, body {
-    height:100%; width:100%; overflow:hidden;
-    background:var(--bg);
-    font-family:var(--font);
-    color:var(--text);
-    overscroll-behavior:none;
+body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    line-height: 1.5;
 }
 
-/* ── ANIMATED BG ── */
-.bg-canvas {
-    position:fixed; inset:0; z-index:0; overflow:hidden;
-    background: radial-gradient(ellipse 80% 60% at 20% 10%, rgba(57,255,20,0.07) 0%, transparent 60%),
-                radial-gradient(ellipse 60% 50% at 80% 80%, rgba(255,60,172,0.06) 0%, transparent 60%),
-                radial-gradient(ellipse 50% 40% at 50% 50%, rgba(0,240,255,0.04) 0%, transparent 60%),
+/* Premium Background */
+.bg-premium {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background: radial-gradient(ellipse 80% 60% at 30% 20%, rgba(57,255,20,0.04), transparent 60%),
+                radial-gradient(ellipse 60% 50% at 80% 80%, rgba(0,240,255,0.03), transparent 60%),
                 var(--bg);
 }
-.bg-canvas::before {
-    content:''; position:absolute; inset:0;
-    background-image:
-        repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(255,255,255,0.012) 40px, rgba(255,255,255,0.012) 41px),
-        repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(255,255,255,0.012) 40px, rgba(255,255,255,0.012) 41px);
-}
-.orb {
-    position:absolute; border-radius:50%;
-    filter:blur(80px); pointer-events:none;
-    animation:orbFloat var(--dur, 25s) ease-in-out infinite;
-}
-.orb-1 { width:500px;height:500px;top:-100px;left:-100px; background:radial-gradient(circle, rgba(57,255,20,0.12), transparent 70%); --dur:30s; }
-.orb-2 { width:400px;height:400px;bottom:-50px;right:-100px; background:radial-gradient(circle, rgba(255,60,172,0.1), transparent 70%); --dur:25s; --delay:-10s; }
-.orb-3 { width:300px;height:300px;top:40%;left:40%; background:radial-gradient(circle, rgba(0,240,255,0.08), transparent 70%); --dur:20s; --delay:-5s; }
-@keyframes orbFloat {
-    0%,100%{transform:translate(0,0) scale(1);}
-    33%{transform:translate(60px,-80px) scale(1.1);}
-    66%{transform:translate(-40px,60px) scale(0.9);}
+.bg-premium::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(255,255,255,0.01) 1px, rgba(255,255,255,0.01) 2px);
+    background-size: 100% 40px;
+    pointer-events: none;
 }
 
-/* ── APP SHELL ── */
-.app { position:relative; z-index:10; width:100%; height:100%; display:flex; flex-direction:column; max-width:480px; margin:0 auto; }
-
-/* ── TOPBAR ── */
-.topbar {
-    display:flex; align-items:center; justify-content:space-between;
-    padding:12px 16px 8px;
-    background:rgba(7,7,9,0.85);
-    backdrop-filter:blur(20px);
-    border-bottom:1px solid var(--border);
-    flex-shrink:0;
-    position:relative; z-index:50;
+/* App Container */
+.app {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    max-width: 480px;
+    margin: 0 auto;
 }
-.topbar-stats { display:flex; gap:6px; align-items:center; }
+
+/* ============ TOP BAR ============ */
+.top-bar {
+    padding: 16px 20px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(10,10,12,0.7);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+}
+.logo {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.stats-group {
+    display: flex;
+    gap: 8px;
+}
 .stat-pill {
-    background:var(--bg3); border:1px solid var(--border);
-    padding:5px 10px; border-radius:100px;
-    font-size:12px; font-weight:600;
-    display:flex; align-items:center; gap:4px;
-    font-family:var(--mono);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 4px 12px;
+    border-radius: 40px;
+    font-size: 12px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--text-secondary);
 }
-.stat-pill .val { color:var(--neon); }
-.stat-pill.energy .val { color:var(--neon3); }
-.menu-toggle {
-    width:36px; height:36px; border-radius:12px;
-    background:linear-gradient(135deg, var(--neon), var(--neon2));
-    border:none; cursor:pointer;
-    display:flex; align-items:center; justify-content:center;
-    font-size:16px; transition:transform .2s; flex-shrink:0;
+.stat-pill .value {
+    color: var(--accent);
+    font-weight: 600;
 }
-.menu-toggle:active { transform:scale(0.9); }
+.menu-btn {
+    width: 36px;
+    height: 36px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.menu-btn:active { background: var(--bg-elevated); transform: scale(0.95); }
 
-/* ── DAILY BANNER ── */
-.daily-banner {
-    margin:10px 12px 0;
-    background:linear-gradient(135deg, rgba(57,255,20,0.08), rgba(255,60,172,0.06));
-    border:1px solid rgba(57,255,20,0.2);
-    border-radius:20px; padding:10px 14px;
-    display:flex; align-items:center; justify-content:space-between;
-    flex-shrink:0; cursor:pointer;
+/* ============ DAILY CARD ============ */
+.daily-card {
+    margin: 12px 16px 0;
+    background: linear-gradient(135deg, rgba(57,255,20,0.06), rgba(0,240,255,0.03));
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
-.streak-badge {
-    background:rgba(0,0,0,0.5); border-radius:12px;
-    padding:6px 12px; text-align:center;
-    border:1px solid rgba(57,255,20,0.3);
+.daily-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
-.streak-num { font-size:22px; font-weight:800; color:var(--neon); font-family:var(--mono); line-height:1; }
-.streak-lbl { font-size:9px; color:var(--muted); letter-spacing:1px; }
-.daily-text { font-size:12px; line-height:1.5; }
-.daily-text strong { color:var(--neon); }
-.claim-btn {
-    background:linear-gradient(135deg, var(--neon), #00c853);
-    color:#000; font-weight:800; font-size:12px;
-    padding:8px 16px; border-radius:100px; border:none; cursor:pointer;
-    transition:transform .15s;
+.streak-circle {
+    background: var(--accent-dim);
+    border-radius: 48px;
+    padding: 8px 16px;
+    text-align: center;
+    border: 1px solid rgba(57,255,20,0.2);
 }
-.claim-btn:active { transform:scale(0.93); }
+.streak-number {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--accent);
+    font-family: monospace;
+    line-height: 1;
+}
+.streak-label {
+    font-size: 9px;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+}
+.daily-text {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+.daily-text strong {
+    color: var(--accent);
+    font-weight: 600;
+}
+.claim-button {
+    background: linear-gradient(135deg, var(--accent), #00c853);
+    border: none;
+    padding: 8px 18px;
+    border-radius: 40px;
+    font-weight: 600;
+    font-size: 12px;
+    color: #000;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.claim-button:active { transform: scale(0.96); }
 
-/* ── STORIES ── */
-.stories {
-    padding:10px 12px;
-    display:flex; gap:12px; overflow-x:auto;
-    scrollbar-width:none; flex-shrink:0;
+/* ============ STORIES ROW ============ */
+.stories-row {
+    padding: 12px 16px;
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    flex-shrink: 0;
 }
-.stories::-webkit-scrollbar { display:none; }
-.story {
-    display:flex; flex-direction:column; align-items:center; gap:5px;
-    cursor:pointer; flex-shrink:0;
+.stories-row::-webkit-scrollbar { display: none; }
+.story-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    flex-shrink: 0;
 }
 .story-ring {
-    width:62px; height:62px; border-radius:50%;
-    background:conic-gradient(var(--neon), var(--neon2), var(--neon3), var(--neon));
-    padding:2px; display:flex; align-items:center; justify-content:center;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent-pink));
+    padding: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-.story-ring.seen { background:conic-gradient(var(--bg3), var(--bg3)); border:2px solid var(--bg3); }
-.story-inner { width:56px; height:56px; border-radius:50%; background:var(--bg2); display:flex; align-items:center; justify-content:center; font-size:28px; }
-.story-name { font-size:10px; color:var(--muted); max-width:62px; text-align:center; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.story-ring.seen { background: var(--bg-card); border: 2px solid var(--border); }
+.story-inner {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: var(--bg-card);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+}
+.story-name {
+    font-size: 10px;
+    color: var(--text-secondary);
+    max-width: 64px;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
-/* ── MAIN CONTENT ── */
-.main { flex:1; overflow:hidden; position:relative; }
+/* ============ MAIN CONTENT ============ */
+.main-content {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+}
 .view {
-    position:absolute; inset:0;
-    overflow-y:auto; overflow-x:hidden;
-    padding:12px;
-    display:none; flex-direction:column; gap:12px;
-    scrollbar-width:none;
+    position: absolute;
+    inset: 0;
+    overflow-y: auto;
+    padding: 16px;
+    display: none;
+    flex-direction: column;
+    gap: 16px;
+    scrollbar-width: thin;
 }
-.view::-webkit-scrollbar { display:none; }
-.view.active { display:flex; }
+.view.active { display: flex; }
 
-/* ── POST CARD ── */
-.post-card {
-    background:var(--bg2); border:1px solid var(--border);
-    border-radius:20px; overflow:hidden;
-    animation:slideUp .3s ease both;
-}
-@keyframes slideUp { from{opacity:0;transform:translateY(16px);} to{opacity:1;transform:translateY(0);} }
-.post-top { padding:14px 14px 0; display:flex; align-items:center; gap:10px; }
-.post-ava { width:42px; height:42px; border-radius:50%; background:linear-gradient(135deg, var(--neon), var(--neon2)); display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
-.post-meta { flex:1; }
-.post-uname { font-size:14px; font-weight:700; color:#fff; }
-.post-sub { font-size:11px; color:var(--muted); }
-.post-pet-badge { background:rgba(57,255,20,0.1); border:1px solid rgba(57,255,20,0.2); padding:4px 10px; border-radius:100px; font-size:11px; font-weight:600; color:var(--neon); }
-.post-body { padding:10px 14px 0; font-size:14px; line-height:1.6; color:var(--text); }
-.post-actions { padding:10px 14px 14px; display:flex; gap:0; border-top:1px solid var(--border); margin-top:10px; }
-.act-btn {
-    flex:1; background:none; border:none; cursor:pointer;
-    display:flex; align-items:center; justify-content:center; gap:6px;
-    color:var(--muted); font-size:13px; padding:8px; border-radius:10px;
-}
-.act-btn:active { background:rgba(255,255,255,0.05); }
-.act-btn.liked { color:var(--neon2); }
-
-/* ── CARDS ── */
+/* ============ CARDS ============ */
 .card {
-    background:var(--bg2); border:1px solid var(--border);
-    border-radius:20px; padding:16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    padding: 20px;
 }
-.card-title { font-size:13px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--muted); margin-bottom:12px; }
-.sec-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:4px; }
-.sec-title { font-size:13px; font-weight:700; color:var(--muted); letter-spacing:1px; text-transform:uppercase; }
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+.card-title {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+.card-link {
+    font-size: 11px;
+    color: var(--accent);
+    cursor: pointer;
+}
 
-/* ── PROFILE ── */
+/* ============ FEED POST ============ */
+.post-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+}
+.post-header {
+    padding: 16px 16px 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.post-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent-pink));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+}
+.post-meta { flex: 1; }
+.post-name { font-size: 14px; font-weight: 600; color: var(--text); }
+.post-time { font-size: 11px; color: var(--text-muted); }
+.post-pet-badge {
+    background: var(--accent-dim);
+    border: 1px solid rgba(57,255,20,0.15);
+    padding: 4px 12px;
+    border-radius: 40px;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--accent);
+}
+.post-content {
+    padding: 12px 16px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text-secondary);
+}
+.post-actions {
+    padding: 12px 16px 16px;
+    display: flex;
+    gap: 24px;
+    border-top: 1px solid var(--border-light);
+}
+.action-btn {
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-muted);
+    font-size: 13px;
+    cursor: pointer;
+    padding: 4px 0;
+}
+.action-btn.liked { color: var(--accent-pink); }
+
+/* ============ PROFILE ============ */
 .profile-hero {
-    background:linear-gradient(135deg, rgba(57,255,20,0.08), rgba(255,60,172,0.06));
-    border:1px solid var(--border); border-radius:20px;
-    padding:20px; text-align:center;
+    text-align: center;
+    background: linear-gradient(135deg, rgba(57,255,20,0.04), rgba(0,240,255,0.02));
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    padding: 24px;
 }
-.profile-ava-wrap { width:80px; height:80px; margin:0 auto 12px; background:linear-gradient(135deg, var(--neon), var(--neon2)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:40px; }
-.profile-name { font-size:22px; font-weight:800; }
-.profile-tag { font-size:12px; color:var(--muted); margin-bottom:12px; }
-.profile-numbers { display:flex; gap:0; }
-.pnum { flex:1; text-align:center; }
-.pnum-v { font-size:20px; font-weight:800; font-family:var(--mono); color:#fff; }
-.pnum-l { font-size:10px; color:var(--muted); letter-spacing:1px; }
-.xp-bar-wrap { background:var(--bg3); border-radius:100px; height:6px; margin:12px 0 4px; overflow:hidden; }
-.xp-bar { height:100%; border-radius:100px; background:linear-gradient(90deg, var(--neon), var(--neon3)); transition:width .5s ease; }
-.xp-label { font-size:11px; color:var(--muted); font-family:var(--mono); }
-.abilities { display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; }
-.ability-tag { background:rgba(57,255,20,0.1); border:1px solid rgba(57,255,20,0.2); padding:5px 12px; border-radius:100px; font-size:12px; font-weight:600; }
-
-/* ── SHOP ── */
-.search-input-wrap { background:var(--bg3); border:1px solid var(--border); border-radius:14px; display:flex; align-items:center; gap:8px; padding:0 12px; }
-.search-input-wrap input { flex:1; background:none; border:none; outline:none; padding:12px 0; color:var(--text); font-size:14px; }
-.product-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
-.product-card { background:var(--bg3); border:1px solid var(--border); border-radius:16px; padding:14px; text-align:center; cursor:pointer; transition:all .2s; }
-.product-card:active { transform:scale(0.96); border-color:rgba(57,255,20,0.4); }
-.prod-emoji { font-size:36px; margin-bottom:6px; }
-.prod-name { font-size:13px; font-weight:700; margin-bottom:4px; }
-.prod-price { font-size:12px; color:var(--neon); font-family:var(--mono); font-weight:600; }
-.code-row { display:flex; align-items:center; justify-content:space-between; padding:10px 0; border-bottom:1px solid var(--border); }
-.code-row:last-child { border-bottom:none; }
-.code-tag { font-family:var(--mono); font-size:13px; background:var(--bg3); padding:4px 10px; border-radius:8px; }
-.do-btn { margin-top:0; background:rgba(57,255,20,0.15); border:1px solid rgba(57,255,20,0.3); color:var(--neon); padding:4px 12px; border-radius:100px; font-size:11px; font-weight:700; cursor:pointer; }
-.btn-primary { background:linear-gradient(135deg, var(--neon), #00c853); color:#000; font-weight:800; font-size:14px; padding:13px; border-radius:100px; border:none; cursor:pointer; width:100%; transition:transform .15s; }
-.btn-primary:active { transform:scale(0.97); }
-.btn-secondary { background:var(--bg3); color:var(--text); font-weight:700; font-size:13px; padding:12px; border-radius:100px; border:1px solid var(--border); cursor:pointer; width:100%; transition:all .15s; }
-.btn-secondary:active { border-color:rgba(255,255,255,0.3); }
-
-/* ── CHAT ── */
-.chat-item {
-    display:flex; align-items:center; gap:12px;
-    padding:12px 0; border-bottom:1px solid var(--border); cursor:pointer;
+.profile-avatar {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 12px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-pink));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
 }
-.chat-ava { width:48px; height:48px; border-radius:50%; background:linear-gradient(135deg, var(--bg3), var(--bg2)); display:flex; align-items:center; justify-content:center; font-size:24px; border:1px solid var(--border); }
-.chat-info { flex:1; min-width:0; }
-.chat-name { font-size:15px; font-weight:700; }
-.chat-prev { font-size:12px; color:var(--muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; margin-top:2px; }
-.chat-meta { text-align:right; flex-shrink:0; }
-.chat-time { font-size:10px; color:var(--muted); font-family:var(--mono); }
-.chat-streak-badge { font-size:10px; color:#ff4444; margin-top:4px; font-weight:700; }
-.unread-dot { width:8px; height:8px; background:var(--neon); border-radius:50%; margin:4px 0 0 auto; }
-
-/* ── AI CHAT WINDOW ── */
-.ai-chat-window {
-    position:fixed; inset:0; z-index:200;
-    background:var(--bg); display:flex; flex-direction:column;
-    transform:translateY(100%); transition:transform .3s cubic-bezier(0.32, 0.72, 0, 1);
+.profile-name { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+.profile-handle { font-size: 12px; color: var(--text-muted); margin-bottom: 16px; }
+.profile-stats {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-bottom: 16px;
 }
-.ai-chat-window.open { transform:translateY(0); }
-.ai-chat-header {
-    padding:16px; display:flex; align-items:center; gap:12px;
-    border-bottom:1px solid var(--border);
-    background:rgba(7,7,9,0.9); backdrop-filter:blur(20px);
+.stat-item { text-align: center; }
+.stat-number { font-size: 18px; font-weight: 700; color: var(--text); }
+.stat-label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; }
+.xp-bar {
+    height: 6px;
+    background: var(--bg-elevated);
+    border-radius: 3px;
+    overflow: hidden;
+    margin: 12px 0 8px;
 }
-.ai-chat-ava { width:44px; height:44px; border-radius:50%; background:linear-gradient(135deg, var(--neon3), var(--neon2)); display:flex; align-items:center; justify-content:center; font-size:22px; }
-.ai-chat-name { font-size:16px; font-weight:700; }
-.ai-chat-status { font-size:11px; color:var(--neon); font-family:var(--mono); }
-.ai-chat-back { background:none; border:none; color:var(--text); font-size:22px; cursor:pointer; }
-.ai-messages { flex:1; overflow-y:auto; padding:16px; display:flex; flex-direction:column; gap:10px; scrollbar-width:none; }
-.ai-messages::-webkit-scrollbar { display:none; }
-.msg { max-width:80%; padding:10px 14px; border-radius:18px; font-size:14px; line-height:1.5; }
-.msg.user { align-self:flex-end; background:linear-gradient(135deg, rgba(57,255,20,0.25), rgba(0,240,255,0.15)); border:1px solid rgba(57,255,20,0.3); }
-.msg.ai { align-self:flex-start; background:var(--bg3); border:1px solid var(--border); }
-.msg.ai.loading { color:var(--muted); font-style:italic; }
-.ai-chat-input-row { padding:12px 16px; display:flex; gap:8px; align-items:center; border-top:1px solid var(--border); background:rgba(7,7,9,0.9); backdrop-filter:blur(20px); }
-.ai-chat-input { flex:1; background:var(--bg3); border:1px solid var(--border); border-radius:100px; padding:10px 16px; color:var(--text); font-size:14px; outline:none; }
-.ai-chat-input:focus { border-color:rgba(57,255,20,0.4); }
-.ai-send-btn { width:42px; height:42px; border-radius:50%; border:none; cursor:pointer; background:linear-gradient(135deg, var(--neon), var(--neon3)); display:flex; align-items:center; justify-content:center; font-size:18px; }
-.ai-send-btn:active { transform:scale(0.9); }
-
-/* ── WORLD ── */
-.world-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
-.world-loc {
-    background:var(--bg2); border:1px solid var(--border);
-    border-radius:16px; padding:14px; text-align:center; cursor:pointer;
-    transition:all .2s;
+.xp-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-blue));
+    border-radius: 3px;
+    transition: width 0.3s;
 }
-.world-loc:active { transform:scale(0.96); }
-.world-loc.locked { opacity:0.5; }
-.world-emoji { font-size:36px; margin-bottom:6px; }
-.world-name { font-size:13px; font-weight:700; margin-bottom:4px; }
-.world-info { font-size:11px; color:var(--muted); }
-.world-status { font-size:11px; margin-top:6px; font-weight:600; }
-.world-status.open { color:var(--neon); }
-.world-status.locked { color:#ff4444; }
+.abilities-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 16px;
+}
+.ability-tag {
+    background: var(--accent-dim);
+    border: 1px solid rgba(57,255,20,0.15);
+    padding: 4px 12px;
+    border-radius: 40px;
+    font-size: 11px;
+    font-weight: 500;
+}
 
-/* ── BOUNTIES ── */
+/* ============ SHOP ============ */
+.search-bar {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 48px;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.search-bar input {
+    flex: 1;
+    background: none;
+    border: none;
+    outline: none;
+    color: var(--text);
+    font-size: 14px;
+}
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+.product-card {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.product-card:active { transform: scale(0.97); border-color: rgba(57,255,20,0.3); }
+.product-emoji { font-size: 36px; margin-bottom: 8px; }
+.product-name { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+.product-price { font-size: 12px; color: var(--accent); font-weight: 600; }
+.code-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-light);
+}
+.code-row:last-child { border-bottom: none; }
+
+/* ============ BATTLE ============ */
+.battle-opponents {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+.opponent-card {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    text-align: center;
+    cursor: pointer;
+}
+.opponent-card:active { transform: scale(0.96); }
+.opponent-emoji { font-size: 40px; margin-bottom: 8px; }
+.opponent-name { font-size: 13px; font-weight: 600; }
+.opponent-level { font-size: 11px; color: var(--text-muted); margin: 4px 0; }
+.opponent-reward { font-size: 11px; color: var(--accent); font-weight: 600; }
+.battle-arena {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    padding: 20px;
+}
+.battle-hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+.battle-fighter { text-align: center; flex: 1; }
+.battle-emoji { font-size: 52px; }
+.battle-hp-bar { height: 6px; background: var(--bg-card); border-radius: 3px; margin: 8px 0 4px; overflow: hidden; }
+.battle-hp-fill { height: 100%; background: linear-gradient(90deg, #ff4444, var(--accent-pink)); border-radius: 3px; transition: width 0.2s; }
+.battle-log {
+    background: var(--bg-card);
+    border-radius: var(--radius-md);
+    padding: 12px;
+    height: 100px;
+    overflow-y: auto;
+    font-size: 12px;
+    font-family: monospace;
+    margin-bottom: 16px;
+}
+.battle-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+/* ============ WORLD ============ */
+.world-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+.world-location {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    text-align: center;
+    cursor: pointer;
+}
+.world-location.locked { opacity: 0.5; }
+.world-emoji { font-size: 32px; margin-bottom: 8px; }
+.world-name { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+.world-users { font-size: 11px; color: var(--text-muted); }
+.world-reward { font-size: 11px; margin-top: 8px; color: var(--accent); }
+
+/* ============ MAP ============ */
+.map-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+.map-friend {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 14px;
+    text-align: center;
+}
+.friend-avatar { font-size: 36px; margin-bottom: 8px; }
+.friend-name { font-size: 14px; font-weight: 600; }
+.friend-location { font-size: 11px; color: var(--accent-blue); margin: 4px 0; }
+.friend-distance { font-size: 10px; color: var(--text-muted); }
+
+/* ============ BOUNTIES ============ */
 .bounty-card {
-    background:var(--bg3); border:1px solid var(--border);
-    border-radius:16px; padding:14px; margin-bottom:10px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    margin-bottom: 12px;
 }
-.bounty-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; }
-.bounty-title { font-size:14px; font-weight:700; }
-.bounty-reward { font-size:13px; color:var(--gold); font-family:var(--mono); font-weight:600; }
-.bounty-desc { font-size:12px; color:var(--muted); line-height:1.5; }
-
-/* ── BATTLE ── */
-.battle-opp-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
-.opp-card {
-    background:var(--bg3); border:1px solid var(--border);
-    border-radius:16px; padding:14px; text-align:center; cursor:pointer;
+.bounty-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
 }
-.opp-card:active { transform:scale(0.95); }
-.opp-emoji { font-size:40px; }
-.opp-name { font-size:12px; font-weight:700; margin:6px 0 2px; }
-.opp-level { font-size:11px; color:var(--muted); }
-.opp-reward { font-size:11px; color:var(--gold); font-family:var(--mono); margin-top:4px; }
-.battle-hero { display:flex; align-items:center; justify-content:space-around; background:linear-gradient(135deg, rgba(57,255,20,0.05), rgba(255,60,172,0.05)); border:1px solid var(--border); border-radius:20px; padding:20px; margin-bottom:12px; }
-.battle-fighter { text-align:center; }
-.battle-emo { font-size:56px; line-height:1; }
-.battle-fname { font-size:13px; font-weight:700; margin-top:6px; }
-.battle-hp-bar { width:100px; height:6px; background:var(--bg3); border-radius:100px; margin:6px auto 0; overflow:hidden; }
-.battle-hp-fill { height:100%; border-radius:100px; background:linear-gradient(90deg, #ff4444, var(--neon2)); transition:width .3s; }
-.player-hp-fill { background:linear-gradient(90deg, var(--neon), var(--neon3)); }
-.battle-vs { font-size:22px; font-weight:800; color:var(--muted); }
-.battle-log { background:var(--bg3); border-radius:14px; padding:10px; max-height:100px; overflow-y:auto; font-size:12px; font-family:var(--mono); display:flex; flex-direction:column; gap:4px; margin-bottom:12px; scrollbar-width:none; }
-.battle-actions { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.bounty-title { font-weight: 600; }
+.bounty-reward { color: var(--accent); font-weight: 600; }
+.bounty-desc { font-size: 12px; color: var(--text-muted); margin-bottom: 12px; }
 
-/* ── MAP ── */
-.map-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-.map-friend-card { background:var(--bg3); border:1px solid var(--border); border-radius:16px; padding:14px; text-align:center; }
-.mf-ava { font-size:36px; margin-bottom:6px; }
-.mf-name { font-size:14px; font-weight:700; }
-.mf-loc { font-size:11px; color:var(--neon3); margin-top:3px; }
-.mf-dist { font-size:10px; color:var(--muted); margin-top:2px; font-family:var(--mono); }
+/* ============ COMPARE ============ */
+.compare-result {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+}
+.price-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-light);
+}
+.price-row:last-child { border-bottom: none; }
+.best-price { color: var(--accent); font-weight: 600; }
 
-/* ── COMPARE ── */
-.compare-result { background:var(--bg2); border:1px solid var(--border); border-radius:16px; padding:14px; }
-.price-row { display:flex; justify-content:space-between; align-items:center; padding:9px 0; border-bottom:1px solid var(--border); font-size:13px; }
-.price-row:last-child { border-bottom:none; }
-.best-price { color:var(--neon); font-weight:700; font-family:var(--mono); }
+/* ============ BUTTONS ============ */
+.btn-primary {
+    background: linear-gradient(135deg, var(--accent), #00c853);
+    border: none;
+    border-radius: 48px;
+    padding: 14px;
+    font-weight: 600;
+    font-size: 14px;
+    color: #000;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.2s;
+}
+.btn-primary:active { transform: scale(0.98); }
+.btn-secondary {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 48px;
+    padding: 12px;
+    font-weight: 500;
+    font-size: 13px;
+    color: var(--text);
+    cursor: pointer;
+    width: 100%;
+}
 
-/* ── BOTTOM NAV ── */
+/* ============ BOTTOM NAV ============ */
 .bottom-nav {
-    display:flex; align-items:center;
-    background:rgba(10,10,14,0.95); backdrop-filter:blur(25px);
-    border-top:1px solid var(--border);
-    padding:8px 8px 20px; flex-shrink:0;
+    background: rgba(15,15,18,0.95);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid var(--border);
+    padding: 8px 16px 20px;
+    display: flex;
+    flex-shrink: 0;
 }
-.nav-btn {
-    flex:1; background:none; border:none; cursor:pointer;
-    display:flex; flex-direction:column; align-items:center; gap:3px;
-    padding:6px 0;
+.nav-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: all 0.2s;
 }
-.nav-ico { font-size:22px; transition:transform .2s; }
-.nav-lbl { font-size:9px; font-weight:700; letter-spacing:0.5px; color:var(--muted); text-transform:uppercase; }
-.nav-btn.active .nav-ico { transform:scale(1.15); filter:drop-shadow(0 0 6px var(--neon)); }
-.nav-btn.active .nav-lbl { color:var(--neon); }
-.nav-cam-btn {
-    flex:1; background:none; border:none; cursor:pointer;
-    display:flex; flex-direction:column; align-items:center; gap:3px; padding:0;
+.nav-icon { font-size: 22px; }
+.nav-label { font-size: 9px; font-weight: 500; letter-spacing: 0.3px; text-transform: uppercase; }
+.nav-item.active .nav-icon { color: var(--accent); transform: scale(1.05); }
+.nav-item.active .nav-label { color: var(--accent); }
+.nav-camera {
+    background: linear-gradient(135deg, var(--accent), var(--accent-blue));
+    width: 52px;
+    height: 52px;
+    border-radius: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -18px;
+    box-shadow: 0 0 20px rgba(57,255,20,0.3);
 }
-.nav-cam-ico {
-    width:52px; height:52px; border-radius:50%;
-    background:linear-gradient(135deg, var(--neon), var(--neon3));
-    display:flex; align-items:center; justify-content:center;
-    font-size:24px; margin-top:-18px;
-    box-shadow:0 0 20px rgba(57,255,20,0.4);
-}
-.nav-cam-btn:active .nav-cam-ico { transform:scale(0.9); }
 
-/* ── MODALS ── */
+/* ============ MODALS ============ */
 .modal-overlay {
-    position:fixed; inset:0; z-index:100;
-    background:rgba(0,0,0,0.7); backdrop-filter:blur(10px);
-    display:flex; align-items:flex-end;
-    opacity:0; pointer-events:none; transition:opacity .3s;
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(12px);
+    display: flex;
+    align-items: flex-end;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s;
 }
-.modal-overlay.open { opacity:1; pointer-events:all; }
+.modal-overlay.open { opacity: 1; pointer-events: all; }
 .modal-sheet {
-    width:100%; max-width:480px; margin:0 auto;
-    background:var(--bg2); border-radius:28px 28px 0 0;
-    border:1px solid var(--border); border-bottom:none;
-    padding:20px 20px 40px;
-    transform:translateY(100%); transition:transform .3s cubic-bezier(0.32, 0.72, 0, 1);
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+    background: var(--bg-card);
+    border-radius: 28px 28px 0 0;
+    border: 1px solid var(--border);
+    border-bottom: none;
+    padding: 20px;
+    transform: translateY(100%);
+    transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
 }
-.modal-overlay.open .modal-sheet { transform:translateY(0); }
-.modal-handle { width:40px; height:4px; background:var(--bg3); border-radius:2px; margin:0 auto 20px; }
-.modal-logo { font-size:24px; font-weight:800; margin-bottom:16px; background:linear-gradient(135deg, var(--neon), var(--neon3)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-.modal-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.modal-overlay.open .modal-sheet { transform: translateY(0); }
+.modal-handle { width: 40px; height: 4px; background: var(--border); border-radius: 2px; margin: 0 auto 20px; }
+.modal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
 .modal-item {
-    background:var(--bg3); border:1px solid var(--border); border-radius:16px;
-    padding:14px 12px; cursor:pointer; display:flex; align-items:center; gap:10px;
-    font-size:14px; font-weight:600;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 14px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
 }
-.modal-item:active { border-color:rgba(57,255,20,0.4); background:rgba(57,255,20,0.07); }
 
-/* ── CAMERA OVERLAY ── */
+/* ============ CAMERA ============ */
 .camera-overlay {
-    position:fixed; inset:0; z-index:100;
-    background:rgba(0,0,0,0.8); backdrop-filter:blur(10px);
-    display:flex; align-items:flex-end;
-    opacity:0; pointer-events:none; transition:opacity .3s;
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: rgba(0,0,0,0.9);
+    backdrop-filter: blur(20px);
+    display: flex;
+    align-items: flex-end;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s;
 }
-.camera-overlay.open { opacity:1; pointer-events:all; }
+.camera-overlay.open { opacity: 1; pointer-events: all; }
 .camera-sheet {
-    width:100%; max-width:480px; margin:0 auto;
-    background:var(--bg2); border-radius:28px 28px 0 0;
-    border:1px solid var(--border);
-    padding:20px 20px 40px;
-    transform:translateY(100%); transition:transform .3s cubic-bezier(0.32, 0.72, 0, 1);
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+    background: var(--bg-card);
+    border-radius: 28px 28px 0 0;
+    border: 1px solid var(--border);
+    padding: 20px;
+    transform: translateY(100%);
+    transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
 }
-.camera-overlay.open .camera-sheet { transform:translateY(0); }
-.camera-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
-.camera-title { font-size:18px; font-weight:800; }
-.cam-close { background:var(--bg3); border:1px solid var(--border); border-radius:50%; width:36px; height:36px; font-size:16px; cursor:pointer; display:flex; align-items:center; justify-content:center; color:var(--text); }
-.post-textarea { width:100%; background:var(--bg3); border:1px solid var(--border); border-radius:14px; padding:12px; color:var(--text); font-size:14px; resize:none; outline:none; min-height:80px; }
-.post-textarea:focus { border-color:rgba(57,255,20,0.4); }
-.post-preview-img { width:100%; border-radius:14px; margin:10px 0; display:none; max-height:200px; object-fit:cover; }
+.camera-overlay.open .camera-sheet { transform: translateY(0); }
+.camera-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.camera-title { font-size: 18px; font-weight: 600; }
+.camera-close {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+}
+.post-textarea {
+    width: 100%;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 14px;
+    color: var(--text);
+    font-size: 14px;
+    resize: none;
+    margin: 16px 0;
+}
+.post-preview { width: 100%; border-radius: var(--radius-md); margin-bottom: 16px; display: none; }
 
-/* ── TOAST & EFFECTS ── */
+/* ============ AI CHAT ============ */
+.ai-chat-window {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    transform: translateY(100%);
+    transition: transform 0.3s;
+}
+.ai-chat-window.open { transform: translateY(0); }
+.ai-chat-header {
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(10,10,12,0.95);
+}
+.ai-chat-back { background: none; border: none; font-size: 24px; color: var(--text); cursor: pointer; }
+.ai-chat-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent-blue), var(--accent-pink));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+}
+.ai-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.msg {
+    max-width: 85%;
+    padding: 12px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+}
+.msg.user {
+    align-self: flex-end;
+    background: linear-gradient(135deg, rgba(57,255,20,0.15), rgba(0,240,255,0.08));
+    border: 1px solid rgba(57,255,20,0.2);
+}
+.msg.ai {
+    align-self: flex-start;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+}
+.ai-input-row {
+    padding: 12px 16px;
+    display: flex;
+    gap: 8px;
+    border-top: 1px solid var(--border);
+    background: rgba(10,10,12,0.95);
+}
+.ai-input {
+    flex: 1;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 40px;
+    padding: 12px 16px;
+    color: var(--text);
+    outline: none;
+}
+.ai-send {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent-blue));
+    border: none;
+    cursor: pointer;
+}
+
+/* ============ TOAST ============ */
 .toast {
-    position:fixed; bottom:90px; left:50%; transform:translateX(-50%) translateY(20px);
-    background:var(--bg2); border:1px solid var(--border); border-radius:100px;
-    padding:10px 20px; font-size:13px; font-weight:600; z-index:999;
-    white-space:nowrap; opacity:0; transition:all .3s; pointer-events:none;
+    position: fixed;
+    bottom: 90px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 48px;
+    padding: 10px 20px;
+    font-size: 13px;
+    font-weight: 500;
+    z-index: 999;
+    opacity: 0;
+    transition: all 0.2s;
+    pointer-events: none;
+    white-space: nowrap;
 }
-.toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
-.toast.success { border-color:rgba(57,255,20,0.5); color:var(--neon); }
-.toast.error { border-color:rgba(255,60,172,0.5); color:var(--neon2); }
-@keyframes coinBurst { 0%{opacity:1;transform:translateY(0) scale(1);} 100%{opacity:0;transform:translateY(-80px) scale(0.5);} }
-.coin-burst { position:fixed; pointer-events:none; z-index:999; font-size:20px; font-weight:700; color:var(--gold); animation:coinBurst .8s ease-out forwards; }
-.levelup-splash {
-    position:fixed; inset:0; z-index:500;
-    display:flex; align-items:center; justify-content:center;
-    background:rgba(0,0,0,0.8); backdrop-filter:blur(20px);
-    opacity:0; pointer-events:none; transition:opacity .3s;
-}
-.levelup-splash.show { opacity:1; }
-.levelup-content { text-align:center; animation:levelUpPop .5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-@keyframes levelUpPop { from{transform:scale(0.3);} to{transform:scale(1);} }
-.levelup-emoji { font-size:80px; display:block; margin-bottom:12px; }
-.levelup-text { font-size:32px; font-weight:800; background:linear-gradient(135deg,var(--neon),var(--neon3)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-.levelup-sub { font-size:16px; color:var(--muted); margin-top:6px; }
-.spacer { height:16px; }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.toast.success { border-color: var(--accent); color: var(--accent); }
+.toast.error { border-color: var(--accent-pink); color: var(--accent-pink); }
+
+/* ============ UTILITIES ============ */
+.hidden { display: none; }
+.spacer { height: 8px; }
 </style>
 </head>
 <body>
-<div class="bg-canvas"><div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div></div>
+<div class="bg-premium"></div>
 
-<div class="app" id="app">
-  <!-- TOPBAR -->
-  <div class="topbar">
-    <div style="font-size:20px; font-weight:800; letter-spacing:-0.5px; background:linear-gradient(135deg,#39FF14,#00f0ff); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">PETPET</div>
-    <div class="topbar-stats">
-      <div class="stat-pill">🐉 Lv.<span class="val" id="lvl">5</span></div>
-      <div class="stat-pill">💰 <span class="val" id="coins">2840</span></div>
-      <div class="stat-pill">🔥 <span class="val" id="streak">12</span></div>
-      <div class="stat-pill energy">⚡ <span class="val" id="energy">100</span></div>
-    </div>
-    <button class="menu-toggle" id="menuToggle">☰</button>
-  </div>
-
-  <!-- DAILY BANNER -->
-  <div class="daily-banner" id="dailyBanner">
-    <div class="daily-left">
-      <div class="streak-badge"><div class="streak-num" id="bannerStreak">12</div><div class="streak-lbl">DAGAR</div></div>
-      <div class="daily-text"><strong>🔥 Daglig bonus</strong><br><span style="color:#888;font-size:11px;">Logga in varje dag – få coins!</span></div>
-    </div>
-    <button class="claim-btn" id="claimBtn">CLAIM</button>
-  </div>
-
-  <!-- STORIES -->
-  <div class="stories" id="storiesRow"></div>
-
-  <!-- MAIN -->
-  <div class="main">
-    <div class="view active" id="view-feed"></div>
-    <div class="view" id="view-chat">
-      <div class="card"><div class="card-title">Meddelanden</div><div id="chatList"></div></div>
-      <div class="card" style="cursor:pointer;" id="aiChatCard">
-        <div style="display:flex; align-items:center; gap:12px;">
-          <div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#00f0ff,#ff3cac);display:flex;align-items:center;justify-content:center;font-size:24px;">🤖</div>
-          <div><div style="font-size:15px;font-weight:700;">PetPal AI</div><div style="font-size:12px;color:var(--muted);">Din smarta kompis – fråga vad som helst!</div></div>
-          <div style="margin-left:auto;background:rgba(0,240,255,0.15);border:1px solid rgba(0,240,255,0.3);color:#00f0ff;font-size:10px;font-weight:700;padding:4px 10px;border-radius:100px;">AI</div>
+<div class="app">
+    <!-- TOP BAR -->
+    <div class="top-bar">
+        <div class="logo">PETPET</div>
+        <div class="stats-group">
+            <div class="stat-pill">🐉 Lv.<span class="value" id="lvl">5</span></div>
+            <div class="stat-pill">💰 <span class="value" id="coins">2840</span></div>
+            <div class="stat-pill">🔥 <span class="value" id="streak">12</span></div>
+            <div class="stat-pill">⚡ <span class="value" id="energy">100</span></div>
         </div>
-      </div>
+        <button class="menu-btn" id="menuBtn">☰</button>
     </div>
-    <div class="view" id="view-shop">
-      <div class="search-input-wrap"><span>🔍</span><input id="shopSearchInput" placeholder="Sök produkter..." oninput="filterShop(this.value)"></div>
-      <div class="product-grid" id="shopGrid"></div>
-      <div class="card"><div class="card-title">🎟️ Rabattkoder</div><div id="codesList"></div></div>
-    </div>
-    <div class="view" id="view-profile">
-      <div class="profile-hero">
-        <div class="profile-ava-wrap">🐉</div>
-        <div class="profile-name" id="pName">Äventyrare</div>
-        <div class="profile-tag">@petpet_user · <span style="color:var(--neon);">🐉 Eldraken</span></div>
-        <div class="profile-numbers">
-          <div class="pnum"><div class="pnum-v">24</div><div class="pnum-l">INLÄGG</div></div>
-          <div class="pnum"><div class="pnum-v">1.2K</div><div class="pnum-l">FÖLJARE</div></div>
-          <div class="pnum"><div class="pnum-v">342</div><div class="pnum-l">FÖLJER</div></div>
-        </div>
-        <div class="xp-bar-wrap"><div class="xp-bar" id="xpBar" style="width:60%"></div></div>
-        <div class="xp-label"><span id="xpVal">60</span>/100 XP till nästa level</div>
-        <div class="abilities" id="abilities"></div>
-      </div>
-      <button class="btn-primary" onclick="shareProfile()">📤 Dela profil</button>
-      <button class="btn-secondary" onclick="showToast('⚙️ Inställningar – kommer snart!', 'success')">⚙️ Inställningar</button>
-    </div>
-    <div class="view" id="view-bounties">
-      <div class="sec-head"><div class="sec-title">🎯 Aktiva uppdrag</div></div>
-      <div id="bountiesList"></div>
-      <button class="btn-primary" onclick="createBounty()">➕ Skapa uppdrag</button>
-      <div class="sec-head" style="margin-top:8px;"><div class="sec-title">📋 Mina genomförda</div></div>
-      <div id="myBountiesList"></div>
-    </div>
-    <div class="view" id="view-battle">
-      <div id="battlePicker"><div class="sec-head" style="margin-bottom:12px;"><div class="sec-title">⚔️ Välj motståndare</div></div><div class="battle-opp-grid" id="oppGrid"></div></div>
-      <div id="battleArena" style="display:none;"><div class="battle-hero" id="battleHero"></div><div class="battle-log" id="battleLog"></div><div class="battle-actions" id="battleActGrid"></div></div>
-    </div>
-    <div class="view" id="view-world"><div class="sec-head"><div class="sec-title">🌍 Välj plats</div></div><div class="world-grid" id="worldGrid"></div></div>
-    <div class="view" id="view-map"><div class="card"><div class="card-title">📍 Vänner online nu</div><div class="map-grid" id="mapGrid"></div></div></div>
-    <div class="view" id="view-compare"><div class="search-input-wrap"><span>🔍</span><input id="compareInput" placeholder="Sök produkt att jämföra..." oninput="runCompare(this.value)"></div><div id="compareResults"></div></div>
-  </div>
 
-  <!-- BOTTOM NAV -->
-  <div class="bottom-nav">
-    <button class="nav-btn active" data-view="feed"><div class="nav-ico">🔥</div><div class="nav-lbl">Flöde</div></button>
-    <button class="nav-btn" data-view="chat"><div class="nav-ico">💬</div><div class="nav-lbl">Chat</div></button>
-    <button class="nav-btn" data-view="map"><div class="nav-ico">📍</div><div class="nav-lbl">Karta</div></button>
-    <button class="nav-cam-btn" id="camBtn"><div class="nav-cam-ico">📸</div><div class="nav-lbl" style="font-size:9px;color:var(--muted);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;">Nytt</div></button>
-    <button class="nav-btn" data-view="shop"><div class="nav-ico">🛍️</div><div class="nav-lbl">Shop</div></button>
-    <button class="nav-btn" data-view="profile"><div class="nav-ico">👤</div><div class="nav-lbl">Profil</div></button>
-  </div>
+    <!-- DAILY CARD -->
+    <div class="daily-card">
+        <div class="daily-left">
+            <div class="streak-circle">
+                <div class="streak-number" id="dailyStreak">12</div>
+                <div class="streak-label">DAGAR</div>
+            </div>
+            <div class="daily-text"><strong>🔥 Daglig bonus</strong><br>Logga in varje dag</div>
+        </div>
+        <button class="claim-button" id="claimBtn">CLAIM</button>
+    </div>
+
+    <!-- STORIES -->
+    <div class="stories-row" id="storiesRow"></div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <!-- FEED VIEW -->
+        <div class="view active" id="view-feed"></div>
+        <!-- CHAT VIEW -->
+        <div class="view" id="view-chat">
+            <div class="card"><div class="card-header"><div class="card-title">Meddelanden</div></div><div id="chatList"></div></div>
+            <div class="card" style="cursor:pointer;" id="aiChatTrigger">
+                <div style="display:flex; align-items:center; gap:12px;">
+                    <div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#00f0ff,#ff3cac);display:flex;align-items:center;justify-content:center;font-size:24px;">🤖</div>
+                    <div><div style="font-weight:600;">PetPal AI</div><div style="font-size:12px;color:var(--text-muted);">Din smarta kompis</div></div>
+                    <div style="margin-left:auto;background:var(--accent-dim);padding:4px 12px;border-radius:40px;font-size:10px;font-weight:600;color:var(--accent);">AI</div>
+                </div>
+            </div>
+        </div>
+        <!-- SHOP VIEW -->
+        <div class="view" id="view-shop">
+            <div class="search-bar"><span>🔍</span><input id="shopSearch" placeholder="Sök produkter..." oninput="filterShop(this.value)"></div>
+            <div class="product-grid" id="shopGrid"></div>
+            <div class="card"><div class="card-header"><div class="card-title">🎟️ Rabattkoder</div></div><div id="codesList"></div></div>
+        </div>
+        <!-- PROFILE VIEW -->
+        <div class="view" id="view-profile">
+            <div class="profile-hero">
+                <div class="profile-avatar">🐉</div>
+                <div class="profile-name" id="profileName">Äventyrare</div>
+                <div class="profile-handle">@petpet_user · 🐉 Eldraken</div>
+                <div class="profile-stats">
+                    <div class="stat-item"><div class="stat-number">24</div><div class="stat-label">INLÄGG</div></div>
+                    <div class="stat-item"><div class="stat-number">1.2K</div><div class="stat-label">FÖLJARE</div></div>
+                    <div class="stat-item"><div class="stat-number">342</div><div class="stat-label">FÖLJER</div></div>
+                </div>
+                <div class="xp-bar"><div class="xp-fill" id="xpBar" style="width:60%"></div></div>
+                <div style="font-size:11px;color:var(--text-muted);"><span id="xpVal">60</span>/100 XP</div>
+                <div class="abilities-list" id="abilitiesList"></div>
+            </div>
+            <button class="btn-primary" onclick="shareProfile()">📤 Dela profil</button>
+        </div>
+        <!-- BOUNTIES VIEW -->
+        <div class="view" id="view-bounties">
+            <div class="card-header"><div class="card-title">🎯 Aktiva uppdrag</div></div>
+            <div id="bountiesList"></div>
+            <button class="btn-primary" onclick="createBounty()">➕ Skapa uppdrag</button>
+            <div class="card-header" style="margin-top:8px;"><div class="card-title">📋 Mina uppdrag</div></div>
+            <div id="myBountiesList"></div>
+        </div>
+        <!-- BATTLE VIEW -->
+        <div class="view" id="view-battle">
+            <div id="battlePicker"><div class="card-header"><div class="card-title">⚔️ Välj motståndare</div></div><div class="battle-opponents" id="opponentsGrid"></div></div>
+            <div id="battleArena" style="display:none;"><div class="battle-arena"><div class="battle-hero" id="battleHero"></div><div class="battle-log" id="battleLog"></div><div class="battle-actions" id="battleActions"></div></div></div>
+        </div>
+        <!-- WORLD VIEW -->
+        <div class="view" id="view-world">
+            <div class="card-header"><div class="card-title">🌍 Utforska världen</div></div>
+            <div class="world-grid" id="worldGrid"></div>
+        </div>
+        <!-- MAP VIEW -->
+        <div class="view" id="view-map">
+            <div class="card"><div class="card-header"><div class="card-title">📍 Vänner online</div></div><div class="map-grid" id="mapGrid"></div></div>
+        </div>
+        <!-- COMPARE VIEW -->
+        <div class="view" id="view-compare">
+            <div class="search-bar"><span>🔍</span><input id="compareInput" placeholder="Sök produkt..." oninput="runCompare(this.value)"></div>
+            <div id="compareResults"></div>
+        </div>
+    </div>
+
+    <!-- BOTTOM NAV -->
+    <div class="bottom-nav">
+        <button class="nav-item active" data-view="feed"><div class="nav-icon">🔥</div><div class="nav-label">Flöde</div></button>
+        <button class="nav-item" data-view="chat"><div class="nav-icon">💬</div><div class="nav-label">Chat</div></button>
+        <button class="nav-item" data-view="map"><div class="nav-icon">📍</div><div class="nav-label">Karta</div></button>
+        <button class="nav-cam-btn" id="cameraBtn"><div class="nav-camera">📸</div><div class="nav-label" style="font-size:9px;margin-top:4px;">Nytt</div></button>
+        <button class="nav-item" data-view="shop"><div class="nav-icon">🛍️</div><div class="nav-label">Shop</div></button>
+        <button class="nav-item" data-view="profile"><div class="nav-icon">👤</div><div class="nav-label">Profil</div></button>
+    </div>
 </div>
 
 <!-- MODAL MENU -->
-<div class="modal-overlay" id="modalOverlay"><div class="modal-sheet"><div class="modal-handle"></div><div class="modal-logo">PETPET</div><div class="modal-grid" id="modalGrid"></div></div></div>
+<div class="modal-overlay" id="modalOverlay"><div class="modal-sheet"><div class="modal-handle"></div><div class="modal-logo" style="font-size:20px;font-weight:700;margin-bottom:16px;">PETPET</div><div class="modal-grid" id="modalGrid"></div></div></div>
 
 <!-- CAMERA OVERLAY -->
-<div class="camera-overlay" id="camOverlay"><div class="camera-sheet"><div class="camera-header"><div class="camera-title">📸 Nytt inlägg</div><button class="cam-close" id="camClose">✕</button></div><button class="btn-secondary" style="margin-bottom:10px;" onclick="pickImage()">🖼️ Välj bild</button><img id="postPreview" class="post-preview-img"><textarea class="post-textarea" id="postText" placeholder="Vad händer i din värld? 🔥" rows="3"></textarea><div class="spacer"></div><button class="btn-primary" onclick="publishPost()">📤 Publicera</button></div></div>
+<div class="camera-overlay" id="camOverlay"><div class="camera-sheet"><div class="camera-header"><div class="camera-title">📸 Nytt inlägg</div><button class="camera-close" id="camClose">✕</button></div><button class="btn-secondary" onclick="pickImage()">🖼️ Välj bild</button><img id="postPreview" class="post-preview"><textarea class="post-textarea" id="postContent" placeholder="Vad händer? 🔥" rows="3"></textarea><button class="btn-primary" onclick="publishPost()">📤 Publicera</button></div></div>
 
 <!-- AI CHAT WINDOW -->
-<div class="ai-chat-window" id="aiChatWindow"><div class="ai-chat-header"><button class="ai-chat-back" id="aiChatBack">←</button><div class="ai-chat-ava">🤖</div><div><div class="ai-chat-name">PetPal AI</div><div class="ai-chat-status">● Online</div></div></div><div class="ai-messages" id="aiMessages"><div class="msg ai">Hej! 👋 Jag är PetPal AI. Fråga mig om tips, strategier, pet-info eller vad som helst!</div></div><div class="ai-chat-input-row"><input class="ai-chat-input" id="aiInput" placeholder="Skriv ett meddelande..." /><button class="ai-send-btn" id="aiSendBtn">➤</button></div></div>
+<div class="ai-chat-window" id="aiChatWindow"><div class="ai-chat-header"><button class="ai-chat-back" id="aiChatBack">←</button><div class="ai-chat-avatar">🤖</div><div><div style="font-weight:600;">PetPal AI</div><div style="font-size:11px;color:var(--accent);">● Online</div></div></div><div class="ai-messages" id="aiMessages"><div class="msg ai">Hej! 👋 Jag är PetPal AI. Fråga mig om tips, strategier eller vad som helst!</div></div><div class="ai-input-row"><input class="ai-input" id="aiInput" placeholder="Skriv ett meddelande..."><button class="ai-send" id="aiSendBtn">➤</button></div></div>
 
-<!-- TOAST & LEVELUP -->
+<!-- TOAST -->
 <div class="toast" id="toast"></div>
-<div class="levelup-splash" id="levelupSplash"><div class="levelup-content"><span class="levelup-emoji">🎉</span><div class="levelup-text" id="levelupText">LEVEL UP!</div><div class="levelup-sub" id="levelupSub">Grattis!</div></div></div>
 
 <script>
-// ============ STATE ============
-let STATE = {
-    level: 5, exp: 60, coins: 2840, energy: 100, streak: 12,
-    abilities: ['🔥 Fire Breath', '🪽 Fly', '⚡ Lightning'],
-    likedPosts: new Set(),
-    battleActive: null,
-    lastEnergyRegen: Date.now()
-};
+// ============ STATE ==========
+let STATE = { level: 5, exp: 60, coins: 2840, energy: 100, streak: 12, abilities: ['🔥 Fire Breath', '🪽 Fly', '⚡ Lightning'], likedPosts: new Set(), battleActive: null };
 
-// ============ DATA ============
+// ============ DATA ==========
 let POSTS = [
-    {id:'p1',user:'Ella',ava:'👩‍🎤',pet:'🐉',lvl:7,text:'Köpte Fire Wings till min drake! 🔥 Nu kan den flyga snabbare än någonsin!',likes:47,t:'15 min'},
-    {id:'p2',user:'Max',ava:'🧑‍🚀',pet:'🐺',lvl:10,text:'LEVEL 10! Min varg är nu en legend!! Tog 3 månader men det var värt varenda sekund 🎉⚡',likes:132,t:'1 tim'},
-    {id:'p3',user:'Clara',ava:'👩‍💻',pet:'🦊',lvl:6,text:'Hittade en legendary skin idag vid Drakberget ✨ Kan inte sluta titta på den lol',likes:89,t:'3 tim'},
-    {id:'p4',user:'Leo',ava:'🧑‍🎤',pet:'🐻',lvl:4,text:'Precis klarat mitt första battle uppdrag 💪 Elddemon nedlagd!',likes:23,t:'5 tim'},
-    {id:'p5',user:'Wendela',ava:'😂',pet:'🐱',lvl:3,text:'Min katt-pet hittade en hemlig grotta!! Finns det fler dolda platser?? 🗺️',likes:61,t:'8 tim'}
+    {id:'p1',user:'Ella',ava:'👩‍🎤',pet:'🐉',lvl:7,text:'Köpte Fire Wings till min drake! 🔥 Nu kan den flyga!',likes:47,t:'15 min'},
+    {id:'p2',user:'Max',ava:'🧑‍🚀',pet:'🐺',lvl:10,text:'Level 10! Min varg är nu en legend! 🎉',likes:132,t:'1 tim'},
+    {id:'p3',user:'Clara',ava:'👩‍💻',pet:'🦊',lvl:6,text:'Legendary skin! ✨',likes:89,t:'3 tim'},
+    {id:'p4',user:'Leo',ava:'🧑‍🎤',pet:'🐻',lvl:4,text:'Klarade första battlet! 💪',likes:23,t:'5 tim'},
+    {id:'p5',user:'Wendela',ava:'😂',pet:'🐱',lvl:3,text:'Hittade en hemlig grotta! 🗺️',likes:61,t:'8 tim'}
 ];
-
 let SHOP_ITEMS = [
-    {id:'s1',emoji:'🔥',name:'Fire Wings',price:199,tag:'POPULÄR'},
-    {id:'s2',emoji:'✨',name:'Legendary Glow',price:499,tag:'LEGENDARISK'},
-   {id:'s3',emoji:'⚡',name:'XP Boost x2',price:99,tag:''},
-    {id:'s4',emoji:'👑',name:'Royal Crown',price:799,tag:'PREMIUM'},
-    {id:'s5',emoji:'💊',name:'Health Potion',price:49,tag:''},
-    {id:'s6',emoji:'🎨',name:'Custom Skin',price:299,tag:'NY'},
-    {id:'s7',emoji:'🌪️',name:'Storm Aura',price:349,tag:''},
-    {id:'s8',emoji:'🏆',name:'Gold Trophy',price:999,tag:'SÄLLSYNT'}
+    {id:'s1',emoji:'🔥',name:'Fire Wings',price:199},{id:'s2',emoji:'✨',name:'Legendary Glow',price:499},
+    {id:'s3',emoji:'⚡',name:'XP Boost',price:99},{id:'s4',emoji:'👑',name:'Royal Crown',price:799},
+    {id:'s5',emoji:'💊',name:'Health Potion',price:49},{id:'s6',emoji:'🎨',name:'Custom Skin',price:299}
 ];
-
-let CODES = [
-    {code:'WELCOME10',reward:100,used:false},
-    {code:'DRAGON50',reward:500,used:false},
-    {code:'PETPET25',reward:250,used:false}
-];
-
+let CODES = [{code:'WELCOME10',reward:100,used:false},{code:'DRAGON50',reward:500,used:false},{code:'PETPET25',reward:250,used:false}];
 let CHATS = [
     {name:'Stella 🥰',ava:'🌟',prev:'Haha ja! 😄',time:'15 min',streak:103,unread:true},
     {name:'Mackan',ava:'👨‍💻',prev:'Jobbar sent idag',time:'2 d',streak:0,unread:false},
     {name:'Jack ❤️',ava:'🐶',prev:'Vi ses imorgon!',time:'17 h',streak:0,unread:true},
     {name:'Wendela',ava:'😂',prev:'Hahaha bästa!',time:'5 h',streak:143,unread:false}
 ];
-
 let STORIES = [
-    {name:'Din story',ava:'📸',seen:false},
-    {name:'Stella',ava:'🌟',seen:false},
-    {name:'Max',ava:'🧑‍🚀',seen:true},
-    {name:'Leo',ava:'🧑‍🎤',seen:false},
-    {name:'Clara',ava:'👩‍💻',seen:false},
-    {name:'Wendela',ava:'😂',seen:true}
+    {name:'Din story',ava:'📸',seen:false},{name:'Stella',ava:'🌟',seen:false},
+    {name:'Max',ava:'🧑‍🚀',seen:true},{name:'Leo',ava:'🧑‍🎤',seen:false},
+    {name:'Clara',ava:'👩‍💻',seen:false},{name:'Wendela',ava:'😂',seen:true}
 ];
-
 let LOCATIONS = [
-    {emoji:'🏠',name:'Hemvärlden',users:127,locked:false,xp:5,coins:10},
-    {emoji:'🛍️',name:'Shopping Plaza',users:45,locked:false,xp:8,coins:15},
-    {emoji:'🎯',name:'Uppdragstorget',users:32,locked:false,xp:10,coins:20},
-    {emoji:'⚔️',name:'Battle Arena',users:18,locked:false,xp:12,coins:25},
-    {emoji:'🌲',name:'MagiSkogen',users:56,locked:false,xp:15,coins:30},
-    {emoji:'⛰️',name:'Drakberget',users:23,locked:true,reqLvl:10,xp:50,coins:100}
+    {emoji:'🏠',name:'Hemvärlden',users:127,locked:false,coins:10,xp:5},
+    {emoji:'🛍️',name:'Shopping Plaza',users:45,locked:false,coins:15,xp:8},
+    {emoji:'🎯',name:'Uppdragstorget',users:32,locked:false,coins:20,xp:10},
+    {emoji:'⚔️',name:'Battle Arena',users:18,locked:false,coins:25,xp:12},
+    {emoji:'🌲',name:'MagiSkogen',users:56,locked:false,coins:30,xp:15},
+    {emoji:'⛰️',name:'Drakberget',users:23,locked:true,reqLvl:10,coins:100,xp:50}
 ];
-
 let BOUNTIES = [
-    {id:'b1',title:'📸 Fota något blått',reward:100,desc:'Hitta något blått och ta en bild!'},
-    {id:'b2',title:'🏃 Gå 5 000 steg',reward:150,desc:'Visa screenshot från din stegräknare'},
-    {id:'b3',title:'☕ Besök ett café',reward:200,desc:'Fota dig på ett café eller fik'},
-    {id:'b4',title:'🌅 Morgonsoluppgång',reward:250,desc:'Fota en soluppgång tidigt på morgonen'},
-    {id:'b5',title:'🌱 Hitta en ovanlig planta',reward:175,desc:'Fota en planta du aldrig sett förut'}
+    {id:'b1',title:'📸 Fota något blått',reward:100,desc:'Hitta något blått!'},
+    {id:'b2',title:'🏃 Gå 5000 steg',reward:150,desc:'Visa screenshot'},
+    {id:'b3',title:'☕ Besök ett café',reward:200,desc:'Fota dig på café'}
 ];
 let userBounties = [];
-
-const OPPONENTS = [
+let OPPONENTS = [
     {emoji:'🌲',name:'Skogsvätte',level:1,hp:60,maxHp:60,atk:12,reward:50},
     {emoji:'🔥',name:'Eldsprutare',level:3,hp:100,maxHp:100,atk:18,reward:120},
-    {emoji:'❄️',name:'Isdemon',level:5,hp:150,maxHp:150,atk:25,reward:220},
-    {emoji:'🐲',name:'Uradrake',level:8,hp:250,maxHp:250,atk:35,reward:500}
+    {emoji:'❄️',name:'Isdemon',level:5,hp:150,maxHp:150,atk:25,reward:220}
 ];
-
-const MAP_FRIENDS = [
+let MAP_FRIENDS = [
     {ava:'👩‍🎤',name:'Ella',loc:'Hemvärlden',dist:'500m',online:true},
     {ava:'🧑‍🚀',name:'Max',loc:'Shopping Plaza',dist:'1.2km',online:true},
     {ava:'👩‍💻',name:'Clara',loc:'Battle Arena',dist:'2km',online:false},
     {ava:'🧑‍🎤',name:'Leo',loc:'MagiSkogen',dist:'3.5km',online:true}
 ];
-
 const MENU_ITEMS = [
     {view:'feed',label:'🔥 Flöde'},{view:'chat',label:'💬 Chat'},{view:'world',label:'🌍 Världen'},
-    {view:'shop',label:'🛍️ Shop'},{view:'profile',label:'👤 Min profil'},{view:'bounties',label:'🎯 Uppdrag'},
-    {view:'battle',label:'⚔️ Battle'},{view:'map',label:'📍 Social karta'},{view:'compare',label:'🔍 Jämför priser'}
+    {view:'shop',label:'🛍️ Shop'},{view:'profile',label:'👤 Profil'},{view:'bounties',label:'🎯 Uppdrag'},
+    {view:'battle',label:'⚔️ Battle'},{view:'map',label:'📍 Karta'},{view:'compare',label:'🔍 Jämför'}
 ];
 
-// ============ PERSISTENT STATE ============
-function loadState() {
-    const saved = localStorage.getItem('petpet_state');
-    if(saved) {
-        try {
-            const data = JSON.parse(saved);
-            STATE.level = data.level ?? 5;
-            STATE.exp = data.exp ?? 60;
-            STATE.coins = data.coins ?? 2840;
-            STATE.energy = data.energy ?? 100;
-            STATE.streak = data.streak ?? 12;
-            if(data.likedPosts) STATE.likedPosts = new Set(data.likedPosts);
-            if(data.userBounties) userBounties = data.userBounties;
-            if(data.bounties) BOUNTIES.splice(0, BOUNTIES.length, ...data.bounties);
-            if(data.codes) CODES.splice(0, CODES.length, ...data.codes);
-            if(data.posts) POSTS.splice(0, POSTS.length, ...data.posts);
-        } catch(e) {}
-    }
-    updateHUD();
-}
-
-function saveState() {
-    localStorage.setItem('petpet_state', JSON.stringify({
-        level: STATE.level, exp: STATE.exp, coins: STATE.coins, energy: STATE.energy, streak: STATE.streak,
-        likedPosts: [...STATE.likedPosts], userBounties: userBounties, bounties: BOUNTIES, codes: CODES, posts: POSTS
-    }));
-}
-
-// ============ UI HELPERS ============
 function $(id){ return document.getElementById(id); }
-let toastTimer;
-function showToast(msg, type='success') {
-    const el = $('toast');
-    el.textContent = msg;
-    el.className = `toast show ${type}`;
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(()=>{ el.className='toast'; }, 2600);
+function showToast(msg, type='success'){
+    const t = $('toast'); t.textContent = msg; t.className = `toast show ${type}`;
+    setTimeout(()=>t.className='toast', 2500);
 }
-
-function coinBurst(amount, x, y) {
-    const el = document.createElement('div');
-    el.className = 'coin-burst';
-    el.textContent = `${amount>=0?'+':''}${amount}💰`;
-    el.style.left = `${x}px`;
-    el.style.top = `${y}px`;
-    document.body.appendChild(el);
-    setTimeout(()=>el.remove(), 900);
-}
-
-function updateHUD() {
+function updateHUD(){
     $('lvl').textContent = STATE.level;
     $('coins').textContent = STATE.coins.toLocaleString();
     $('streak').textContent = STATE.streak;
     $('energy').textContent = STATE.energy;
-    $('bannerStreak').textContent = STATE.streak;
-    $('pName').textContent = 'Äventyrare';
+    $('dailyStreak').textContent = STATE.streak;
     $('xpBar').style.width = STATE.exp + '%';
     $('xpVal').textContent = STATE.exp;
-    $('abilities').innerHTML = STATE.abilities.map(a=>`<div class="ability-tag">${a}</div>`).join('');
+    $('abilitiesList').innerHTML = STATE.abilities.map(a=>`<div class="ability-tag">${a}</div>`).join('');
 }
-
-function gainCoins(amount, el) {
-    STATE.coins += amount;
-    updateHUD();
+function gainCoins(amount, el){
+    STATE.coins += amount; updateHUD();
+    if(el){ const r = el.getBoundingClientRect(); const burst = document.createElement('div'); burst.className = 'coin-burst'; burst.textContent = `+${amount}💰`; burst.style.left = r.left+r.width/2+'px'; burst.style.top = r.top+'px'; document.body.appendChild(burst); setTimeout(()=>burst.remove(),800); }
     saveState();
-    if(el) {
-        const r = el.getBoundingClientRect();
-        coinBurst(amount, r.left + r.width/2, r.top);
-    }
 }
-
-function gainXP(amount) {
+function gainXP(amount){
     STATE.exp += amount;
-    let leveledUp = false;
-    while(STATE.exp >= 100) {
-        STATE.exp -= 100;
-        STATE.level++;
-        leveledUp = true;
+    if(STATE.exp >= 100){ STATE.exp -= 100; STATE.level++; showToast(`🎉 LEVEL ${STATE.level}!`); }
+    updateHUD(); saveState();
+}
+function saveState(){ localStorage.setItem('petpet_state', JSON.stringify({level:STATE.level,exp:STATE.exp,coins:STATE.coins,energy:STATE.energy,streak:STATE.streak,likedPosts:[...STATE.likedPosts],userBounties,bounties:BOUNTIES,codes:CODES,posts:POSTS})); }
+function loadState(){
+    const s = localStorage.getItem('petpet_state');
+    if(s){
+        const d = JSON.parse(s);
+        STATE.level = d.level ?? 5; STATE.exp = d.exp ?? 60; STATE.coins = d.coins ?? 2840; STATE.energy = d.energy ?? 100; STATE.streak = d.streak ?? 12;
+        if(d.likedPosts) STATE.likedPosts = new Set(d.likedPosts);
+        if(d.userBounties) userBounties = d.userBounties;
+        if(d.bounties) BOUNTIES.splice(0, BOUNTIES.length, ...d.bounties);
+        if(d.codes) CODES.splice(0, CODES.length, ...d.codes);
+        if(d.posts) POSTS.splice(0, POSTS.length, ...d.posts);
     }
     updateHUD();
-    saveState();
-    if(leveledUp) showLevelUp();
 }
 
-function showLevelUp() {
-    $('levelupText').textContent = `LEVEL ${STATE.level}!`;
-    $('levelupSub').textContent = `Du är nu på level ${STATE.level} — otroligt!`;
-    const el = $('levelupSplash');
-    el.classList.add('show');
-    setTimeout(()=>el.classList.remove('show'), 2800);
+function renderStories(){
+    $('storiesRow').innerHTML = STORIES.map(s=>`<div class="story-item" onclick="viewStory('${s.name}')"><div class="story-ring ${s.seen?'seen':''}"><div class="story-inner">${s.ava}</div></div><div class="story-name">${s.name}</div></div>`).join('');
 }
+function viewStory(name){ const s = STORIES.find(x=>x.name===name); if(s) s.seen=true; renderStories(); showToast(`👁️ ${name}s story`); saveState(); }
 
-// Energiregenerering varje minut
-function regenEnergy() {
-    const now = Date.now();
-    const minutesPassed = Math.floor((now - STATE.lastEnergyRegen) / 60000);
-    if(minutesPassed > 0 && STATE.energy < 100) {
-        STATE.energy = Math.min(100, STATE.energy + minutesPassed * 5);
-        STATE.lastEnergyRegen = now;
-        updateHUD();
-        saveState();
-    }
+function renderFeed(){
+    $('view-feed').innerHTML = POSTS.map((p,i)=>`<div class="post-card"><div class="post-header"><div class="post-ava">${p.ava}</div><div class="post-meta"><div class="post-name">${p.user}</div><div class="post-time">${p.t} · ${p.pet} Lv.${p.lvl}</div></div><div class="post-pet-badge">${p.pet} Lv.${p.lvl}</div></div><div class="post-content">${p.text}</div><div class="post-actions"><button class="action-btn ${STATE.likedPosts.has(p.id)?'liked':''}" onclick="toggleLike('${p.id}',this)">❤️ <span id="lc-${p.id}">${p.likes}</span></button><button class="action-btn" onclick="sharePost('${p.id}')">📤 Dela</button></div></div>`).join('');
 }
-setInterval(regenEnergy, 60000);
-setInterval(() => { if(STATE.energy < 100) regenEnergy(); }, 10000);
-
-// ============ RENDER FUNCTIONS ============
-function renderStories() {
-    $('storiesRow').innerHTML = STORIES.map(s=>`
-        <div class="story" onclick="viewStory('${s.name}')">
-            <div class="story-ring ${s.seen?'seen':''}"><div class="story-inner">${s.ava}</div></div>
-            <div class="story-name">${s.name}</div>
-        </div>
-    `).join('');
-}
-function viewStory(name) { const s = STORIES.find(x=>x.name===name); if(s) s.seen=true; renderStories(); showToast(`👁️ Tittar på ${name}s story`); saveState(); }
-
-function renderFeed() {
-    $('view-feed').innerHTML = POSTS.map((p,i)=>`
-        <div class="post-card" style="animation-delay:${i*0.06}s">
-            <div class="post-top"><div class="post-ava">${p.ava}</div><div class="post-meta"><div class="post-uname">${p.user}</div><div class="post-sub">${p.t} · ${p.pet} Lv.${p.lvl}</div></div><div class="post-pet-badge">${p.pet} Lv.${p.lvl}</div></div>
-            <div class="post-body">${p.text}</div>
-            <div class="post-actions">
-                <button class="act-btn ${STATE.likedPosts.has(p.id)?'liked':''}" onclick="toggleLike('${p.id}',this)">❤️ <span id="lc-${p.id}">${p.likes}</span></button>
-                <button class="act-btn" onclick="sharePost('${p.id}')">📤 <span>Dela</span></button>
-                <button class="act-btn" onclick="commentPost('${p.id}')">💬 <span>Kommentera</span></button>
-            </div>
-        </div>
-    `).join('');
-}
-function toggleLike(id, btn) {
+function toggleLike(id,btn){
     const p = POSTS.find(x=>x.id===id);
-    if(STATE.likedPosts.has(id)) { STATE.likedPosts.delete(id); p.likes--; btn.classList.remove('liked'); }
-    else { STATE.likedPosts.add(id); p.likes++; btn.classList.add('liked'); showToast('❤️ Gillade inlägget!'); }
-    $(`lc-${id}`).textContent = p.likes;
-    saveState();
+    if(STATE.likedPosts.has(id)){ STATE.likedPosts.delete(id); p.likes--; btn.classList.remove('liked'); }
+    else{ STATE.likedPosts.add(id); p.likes++; btn.classList.add('liked'); showToast('❤️ Gillade!'); }
+    $(`lc-${id}`).textContent = p.likes; saveState();
 }
-function sharePost(id) { const p = POSTS.find(x=>x.id===id); if(navigator.share) navigator.share({title:'PETPET',text:p.text}); else { navigator.clipboard?.writeText(p.text); showToast('📋 Kopierat!'); } }
-function commentPost(id) { showToast('💬 Kommentarer – kommer snart!'); }
+function sharePost(id){ const p = POSTS.find(x=>x.id===id); if(navigator.share) navigator.share({title:'PETPET',text:p.text}); else showToast('📋 Kopierat!'); }
 
-function renderChat() {
-    $('chatList').innerHTML = CHATS.map(c=>`
-        <div class="chat-item" onclick="openChatWith('${c.name}')">
-            <div class="chat-ava">${c.ava}</div><div class="chat-info"><div class="chat-name">${c.name}</div><div class="chat-prev">${c.prev}</div></div>
-            <div class="chat-meta"><div class="chat-time">${c.time}</div>${c.streak>0?`<div class="chat-streak-badge">🔥 ${c.streak}</div>`:''}${c.unread?`<div class="unread-dot"></div>`:''}</div>
-        </div>
-    `).join('');
-}
-function openChatWith(name) { const c = CHATS.find(x=>x.name===name); if(c) c.unread=false; renderChat(); showToast(`💬 Chatt med ${name} – öppnas snart!`); saveState(); }
+function renderChat(){ $('chatList').innerHTML = CHATS.map(c=>`<div class="code-row" style="cursor:pointer;" onclick="openChatWith('${c.name}')"><div><div style="font-weight:600;">${c.name}</div><div style="font-size:12px;color:var(--text-muted);">${c.prev}</div></div><div style="text-align:right;"><div style="font-size:10px;color:var(--text-muted);">${c.time}</div>${c.streak>0?`<div style="font-size:10px;color:#ff4444;">🔥 ${c.streak}</div>`:''}</div></div>`).join(''); }
+function openChatWith(name){ const c = CHATS.find(x=>x.name===name); if(c) c.unread=false; renderChat(); showToast(`💬 Chatt med ${name}`); saveState(); }
 
-function renderShop(items = SHOP_ITEMS) {
-    $('shopGrid').innerHTML = items.map(p=>`
-        <div class="product-card" onclick="buyItem('${p.id}', this)">${p.tag?`<div style="font-size:9px;font-weight:700;color:var(--neon);letter-spacing:1px;margin-bottom:4px;">${p.tag}</div>`:''}<div class="prod-emoji">${p.emoji}</div><div class="prod-name">${p.name}</div><div class="prod-price">${p.price} 💰</div></div>
-    `).join('');
-    $('codesList').innerHTML = CODES.map(c=>`<div class="code-row"><span class="code-tag">${c.code}</span><span style="font-size:12px;color:var(--muted);">+${c.reward} 💰</span><button class="do-btn" ${c.used?'disabled style="opacity:0.4"':''} onclick="useCode('${c.code}', this)">ANVÄND</button></div>`).join('');
+function renderShop(items=SHOP_ITEMS){ $('shopGrid').innerHTML = items.map(p=>`<div class="product-card" onclick="buyItem('${p.id}',this)"><div class="product-emoji">${p.emoji}</div><div class="product-name">${p.name}</div><div class="product-price">${p.price} 💰</div></div>`).join('');
+    $('codesList').innerHTML = CODES.map(c=>`<div class="code-row"><span>${c.code}</span><span>+${c.reward}💰</span><button class="btn-secondary" style="padding:4px 12px;width:auto;" onclick="useCode('${c.code}',this)" ${c.used?'disabled':''}>Använd</button></div>`).join('');
 }
-function filterShop(q) { renderShop(SHOP_ITEMS.filter(p=>p.name.toLowerCase().includes(q.toLowerCase()))); }
-function buyItem(id, el) { const p = SHOP_ITEMS.find(x=>x.id===id); if(!p) return; if(STATE.coins < p.price) { showToast(`❌ Behöver ${p.price - STATE.coins} mer coins!`, 'error'); return; } STATE.coins -= p.price; updateHUD(); saveState(); coinBurst(-p.price, el.getBoundingClientRect().left + 40, el.getBoundingClientRect().top); showToast(`✅ Köpte ${p.name}!`); }
-function useCode(code, btn) { const c = CODES.find(x=>x.code===code); if(!c||c.used) return; c.used=true; gainCoins(c.reward, btn); showToast(`🎟️ Kod ${code} använd! +${c.reward} coins`); renderShop(); saveState(); }
+function filterShop(q){ renderShop(SHOP_ITEMS.filter(p=>p.name.toLowerCase().includes(q.toLowerCase()))); }
+function buyItem(id,el){ const p = SHOP_ITEMS.find(x=>x.id===id); if(STATE.coins < p.price){ showToast(`❌ Behöver ${p.price-STATE.coins} mer!`,'error'); return; } STATE.coins -= p.price; updateHUD(); saveState(); gainCoins(-p.price,el); showToast(`✅ Köpte ${p.name}!`); }
+function useCode(code,btn){ const c = CODES.find(x=>x.code===code); if(c.used) return; c.used=true; gainCoins(c.reward,btn); showToast(`🎟️ +${c.reward} coins!`); renderShop(); saveState(); }
 
-function renderWorld() {
-    $('worldGrid').innerHTML = LOCATIONS.map(l=>`
-        <div class="world-loc ${l.locked&&STATE.level<(l.reqLvl||0)?'locked':''}" onclick="visitLoc('${l.name}')">
-            <div class="world-emoji">${l.emoji}</div><div class="world-name">${l.name}</div><div class="world-info">👥 ${l.users} online</div>
-            <div class="world-status ${l.locked&&STATE.level<(l.reqLvl||0)?'locked':'open'}">${l.locked&&STATE.level<(l.reqLvl||0)?`🔒 Kräver Lv.${l.reqLvl}`:`✅ +${l.coins}💰 +${l.xp}XP`}</div>
-        </div>
-    `).join('');
-}
-function visitLoc(name) { const l = LOCATIONS.find(x=>x.name===name); if(!l) return; if(l.locked && STATE.level < (l.reqLvl||0)) { showToast(`🔒 Level ${l.reqLvl} krävs!`, 'error'); return; } gainCoins(l.coins); gainXP(l.xp); showToast(`✨ Besökte ${l.name}! +${l.coins}💰 +${l.xp}XP`); }
+function renderWorld(){ $('worldGrid').innerHTML = LOCATIONS.map(l=>`<div class="world-location ${l.locked&&STATE.level<(l.reqLvl||0)?'locked':''}" onclick="visitLoc('${l.name}')"><div class="world-emoji">${l.emoji}</div><div class="world-name">${l.name}</div><div class="world-users">👥 ${l.users}</div><div class="world-reward">${l.locked&&STATE.level<(l.reqLvl||0)?`🔒 Lv.${l.reqLvl}`:`+${l.coins}💰 +${l.xp}XP`}</div></div>`).join(''); }
+function visitLoc(name){ const l = LOCATIONS.find(x=>x.name===name); if(l.locked && STATE.level<(l.reqLvl||0)){ showToast(`🔒 Level ${l.reqLvl} krävs!`,'error'); return; } gainCoins(l.coins); gainXP(l.xp); showToast(`✨ +${l.coins}💰 +${l.xp}XP`); }
 
-function renderBounties() {
-    $('bountiesList').innerHTML = BOUNTIES.map(b=>`
-        <div class="bounty-card"><div class="bounty-top"><div class="bounty-title">${b.title}</div><div class="bounty-reward">+${b.reward}💰</div></div><div class="bounty-desc">${b.desc}</div><div class="do-btn" onclick="doBounty('${b.id}',this)">🎯 Gör uppdraget</div></div>
-    `).join('');
-    $('myBountiesList').innerHTML = userBounties.length === 0 ? `<div style="color:var(--muted);text-align:center;padding:20px;font-size:13px;">Inga genomförda uppdrag än</div>` : userBounties.map(b=>`<div class="bounty-card" style="border-color:rgba(57,255,20,0.3);"><div class="bounty-top"><div class="bounty-title">${b.title}</div><div class="bounty-reward" style="color:var(--neon);">✅ Klar</div></div></div>`).join('');
+function renderBounties(){ $('bountiesList').innerHTML = BOUNTIES.map(b=>`<div class="bounty-card"><div class="bounty-header"><span class="bounty-title">${b.title}</span><span class="bounty-reward">+${b.reward}💰</span></div><div class="bounty-desc">${b.desc}</div><button class="btn-secondary" style="margin-top:8px;" onclick="doBounty('${b.id}',this)">🎯 Gör uppdrag</button></div>`).join('');
+    $('myBountiesList').innerHTML = userBounties.length===0?'<div style="color:var(--text-muted);text-align:center;padding:20px;">Inga uppdrag än</div>':userBounties.map(b=>`<div class="bounty-card"><div class="bounty-header"><span>${b.title}</span><span style="color:var(--accent);">✅ Klar</span></div></div>`).join('');
 }
-function doBounty(id, el) { const b = BOUNTIES.find(x=>x.id===id); if(!b) return; userBounties.push(b); BOUNTIES.splice(BOUNTIES.indexOf(b),1); gainCoins(b.reward, el); gainXP(10); showToast(`🎯 Uppdrag klart! +${b.reward}💰`); renderBounties(); saveState(); }
-function createBounty() { const title = prompt('Uppdragsnamn:'); if(!title) return; const reward = parseInt(prompt('Belöning (coins):')) || 50; const desc = prompt('Beskrivning:') || ''; BOUNTIES.push({id:'b'+Date.now(),title,reward,desc}); renderBounties(); showToast('✅ Uppdrag skapat!'); saveState(); }
+function doBounty(id,el){ const b = BOUNTIES.find(x=>x.id===id); if(!b) return; userBounties.push(b); BOUNTIES.splice(BOUNTIES.indexOf(b),1); gainCoins(b.reward,el); gainXP(10); showToast(`🎯 +${b.reward}💰`); renderBounties(); saveState(); }
+function createBounty(){ const title = prompt('Uppdragsnamn:'); if(!title) return; const reward = parseInt(prompt('Belöning:'))||50; const desc = prompt('Beskrivning:'); BOUNTIES.push({id:'b'+Date.now(),title,reward,desc}); renderBounties(); showToast('✅ Uppdrag skapat!'); saveState(); }
 
-function renderBattle() {
-    $('oppGrid').innerHTML = OPPONENTS.map(o=>`<div class="opp-card" onclick="startBattle('${o.name}')"><div class="opp-emoji">${o.emoji}</div><div class="opp-name">${o.name}</div><div class="opp-level">Lv.${o.level}</div><div class="opp-reward">+${o.reward}💰</div></div>`).join('');
-    $('battlePicker').style.display='block'; $('battleArena').style.display='none';
-}
-function startBattle(name) {
+function renderBattle(){ $('opponentsGrid').innerHTML = OPPONENTS.map(o=>`<div class="opponent-card" onclick="startBattle('${o.name}')"><div class="opponent-emoji">${o.emoji}</div><div class="opponent-name">${o.name}</div><div class="opponent-level">Lv.${o.level}</div><div class="opponent-reward">+${o.reward}💰</div></div>`).join(''); $('battlePicker').style.display='block'; $('battleArena').style.display='none'; }
+function startBattle(name){
     const opp = OPPONENTS.find(o=>o.name===name);
-    if(!opp) return;
     STATE.battleActive = {opp:{...opp,hp:opp.maxHp}, playerHp:100, log:[]};
     $('battlePicker').style.display='none'; $('battleArena').style.display='block';
     updateBattleUI();
 }
-function updateBattleUI() {
-    const b = STATE.battleActive; if(!b) return;
-    $('battleHero').innerHTML = `<div class="battle-fighter"><div class="battle-emo">🐉</div><div class="battle-fname">Din pet</div><div class="battle-hp-bar"><div class="battle-hp-fill player-hp-fill" style="width:${b.playerHp}%"></div></div><div style="font-size:11px;color:var(--muted);margin-top:4px;">❤️ ${b.playerHp}/100</div></div><div class="battle-vs">VS</div><div class="battle-fighter"><div class="battle-emo">${b.opp.emoji}</div><div class="battle-fname">${b.opp.name}</div><div class="battle-hp-bar"><div class="battle-hp-fill" style="width:${(b.opp.hp/b.opp.maxHp)*100}%"></div></div><div style="font-size:11px;color:var(--muted);margin-top:4px;">❤️ ${b.opp.hp}/${b.opp.maxHp}</div></div>`;
-    $('battleLog').innerHTML = b.log.slice(0,6).map(l=>`<div class="log-line">${l}</div>`).join('');
-    $('battleActGrid').innerHTML = `<button class="btn-primary" onclick="battleAttack()">⚔️ Attackera</button><button class="btn-secondary" onclick="battleHeal()">💊 Heala (20⚡)</button><button class="btn-secondary" onclick="endBattle()">🏳️ Ge upp</button><button class="btn-secondary" onclick="battleSpecial()">✨ Special (30⚡)</button>`;
+function updateBattleUI(){
+    const b = STATE.battleActive;
+    $('battleHero').innerHTML = `<div class="battle-fighter"><div class="battle-emoji">🐉</div><div>Din pet</div><div class="battle-hp-bar"><div class="battle-hp-fill" style="width:${b.playerHp}%"></div></div><div>❤️ ${b.playerHp}/100</div></div><div style="font-size:24px;">VS</div><div class="battle-fighter"><div class="battle-emoji">${b.opp.emoji}</div><div>${b.opp.name}</div><div class="battle-hp-bar"><div class="battle-hp-fill" style="width:${(b.opp.hp/b.opp.maxHp)*100}%"></div></div><div>❤️ ${b.opp.hp}/${b.opp.maxHp}</div></div>`;
+    $('battleLog').innerHTML = b.log.slice(0,6).map(l=>`<div>${l}</div>`).join('');
+    $('battleActions').innerHTML = `<button class="btn-primary" onclick="battleAttack()">⚔️ Attackera</button><button class="btn-secondary" onclick="battleHeal()">💊 Heala (20⚡)</button><button class="btn-secondary" onclick="battleSpecial()">✨ Special (30⚡)</button><button class="btn-secondary" onclick="endBattle()">🏳️ Ge upp</button>`;
 }
-function battleAttack() {
-    const b = STATE.battleActive; if(!b) return;
-    const dmg = Math.floor(Math.random()*30)+15;
+function battleAttack(){
+    const b = STATE.battleActive; const dmg = Math.floor(Math.random()*30)+15;
     b.opp.hp = Math.max(0, b.opp.hp - dmg);
-    b.log.unshift(`⚔️ Du attackerade för ${dmg} skada!`);
-    if(b.opp.hp <= 0) { battleWin(); return; }
+    b.log.unshift(`⚔️ Du gjorde ${dmg} skada!`);
+    if(b.opp.hp<=0){ battleWin(); return; }
     const edm = Math.floor(Math.random()*b.opp.atk)+8;
     b.playerHp = Math.max(0, b.playerHp - edm);
     b.log.unshift(`💀 ${b.opp.name} slog ${edm} tillbaka!`);
-    if(b.playerHp <= 0) { battleLose(); return; }
+    if(b.playerHp<=0){ battleLose(); return; }
     updateBattleUI();
 }
-function battleHeal() {
-    const b = STATE.battleActive; if(!b) return;
-    if(STATE.energy < 20) { showToast('❌ Inte nog med energi!', 'error'); return; }
-    STATE.energy -= 20; updateHUD(); saveState();
-    b.playerHp = Math.min(100, b.playerHp + 35);
+function battleHeal(){
+    const b = STATE.battleActive;
+    if(STATE.energy<20){ showToast('❌ Inte nog med energi!','error'); return; }
+    STATE.energy-=20; updateHUD();
+    b.playerHp = Math.min(100, b.playerHp+35);
     b.log.unshift(`✅ Du healade 35 HP!`);
-    updateBattleUI();
+    updateBattleUI(); saveState();
 }
-function battleSpecial() {
-    const b = STATE.battleActive; if(!b) return;
-    if(STATE.energy < 30) { showToast('❌ Inte nog med energi!', 'error'); return; }
-    STATE.energy -= 30; updateHUD(); saveState();
+function battleSpecial(){
+    const b = STATE.battleActive;
+    if(STATE.energy<30){ showToast('❌ Inte nog med energi!','error'); return; }
+    STATE.energy-=30; updateHUD();
     const dmg = Math.floor(Math.random()*50)+40;
     b.opp.hp = Math.max(0, b.opp.hp - dmg);
-    b.log.unshift(`✨ SPECIAL ATTACK! ${dmg} massiv skada!`);
-    if(b.opp.hp <= 0) { battleWin(); return; }
-    updateBattleUI();
+    b.log.unshift(`✨ SPECIAL! ${dmg} skada!`);
+    if(b.opp.hp<=0){ battleWin(); return; }
+    updateBattleUI(); saveState();
 }
-function battleWin() { const b = STATE.battleActive; gainCoins(b.opp.reward); gainXP(20); showToast(`🏆 VINST! +${b.opp.reward}💰`); setTimeout(endBattle, 1500); }
-function battleLose() { showToast('💀 Du förlorade striden...', 'error'); setTimeout(endBattle, 1500); }
-function endBattle() { STATE.battleActive = null; renderBattle(); }
+function battleWin(){ const b = STATE.battleActive; gainCoins(b.opp.reward); gainXP(20); showToast(`🏆 VINST! +${b.opp.reward}💰`); setTimeout(endBattle,1500); }
+function battleLose(){ showToast('💀 Förlust!','error'); setTimeout(endBattle,1500); }
+function endBattle(){ STATE.battleActive=null; renderBattle(); }
 
-function renderMap() {
-    $('mapGrid').innerHTML = MAP_FRIENDS.map(f=>`
-        <div class="map-friend-card"><div class="mf-ava">${f.ava}</div><div style="display:flex;align-items:center;justify-content:center;gap:6px;"><div class="mf-name">${f.name}</div><div style="width:6px;height:6px;border-radius:50%;background:${f.online?'var(--neon)':'var(--muted)'};"></div></div><div class="mf-loc">📍 ${f.loc}</div><div class="mf-dist">${f.dist} bort</div></div>
-    `).join('');
-}
+function renderMap(){ $('mapGrid').innerHTML = MAP_FRIENDS.map(f=>`<div class="map-friend"><div class="friend-avatar">${f.ava}</div><div class="friend-name">${f.name}</div><div class="friend-location">📍 ${f.loc}</div><div class="friend-distance">${f.dist}</div><div style="width:8px;height:8px;border-radius:50%;background:${f.online?'var(--accent)':'var(--text-muted)'};margin:4px auto 0;"></div></div>`).join(''); }
 
 let compareTimeout;
-function runCompare(val) {
+function runCompare(val){
     clearTimeout(compareTimeout);
-    if(!val.trim()) { $('compareResults').innerHTML=''; return; }
+    if(!val.trim()){ $('compareResults').innerHTML=''; return; }
     compareTimeout = setTimeout(()=>{
         const base = Math.floor(Math.random()*400)+150;
-        const res = [
-            {store:'🛍️ Prisjakt',price:base+Math.floor(Math.random()*100)},
-            {store:'🎯 Tradera',price:base+Math.floor(Math.random()*80)-20},
-            {store:'📦 Amazon',price:base+Math.floor(Math.random()*120)},
-            {store:'🇪🇺 eBay',price:base+Math.floor(Math.random()*90)-10},
-            {store:'🏪 Elgiganten',price:base+Math.floor(Math.random()*150)},
-        ].sort((a,b)=>a.price-b.price);
-        $('compareResults').innerHTML = `<div class="compare-result card"><div class="card-title" style="margin-bottom:8px;">🔍 ${val}</div>${res.map((r,i)=>`<div class="price-row"><span>${r.store}</span><span class="${i===0?'best-price':''}" style="font-family:var(--mono);">${r.price} kr${i===0?' 🏆':''}</span></div>`).join('')}</div>`;
-    }, 400);
+        const results = [{store:'🛍️ Prisjakt',price:base+Math.floor(Math.random()*100)},{store:'🎯 Tradera',price:base+Math.floor(Math.random()*80)-20},{store:'📦 Amazon',price:base+Math.floor(Math.random()*120)},{store:'🇪🇺 eBay',price:base+Math.floor(Math.random()*90)-10}].sort((a,b)=>a.price-b.price);
+        $('compareResults').innerHTML = `<div class="compare-result"><div class="card-header" style="margin-bottom:12px;"><div class="card-title">🔍 ${val}</div></div>${results.map((r,i)=>`<div class="price-row"><span>${r.store}</span><span class="${i===0?'best-price':''}">${r.price} kr</span></div>`).join('')}</div>`;
+    },400);
 }
 
-// ============ DAILY BONUS ============
-$('claimBtn').addEventListener('click', function(e) {
-    const today = new Date().toDateString();
-    const last = localStorage.getItem('pp_daily');
-    if(last===today) { showToast('❌ Kom tillbaka imorgon!', 'error'); return; }
-    localStorage.setItem('pp_daily', today);
-    const bonus = 50 + STATE.streak * 5;
-    STATE.streak++;
-    gainCoins(bonus, this);
-    updateHUD();
-    saveState();
-    showToast(`🎉 Daglig bonus! +${bonus} coins`);
-});
+function shareProfile(){ const txt = `🔥 Jag är Level ${STATE.level} på PETPET! ${STATE.streak} dagars streak!`; if(navigator.share) navigator.share({title:'PETPET',text:txt}); else showToast('📋 Profil kopierad!'); }
 
-// ============ CAMERA ============
-let selectedImg = null;
-$('camBtn').addEventListener('click', ()=>openCam());
-$('camClose').addEventListener('click', ()=>closeCam());
-function openCam() { $('camOverlay').classList.add('open'); }
-function closeCam() { $('camOverlay').classList.remove('open'); selectedImg=null; $('postText').value=''; $('postPreview').style.display='none'; }
-function pickImage() {
-    const inp = document.createElement('input'); inp.type='file'; inp.accept='image/*';
-    inp.onchange = e => { const f = e.target.files[0]; if(!f) return; const r = new FileReader(); r.onload = ev => { selectedImg = ev.target.result; $('postPreview').src = selectedImg; $('postPreview').style.display='block'; }; r.readAsDataURL(f); };
-    inp.click();
-}
-function publishPost() {
-    const txt = $('postText').value.trim();
-    if(!txt && !selectedImg) { showToast('✏️ Skriv något eller välj en bild!', 'error'); return; }
-    POSTS.unshift({id:'u'+Date.now(),user:'Du',ava:'👤',pet:'🐉',lvl:STATE.level,text:txt||'Kolla in mitt äventyr! 🔥',likes:0,t:'just nu'});
-    closeCam();
-    gainCoins(5);
-    renderFeed();
-    saveState();
-    showToast('✅ Publicerat! +5 coins');
-    switchView('feed');
-}
-function shareProfile() { const txt = `🔥 Jag är Level ${STATE.level} på PETPET!\n${STATE.streak} dagars streak! ${STATE.coins} coins!\nLadda ner PETPET nu!`; if(navigator.share) navigator.share({title:'PETPET',text:txt}); else { navigator.clipboard?.writeText(txt); showToast('📋 Profil kopierad!'); } }
-
-// ============ AI CHAT (DEMO MODE) ==========
-const AI_WINDOW = $('aiChatWindow');
-const AI_MSGS = $('aiMessages');
-const AI_INPUT = $('aiInput');
-$('aiChatCard').addEventListener('click', ()=>AI_WINDOW.classList.add('open'));
-$('aiChatBack').addEventListener('click', ()=>AI_WINDOW.classList.remove('open'));
+// ============ AI CHAT ==========
+const aiWindow = $('aiChatWindow');
+$('aiChatTrigger').addEventListener('click', ()=>aiWindow.classList.add('open'));
+$('aiChatBack').addEventListener('click', ()=>aiWindow.classList.remove('open'));
 $('aiSendBtn').addEventListener('click', sendAI);
-AI_INPUT.addEventListener('keydown', e=>{ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); sendAI(); } });
-function addMsg(txt, type) { const el = document.createElement('div'); el.className = `msg ${type}`; el.textContent = txt; AI_MSGS.appendChild(el); AI_MSGS.scrollTop = AI_MSGS.scrollHeight; return el; }
-function sendAI() {
-    const msg = AI_INPUT.value.trim();
+$('aiInput').addEventListener('keypress', e=>{ if(e.key==='Enter') sendAI(); });
+function addMsg(txt, type){ const el = document.createElement('div'); el.className = `msg ${type}`; el.textContent = txt; $('aiMessages').appendChild(el); $('aiMessages').scrollTop = $('aiMessages').scrollHeight; return el; }
+function sendAI(){
+    const msg = $('aiInput').value.trim();
     if(!msg) return;
-    AI_INPUT.value = '';
+    $('aiInput').value = '';
     addMsg(msg, 'user');
     const loadEl = addMsg('✦ Tänker...', 'ai loading');
-    setTimeout(() => {
-        const responses = [
-            `💡 Tips! Gör dagliga bounties för extra coins och XP! Just nu har du ${STATE.coins} coins.`,
-            `⚔️ I battle: använd Special Attack när motståndaren har låg HP! Din energi är ${STATE.energy}.`,
-            `🔥 Din streak är ${STATE.streak} dagar! Fortsätt så för bonus!`,
-            `🐉 Din pet är level ${STATE.level}! Nästa level ger nya abilities.`,
-            `📍 Kolla sociala kartan – se var dina vänner är just nu!`,
-            `💰 Du har ${STATE.coins} coins. Kolla shoppen för coola skins!`,
-            `✨ Tips: Besök Drakberget när du når level 10 för stora belöningar!`
-        ];
-        const reply = responses[Math.floor(Math.random() * responses.length)];
-        loadEl.textContent = reply;
+    setTimeout(()=>{
+        const replies = [`💡 Tips! Gör dagliga bounties för extra coins!`, `⚔️ I battle: använd Special när motståndaren har låg HP!`, `🔥 Din streak är ${STATE.streak} dagar!`, `🐉 Din pet är level ${STATE.level}!`, `📍 Kolla kartan – se var dina vänner är!`];
+        loadEl.textContent = replies[Math.floor(Math.random()*replies.length)];
         loadEl.classList.remove('loading');
     }, 800);
 }
 
-// ============ VIEW SWITCHING ============
-function switchView(name) {
-    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
-    document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
-    const el = $(`view-${name}`);
-    if(el) el.classList.add('active');
-    const btn = document.querySelector(`.nav-btn[data-view="${name}"]`);
-    if(btn) btn.classList.add('active');
-    if(name==='feed') renderFeed();
-    if(name==='chat') renderChat();
-    if(name==='shop') renderShop();
-    if(name==='world') renderWorld();
-    if(name==='bounties') renderBounties();
-    if(name==='battle') renderBattle();
-    if(name==='map') renderMap();
-    if(name==='profile') updateHUD();
+// ============ CAMERA ==========
+let selectedImg = null;
+$('cameraBtn').addEventListener('click', ()=>$('camOverlay').classList.add('open'));
+$('camClose').addEventListener('click', ()=>$('camOverlay').classList.remove('open'));
+function pickImage(){ const inp = document.createElement('input'); inp.type='file'; inp.accept='image/*'; inp.onchange=e=>{ const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=ev=>{ selectedImg=ev.target.result; $('postPreview').src=selectedImg; $('postPreview').style.display='block'; }; r.readAsDataURL(f); }; inp.click(); }
+function publishPost(){
+    const txt = $('postContent').value.trim();
+    if(!txt && !selectedImg){ showToast('✏️ Skriv något eller välj bild!','error'); return; }
+    POSTS.unshift({id:'u'+Date.now(),user:'Du',ava:'👤',pet:'🐉',lvl:STATE.level,text:txt||'Kolla in mitt äventyr! 🔥',likes:0,t:'just nu'});
+    $('camOverlay').classList.remove('open'); $('postContent').value=''; selectedImg=null; $('postPreview').style.display='none';
+    gainCoins(5); renderFeed(); saveState(); showToast('✅ Publicerat! +5 coins');
+    switchView('feed');
 }
 
-document.querySelectorAll('.nav-btn[data-view]').forEach(btn=>{ btn.addEventListener('click', ()=>switchView(btn.dataset.view)); });
+// ============ VIEW SWITCHING ==========
+function switchView(view){
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
+    $(`view-${view}`).classList.add('active');
+    const btn = document.querySelector(`.nav-item[data-view="${view}"]`);
+    if(btn) btn.classList.add('active');
+    if(view==='feed') renderFeed();
+    if(view==='chat') renderChat();
+    if(view==='shop') renderShop();
+    if(view==='world') renderWorld();
+    if(view==='bounties') renderBounties();
+    if(view==='battle') renderBattle();
+    if(view==='map') renderMap();
+    if(view==='profile') updateHUD();
+}
+document.querySelectorAll('.nav-item[data-view]').forEach(btn=>btn.addEventListener('click', ()=>switchView(btn.dataset.view)));
 
 // ============ MODAL MENU ==========
-$('menuToggle').addEventListener('click', ()=>$('modalOverlay').classList.add('open'));
+$('menuBtn').addEventListener('click', ()=>$('modalOverlay').classList.add('open'));
 $('modalOverlay').addEventListener('click', e=>{ if(e.target===$('modalOverlay')) $('modalOverlay').classList.remove('open'); });
 $('modalGrid').innerHTML = MENU_ITEMS.map(m=>`<div class="modal-item" data-view="${m.view}">${m.label}</div>`).join('');
 document.querySelectorAll('.modal-item').forEach(item=>{ item.addEventListener('click', ()=>{ $('modalOverlay').classList.remove('open'); switchView(item.dataset.view); }); });
 
-// ============ INIT ============
+// ============ DAILY BONUS ==========
+$('claimBtn').addEventListener('click', function(){
+    const today = new Date().toDateString();
+    const last = localStorage.getItem('pp_daily');
+    if(last===today){ showToast('❌ Kom tillbaka imorgon!','error'); return; }
+    localStorage.setItem('pp_daily', today);
+    const bonus = 50 + STATE.streak * 5;
+    STATE.streak++;
+    gainCoins(bonus, this);
+    showToast(`🎉 Daglig bonus! +${bonus} coins`);
+    saveState();
+});
+
+// ============ ENERGY REGEN ==========
+setInterval(()=>{ if(STATE.energy<100){ STATE.energy = Math.min(100, STATE.energy+5); updateHUD(); saveState(); } }, 60000);
+
+// ============ INIT ==========
 loadState();
 renderStories();
 renderFeed();
