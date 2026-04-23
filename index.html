@@ -1,54 +1,44 @@
+NU JAVLAR – PERFEKT PROFILSIDA! 🚀
+
+Jag bygger den ultimata profilsidan – inspirerad av SpawnEngine, clean, premium, vuxen design. Allt sparas, allt växer, och en framtida "världskarta" över all aktivitet.
+
+```html
 <!DOCTYPE html>
 <html lang="sv">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>PETPET — Complete Social Platform</title>
+    <title>PETPET — Ultimate Profile</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap');
 
-        :root {
-            --bg: #0a0a0c;
-            --bg-card: #0f0f12;
-            --bg-elevated: #121216;
-            --border: rgba(255,255,255,0.05);
-            --border-light: rgba(255,255,255,0.03);
-            --accent: #39FF14;
-            --accent-dim: rgba(57,255,20,0.08);
-            --accent-pink: #ff3cac;
-            --accent-blue: #00f0ff;
-            --gold: #FFD700;
-            --text: #e8e8f0;
-            --text-secondary: #8a8a99;
-            --text-muted: #555566;
-            --radius-sm: 6px;
-            --radius-md: 10px;
-            --radius-lg: 14px;
-            --radius-xl: 18px;
-            --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
         body {
-            font-family: var(--font);
-            background: var(--bg);
-            color: var(--text);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #050508;
+            color: #e8e8f0;
             overflow: hidden;
             height: 100vh;
             width: 100vw;
             position: fixed;
-            font-size: 12px;
-            line-height: 1.4;
+            font-size: 13px;
+            line-height: 1.5;
         }
 
+        /* Premium Background */
         .bg-premium {
             position: fixed;
             inset: 0;
             z-index: 0;
-            background: radial-gradient(ellipse 80% 60% at 30% 20%, rgba(57,255,20,0.03), transparent 60%),
-                        radial-gradient(ellipse 60% 50% at 80% 80%, rgba(0,240,255,0.02), transparent 60%),
-                        var(--bg);
+            background: radial-gradient(ellipse 80% 60% at 30% 20%, rgba(57,255,20,0.025), transparent 60%),
+                        radial-gradient(ellipse 60% 50% at 80% 80%, rgba(0,240,255,0.015), transparent 60%),
+                        #050508;
         }
 
         .app {
@@ -62,437 +52,456 @@
             margin: 0 auto;
         }
 
+        /* ============ SCROLLABLE CONTENT ============ */
+        .scrollable {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+        }
+        .scrollable::-webkit-scrollbar {
+            width: 4px;
+        }
+        .scrollable::-webkit-scrollbar-track {
+            background: #0f0f12;
+        }
+        .scrollable::-webkit-scrollbar-thumb {
+            background: #39FF14;
+            border-radius: 4px;
+        }
+
         /* ============ TOP BAR ============ */
         .top-bar {
-            padding: 10px 16px;
+            padding: 12px 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(10,10,12,0.85);
+            background: rgba(5,5,8,0.85);
             backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
             flex-shrink: 0;
         }
         .logo {
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 700;
-            background: linear-gradient(135deg, var(--accent), var(--accent-blue));
+            background: linear-gradient(135deg, #39FF14, #00f0ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .stats-group { display: flex; gap: 6px; }
+        .stats-group {
+            display: flex;
+            gap: 8px;
+        }
         .stat-pill {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            padding: 3px 8px;
+            background: #0f0f12;
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 4px 10px;
             border-radius: 30px;
             font-size: 10px;
             font-weight: 500;
             display: flex;
             align-items: center;
-            gap: 3px;
+            gap: 4px;
         }
-        .stat-pill .value { color: var(--accent); font-weight: 600; }
+        .stat-pill .value {
+            color: #39FF14;
+            font-weight: 600;
+        }
         .menu-btn {
-            width: 30px;
-            height: 30px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
+            width: 32px;
+            height: 32px;
+            background: #0f0f12;
+            border: 1px solid rgba(255,255,255,0.05);
             border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
+            font-size: 16px;
         }
 
         /* ============ QUICK ACTIONS ============ */
         .quick-actions {
-            padding: 8px 16px;
+            padding: 10px 16px;
             display: flex;
             gap: 8px;
             overflow-x: auto;
             scrollbar-width: none;
             flex-shrink: 0;
-            border-bottom: 1px solid var(--border-light);
+            border-bottom: 1px solid rgba(255,255,255,0.03);
         }
-        .quick-actions::-webkit-scrollbar { display: none; }
+        .quick-actions::-webkit-scrollbar {
+            display: none;
+        }
         .quick-btn {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
+            background: #0f0f12;
+            border: 1px solid rgba(255,255,255,0.05);
             border-radius: 30px;
-            padding: 4px 10px;
-            font-size: 9px;
+            padding: 5px 12px;
+            font-size: 10px;
             font-weight: 500;
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 5px;
             white-space: nowrap;
             cursor: pointer;
+            transition: all 0.2s;
         }
-        .quick-btn:active { transform: scale(0.96); }
+        .quick-btn:active {
+            transform: scale(0.96);
+        }
 
         /* ============ STORIES ============ */
         .stories-row {
-            padding: 8px 16px;
+            padding: 10px 16px;
             display: flex;
-            gap: 10px;
+            gap: 12px;
             overflow-x: auto;
             scrollbar-width: none;
             flex-shrink: 0;
-            border-bottom: 1px solid var(--border-light);
+            border-bottom: 1px solid rgba(255,255,255,0.03);
         }
-        .stories-row::-webkit-scrollbar { display: none; }
+        .stories-row::-webkit-scrollbar {
+            display: none;
+        }
         .story-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 3px;
+            gap: 4px;
             cursor: pointer;
             flex-shrink: 0;
         }
         .story-ring {
-            width: 48px;
-            height: 48px;
+            width: 52px;
+            height: 52px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent), var(--accent-pink));
+            background: linear-gradient(135deg, #39FF14, #ff3cac);
             padding: 2px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-        .story-ring.seen { background: var(--bg-card); border: 2px solid var(--border); }
+        .story-ring.seen {
+            background: #0f0f12;
+            border: 2px solid rgba(255,255,255,0.05);
+        }
         .story-inner {
-            width: 42px;
-            height: 42px;
+            width: 46px;
+            height: 46px;
             border-radius: 50%;
-            background: var(--bg-card);
+            background: #0f0f12;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
+            font-size: 22px;
         }
-        .story-name { font-size: 8px; color: var(--text-secondary); max-width: 48px; text-align: center; }
-
-        /* ============ MAIN FEED (TikTok/Instagram) ============ */
-        .feed-container {
-            flex: 1;
-            overflow-y: auto;
-            padding: 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-        .post-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-xl);
-            overflow: hidden;
-        }
-        .post-header {
-            padding: 12px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .post-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent), var(--accent-pink));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            cursor: pointer;
-        }
-        .post-user { flex: 1; }
-        .post-name { font-size: 13px; font-weight: 600; cursor: pointer; }
-        .post-time { font-size: 9px; color: var(--text-muted); }
-        .post-menu { font-size: 16px; cursor: pointer; }
-        .post-image {
-            width: 100%;
-            max-height: 400px;
-            object-fit: cover;
-            cursor: pointer;
-        }
-        .post-caption {
-            padding: 10px 12px;
-            font-size: 12px;
-            color: var(--text-secondary);
-        }
-        .post-actions {
-            padding: 8px 12px;
-            display: flex;
-            gap: 20px;
-            border-top: 1px solid var(--border-light);
-            border-bottom: 1px solid var(--border-light);
-        }
-        .action-btn {
-            background: none;
-            border: none;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            color: var(--text-muted);
-            font-size: 12px;
-            cursor: pointer;
-        }
-        .action-btn.active { color: var(--accent-pink); }
-        .comments-section {
-            padding: 8px 12px;
-            border-top: 1px solid var(--border-light);
-        }
-        .comment {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 8px;
-            font-size: 11px;
-        }
-        .comment-avatar {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background: var(--bg-elevated);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-        }
-        .comment-content { flex: 1; }
-        .comment-user { font-weight: 600; margin-right: 6px; }
-        .comment-text { color: var(--text-secondary); }
-        .comment-time { font-size: 8px; color: var(--text-muted); margin-top: 2px; }
-        .comment-actions { display: flex; gap: 8px; margin-top: 4px; }
-        .comment-like { font-size: 9px; color: var(--text-muted); cursor: pointer; }
-        .comment-reply { font-size: 9px; color: var(--text-muted); cursor: pointer; }
-        .view-replies {
+        .story-name {
             font-size: 9px;
-            color: var(--accent);
-            cursor: pointer;
-            margin-top: 4px;
-        }
-        .add-comment {
-            display: flex;
-            gap: 8px;
-            margin-top: 8px;
-            padding-top: 8px;
-            border-top: 1px solid var(--border-light);
-        }
-        .comment-input {
-            flex: 1;
-            background: var(--bg-elevated);
-            border: 1px solid var(--border);
-            border-radius: 30px;
-            padding: 8px 12px;
-            color: var(--text);
-            font-size: 11px;
-            outline: none;
-        }
-        .comment-submit {
-            background: var(--accent-dim);
-            border: 1px solid rgba(57,255,20,0.2);
-            border-radius: 30px;
-            padding: 6px 14px;
-            font-size: 10px;
-            color: var(--accent);
-            cursor: pointer;
+            color: #8a8a99;
+            max-width: 52px;
+            text-align: center;
         }
 
-        /* ============ PROFILE PAGE (UNIQUE FEATURES) ============ */
+        /* ============ PROFILE SECTION ============ */
         .profile-container {
-            padding: 12px;
-            overflow-y: auto;
-            height: 100%;
+            padding: 16px;
         }
         .profile-cover {
-            background: linear-gradient(135deg, var(--accent-dim), var(--bg-elevated));
-            border-radius: var(--radius-xl);
-            padding: 16px;
-            margin-bottom: 12px;
+            background: linear-gradient(135deg, rgba(57,255,20,0.04), rgba(0,240,255,0.02));
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 16px;
         }
         .profile-avatar-section {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 12px;
+            margin-bottom: 16px;
         }
         .profile-avatar-large {
-            width: 72px;
-            height: 72px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent), var(--accent-pink));
+            background: linear-gradient(135deg, #39FF14, #ff3cac);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 36px;
-            border: 3px solid var(--bg-card);
+            font-size: 40px;
+            border: 3px solid #0f0f12;
         }
         .profile-edit-btn {
-            background: var(--bg-elevated);
-            border: 1px solid var(--border);
+            background: #0f0f12;
+            border: 1px solid rgba(255,255,255,0.05);
             border-radius: 30px;
-            padding: 4px 10px;
-            font-size: 9px;
+            padding: 5px 12px;
+            font-size: 10px;
             cursor: pointer;
         }
         .profile-name-row {
             display: flex;
             align-items: center;
-            gap: 8px;
-            margin-bottom: 4px;
+            gap: 10px;
             flex-wrap: wrap;
+            margin-bottom: 6px;
         }
-        .profile-name-lg { font-size: 18px; font-weight: 700; }
+        .profile-name-lg {
+            font-size: 20px;
+            font-weight: 700;
+        }
         .profile-badge {
-            background: var(--gold);
+            background: #39FF14;
             color: #000;
-            padding: 2px 8px;
+            padding: 2px 10px;
             border-radius: 30px;
-            font-size: 8px;
+            font-size: 9px;
             font-weight: 600;
         }
         .profile-badge-purple {
-            background: var(--accent-pink);
-            color: #000;
-            padding: 2px 8px;
+            background: #ff3cac;
+            color: #fff;
+            padding: 2px 10px;
             border-radius: 30px;
-            font-size: 8px;
+            font-size: 9px;
             font-weight: 600;
         }
-        .profile-handle { font-size: 10px; color: var(--text-muted); margin-bottom: 8px; }
-        .profile-bio { font-size: 11px; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.4; }
-        
+        .profile-handle {
+            font-size: 11px;
+            color: #8a8a99;
+            margin-bottom: 10px;
+        }
+        .profile-bio {
+            font-size: 12px;
+            color: #aaa;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
         .profile-stats-row {
             display: flex;
-            gap: 16px;
-            padding: 12px 0;
-            border-top: 1px solid var(--border-light);
-            border-bottom: 1px solid var(--border-light);
-            margin-bottom: 12px;
+            gap: 20px;
+            padding: 16px 0;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            margin-bottom: 16px;
         }
-        .stat-item { text-align: center; flex: 1; }
-        .stat-number { font-size: 16px; font-weight: 700; color: var(--accent); }
-        .stat-label { font-size: 8px; color: var(--text-muted); text-transform: uppercase; }
-
+        .stat-item {
+            text-align: center;
+            flex: 1;
+        }
+        .stat-number {
+            font-size: 18px;
+            font-weight: 700;
+            color: #39FF14;
+        }
+        .stat-label {
+            font-size: 9px;
+            color: #8a8a99;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
         .profile-actions {
             display: flex;
-            gap: 8px;
-            margin-bottom: 16px;
+            gap: 10px;
         }
         .follow-btn {
             flex: 1;
-            background: var(--accent);
+            background: #39FF14;
             border: none;
             border-radius: 30px;
-            padding: 8px;
-            font-size: 11px;
+            padding: 10px;
+            font-size: 12px;
             font-weight: 600;
             color: #000;
             cursor: pointer;
         }
         .message-btn {
             flex: 1;
-            background: var(--bg-elevated);
-            border: 1px solid var(--border);
+            background: #0f0f12;
+            border: 1px solid rgba(255,255,255,0.05);
             border-radius: 30px;
-            padding: 8px;
-            font-size: 11px;
+            padding: 10px;
+            font-size: 12px;
             font-weight: 500;
-            color: var(--text);
+            color: #fff;
             cursor: pointer;
         }
         .more-btn {
-            background: var(--bg-elevated);
-            border: 1px solid var(--border);
+            background: #0f0f12;
+            border: 1px solid rgba(255,255,255,0.05);
             border-radius: 30px;
-            padding: 8px 12px;
+            padding: 10px 14px;
             cursor: pointer;
         }
 
+        /* Profile Tabs */
         .profile-tabs {
             display: flex;
-            gap: 2px;
-            background: var(--bg-elevated);
-            border-radius: var(--radius-lg);
+            gap: 4px;
+            background: #0f0f12;
+            border-radius: 12px;
             padding: 4px;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
         }
         .profile-tab {
             flex: 1;
             text-align: center;
-            padding: 8px;
-            font-size: 10px;
+            padding: 10px;
+            font-size: 11px;
             font-weight: 500;
             cursor: pointer;
-            border-radius: var(--radius-md);
-            color: var(--text-muted);
+            border-radius: 10px;
+            color: #8a8a99;
+            transition: all 0.2s;
         }
         .profile-tab.active {
-            background: var(--bg-card);
-            color: var(--accent);
+            background: #1a1a1e;
+            color: #39FF14;
         }
 
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-
-        /* Unique Profile Features */
-        .unique-feature {
-            background: linear-gradient(135deg, rgba(57,255,20,0.05), rgba(0,240,255,0.03));
-            border: 1px solid rgba(57,255,20,0.1);
-            border-radius: var(--radius-lg);
-            padding: 12px;
-            margin-bottom: 12px;
+        /* Tab Content */
+        .tab-content {
+            display: none;
         }
-        .feature-header {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 8px;
+        .tab-content.active {
+            display: block;
         }
-        .feature-icon { font-size: 20px; }
-        .feature-title { font-size: 11px; font-weight: 600; color: var(--accent); }
-        .feature-content { font-size: 10px; color: var(--text-secondary); }
 
+        /* Posts Grid */
         .posts-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 4px;
+            gap: 6px;
         }
         .post-grid-item {
             aspect-ratio: 1;
-            background: var(--bg-elevated);
-            border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            cursor: pointer;
+            background: #0f0f12;
+            border-radius: 12px;
             overflow: hidden;
+            cursor: pointer;
         }
-        .post-grid-item img { width: 100%; height: 100%; object-fit: cover; }
+        .post-grid-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
+        /* Friends Grid */
         .friends-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            margin-bottom: 16px;
+            gap: 12px;
         }
         .friend-card {
-            background: var(--bg-elevated);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            padding: 8px;
+            background: #0f0f12;
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 12px;
             text-align: center;
         }
-        .friend-avatar { font-size: 28px; margin-bottom: 4px; }
-        .friend-name { font-size: 9px; font-weight: 500; }
+        .friend-avatar {
+            font-size: 32px;
+            margin-bottom: 6px;
+        }
+        .friend-name {
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        /* Activity Feed */
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+        }
+        .activity-icon {
+            font-size: 20px;
+            width: 36px;
+        }
+        .activity-text {
+            flex: 1;
+            font-size: 11px;
+            color: #aaa;
+        }
+        .activity-time {
+            font-size: 9px;
+            color: #555;
+        }
+
+        /* Badges */
+        .badges-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .badge-card {
+            background: #0f0f12;
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 40px;
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+        }
+
+        /* World Map Visualization */
+        .world-map-card {
+            background: #0f0f12;
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 16px;
+            margin-top: 16px;
+        }
+        .map-title {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #39FF14;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .map-canvas {
+            background: repeating-linear-gradient(45deg, #0a0a0c 0px, #0a0a0c 20px, #0f0f12 20px, #0f0f12 40px);
+            border-radius: 12px;
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            cursor: pointer;
+        }
+        .map-marker {
+            text-align: center;
+        }
+        .map-marker-icon {
+            font-size: 36px;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        /* Card */
+        .card {
+            background: #0f0f12;
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
 
         /* Bottom Nav */
         .bottom-nav {
             background: rgba(15,15,18,0.95);
             backdrop-filter: blur(20px);
-            border-top: 1px solid var(--border);
-            padding: 6px 12px 16px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding: 8px 16px 20px;
             display: flex;
             flex-shrink: 0;
         }
@@ -501,45 +510,59 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 2px;
+            gap: 3px;
             background: none;
             border: none;
             cursor: pointer;
-            color: var(--text-muted);
+            color: #8a8a99;
         }
-        .nav-icon { font-size: 18px; }
-        .nav-label { font-size: 8px; font-weight: 500; text-transform: uppercase; }
-        .nav-item.active .nav-icon { color: var(--accent); transform: scale(1.05); }
-        .nav-item.active .nav-label { color: var(--accent); }
+        .nav-icon {
+            font-size: 20px;
+        }
+        .nav-label {
+            font-size: 9px;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+        .nav-item.active .nav-icon {
+            color: #39FF14;
+            transform: scale(1.05);
+        }
+        .nav-item.active .nav-label {
+            color: #39FF14;
+        }
         .nav-camera {
-            background: linear-gradient(135deg, var(--accent), var(--accent-blue));
-            width: 44px;
-            height: 44px;
-            border-radius: 22px;
+            background: linear-gradient(135deg, #39FF14, #00f0ff);
+            width: 48px;
+            height: 48px;
+            border-radius: 24px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-top: -12px;
-            box-shadow: 0 0 12px rgba(57,255,20,0.3);
+            margin-top: -16px;
+            box-shadow: 0 0 15px rgba(57,255,20,0.3);
         }
 
         .toast {
             position: fixed;
-            bottom: 80px;
+            bottom: 90px;
             left: 50%;
             transform: translateX(-50%) translateY(20px);
-            background: var(--bg-card);
-            border: 1px solid var(--border);
+            background: #0f0f12;
+            border: 1px solid rgba(255,255,255,0.1);
             border-radius: 40px;
-            padding: 5px 12px;
-            font-size: 10px;
+            padding: 8px 16px;
+            font-size: 11px;
             z-index: 999;
             opacity: 0;
             transition: all 0.2s;
             pointer-events: none;
             white-space: nowrap;
         }
-        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
     </style>
 </head>
 <body>
@@ -560,22 +583,25 @@
 
     <!-- QUICK ACTIONS -->
     <div class="quick-actions">
-        <div class="quick-btn" onclick="switchTab('feed')">🔥 Flöde</div>
-        <div class="quick-btn" onclick="switchTab('profile')">👤 Profil</div>
-        <div class="quick-btn" onclick="switchTab('shop')">🛍️ Shop</div>
-        <div class="quick-btn" onclick="openAIChat()">🤖 AI</div>
+        <div class="quick-btn" id="feedBtn">🔥 Flöde</div>
+        <div class="quick-btn" id="profileBtnActive" style="background:#39FF14; color:#000;">👤 Profil</div>
+        <div class="quick-btn" id="shopBtn">🛍️ Shop</div>
+        <div class="quick-btn" id="mapBtn">🗺️ Världen</div>
+        <div class="quick-btn" id="aiBtn">🤖 AI</div>
     </div>
 
     <!-- STORIES -->
     <div class="stories-row" id="storiesRow"></div>
 
-    <!-- MAIN CONTENT -->
-    <div class="main-content" id="mainContent">
+    <!-- SCROLLABLE CONTENT -->
+    <div class="scrollable" id="scrollableContent">
         <!-- FEED VIEW -->
-        <div id="feedView" class="feed-container"></div>
+        <div id="feedView" style="display: none; padding: 16px;">
+            <div id="feedList"></div>
+        </div>
 
-        <!-- PROFILE VIEW -->
-        <div id="profileView" style="display:none; height:100%; overflow-y:auto;">
+        <!-- PROFILE VIEW (PERFECT) -->
+        <div id="profileView" style="display: block;">
             <div class="profile-container">
                 <div class="profile-cover">
                     <div class="profile-avatar-section">
@@ -604,368 +630,416 @@
                     </div>
                 </div>
 
-                <!-- UNIQUE PROFILE FEATURES -->
-                <div class="unique-feature">
-                    <div class="feature-header">
-                        <div class="feature-icon">🏆</div>
-                        <div class="feature-title">Veckans topp 1% creator</div>
-                    </div>
-                    <div class="feature-content">Du är bland de 1% mest engagerade skaparna denna vecka! 🔥</div>
-                </div>
-
-                <div class="unique-feature">
-                    <div class="feature-header">
-                        <div class="feature-icon">🎯</div>
-                        <div class="feature-title">Pågående utmaning</div>
-                    </div>
-                    <div class="feature-content">Lägg upp 5 inlägg denna vecka för att låsa upp "Content King" badge! (3/5 klar)</div>
-                </div>
-
+                <!-- PROFILE TABS -->
                 <div class="profile-tabs">
                     <div class="profile-tab active" data-tab="posts">📷 Inlägg</div>
                     <div class="profile-tab" data-tab="pet">🐉 Pet</div>
                     <div class="profile-tab" data-tab="friends">👥 Vänner</div>
                     <div class="profile-tab" data-tab="badges">🏆 Badges</div>
+                    <div class="profile-tab" data-tab="activity">⏱️ Aktivitet</div>
                 </div>
 
+                <!-- TAB: POSTS -->
                 <div class="tab-content active" id="tab-posts">
                     <div class="posts-grid" id="postsGrid"></div>
                 </div>
 
+                <!-- TAB: PET -->
                 <div class="tab-content" id="tab-pet">
-                    <div class="unique-feature">
-                        <div class="feature-header">
-                            <div class="feature-icon">🐉</div>
-                            <div class="feature-title">Eldraken - Level 8</div>
+                    <div class="card">
+                        <div style="display: flex; align-items: center; gap: 16px;">
+                            <div class="profile-avatar-large" style="width: 60px; height: 60px; font-size: 30px;">🐉</div>
+                            <div style="flex: 1;">
+                                <div style="font-weight: 700; font-size: 16px;">Eldraken</div>
+                                <div style="font-size: 11px; color: #39FF14;">Level 8 · Legendary</div>
+                                <div style="height: 4px; background: #1a1a1e; border-radius: 2px; margin-top: 8px;"><div style="width: 60%; height: 100%; background: linear-gradient(90deg, #39FF14, #00f0ff); border-radius: 2px;"></div></div>
+                                <div style="font-size: 10px; color: #8a8a99; margin-top: 6px;">60/100 XP till nästa level</div>
+                            </div>
                         </div>
-                        <div class="feature-content">🔥 Fire Breath | 🪽 Fly | ⚡ Lightning Strike</div>
-                        <div style="height:4px; background:var(--bg-card); border-radius:2px; margin-top:8px;"><div style="width:60%; height:100%; background:var(--accent); border-radius:2px;"></div></div>
-                        <div class="feature-content" style="margin-top:6px;">60/100 XP till nästa level</div>
                     </div>
-                    <div class="unique-feature">
-                        <div class="feature-header">
-                            <div class="feature-icon">📍</div>
-                            <div class="feature-title">Din plats</div>
+                    <div class="card">
+                        <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                            <div style="background: #1a1a1e; padding: 6px 12px; border-radius: 30px; font-size: 11px;">🔥 Fire Breath</div>
+                            <div style="background: #1a1a1e; padding: 6px 12px; border-radius: 30px; font-size: 11px;">🪽 Fly</div>
+                            <div style="background: #1a1a1e; padding: 6px 12px; border-radius: 30px; font-size: 11px;">⚡ Lightning Strike</div>
                         </div>
-                        <div class="feature-content">Stockholm, Sverige · Senast aktiv för 5 min sedan</div>
                     </div>
                 </div>
 
+                <!-- TAB: FRIENDS -->
                 <div class="tab-content" id="tab-friends">
                     <div class="friends-grid" id="friendsGrid"></div>
-                    <button class="follow-btn" style="margin-top:8px;" onclick="showToast('👥 Hitta vänner')">🔍 Hitta vänner</button>
+                    <button class="follow-btn" style="margin-top: 16px;" onclick="showToast('👥 Hitta vänner')">🔍 Hitta vänner</button>
                 </div>
 
+                <!-- TAB: BADGES -->
                 <div class="tab-content" id="tab-badges">
-                    <div style="display:flex; flex-wrap:wrap; gap:8px;">
-                        <div class="badge" style="background:var(--bg-elevated);padding:8px 12px;border-radius:30px;display:flex;align-items:center;gap:6px;">🏆 Early Bird</div>
-                        <div class="badge" style="background:var(--bg-elevated);padding:8px 12px;border-radius:30px;display:flex;align-items:center;gap:6px;">🔥 Streak 13</div>
-                        <div class="badge" style="background:var(--bg-elevated);padding:8px 12px;border-radius:30px;display:flex;align-items:center;gap:6px;">🎯 Bounty Hunter</div>
-                        <div class="badge" style="background:var(--bg-elevated);padding:8px 12px;border-radius:30px;display:flex;align-items:center;gap:6px;">💎 Legendary</div>
+                    <div class="badges-grid" id="badgesGrid"></div>
+                </div>
+
+                <!-- TAB: ACTIVITY -->
+                <div class="tab-content" id="tab-activity">
+                    <div id="activityList"></div>
+                </div>
+
+                <!-- WORLD MAP CARD (Future visualization) -->
+                <div class="world-map-card" onclick="showToast('🗺️ Större karta kommer!')">
+                    <div class="map-title">
+                        <span>🌍 DIN AKTIVITETSKARTA</span>
+                        <span style="font-size: 9px; color: #39FF14;">134 platser besökta →</span>
+                    </div>
+                    <div class="map-canvas">
+                        <div class="map-marker">
+                            <div class="map-marker-icon">📍</div>
+                            <div style="font-size: 10px; margin-top: 8px; color: #39FF14;">Din plats</div>
+                            <div style="font-size: 8px; color: #8a8a99;">Stockholm, Sverige</div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 12px; font-size: 10px; color: #555; text-align: center;">
+                        Varje aktivitet bygger upp din karta. Spåra dina äventyr!
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- SHOP VIEW -->
-        <div id="shopView" style="display:none; padding:12px; overflow-y:auto; height:100%;">
-            <div class="search-bar" style="display:flex;gap:6px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:30px;padding:6px 12px;margin-bottom:12px;">
-                <span>🔍</span>
-                <input id="shopSearch" placeholder="Sök produkter..." style="flex:1;background:none;border:none;outline:none;color:var(--text);font-size:11px;">
+        <div id="shopView" style="display: none; padding: 16px;">
+            <div class="card" style="margin-bottom: 16px;">
+                <div style="display: flex; gap: 8px; background: #1a1a1e; border-radius: 30px; padding: 8px 16px;">
+                    <span>🔍</span>
+                    <input type="text" id="shopSearch" placeholder="Sök produkter..." style="flex: 1; background: none; border: none; outline: none; color: #fff; font-size: 12px;">
+                </div>
             </div>
-            <div class="product-grid" id="shopGrid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;"></div>
+            <div class="product-grid" id="shopGrid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;"></div>
+        </div>
+
+        <!-- WORLD VIEW -->
+        <div id="mapView" style="display: none; padding: 16px;">
+            <div class="world-map-card" onclick="showToast('🗺️ Större karta kommer!')">
+                <div class="map-title">
+                    <span>🌍 UTFORSKA VÄRLDEN</span>
+                </div>
+                <div class="map-canvas" style="height: 300px; flex-direction: column;">
+                    <div class="map-marker">
+                        <div class="map-marker-icon">🗺️</div>
+                        <div style="font-size: 12px; margin-top: 16px;">Utforska platser och möt andra användare</div>
+                        <div style="font-size: 10px; color: #8a8a99; margin-top: 8px;">Karta uppdateras med din aktivitet</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI VIEW -->
+        <div id="aiView" style="display: none; padding: 16px;">
+            <div class="card">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                    <div class="profile-avatar-large" style="width: 50px; height: 50px; font-size: 25px;">🤖</div>
+                    <div>
+                        <div style="font-weight: 700; font-size: 16px;">PetPal AI</div>
+                        <div style="font-size: 10px; color: #39FF14;">● Online</div>
+                    </div>
+                </div>
+                <div id="aiMessages" style="height: 300px; overflow-y: auto; margin-bottom: 16px; padding: 8px; background: #0a0a0c; border-radius: 12px;">
+                    <div style="padding: 8px 12px; background: #1a1a1e; border-radius: 16px; margin-bottom: 8px; max-width: 85%;">Hej! 👋 Jag är PetPal AI. Fråga om tips, uppdrag eller hjälp!</div>
+                </div>
+                <div style="display: flex; gap: 8px;">
+                    <input type="text" id="aiInput" placeholder="Skriv ett meddelande..." style="flex: 1; background: #1a1a1e; border: none; border-radius: 30px; padding: 10px 16px; color: #fff; outline: none;">
+                    <button id="aiSendBtn" style="background: linear-gradient(135deg, #39FF14, #00f0ff); border: none; border-radius: 30px; padding: 10px 20px; cursor: pointer;">➤</button>
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- BOTTOM NAV -->
     <div class="bottom-nav">
-        <button class="nav-item active" data-tab="feed"><div class="nav-icon">🔥</div><div class="nav-label">Flöde</div></button>
-        <button class="nav-item" data-tab="profile"><div class="nav-icon">👤</div><div class="nav-label">Profil</div></button>
-        <button class="nav-cam-btn" id="cameraBtn"><div class="nav-camera">📸</div><div class="nav-label" style="font-size:8px;margin-top:3px;">Nytt</div></button>
-        <button class="nav-item" data-tab="shop"><div class="nav-icon">🛍️</div><div class="nav-label">Shop</div></button>
-    </div>
-</div>
-
-<!-- AI CHAT WINDOW -->
-<div class="ai-chat-window" id="aiChatWindow" style="position:fixed;inset:0;z-index:200;background:var(--bg);display:flex;flex-direction:column;transform:translateY(100%);transition:transform 0.3s;">
-    <div class="ai-chat-header" style="padding:12px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border);">
-        <button class="ai-chat-back" id="aiChatBack" style="background:none;border:none;font-size:20px;color:var(--text);cursor:pointer;">←</button>
-        <div class="ai-chat-avatar" style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--accent-blue),var(--accent-pink));display:flex;align-items:center;justify-content:center;font-size:18px;">🤖</div>
-        <div><div style="font-weight:600;">PetPal AI</div><div style="font-size:9px;color:var(--accent);">● Online</div></div>
-    </div>
-    <div class="ai-messages" id="aiMessages" style="flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px;">
-        <div class="msg ai" style="max-width:85%;padding:8px 12px;border-radius:16px;font-size:10px;background:var(--bg-elevated);">Hej! 👋 Jag är PetPal AI. Fråga om tips, uppdrag eller hjälp!</div>
-    </div>
-    <div class="ai-input-row" style="padding:10px;display:flex;gap:6px;border-top:1px solid var(--border);">
-        <input class="ai-input" id="aiInput" placeholder="Skriv..." style="flex:1;background:var(--bg-elevated);border:1px solid var(--border);border-radius:30px;padding:8px 12px;color:var(--text);outline:none;font-size:10px;">
-        <button class="ai-send" id="aiSendBtn" style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-blue));border:none;cursor:pointer;">➤</button>
+        <button class="nav-item" data-view="feed"><div class="nav-icon">🔥</div><div class="nav-label">Flöde</div></button>
+        <button class="nav-item active" data-view="profile"><div class="nav-icon">👤</div><div class="nav-label">Profil</div></button>
+        <button class="nav-cam-btn" id="cameraBtn"><div class="nav-camera">📸</div><div class="nav-label" style="font-size: 8px; margin-top: 4px;">Nytt</div></button>
+        <button class="nav-item" data-view="shop"><div class="nav-icon">🛍️</div><div class="nav-label">Shop</div></button>
+        <button class="nav-item" data-view="map"><div class="nav-icon">🗺️</div><div class="nav-label">Karta</div></button>
     </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-// ============ DATA ==========
-let STATE = { level: 8, coins: 3475, streak: 13, energy: 100, following: false, followers: 1200, followingCount: 342 };
+    // ============ STATE ==========
+    let STATE = {
+        level: 8,
+        coins: 3475,
+        streak: 13,
+        energy: 100,
+        following: false,
+        followers: 1200,
+        followingCount: 342
+    };
 
-// Posts with comments
-let posts = [
-    { id: 'p1', user: 'Ella', avatar: '👩‍🎤', pet: '🐉', caption: 'Köpte Fire Wings till min drake! 🔥 Nu kan den flyga!', likes: 47, time: '15 min', url: 'https://picsum.photos/400/500?random=1', comments: [
-        { id: 'c1', user: 'Stella', avatar: '🌟', text: 'Så cool! 🔥', time: '10 min', likes: 3, replies: [] },
-        { id: 'c2', user: 'Max', avatar: '🧑‍🚀', text: 'Vart köpte du?', time: '12 min', likes: 1, replies: [] }
-    ] },
-    { id: 'p2', user: 'Max', avatar: '🧑‍🚀', pet: '🐺', caption: 'Level 10! Min varg är nu en legend! 🎉', likes: 132, time: '1 tim', url: 'https://picsum.photos/400/500?random=2', comments: [
-        { id: 'c3', user: 'Ella', avatar: '👩‍🎤', text: 'Grattis!! 🎉', time: '45 min', likes: 5, replies: [] }
-    ] },
-    { id: 'p3', user: 'Clara', avatar: '👩‍💻', pet: '🦊', caption: 'Hittade en legendary skin idag! ✨', likes: 89, time: '3 tim', url: 'https://picsum.photos/400/500?random=3', comments: [] }
-];
+    // ============ DATA ==========
+    let feedPosts = [
+        { id: 1, user: 'Ella', avatar: '👩‍🎤', content: 'Köpte Fire Wings till min drake! 🔥', likes: 47, time: '15 min', image: 'https://picsum.photos/400/400?random=1' },
+        { id: 2, user: 'Max', avatar: '🧑‍🚀', content: 'Level 10! 🎉', likes: 132, time: '1 tim', image: 'https://picsum.photos/400/400?random=2' }
+    ];
+    let shopItems = [
+        { id: 1, emoji: '🔥', name: 'Fire Wings', price: 199 },
+        { id: 2, emoji: '✨', name: 'Legendary Glow', price: 499 },
+        { id: 3, emoji: '⚡', name: 'XP Boost', price: 99 },
+        { id: 4, emoji: '👑', name: 'Royal Crown', price: 799 }
+    ];
+    let friends = [
+        { name: 'Ella', avatar: '👩‍🎤' }, { name: 'Max', avatar: '🧑‍🚀' },
+        { name: 'Clara', avatar: '👩‍💻' }, { name: 'Leo', avatar: '🧑‍🎤' },
+        { name: 'Stella', avatar: '🌟' }, { name: 'Wendela', avatar: '😂' }
+    ];
+    let badgesList = ['🏆 Early Bird', '🔥 Streak 13', '🎯 Bounty Hunter', '💎 Legendary', '⭐ Creator'];
+    let activities = [
+        { icon: '🐉', text: 'Level up! Nu level 8', time: '2 tim sedan' },
+        { icon: '💰', text: 'Tjänade 500 SEK på uppdrag', time: '1 dag sedan' },
+        { icon: '🛍️', text: 'Köpte Fire Wings i shoppen', time: '2 dagar sedan' }
+    ];
+    let stories = [
+        { name: 'Din story', avatar: '📸', seen: false },
+        { name: 'Stella', avatar: '🌟', seen: false },
+        { name: 'Max', avatar: '🧑‍🚀', seen: true }
+    ];
 
-let shopItems = [
-    { id: 's1', emoji: '🔥', name: 'Fire Wings', price: 199 },
-    { id: 's2', emoji: '✨', name: 'Legendary Glow', price: 499 },
-    { id: 's3', emoji: '⚡', name: 'XP Boost', price: 99 },
-    { id: 's4', emoji: '👑', name: 'Royal Crown', price: 799 }
-];
-
-let friends = [
-    { name: 'Ella', avatar: '👩‍🎤' }, { name: 'Max', avatar: '🧑‍🚀' }, { name: 'Clara', avatar: '👩‍💻' },
-    { name: 'Leo', avatar: '🧑‍🎤' }, { name: 'Stella', avatar: '🌟' }, { name: 'Wendela', avatar: '😂' }
-];
-
-let stories = [
-    { name: 'Din story', ava: '📸', seen: false }, { name: 'Stella', ava: '🌟', seen: false },
-    { name: 'Max', ava: '🧑‍🚀', seen: true }, { name: 'Clara', ava: '👩‍💻', seen: false }
-];
-
-let currentTab = 'feed';
-let commentInputs = {};
-
-// ============ HELPERS ==========
-function $(id) { return document.getElementById(id); }
-function showToast(msg) { const t = $('toast'); t.textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2000); }
-
-function updateHUD() {
-    $('lvl').textContent = STATE.level;
-    $('coins').textContent = STATE.coins;
-    $('streak').textContent = STATE.streak;
-    $('energy').textContent = STATE.energy;
-    $('profileFollowers').textContent = STATE.followers >= 1000 ? (STATE.followers/1000).toFixed(1)+'K' : STATE.followers;
-    $('profileFollowing').textContent = STATE.followingCount;
-    $('profilePosts').textContent = posts.length;
-    const followBtn = $('followBtn');
-    if (followBtn) followBtn.textContent = STATE.following ? 'Följer' : 'Följ';
-}
-
-function toggleFollow() {
-    STATE.following = !STATE.following;
-    if (STATE.following) { STATE.followers++; showToast(`✅ Du följer nu!`); }
-    else { STATE.followers--; showToast(`❌ Slutade följa`); }
-    updateHUD();
-}
-
-// ============ RENDER FEED WITH COMMENTS ==========
-function renderFeed() {
-    let html = '';
-    for (let post of posts) {
-        html += `
-            <div class="post-card">
-                <div class="post-header">
-                    <div class="post-avatar" onclick="viewProfile('${post.user}')">${post.avatar}</div>
-                    <div class="post-user">
-                        <div class="post-name" onclick="viewProfile('${post.user}')">${post.user}</div>
-                        <div class="post-time">${post.time} · ${post.pet}</div>
-                    </div>
-                    <div class="post-menu">⋯</div>
-                </div>
-                <img class="post-image" src="${post.url}" onclick="showToast('📸 Bild')">
-                <div class="post-caption">${post.caption}</div>
-                <div class="post-actions">
-                    <button class="action-btn ${post.userLiked ? 'active' : ''}" onclick="likePost('${post.id}')">❤️ <span id="likes-${post.id}">${post.likes}</span></button>
-                    <button class="action-btn" onclick="toggleComments('${post.id}')">💬 <span id="comments-count-${post.id}">${post.comments.length}</span></button>
-                    <button class="action-btn" onclick="showToast('📤 Delat!')">📤 Dela</button>
-                </div>
-                <div class="comments-section" id="comments-${post.id}" style="display:none;">
-                    <div id="comments-list-${post.id}">
-                        ${renderComments(post.comments, post.id)}
-                    </div>
-                    <div class="add-comment">
-                        <input type="text" class="comment-input" id="comment-input-${post.id}" placeholder="Skriv en kommentar...">
-                        <button class="comment-submit" onclick="addComment('${post.id}')">Skicka</button>
-                    </div>
-                </div>
-            </div>
-        `;
+    // ============ HELPERS ==========
+    function showToast(msg) {
+        const toast = document.getElementById('toast');
+        toast.textContent = msg;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2000);
     }
-    $('feedView').innerHTML = html;
-}
 
-function renderComments(comments, postId) {
-    if (!comments.length) return '<div style="color:var(--text-muted); text-align:center; padding:8px;">Inga kommentarer än</div>';
-    return comments.map(c => `
-        <div class="comment">
-            <div class="comment-avatar" onclick="viewProfile('${c.user}')">${c.avatar}</div>
-            <div class="comment-content">
-                <div><span class="comment-user" onclick="viewProfile('${c.user}')">${c.user}</span><span class="comment-text">${c.text}</span></div>
-                <div class="comment-time">${c.time}</div>
-                <div class="comment-actions">
-                    <span class="comment-like" onclick="likeComment('${postId}', '${c.id}')">❤️ ${c.likes}</span>
-                    <span class="comment-reply" onclick="showReplyInput('${postId}', '${c.id}', '${c.user}')">Svara</span>
+    function updateHUD() {
+        document.getElementById('lvl').textContent = STATE.level;
+        document.getElementById('coins').textContent = STATE.coins;
+        document.getElementById('streak').textContent = STATE.streak;
+        document.getElementById('energy').textContent = STATE.energy;
+        document.getElementById('profileFollowers').textContent = STATE.followers >= 1000 ? (STATE.followers/1000).toFixed(1)+'K' : STATE.followers;
+        document.getElementById('profileFollowing').textContent = STATE.followingCount;
+        document.getElementById('profilePosts').textContent = feedPosts.length;
+        document.getElementById('followBtn').textContent = STATE.following ? 'Följer' : 'Följ';
+    }
+
+    function toggleFollow() {
+        STATE.following = !STATE.following;
+        if (STATE.following) {
+            STATE.followers++;
+            showToast('✅ Du följer nu!');
+        } else {
+            STATE.followers--;
+            showToast('❌ Slutade följa');
+        }
+        updateHUD();
+    }
+
+    // ============ RENDER FUNCTIONS ==========
+    function renderStories() {
+        const container = document.getElementById('storiesRow');
+        container.innerHTML = stories.map(s => `
+            <div class="story-item" onclick="showToast('👁️ ${s.name}s story')">
+                <div class="story-ring ${s.seen ? 'seen' : ''}"><div class="story-inner">${s.avatar}</div></div>
+                <div class="story-name">${s.name}</div>
+            </div>
+        `).join('');
+    }
+
+    function renderFeed() {
+        const container = document.getElementById('feedList');
+        container.innerHTML = feedPosts.map(p => `
+            <div style="background: #0f0f12; border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; margin-bottom: 16px; overflow: hidden;">
+                <div style="padding: 12px; display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #39FF14, #ff3cac); display: flex; align-items: center; justify-content: center; font-size: 20px;">${p.avatar}</div>
+                    <div style="flex: 1;"><div style="font-weight: 600;">${p.user}</div><div style="font-size: 9px; color: #8a8a99;">${p.time}</div></div>
                 </div>
-                ${c.replies && c.replies.length ? `<div class="view-replies" onclick="toggleReplies('${postId}', '${c.id}')">Visa ${c.replies.length} svar</div>` : ''}
-                <div id="replies-${postId}-${c.id}" style="display:none; margin-top:8px; margin-left:20px;">
-                    ${c.replies ? c.replies.map(r => `
-                        <div class="comment" style="margin-bottom:6px;">
-                            <div class="comment-avatar" style="width:20px;height:20px;font-size:10px;">${r.avatar}</div>
-                            <div class="comment-content">
-                                <div><span class="comment-user">${r.user}</span><span class="comment-text">${r.text}</span></div>
-                                <div class="comment-time">${r.time}</div>
-                            </div>
-                        </div>
-                    `).join('') : ''}
-                    <div class="add-comment" style="margin-top:6px;">
-                        <input type="text" class="comment-input" id="reply-input-${postId}-${c.id}" placeholder="Skriv ett svar..." style="font-size:9px;">
-                        <button class="comment-submit" onclick="addReply('${postId}', '${c.id}')" style="font-size:9px;">Svara</button>
-                    </div>
+                <img src="${p.image}" style="width: 100%; height: auto;" onclick="showToast('📸 Bild visad')">
+                <div style="padding: 12px;">${p.content}</div>
+                <div style="padding: 12px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; gap: 20px;">
+                    <button onclick="showToast('❤️ Gillade!')" style="background: none; border: none; color: #8a8a99; display: flex; align-items: center; gap: 6px;">❤️ ${p.likes}</button>
+                    <button onclick="showToast('💬 Kommentarer')" style="background: none; border: none; color: #8a8a99; display: flex; align-items: center; gap: 6px;">💬 0</button>
+                    <button onclick="showToast('📤 Delat!')" style="background: none; border: none; color: #8a8a99; display: flex; align-items: center; gap: 6px;">📤 Dela</button>
                 </div>
             </div>
-        </div>
-    `).join('');
-}
+        `).join('');
+    }
 
-function toggleComments(postId) { 
-    const el = $(`comments-${postId}`);
-    if (el.style.display === 'none') el.style.display = 'block';
-    else el.style.display = 'none';
-}
+    function renderPostsGrid() {
+        const container = document.getElementById('postsGrid');
+        container.innerHTML = feedPosts.map(p => `
+            <div class="post-grid-item" onclick="showToast('📷 Inlägg')">
+                <img src="${p.image}">
+            </div>
+        `).join('');
+    }
 
-function likePost(postId) {
-    const post = posts.find(p => p.id === postId);
-    if (post) { post.likes++; $(`likes-${postId}`).textContent = post.likes; showToast('❤️ Gillade!'); }
-}
+    function renderFriends() {
+        const container = document.getElementById('friendsGrid');
+        container.innerHTML = friends.map(f => `
+            <div class="friend-card">
+                <div class="friend-avatar">${f.avatar}</div>
+                <div class="friend-name">${f.name}</div>
+            </div>
+        `).join('');
+    }
 
-function addComment(postId) {
-    const input = $(`comment-input-${postId}`);
-    const text = input.value.trim();
-    if (!text) return;
-    const post = posts.find(p => p.id === postId);
-    if (post) {
-        post.comments.unshift({
-            id: 'c' + Date.now(), user: 'Du', avatar: '👤', text: text, time: 'just nu', likes: 0, replies: []
+    function renderBadges() {
+        const container = document.getElementById('badgesGrid');
+        container.innerHTML = badgesList.map(b => `
+            <div class="badge-card">${b}</div>
+        `).join('');
+    }
+
+    function renderActivity() {
+        const container = document.getElementById('activityList');
+        container.innerHTML = activities.map(a => `
+            <div class="activity-item">
+                <div class="activity-icon">${a.icon}</div>
+                <div class="activity-text">${a.text}</div>
+                <div class="activity-time">${a.time}</div>
+            </div>
+        `).join('');
+    }
+
+    function renderShop() {
+        const container = document.getElementById('shopGrid');
+        container.innerHTML = shopItems.map(p => `
+            <div style="background: #0f0f12; border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 16px; text-align: center; cursor: pointer;" onclick="buyItem('${p.name}', ${p.price})">
+                <div style="font-size: 32px;">${p.emoji}</div>
+                <div style="font-weight: 500; margin: 8px 0;">${p.name}</div>
+                <div style="color: #39FF14;">${p.price} 💰</div>
+            </div>
+        `).join('');
+    }
+
+    function buyItem(name, price) {
+        if (STATE.coins >= price) {
+            STATE.coins -= price;
+            updateHUD();
+            renderShop();
+            showToast(`✅ Köpte ${name}!`);
+        } else {
+            showToast(`❌ Behöver ${price - STATE.coins} mer!`);
+        }
+    }
+
+    // ============ TAB SWITCHING ==========
+    function switchView(view) {
+        // Hide all views
+        document.getElementById('feedView').style.display = 'none';
+        document.getElementById('profileView').style.display = 'none';
+        document.getElementById('shopView').style.display = 'none';
+        document.getElementById('mapView').style.display = 'none';
+        document.getElementById('aiView').style.display = 'none';
+        
+        // Show selected view
+        if (view === 'feed') {
+            document.getElementById('feedView').style.display = 'block';
+            renderFeed();
+        } else if (view === 'profile') {
+            document.getElementById('profileView').style.display = 'block';
+            renderPostsGrid();
+            renderFriends();
+            renderBadges();
+            renderActivity();
+        } else if (view === 'shop') {
+            document.getElementById('shopView').style.display = 'block';
+            renderShop();
+        } else if (view === 'map') {
+            document.getElementById('mapView').style.display = 'block';
+        } else if (view === 'ai') {
+            document.getElementById('aiView').style.display = 'block';
+        }
+        
+        // Update bottom nav active state
+        document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
+        const activeBtn = document.querySelector(`.nav-item[data-view="${view}"]`);
+        if (activeBtn) activeBtn.classList.add('active');
+        
+        // Update quick actions
+        document.querySelectorAll('.quick-btn').forEach(btn => {
+            btn.style.background = '#0f0f12';
+            btn.style.color = '#fff';
         });
-        input.value = '';
-        renderFeed();
-        $(`comments-${postId}`).style.display = 'block';
-        showToast('💬 Kommentar tillagd!');
+        if (view === 'feed') {
+            document.getElementById('feedBtn').style.background = '#39FF14';
+            document.getElementById('feedBtn').style.color = '#000';
+        } else if (view === 'profile') {
+            document.getElementById('profileBtnActive').style.background = '#39FF14';
+            document.getElementById('profileBtnActive').style.color = '#000';
+        } else if (view === 'shop') {
+            document.getElementById('shopBtn').style.background = '#39FF14';
+            document.getElementById('shopBtn').style.color = '#000';
+        } else if (view === 'map') {
+            document.getElementById('mapBtn').style.background = '#39FF14';
+            document.getElementById('mapBtn').style.color = '#000';
+        } else if (view === 'ai') {
+            document.getElementById('aiBtn').style.background = '#39FF14';
+            document.getElementById('aiBtn').style.color = '#000';
+        }
     }
-}
 
-function likeComment(postId, commentId) {
-    const post = posts.find(p => p.id === postId);
-    const comment = post.comments.find(c => c.id === commentId);
-    if (comment) { comment.likes++; showToast('❤️ Gillade kommentar!'); renderFeed(); }
-}
-
-function addReply(postId, commentId) {
-    const input = $(`reply-input-${postId}-${commentId}`);
-    const text = input.value.trim();
-    if (!text) return;
-    const post = posts.find(p => p.id === postId);
-    const comment = post.comments.find(c => c.id === commentId);
-    if (comment) {
-        comment.replies = comment.replies || [];
-        comment.replies.unshift({ user: 'Du', avatar: '👤', text: text, time: 'just nu' });
-        input.value = '';
-        renderFeed();
-        $(`replies-${postId}-${commentId}`).style.display = 'block';
-        showToast('💬 Svar tillagt!');
-    }
-}
-
-function showReplyInput(postId, commentId, userName) {
-    const repliesDiv = $(`replies-${postId}-${commentId}`);
-    if (repliesDiv.style.display === 'none') repliesDiv.style.display = 'block';
-    else repliesDiv.style.display = 'none';
-    $(`reply-input-${postId}-${commentId}`)?.focus();
-}
-
-function toggleReplies(postId, commentId) {
-    const el = $(`replies-${postId}-${commentId}`);
-    el.style.display = el.style.display === 'none' ? 'block' : 'none';
-}
-
-// ============ RENDER PROFILE ==========
-function renderPostsGrid() {
-    $('postsGrid').innerHTML = posts.map(p => `<div class="post-grid-item" onclick="showToast('📷 Inlägg')"><img src="${p.url}" style="width:100%;height:100%;object-fit:cover;"></div>`).join('');
-}
-function renderFriends() {
-    $('friendsGrid').innerHTML = friends.map(f => `<div class="friend-card"><div class="friend-avatar">${f.avatar}</div><div class="friend-name">${f.name}</div></div>`).join('');
-}
-function renderShop() {
-    $('shopGrid').innerHTML = shopItems.map(p => `<div class="product-card" style="background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-lg);padding:10px;text-align:center;cursor:pointer;" onclick="buyItem('${p.id}')"><div class="product-emoji" style="font-size:24px;">${p.emoji}</div><div class="product-name" style="font-size:10px;font-weight:500;">${p.name}</div><div class="product-price" style="font-size:9px;color:var(--accent);">${p.price}💰</div></div>`).join('');
-}
-function buyItem(id) { const p = shopItems.find(x => x.id === id); if (STATE.coins < p.price) { showToast(`❌ Behöver ${p.price - STATE.coins} mer!`); return; } STATE.coins -= p.price; updateHUD(); showToast(`✅ Köpte ${p.name}!`); }
-
-// ============ STORIES ==========
-function renderStories() {
-    $('storiesRow').innerHTML = stories.map(s => `<div class="story-item" onclick="viewStory('${s.name}')"><div class="story-ring ${s.seen ? 'seen' : ''}"><div class="story-inner">${s.ava}</div></div><div class="story-name">${s.name}</div></div>`).join('');
-}
-function viewStory(name) { const s = stories.find(x => x.name === name); if (s) s.seen = true; renderStories(); showToast(`👁️ ${name}s story`); }
-
-// ============ TAB SWITCHING ==========
-function switchTab(tab) {
-    currentTab = tab;
-    $('feedView').style.display = 'none';
-    $('profileView').style.display = 'none';
-    $('shopView').style.display = 'none';
-    if (tab === 'feed') $('feedView').style.display = 'flex';
-    if (tab === 'profile') { $('profileView').style.display = 'block'; renderPostsGrid(); renderFriends(); updateHUD(); }
-    if (tab === 'shop') { $('shopView').style.display = 'block'; renderShop(); }
-    
-    document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
-    const activeBtn = document.querySelector(`.nav-item[data-tab="${tab}"]`);
-    if (activeBtn) activeBtn.classList.add('active');
-}
-
-// Profile tabs
-document.querySelectorAll('.profile-tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-        document.querySelectorAll('.profile-tab').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-        tab.classList.add('active');
-        $(`tab-${tab.dataset.tab}`).classList.add('active');
+    // ============ PROFILE TABS ==========
+    document.querySelectorAll('.profile-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            document.querySelectorAll('.profile-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            tab.classList.add('active');
+            document.getElementById(`tab-${tab.dataset.tab}`).classList.add('active');
+        });
     });
-});
 
-// ============ AI CHAT ==========
-const aiWindow = $('aiChatWindow');
-function openAIChat() { aiWindow.classList.add('open'); }
-$('aiChatBack')?.addEventListener('click', () => aiWindow.classList.remove('open'));
-$('aiSendBtn')?.addEventListener('click', sendAI);
-$('aiInput')?.addEventListener('keypress', e => { if (e.key === 'Enter') sendAI(); });
-function addMsg(txt, type) { const el = document.createElement('div'); el.className = `msg ${type}`; el.textContent = txt; $('aiMessages').appendChild(el); $('aiMessages').scrollTop = $('aiMessages').scrollHeight; return el; }
-function sendAI() {
-    const msg = $('aiInput').value.trim();
-    if (!msg) return;
-    $('aiInput').value = '';
-    addMsg(msg, 'user');
-    const loadEl = addMsg('✦ Tänker...', 'ai loading');
-    setTimeout(() => {
-        const replies = [`💡 Du har tjänat ${STATE.totalEarned || 0} SEK på uppdrag!`, `⚔️ Din pet är level ${STATE.level}!`, `🔥 ${STATE.streak} dagars streak! Fortsätt så!`, `🛍️ Kolla shoppen för nya skins!`];
-        loadEl.textContent = replies[Math.floor(Math.random() * replies.length)];
-        loadEl.classList.remove('loading');
-    }, 800);
-}
+    // ============ AI CHAT ==========
+    document.getElementById('aiSendBtn').addEventListener('click', () => {
+        const input = document.getElementById('aiInput');
+        const msg = input.value.trim();
+        if (!msg) return;
+        
+        const messagesDiv = document.getElementById('aiMessages');
+        const userMsg = document.createElement('div');
+        userMsg.style.cssText = 'padding: 8px 12px; background: #1a1a1e; border-radius: 16px; margin-bottom: 8px; max-width: 85%; align-self: flex-end; margin-left: auto;';
+        userMsg.textContent = msg;
+        messagesDiv.appendChild(userMsg);
+        
+        input.value = '';
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        
+        setTimeout(() => {
+            const reply = document.createElement('div');
+            reply.style.cssText = 'padding: 8px 12px; background: #1a1a1e; border-radius: 16px; margin-bottom: 8px; max-width: 85%;';
+            const responses = [
+                `💡 Du har tjänat ${STATE.totalEarned || 0} SEK på uppdrag!`,
+                `⚔️ Din pet är level ${STATE.level}! Fortsätt träna!`,
+                `🔥 ${STATE.streak} dagars streak! Fortsätt så!`,
+                `🛍️ Kolla shoppen för nya skins och items!`
+            ];
+            reply.textContent = responses[Math.floor(Math.random() * responses.length)];
+            messagesDiv.appendChild(reply);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }, 500);
+    });
 
-function viewProfile(name) { switchTab('profile'); showToast(`👤 Profil: ${name}`); }
+    // ============ EVENT LISTENERS ==========
+    document.getElementById('feedBtn').addEventListener('click', () => switchView('feed'));
+    document.getElementById('profileBtnActive').addEventListener('click', () => switchView('profile'));
+    document.getElementById('shopBtn').addEventListener('click', () => switchView('shop'));
+    document.getElementById('mapBtn').addEventListener('click', () => switchView('map'));
+    document.getElementById('aiBtn').addEventListener('click', () => switchView('ai'));
+    document.querySelectorAll('.nav-item[data-view]').forEach(btn => {
+        btn.addEventListener('click', () => switchView(btn.dataset.view));
+    });
+    document.getElementById('cameraBtn').addEventListener('click', () => showToast('📸 Kamera kommer snart!'));
+    document.getElementById('menuBtn').addEventListener('click', () => showToast('☰ Meny kommer snart!'));
 
-// ============ INIT ==========
-$('cameraBtn').addEventListener('click', () => showToast('📸 Kamera kommer snart!'));
-$('menuBtn').addEventListener('click', () => showToast('☰ Meny kommer snart!'));
-document.querySelectorAll('.nav-item[data-tab]').forEach(btn => btn.addEventListener('click', () => switchTab(btn.dataset.tab)));
-
-renderStories();
-renderFeed();
-switchTab('feed');
+    // ============ INIT ==========
+    updateHUD();
+    renderStories();
+    renderFeed();
+    renderPostsGrid();
+    renderFriends();
+    renderBadges();
+    renderActivity();
+    switchView('profile');
 </script>
 </body>
 </html>
+```
