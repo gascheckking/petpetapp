@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>PETPET — Perfekt Profil</title>
+    <title>PETPET — Complete Social Platform</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap');
 
@@ -173,30 +173,142 @@
         }
         .story-name { font-size: 8px; color: var(--text-secondary); max-width: 48px; text-align: center; }
 
-        /* ============ MAIN CONTENT ============ */
-        .main-content {
+        /* ============ MAIN FEED (TikTok/Instagram) ============ */
+        .feed-container {
             flex: 1;
-            overflow: hidden;
-            position: relative;
-        }
-        .world {
-            position: absolute;
-            inset: 0;
             overflow-y: auto;
             padding: 12px;
-            display: none;
+            display: flex;
             flex-direction: column;
-            gap: 12px;
-            scrollbar-width: thin;
+            gap: 16px;
         }
-        .world.active { display: flex; }
+        .post-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+        }
+        .post-header {
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .post-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent-pink));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        .post-user { flex: 1; }
+        .post-name { font-size: 13px; font-weight: 600; cursor: pointer; }
+        .post-time { font-size: 9px; color: var(--text-muted); }
+        .post-menu { font-size: 16px; cursor: pointer; }
+        .post-image {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            cursor: pointer;
+        }
+        .post-caption {
+            padding: 10px 12px;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        .post-actions {
+            padding: 8px 12px;
+            display: flex;
+            gap: 20px;
+            border-top: 1px solid var(--border-light);
+            border-bottom: 1px solid var(--border-light);
+        }
+        .action-btn {
+            background: none;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-muted);
+            font-size: 12px;
+            cursor: pointer;
+        }
+        .action-btn.active { color: var(--accent-pink); }
+        .comments-section {
+            padding: 8px 12px;
+            border-top: 1px solid var(--border-light);
+        }
+        .comment {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 11px;
+        }
+        .comment-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--bg-elevated);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+        .comment-content { flex: 1; }
+        .comment-user { font-weight: 600; margin-right: 6px; }
+        .comment-text { color: var(--text-secondary); }
+        .comment-time { font-size: 8px; color: var(--text-muted); margin-top: 2px; }
+        .comment-actions { display: flex; gap: 8px; margin-top: 4px; }
+        .comment-like { font-size: 9px; color: var(--text-muted); cursor: pointer; }
+        .comment-reply { font-size: 9px; color: var(--text-muted); cursor: pointer; }
+        .view-replies {
+            font-size: 9px;
+            color: var(--accent);
+            cursor: pointer;
+            margin-top: 4px;
+        }
+        .add-comment {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid var(--border-light);
+        }
+        .comment-input {
+            flex: 1;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            padding: 8px 12px;
+            color: var(--text);
+            font-size: 11px;
+            outline: none;
+        }
+        .comment-submit {
+            background: var(--accent-dim);
+            border: 1px solid rgba(57,255,20,0.2);
+            border-radius: 30px;
+            padding: 6px 14px;
+            font-size: 10px;
+            color: var(--accent);
+            cursor: pointer;
+        }
 
-        /* ============ PERFECT PROFILE PAGE ============ */
+        /* ============ PROFILE PAGE (UNIQUE FEATURES) ============ */
+        .profile-container {
+            padding: 12px;
+            overflow-y: auto;
+            height: 100%;
+        }
         .profile-cover {
             background: linear-gradient(135deg, var(--accent-dim), var(--bg-elevated));
             border-radius: var(--radius-xl);
             padding: 16px;
-            position: relative;
+            margin-bottom: 12px;
         }
         .profile-avatar-section {
             display: flex;
@@ -228,6 +340,7 @@
             align-items: center;
             gap: 8px;
             margin-bottom: 4px;
+            flex-wrap: wrap;
         }
         .profile-name-lg { font-size: 18px; font-weight: 700; }
         .profile-badge {
@@ -238,10 +351,17 @@
             font-size: 8px;
             font-weight: 600;
         }
+        .profile-badge-purple {
+            background: var(--accent-pink);
+            color: #000;
+            padding: 2px 8px;
+            border-radius: 30px;
+            font-size: 8px;
+            font-weight: 600;
+        }
         .profile-handle { font-size: 10px; color: var(--text-muted); margin-bottom: 8px; }
         .profile-bio { font-size: 11px; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.4; }
         
-        /* Profile Stats Row */
         .profile-stats-row {
             display: flex;
             gap: 16px;
@@ -254,7 +374,6 @@
         .stat-number { font-size: 16px; font-weight: 700; color: var(--accent); }
         .stat-label { font-size: 8px; color: var(--text-muted); text-transform: uppercase; }
 
-        /* Action Buttons */
         .profile-actions {
             display: flex;
             gap: 8px;
@@ -290,7 +409,6 @@
             cursor: pointer;
         }
 
-        /* Tabs under profile */
         .profile-tabs {
             display: flex;
             gap: 2px;
@@ -314,90 +432,45 @@
             color: var(--accent);
         }
 
-        /* Tab Content */
         .tab-content { display: none; }
         .tab-content.active { display: block; }
 
-        /* Map Widget */
-        .map-widget {
-            background: var(--bg-elevated);
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            margin-bottom: 16px;
-            cursor: pointer;
-        }
-        .map-preview {
-            height: 120px;
-            background: repeating-linear-gradient(45deg, var(--bg-card) 0px, var(--bg-card) 20px, var(--bg-elevated) 20px, var(--bg-elevated) 40px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-        .map-preview-content {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            padding: 16px;
-        }
-        .user-location-marker {
-            width: 40px;
-            height: 40px;
-            background: var(--accent);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.1); opacity: 0.8; }
-        }
-        .location-info { flex: 1; }
-        .location-name { font-size: 12px; font-weight: 600; }
-        .location-address { font-size: 9px; color: var(--text-muted); }
-        .expand-map { font-size: 20px; }
-
-        /* Pet Card in Profile */
-        .pet-card-mini {
-            background: var(--bg-elevated);
-            border: 1px solid var(--border);
+        /* Unique Profile Features */
+        .unique-feature {
+            background: linear-gradient(135deg, rgba(57,255,20,0.05), rgba(0,240,255,0.03));
+            border: 1px solid rgba(57,255,20,0.1);
             border-radius: var(--radius-lg);
             padding: 12px;
+            margin-bottom: 12px;
+        }
+        .feature-header {
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 16px;
+            gap: 8px;
+            margin-bottom: 8px;
         }
-        .pet-avatar-mini {
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, var(--accent), var(--accent-pink));
-            border-radius: 50%;
+        .feature-icon { font-size: 20px; }
+        .feature-title { font-size: 11px; font-weight: 600; color: var(--accent); }
+        .feature-content { font-size: 10px; color: var(--text-secondary); }
+
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4px;
+        }
+        .post-grid-item {
+            aspect-ratio: 1;
+            background: var(--bg-elevated);
+            border-radius: var(--radius-md);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 24px;
-        }
-        .pet-info-mini { flex: 1; }
-        .pet-name-mini { font-size: 13px; font-weight: 600; }
-        .pet-level-mini { font-size: 9px; color: var(--accent); }
-        .pet-exp-bar {
-            height: 3px;
-            background: var(--bg-card);
-            border-radius: 2px;
+            cursor: pointer;
             overflow: hidden;
-            margin-top: 6px;
         }
-        .pet-exp-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--accent), var(--accent-blue));
-            width: 60%;
-        }
+        .post-grid-item img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* Friends Grid */
         .friends-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -413,92 +486,6 @@
         }
         .friend-avatar { font-size: 28px; margin-bottom: 4px; }
         .friend-name { font-size: 9px; font-weight: 500; }
-
-        /* Activity Feed */
-        .activity-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 0;
-            border-bottom: 1px solid var(--border-light);
-        }
-        .activity-icon { font-size: 16px; width: 28px; }
-        .activity-text { flex: 1; font-size: 10px; color: var(--text-secondary); }
-        .activity-time { font-size: 8px; color: var(--text-muted); }
-
-        /* My Ads (Marketplace) */
-        .ad-card {
-            background: var(--bg-elevated);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            padding: 10px;
-            margin-bottom: 8px;
-            display: flex;
-            gap: 10px;
-        }
-        .ad-emoji { font-size: 32px; }
-        .ad-info { flex: 1; }
-        .ad-title { font-size: 11px; font-weight: 600; }
-        .ad-price { font-size: 10px; color: var(--accent); }
-        .ad-status { font-size: 8px; color: var(--text-muted); }
-
-        /* Posts Grid */
-        .posts-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 4px;
-        }
-        .post-grid-item {
-            aspect-ratio: 1;
-            background: var(--bg-elevated);
-            border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            cursor: pointer;
-        }
-
-        /* Full Map Modal */
-        .fullscreen-modal {
-            position: fixed;
-            inset: 0;
-            z-index: 300;
-            background: var(--bg);
-            display: none;
-            flex-direction: column;
-        }
-        .fullscreen-modal.active { display: flex; }
-        .modal-header {
-            padding: 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border);
-        }
-        .full-map {
-            flex: 1;
-            background: repeating-linear-gradient(45deg, var(--bg-card) 0px, var(--bg-card) 30px, var(--bg-elevated) 30px, var(--bg-elevated) 60px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-        .full-map-content {
-            text-align: center;
-        }
-        .full-map-marker {
-            width: 60px;
-            height: 60px;
-            background: var(--accent);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 30px;
-            margin: 0 auto 16px;
-            animation: pulse 2s infinite;
-        }
 
         /* Bottom Nav */
         .bottom-nav {
@@ -573,10 +560,9 @@
 
     <!-- QUICK ACTIONS -->
     <div class="quick-actions">
-        <div class="quick-btn" onclick="switchWorld('feed')">🔥 Flöde</div>
-        <div class="quick-btn" onclick="switchWorld('profile')">👤 Profil</div>
-        <div class="quick-btn" onclick="switchWorld('map')">🗺️ Karta</div>
-        <div class="quick-btn" onclick="switchWorld('shop')">🛍️ Shop</div>
+        <div class="quick-btn" onclick="switchTab('feed')">🔥 Flöde</div>
+        <div class="quick-btn" onclick="switchTab('profile')">👤 Profil</div>
+        <div class="quick-btn" onclick="switchTab('shop')">🛍️ Shop</div>
         <div class="quick-btn" onclick="openAIChat()">🤖 AI</div>
     </div>
 
@@ -584,125 +570,105 @@
     <div class="stories-row" id="storiesRow"></div>
 
     <!-- MAIN CONTENT -->
-    <div class="main-content">
-        <!-- FEED WORLD -->
-        <div class="world" id="world-feed">
-            <div id="feedList" style="display:flex;flex-direction:column;gap:12px;"></div>
-        </div>
+    <div class="main-content" id="mainContent">
+        <!-- FEED VIEW -->
+        <div id="feedView" class="feed-container"></div>
 
-        <!-- PERFECT PROFILE WORLD -->
-        <div class="world active" id="world-profile">
-            <!-- Cover & Avatar -->
-            <div class="profile-cover">
-                <div class="profile-avatar-section">
-                    <div class="profile-avatar-large">🐉</div>
-                    <div class="profile-edit-btn" onclick="showToast('✏️ Redigera profil')">Redigera profil</div>
-                </div>
-                <div class="profile-name-row">
-                    <div class="profile-name-lg">Äventyrare</div>
-                    <div class="profile-badge">⭐ VERIFIERAD</div>
-                </div>
-                <div class="profile-handle">@petpet_user · Gick med april 2026</div>
-                <div class="profile-bio">🐉 Pet lover | Explorer | Level 8 | Digital skapare ✨</div>
-                
-                <!-- Stats -->
-                <div class="profile-stats-row">
-                    <div class="stat-item"><div class="stat-number" id="profilePosts">24</div><div class="stat-label">INLÄGG</div></div>
-                    <div class="stat-item"><div class="stat-number" id="profileFollowers">1.2K</div><div class="stat-label">FÖLJARE</div></div>
-                    <div class="stat-item"><div class="stat-number" id="profileFollowing">342</div><div class="stat-label">FÖLJER</div></div>
-                    <div class="stat-item"><div class="stat-number">8</div><div class="stat-label">LEVEL</div></div>
-                </div>
+        <!-- PROFILE VIEW -->
+        <div id="profileView" style="display:none; height:100%; overflow-y:auto;">
+            <div class="profile-container">
+                <div class="profile-cover">
+                    <div class="profile-avatar-section">
+                        <div class="profile-avatar-large">🐉</div>
+                        <div class="profile-edit-btn" onclick="showToast('✏️ Redigera profil')">Redigera</div>
+                    </div>
+                    <div class="profile-name-row">
+                        <div class="profile-name-lg">Äventyrare</div>
+                        <div class="profile-badge">⭐ VERIFIERAD</div>
+                        <div class="profile-badge-purple">🎮 CREATOR</div>
+                    </div>
+                    <div class="profile-handle">@petpet_user · Gick med april 2026</div>
+                    <div class="profile-bio">🐉 Pet lover | Explorer | Level 8 | Digital skapare ✨</div>
+                    
+                    <div class="profile-stats-row">
+                        <div class="stat-item"><div class="stat-number" id="profilePosts">0</div><div class="stat-label">INLÄGG</div></div>
+                        <div class="stat-item"><div class="stat-number" id="profileFollowers">1.2K</div><div class="stat-label">FÖLJARE</div></div>
+                        <div class="stat-item"><div class="stat-number" id="profileFollowing">342</div><div class="stat-label">FÖLJER</div></div>
+                        <div class="stat-item"><div class="stat-number">8</div><div class="stat-label">LEVEL</div></div>
+                    </div>
 
-                <!-- Action Buttons -->
-                <div class="profile-actions">
-                    <button class="follow-btn" id="followBtn" onclick="toggleFollow()">Följ</button>
-                    <button class="message-btn" onclick="showToast('💬 Meddelande skickat!')">Meddelande</button>
-                    <button class="more-btn" onclick="showToast('⚙️ Mer alternativ')">⋯</button>
-                </div>
-            </div>
-
-            <!-- Profile Tabs -->
-            <div class="profile-tabs">
-                <div class="profile-tab active" data-tab="posts">📷 Inlägg</div>
-                <div class="profile-tab" data-tab="pet">🐉 Pet</div>
-                <div class="profile-tab" data-tab="friends">👥 Vänner</div>
-                <div class="profile-tab" data-tab="ads">📢 Annonser</div>
-                <div class="profile-tab" data-tab="activity">⏱️ Aktivitet</div>
-            </div>
-
-            <!-- TAB: POSTS -->
-            <div class="tab-content active" id="tab-posts">
-                <div class="posts-grid" id="postsGrid"></div>
-            </div>
-
-            <!-- TAB: PET -->
-            <div class="tab-content" id="tab-pet">
-                <div class="pet-card-mini">
-                    <div class="pet-avatar-mini">🐉</div>
-                    <div class="pet-info-mini">
-                        <div class="pet-name-mini">Eldraken</div>
-                        <div class="pet-level-mini">Level 8 · Legendary</div>
-                        <div class="pet-exp-bar"><div class="pet-exp-fill" style="width:60%"></div></div>
+                    <div class="profile-actions">
+                        <button class="follow-btn" id="followBtn" onclick="toggleFollow()">Följ</button>
+                        <button class="message-btn" onclick="showToast('💬 Meddelande skickat!')">Meddelande</button>
+                        <button class="more-btn" onclick="showToast('⚙️ Mer alternativ')">⋯</button>
                     </div>
                 </div>
-                <div class="map-widget" onclick="openFullMap()">
-                    <div class="map-preview">
-                        <div class="map-preview-content">
-                            <div class="user-location-marker">📍</div>
-                            <div class="location-info">
-                                <div class="location-name">Din plats</div>
-                                <div class="location-address">Stockholm, Sverige</div>
-                                <div style="font-size:8px;color:var(--accent);">Uppdaterad nyss</div>
-                            </div>
-                            <div class="expand-map">🗺️</div>
+
+                <!-- UNIQUE PROFILE FEATURES -->
+                <div class="unique-feature">
+                    <div class="feature-header">
+                        <div class="feature-icon">🏆</div>
+                        <div class="feature-title">Veckans topp 1% creator</div>
+                    </div>
+                    <div class="feature-content">Du är bland de 1% mest engagerade skaparna denna vecka! 🔥</div>
+                </div>
+
+                <div class="unique-feature">
+                    <div class="feature-header">
+                        <div class="feature-icon">🎯</div>
+                        <div class="feature-title">Pågående utmaning</div>
+                    </div>
+                    <div class="feature-content">Lägg upp 5 inlägg denna vecka för att låsa upp "Content King" badge! (3/5 klar)</div>
+                </div>
+
+                <div class="profile-tabs">
+                    <div class="profile-tab active" data-tab="posts">📷 Inlägg</div>
+                    <div class="profile-tab" data-tab="pet">🐉 Pet</div>
+                    <div class="profile-tab" data-tab="friends">👥 Vänner</div>
+                    <div class="profile-tab" data-tab="badges">🏆 Badges</div>
+                </div>
+
+                <div class="tab-content active" id="tab-posts">
+                    <div class="posts-grid" id="postsGrid"></div>
+                </div>
+
+                <div class="tab-content" id="tab-pet">
+                    <div class="unique-feature">
+                        <div class="feature-header">
+                            <div class="feature-icon">🐉</div>
+                            <div class="feature-title">Eldraken - Level 8</div>
                         </div>
+                        <div class="feature-content">🔥 Fire Breath | 🪽 Fly | ⚡ Lightning Strike</div>
+                        <div style="height:4px; background:var(--bg-card); border-radius:2px; margin-top:8px;"><div style="width:60%; height:100%; background:var(--accent); border-radius:2px;"></div></div>
+                        <div class="feature-content" style="margin-top:6px;">60/100 XP till nästa level</div>
                     </div>
-                </div>
-                <div class="abilities-grid" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;">
-                    <div class="badge" style="background:var(--bg-elevated);padding:6px 12px;border-radius:30px;">🔥 Fire Breath</div>
-                    <div class="badge" style="background:var(--bg-elevated);padding:6px 12px;border-radius:30px;">🪽 Fly</div>
-                    <div class="badge" style="background:var(--bg-elevated);padding:6px 12px;border-radius:30px;">⚡ Lightning Strike</div>
-                </div>
-            </div>
-
-            <!-- TAB: FRIENDS -->
-            <div class="tab-content" id="tab-friends">
-                <div class="friends-grid" id="friendsGrid"></div>
-                <button class="follow-btn" style="margin-top:8px;" onclick="showToast('👥 Hitta vänner')">🔍 Hitta vänner</button>
-            </div>
-
-            <!-- TAB: ADS (Marketplace) -->
-            <div class="tab-content" id="tab-ads">
-                <div id="adsList"></div>
-                <button class="follow-btn" style="margin-top:8px;" onclick="createAd()">➕ Skapa annons</button>
-            </div>
-
-            <!-- TAB: ACTIVITY -->
-            <div class="tab-content" id="tab-activity">
-                <div id="activityList"></div>
-            </div>
-        </div>
-
-        <!-- MAP WORLD -->
-        <div class="world" id="world-map">
-            <div class="map-widget" style="margin-bottom:0;" onclick="openFullMap()">
-                <div class="map-preview" style="height:200px;">
-                    <div class="map-preview-content">
-                        <div class="user-location-marker">📍</div>
-                        <div class="location-info">
-                            <div class="location-name">Din plats</div>
-                            <div class="location-address">Stockholm, Sverige</div>
-                            <div style="font-size:8px;color:var(--accent);">Uppdaterad nyss</div>
+                    <div class="unique-feature">
+                        <div class="feature-header">
+                            <div class="feature-icon">📍</div>
+                            <div class="feature-title">Din plats</div>
                         </div>
-                        <div class="expand-map">🗺️</div>
+                        <div class="feature-content">Stockholm, Sverige · Senast aktiv för 5 min sedan</div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="tab-friends">
+                    <div class="friends-grid" id="friendsGrid"></div>
+                    <button class="follow-btn" style="margin-top:8px;" onclick="showToast('👥 Hitta vänner')">🔍 Hitta vänner</button>
+                </div>
+
+                <div class="tab-content" id="tab-badges">
+                    <div style="display:flex; flex-wrap:wrap; gap:8px;">
+                        <div class="badge" style="background:var(--bg-elevated);padding:8px 12px;border-radius:30px;display:flex;align-items:center;gap:6px;">🏆 Early Bird</div>
+                        <div class="badge" style="background:var(--bg-elevated);padding:8px 12px;border-radius:30px;display:flex;align-items:center;gap:6px;">🔥 Streak 13</div>
+                        <div class="badge" style="background:var(--bg-elevated);padding:8px 12px;border-radius:30px;display:flex;align-items:center;gap:6px;">🎯 Bounty Hunter</div>
+                        <div class="badge" style="background:var(--bg-elevated);padding:8px 12px;border-radius:30px;display:flex;align-items:center;gap:6px;">💎 Legendary</div>
                     </div>
                 </div>
             </div>
-            <div id="nearbyFriends"></div>
         </div>
 
-        <!-- SHOP WORLD -->
-        <div class="world" id="world-shop">
+        <!-- SHOP VIEW -->
+        <div id="shopView" style="display:none; padding:12px; overflow-y:auto; height:100%;">
             <div class="search-bar" style="display:flex;gap:6px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:30px;padding:6px 12px;margin-bottom:12px;">
                 <span>🔍</span>
                 <input id="shopSearch" placeholder="Sök produkter..." style="flex:1;background:none;border:none;outline:none;color:var(--text);font-size:11px;">
@@ -713,27 +679,10 @@
 
     <!-- BOTTOM NAV -->
     <div class="bottom-nav">
-        <button class="nav-item" data-world="feed"><div class="nav-icon">🔥</div><div class="nav-label">Flöde</div></button>
-        <button class="nav-item active" data-world="profile"><div class="nav-icon">👤</div><div class="nav-label">Profil</div></button>
-        <button class="nav-item" data-world="map"><div class="nav-icon">🗺️</div><div class="nav-label">Karta</div></button>
+        <button class="nav-item active" data-tab="feed"><div class="nav-icon">🔥</div><div class="nav-label">Flöde</div></button>
+        <button class="nav-item" data-tab="profile"><div class="nav-icon">👤</div><div class="nav-label">Profil</div></button>
         <button class="nav-cam-btn" id="cameraBtn"><div class="nav-camera">📸</div><div class="nav-label" style="font-size:8px;margin-top:3px;">Nytt</div></button>
-        <button class="nav-item" data-world="shop"><div class="nav-icon">🛍️</div><div class="nav-label">Shop</div></button>
-    </div>
-</div>
-
-<!-- FULLSCREEN MAP MODAL -->
-<div class="fullscreen-modal" id="fullMapModal">
-    <div class="modal-header">
-        <span style="font-weight:600;">📍 Din plats</span>
-        <button onclick="closeFullMap()" style="background:none;border:none;color:var(--text);font-size:20px;">✕</button>
-    </div>
-    <div class="full-map">
-        <div class="full-map-content">
-            <div class="full-map-marker">📍</div>
-            <div style="font-size:16px;font-weight:600;">Stockholm, Sverige</div>
-            <div style="font-size:10px;color:var(--text-muted);margin-top:4px;">Lat: 59.3293° N, Lon: 18.0686° E</div>
-            <button class="follow-btn" style="margin-top:20px;width:auto;padding:8px 24px;" onclick="showToast('📍 Plats delad!')">Dela plats</button>
-        </div>
+        <button class="nav-item" data-tab="shop"><div class="nav-icon">🛍️</div><div class="nav-label">Shop</div></button>
     </div>
 </div>
 
@@ -756,41 +705,42 @@
 <div class="toast" id="toast"></div>
 
 <script>
-// ============ STATE ==========
-let STATE = { level: 8, coins: 3475, streak: 13, energy: 100, totalEarned: 1250, following: false, followers: 1200, followingCount: 342 };
-let feedPosts = [
-    { id: 'p1', user: 'Ella', avatar: '👩‍🎤', pet: '🐉', caption: 'Check out my new dragon skin! 🔥', likes: 47, time: '15 min', url: 'https://picsum.photos/400/500?random=1' },
-    { id: 'p2', user: 'Max', avatar: '🧑‍🚀', pet: '🐺', caption: 'Level 10! Finally! 🎉', likes: 132, time: '1 tim', url: 'https://picsum.photos/400/500?random=2' }
+// ============ DATA ==========
+let STATE = { level: 8, coins: 3475, streak: 13, energy: 100, following: false, followers: 1200, followingCount: 342 };
+
+// Posts with comments
+let posts = [
+    { id: 'p1', user: 'Ella', avatar: '👩‍🎤', pet: '🐉', caption: 'Köpte Fire Wings till min drake! 🔥 Nu kan den flyga!', likes: 47, time: '15 min', url: 'https://picsum.photos/400/500?random=1', comments: [
+        { id: 'c1', user: 'Stella', avatar: '🌟', text: 'Så cool! 🔥', time: '10 min', likes: 3, replies: [] },
+        { id: 'c2', user: 'Max', avatar: '🧑‍🚀', text: 'Vart köpte du?', time: '12 min', likes: 1, replies: [] }
+    ] },
+    { id: 'p2', user: 'Max', avatar: '🧑‍🚀', pet: '🐺', caption: 'Level 10! Min varg är nu en legend! 🎉', likes: 132, time: '1 tim', url: 'https://picsum.photos/400/500?random=2', comments: [
+        { id: 'c3', user: 'Ella', avatar: '👩‍🎤', text: 'Grattis!! 🎉', time: '45 min', likes: 5, replies: [] }
+    ] },
+    { id: 'p3', user: 'Clara', avatar: '👩‍💻', pet: '🦊', caption: 'Hittade en legendary skin idag! ✨', likes: 89, time: '3 tim', url: 'https://picsum.photos/400/500?random=3', comments: [] }
 ];
+
 let shopItems = [
     { id: 's1', emoji: '🔥', name: 'Fire Wings', price: 199 },
     { id: 's2', emoji: '✨', name: 'Legendary Glow', price: 499 },
     { id: 's3', emoji: '⚡', name: 'XP Boost', price: 99 },
     { id: 's4', emoji: '👑', name: 'Royal Crown', price: 799 }
 ];
+
 let friends = [
-    { name: 'Ella', avatar: '👩‍🎤' },
-    { name: 'Max', avatar: '🧑‍🚀' },
-    { name: 'Clara', avatar: '👩‍💻' },
-    { name: 'Leo', avatar: '🧑‍🎤' },
-    { name: 'Stella', avatar: '🌟' },
-    { name: 'Wendela', avatar: '😂' }
-];
-let ads = [
-    { id: 'a1', emoji: '🎮', title: 'Säljer PS5', price: '5000 SEK', status: 'Aktiv' },
-    { id: 'a2', emoji: '👟', title: 'Nike Air Max', price: '800 SEK', status: 'Såld' }
-];
-let activities = [
-    { icon: '🐉', text: 'Level up! Nu level 8', time: '2 tim sedan' },
-    { icon: '💰', text: 'Tjänade 500 SEK på uppdrag', time: '1 dag sedan' },
-    { icon: '🛍️', text: 'Köpte Fire Wings i shoppen', time: '2 dagar sedan' }
-];
-let stories = [
-    { name: 'Din story', ava: '📸', seen: false },
-    { name: 'Stella', ava: '🌟', seen: false },
-    { name: 'Max', ava: '🧑‍🚀', seen: true }
+    { name: 'Ella', avatar: '👩‍🎤' }, { name: 'Max', avatar: '🧑‍🚀' }, { name: 'Clara', avatar: '👩‍💻' },
+    { name: 'Leo', avatar: '🧑‍🎤' }, { name: 'Stella', avatar: '🌟' }, { name: 'Wendela', avatar: '😂' }
 ];
 
+let stories = [
+    { name: 'Din story', ava: '📸', seen: false }, { name: 'Stella', ava: '🌟', seen: false },
+    { name: 'Max', ava: '🧑‍🚀', seen: true }, { name: 'Clara', ava: '👩‍💻', seen: false }
+];
+
+let currentTab = 'feed';
+let commentInputs = {};
+
+// ============ HELPERS ==========
 function $(id) { return document.getElementById(id); }
 function showToast(msg) { const t = $('toast'); t.textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2000); }
 
@@ -801,7 +751,7 @@ function updateHUD() {
     $('energy').textContent = STATE.energy;
     $('profileFollowers').textContent = STATE.followers >= 1000 ? (STATE.followers/1000).toFixed(1)+'K' : STATE.followers;
     $('profileFollowing').textContent = STATE.followingCount;
-    $('profilePosts').textContent = feedPosts.length;
+    $('profilePosts').textContent = posts.length;
     const followBtn = $('followBtn');
     if (followBtn) followBtn.textContent = STATE.following ? 'Följer' : 'Följ';
 }
@@ -813,54 +763,170 @@ function toggleFollow() {
     updateHUD();
 }
 
+// ============ RENDER FEED WITH COMMENTS ==========
+function renderFeed() {
+    let html = '';
+    for (let post of posts) {
+        html += `
+            <div class="post-card">
+                <div class="post-header">
+                    <div class="post-avatar" onclick="viewProfile('${post.user}')">${post.avatar}</div>
+                    <div class="post-user">
+                        <div class="post-name" onclick="viewProfile('${post.user}')">${post.user}</div>
+                        <div class="post-time">${post.time} · ${post.pet}</div>
+                    </div>
+                    <div class="post-menu">⋯</div>
+                </div>
+                <img class="post-image" src="${post.url}" onclick="showToast('📸 Bild')">
+                <div class="post-caption">${post.caption}</div>
+                <div class="post-actions">
+                    <button class="action-btn ${post.userLiked ? 'active' : ''}" onclick="likePost('${post.id}')">❤️ <span id="likes-${post.id}">${post.likes}</span></button>
+                    <button class="action-btn" onclick="toggleComments('${post.id}')">💬 <span id="comments-count-${post.id}">${post.comments.length}</span></button>
+                    <button class="action-btn" onclick="showToast('📤 Delat!')">📤 Dela</button>
+                </div>
+                <div class="comments-section" id="comments-${post.id}" style="display:none;">
+                    <div id="comments-list-${post.id}">
+                        ${renderComments(post.comments, post.id)}
+                    </div>
+                    <div class="add-comment">
+                        <input type="text" class="comment-input" id="comment-input-${post.id}" placeholder="Skriv en kommentar...">
+                        <button class="comment-submit" onclick="addComment('${post.id}')">Skicka</button>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+    $('feedView').innerHTML = html;
+}
+
+function renderComments(comments, postId) {
+    if (!comments.length) return '<div style="color:var(--text-muted); text-align:center; padding:8px;">Inga kommentarer än</div>';
+    return comments.map(c => `
+        <div class="comment">
+            <div class="comment-avatar" onclick="viewProfile('${c.user}')">${c.avatar}</div>
+            <div class="comment-content">
+                <div><span class="comment-user" onclick="viewProfile('${c.user}')">${c.user}</span><span class="comment-text">${c.text}</span></div>
+                <div class="comment-time">${c.time}</div>
+                <div class="comment-actions">
+                    <span class="comment-like" onclick="likeComment('${postId}', '${c.id}')">❤️ ${c.likes}</span>
+                    <span class="comment-reply" onclick="showReplyInput('${postId}', '${c.id}', '${c.user}')">Svara</span>
+                </div>
+                ${c.replies && c.replies.length ? `<div class="view-replies" onclick="toggleReplies('${postId}', '${c.id}')">Visa ${c.replies.length} svar</div>` : ''}
+                <div id="replies-${postId}-${c.id}" style="display:none; margin-top:8px; margin-left:20px;">
+                    ${c.replies ? c.replies.map(r => `
+                        <div class="comment" style="margin-bottom:6px;">
+                            <div class="comment-avatar" style="width:20px;height:20px;font-size:10px;">${r.avatar}</div>
+                            <div class="comment-content">
+                                <div><span class="comment-user">${r.user}</span><span class="comment-text">${r.text}</span></div>
+                                <div class="comment-time">${r.time}</div>
+                            </div>
+                        </div>
+                    `).join('') : ''}
+                    <div class="add-comment" style="margin-top:6px;">
+                        <input type="text" class="comment-input" id="reply-input-${postId}-${c.id}" placeholder="Skriv ett svar..." style="font-size:9px;">
+                        <button class="comment-submit" onclick="addReply('${postId}', '${c.id}')" style="font-size:9px;">Svara</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function toggleComments(postId) { 
+    const el = $(`comments-${postId}`);
+    if (el.style.display === 'none') el.style.display = 'block';
+    else el.style.display = 'none';
+}
+
+function likePost(postId) {
+    const post = posts.find(p => p.id === postId);
+    if (post) { post.likes++; $(`likes-${postId}`).textContent = post.likes; showToast('❤️ Gillade!'); }
+}
+
+function addComment(postId) {
+    const input = $(`comment-input-${postId}`);
+    const text = input.value.trim();
+    if (!text) return;
+    const post = posts.find(p => p.id === postId);
+    if (post) {
+        post.comments.unshift({
+            id: 'c' + Date.now(), user: 'Du', avatar: '👤', text: text, time: 'just nu', likes: 0, replies: []
+        });
+        input.value = '';
+        renderFeed();
+        $(`comments-${postId}`).style.display = 'block';
+        showToast('💬 Kommentar tillagd!');
+    }
+}
+
+function likeComment(postId, commentId) {
+    const post = posts.find(p => p.id === postId);
+    const comment = post.comments.find(c => c.id === commentId);
+    if (comment) { comment.likes++; showToast('❤️ Gillade kommentar!'); renderFeed(); }
+}
+
+function addReply(postId, commentId) {
+    const input = $(`reply-input-${postId}-${commentId}`);
+    const text = input.value.trim();
+    if (!text) return;
+    const post = posts.find(p => p.id === postId);
+    const comment = post.comments.find(c => c.id === commentId);
+    if (comment) {
+        comment.replies = comment.replies || [];
+        comment.replies.unshift({ user: 'Du', avatar: '👤', text: text, time: 'just nu' });
+        input.value = '';
+        renderFeed();
+        $(`replies-${postId}-${commentId}`).style.display = 'block';
+        showToast('💬 Svar tillagt!');
+    }
+}
+
+function showReplyInput(postId, commentId, userName) {
+    const repliesDiv = $(`replies-${postId}-${commentId}`);
+    if (repliesDiv.style.display === 'none') repliesDiv.style.display = 'block';
+    else repliesDiv.style.display = 'none';
+    $(`reply-input-${postId}-${commentId}`)?.focus();
+}
+
+function toggleReplies(postId, commentId) {
+    const el = $(`replies-${postId}-${commentId}`);
+    el.style.display = el.style.display === 'none' ? 'block' : 'none';
+}
+
+// ============ RENDER PROFILE ==========
+function renderPostsGrid() {
+    $('postsGrid').innerHTML = posts.map(p => `<div class="post-grid-item" onclick="showToast('📷 Inlägg')"><img src="${p.url}" style="width:100%;height:100%;object-fit:cover;"></div>`).join('');
+}
+function renderFriends() {
+    $('friendsGrid').innerHTML = friends.map(f => `<div class="friend-card"><div class="friend-avatar">${f.avatar}</div><div class="friend-name">${f.name}</div></div>`).join('');
+}
+function renderShop() {
+    $('shopGrid').innerHTML = shopItems.map(p => `<div class="product-card" style="background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-lg);padding:10px;text-align:center;cursor:pointer;" onclick="buyItem('${p.id}')"><div class="product-emoji" style="font-size:24px;">${p.emoji}</div><div class="product-name" style="font-size:10px;font-weight:500;">${p.name}</div><div class="product-price" style="font-size:9px;color:var(--accent);">${p.price}💰</div></div>`).join('');
+}
+function buyItem(id) { const p = shopItems.find(x => x.id === id); if (STATE.coins < p.price) { showToast(`❌ Behöver ${p.price - STATE.coins} mer!`); return; } STATE.coins -= p.price; updateHUD(); showToast(`✅ Köpte ${p.name}!`); }
+
+// ============ STORIES ==========
 function renderStories() {
     $('storiesRow').innerHTML = stories.map(s => `<div class="story-item" onclick="viewStory('${s.name}')"><div class="story-ring ${s.seen ? 'seen' : ''}"><div class="story-inner">${s.ava}</div></div><div class="story-name">${s.name}</div></div>`).join('');
 }
 function viewStory(name) { const s = stories.find(x => x.name === name); if (s) s.seen = true; renderStories(); showToast(`👁️ ${name}s story`); }
 
-function renderFeed() {
-    $('feedList').innerHTML = feedPosts.map(p => `
-        <div class="post-card" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;">
-            <div class="post-header" style="padding:10px;display:flex;align-items:center;gap:8px;">
-                <div class="post-avatar" style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-pink));display:flex;align-items:center;justify-content:center;font-size:18px;">${p.avatar}</div>
-                <div><div class="post-name" style="font-size:12px;font-weight:600;">${p.user}</div><div class="post-time" style="font-size:8px;color:var(--text-muted);">${p.time}</div></div>
-                <div>${p.pet}</div>
-            </div>
-            <img class="post-media" src="${p.url}" style="width:100%;max-height:300px;object-fit:cover;" onclick="showToast('📸 Bild visad')">
-            <div class="post-content" style="padding:0 10px 8px;font-size:11px;color:var(--text-secondary);">${p.caption}</div>
-            <div class="post-actions" style="padding:8px 10px;display:flex;gap:16px;border-top:1px solid var(--border-light);">
-                <button class="action-btn" onclick="likePost('${p.id}')" style="background:none;border:none;display:flex;align-items:center;gap:4px;color:var(--text-muted);font-size:10px;">❤️ <span id="likes-${p.id}">${p.likes}</span></button>
-                <button class="action-btn" onclick="showToast('📤 Delat!')">📤 Dela</button>
-            </div>
-        </div>
-    `).join('');
-}
-function likePost(id) { const p = feedPosts.find(x => x.id === id); if (p) { p.likes++; $(`likes-${id}`).textContent = p.likes; showToast('❤️ Gillade!'); } }
-
-function renderPostsGrid() {
-    $('postsGrid').innerHTML = feedPosts.map(p => `<div class="post-grid-item" onclick="showToast('📷 Inlägg')"><img src="${p.url}" style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius-md);"></div>`).join('');
+// ============ TAB SWITCHING ==========
+function switchTab(tab) {
+    currentTab = tab;
+    $('feedView').style.display = 'none';
+    $('profileView').style.display = 'none';
+    $('shopView').style.display = 'none';
+    if (tab === 'feed') $('feedView').style.display = 'flex';
+    if (tab === 'profile') { $('profileView').style.display = 'block'; renderPostsGrid(); renderFriends(); updateHUD(); }
+    if (tab === 'shop') { $('shopView').style.display = 'block'; renderShop(); }
+    
+    document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+    const activeBtn = document.querySelector(`.nav-item[data-tab="${tab}"]`);
+    if (activeBtn) activeBtn.classList.add('active');
 }
 
-function renderFriends() {
-    $('friendsGrid').innerHTML = friends.map(f => `<div class="friend-card"><div class="friend-avatar">${f.avatar}</div><div class="friend-name">${f.name}</div></div>`).join('');
-}
-
-function renderAds() {
-    $('adsList').innerHTML = ads.map(a => `<div class="ad-card"><div class="ad-emoji">${a.emoji}</div><div class="ad-info"><div class="ad-title">${a.title}</div><div class="ad-price">💰 ${a.price}</div><div class="ad-status">${a.status}</div></div></div>`).join('');
-}
-
-function renderActivity() {
-    $('activityList').innerHTML = activities.map(a => `<div class="activity-item"><div class="activity-icon">${a.icon}</div><div class="activity-text">${a.text}</div><div class="activity-time">${a.time}</div></div>`).join('');
-}
-
-function renderShop() {
-    $('shopGrid').innerHTML = shopItems.map(p => `<div class="product-card" onclick="buyItem('${p.id}')" style="background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-lg);padding:10px;text-align:center;cursor:pointer;"><div class="product-emoji" style="font-size:24px;">${p.emoji}</div><div class="product-name" style="font-size:10px;font-weight:500;">${p.name}</div><div class="product-price" style="font-size:9px;color:var(--accent);">${p.price}💰</div></div>`).join('');
-}
-function buyItem(id) { const p = shopItems.find(x => x.id === id); if (STATE.coins < p.price) { showToast(`❌ Behöver ${p.price - STATE.coins} mer!`); return; } STATE.coins -= p.price; updateHUD(); showToast(`✅ Köpte ${p.name}!`); }
-
-function createAd() { const title = prompt('Annonsrubrik:'); if (!title) return; const price = prompt('Pris:'); ads.unshift({ id: 'a' + Date.now(), emoji: '📦', title, price, status: 'Aktiv' }); renderAds(); showToast('✅ Annons skapad!'); }
-
-// Tab switching
+// Profile tabs
 document.querySelectorAll('.profile-tab').forEach(tab => {
     tab.addEventListener('click', () => {
         document.querySelectorAll('.profile-tab').forEach(t => t.classList.remove('active'));
@@ -870,11 +936,7 @@ document.querySelectorAll('.profile-tab').forEach(tab => {
     });
 });
 
-// Map functions
-function openFullMap() { $('fullMapModal').classList.add('active'); }
-function closeFullMap() { $('fullMapModal').classList.remove('active'); }
-
-// AI Chat
+// ============ AI CHAT ==========
 const aiWindow = $('aiChatWindow');
 function openAIChat() { aiWindow.classList.add('open'); }
 $('aiChatBack')?.addEventListener('click', () => aiWindow.classList.remove('open'));
@@ -888,38 +950,22 @@ function sendAI() {
     addMsg(msg, 'user');
     const loadEl = addMsg('✦ Tänker...', 'ai loading');
     setTimeout(() => {
-        const replies = [`💡 Du har tjänat ${STATE.totalEarned} SEK på uppdrag!`, `⚔️ Din pet är level ${STATE.level}!`, `🔥 ${STATE.streak} dagars streak! Fortsätt så!`, `🛍️ Kolla Shopping Plaza för nya skins!`];
+        const replies = [`💡 Du har tjänat ${STATE.totalEarned || 0} SEK på uppdrag!`, `⚔️ Din pet är level ${STATE.level}!`, `🔥 ${STATE.streak} dagars streak! Fortsätt så!`, `🛍️ Kolla shoppen för nya skins!`];
         loadEl.textContent = replies[Math.floor(Math.random() * replies.length)];
         loadEl.classList.remove('loading');
     }, 800);
 }
 
-// World switching
-function switchWorld(world) {
-    document.querySelectorAll('.world').forEach(w => w.classList.remove('active'));
-    document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
-    $(`world-${world}`).classList.add('active');
-    const btn = document.querySelector(`.nav-item[data-world="${world}"]`);
-    if (btn) btn.classList.add('active');
-    if (world === 'feed') renderFeed();
-    if (world === 'profile') { renderPostsGrid(); renderFriends(); renderAds(); renderActivity(); updateHUD(); }
-    if (world === 'shop') renderShop();
-}
-document.querySelectorAll('.nav-item[data-world]').forEach(btn => btn.addEventListener('click', () => switchWorld(btn.dataset.world)));
+function viewProfile(name) { switchTab('profile'); showToast(`👤 Profil: ${name}`); }
 
-// Camera
+// ============ INIT ==========
 $('cameraBtn').addEventListener('click', () => showToast('📸 Kamera kommer snart!'));
-
-// Menu
 $('menuBtn').addEventListener('click', () => showToast('☰ Meny kommer snart!'));
+document.querySelectorAll('.nav-item[data-tab]').forEach(btn => btn.addEventListener('click', () => switchTab(btn.dataset.tab)));
 
-// Daily bonus check
-setInterval(() => { if (STATE.energy < 100) { STATE.energy = Math.min(100, STATE.energy + 5); updateHUD(); } }, 60000);
-
-// Init
 renderStories();
 renderFeed();
-switchWorld('profile');
+switchTab('feed');
 </script>
 </body>
 </html>
