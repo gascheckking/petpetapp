@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>PETPET — Ultra Platform</title>
+    <title>PETPET — Perfekt Profil</title>
     <style>
-        /* ============ SPAWNENGINE PREMIUM DESIGN ============ */
         @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap');
 
         :root {
@@ -43,7 +42,6 @@
             line-height: 1.4;
         }
 
-        /* Premium Background */
         .bg-premium {
             position: fixed;
             inset: 0;
@@ -82,10 +80,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .stats-group {
-            display: flex;
-            gap: 6px;
-        }
+        .stats-group { display: flex; gap: 6px; }
         .stat-pill {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -108,7 +103,6 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            font-size: 14px;
         }
 
         /* ============ QUICK ACTIONS ============ */
@@ -177,7 +171,7 @@
             justify-content: center;
             font-size: 20px;
         }
-        .story-name { font-size: 8px; color: var(--text-secondary); max-width: 48px; text-align: center; overflow: hidden; text-overflow: ellipsis; }
+        .story-name { font-size: 8px; color: var(--text-secondary); max-width: 48px; text-align: center; }
 
         /* ============ MAIN CONTENT ============ */
         .main-content {
@@ -197,336 +191,316 @@
         }
         .world.active { display: flex; }
 
-        /* ============ VIDEO FEED (TikTok/Instagram) ============ */
-        .video-feed {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-        .video-post {
-            background: var(--bg-card);
+        /* ============ PERFECT PROFILE PAGE ============ */
+        .profile-cover {
+            background: linear-gradient(135deg, var(--accent-dim), var(--bg-elevated));
             border-radius: var(--radius-xl);
-            overflow: hidden;
-            border: 1px solid var(--border);
-        }
-        .video-header {
-            padding: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .video-avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent), var(--accent-pink));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            cursor: pointer;
-        }
-        .video-info { flex: 1; }
-        .video-username { font-size: 12px; font-weight: 600; cursor: pointer; }
-        .video-time { font-size: 8px; color: var(--text-muted); }
-        .video-container {
-            position: relative;
-            width: 100%;
-            background: #000;
-            min-height: 300px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .video-preview {
-            width: 100%;
-            max-height: 400px;
-            object-fit: cover;
-            cursor: pointer;
-        }
-        .video-actions {
-            padding: 10px;
-            display: flex;
-            gap: 16px;
-            border-top: 1px solid var(--border-light);
-        }
-        .video-caption {
-            padding: 0 10px 10px;
-            font-size: 11px;
-            color: var(--text-secondary);
-        }
-        .upload-btn {
-            background: var(--accent-dim);
-            border: 1px solid rgba(57,255,20,0.2);
-            padding: 8px;
-            border-radius: var(--radius-lg);
-            text-align: center;
-            cursor: pointer;
-            margin-bottom: 12px;
-        }
-
-        /* ============ SHOPPING PLAZA (Complete E-commerce) ============ */
-        .category-row {
-            display: flex;
-            gap: 8px;
-            overflow-x: auto;
-            padding-bottom: 4px;
-        }
-        .category-chip {
-            background: var(--bg-elevated);
-            border: 1px solid var(--border);
-            border-radius: 30px;
-            padding: 4px 12px;
-            font-size: 10px;
-            white-space: nowrap;
-            cursor: pointer;
-        }
-        .category-chip.active {
-            background: var(--accent-dim);
-            border-color: var(--accent);
-            color: var(--accent);
-        }
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
-        }
-        .product-card {
-            background: var(--bg-elevated);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            padding: 10px;
-            text-align: center;
-            cursor: pointer;
-        }
-        .product-card:active { transform: scale(0.97); }
-        .product-emoji { font-size: 28px; margin-bottom: 4px; }
-        .product-name { font-size: 10px; font-weight: 500; }
-        .product-price { font-size: 9px; color: var(--accent); margin-top: 3px; }
-
-        /* ============ SERIOUS BOUNTIES (Fiverr-style) ============ */
-        .bounty-card-serious {
-            background: linear-gradient(135deg, var(--bg-elevated), var(--bg-card));
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            padding: 12px;
-            margin-bottom: 8px;
-            cursor: pointer;
-        }
-        .bounty-header-serious {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 6px;
-        }
-        .bounty-title-serious { font-size: 12px; font-weight: 700; }
-        .bounty-price-serious { font-size: 14px; font-weight: 700; color: var(--gold); }
-        .bounty-company-serious {
-            font-size: 8px;
-            color: var(--accent-blue);
-            margin-bottom: 4px;
-        }
-        .bounty-desc-serious { font-size: 10px; color: var(--text-secondary); margin-bottom: 8px; }
-        .bounty-footer-serious {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 8px;
-            color: var(--text-muted);
-        }
-        .bounty-stats {
-            display: flex;
-            gap: 12px;
-        }
-        .earnings-card {
-            background: linear-gradient(135deg, rgba(57,255,20,0.08), rgba(0,240,255,0.04));
-            border: 1px solid rgba(57,255,20,0.15);
-            border-radius: var(--radius-lg);
-            padding: 12px;
-            text-align: center;
-            margin-bottom: 12px;
-        }
-        .earnings-amount {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--gold);
-        }
-
-        /* ============ MAP ============ */
-        .map-container {
-            background: var(--bg-elevated);
-            border-radius: var(--radius-lg);
-            padding: 12px;
-        }
-        .map-canvas {
-            background: repeating-linear-gradient(45deg, var(--bg-card) 0px, var(--bg-card) 20px, var(--bg-elevated) 20px, var(--bg-elevated) 40px);
-            border-radius: var(--radius-md);
-            min-height: 200px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 16px;
             padding: 16px;
+            position: relative;
         }
-        .map-pet {
-            text-align: center;
-            cursor: pointer;
-            padding: 8px;
-            background: var(--bg-card);
-            border-radius: var(--radius-lg);
-            min-width: 70px;
-        }
-        .map-pet-emoji { font-size: 28px; }
-        .map-pet-name { font-size: 9px; font-weight: 500; margin-top: 4px; }
-        .map-pet-distance { font-size: 8px; color: var(--accent); }
-
-        /* ============ PACTS ============ */
-        .pact-card {
-            background: var(--bg-elevated);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            padding: 10px;
-            margin-bottom: 8px;
-        }
-        .pact-header {
+        .profile-avatar-section {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 6px;
-        }
-        .pact-name { font-size: 12px; font-weight: 600; }
-        .pact-streak { font-size: 10px; color: var(--accent); }
-        .pact-progress {
-            height: 3px;
-            background: var(--bg-card);
-            border-radius: 2px;
-            overflow: hidden;
-            margin: 6px 0;
-        }
-        .pact-fill {
-            height: 100%;
-            background: var(--accent);
-            width: 0%;
-        }
-
-        /* ============ PROFILE ============ */
-        .profile-header {
-            display: flex;
-            gap: 12px;
-            align-items: center;
+            align-items: flex-start;
             margin-bottom: 12px;
         }
-        .profile-avatar-lg {
-            width: 56px;
-            height: 56px;
+        .profile-avatar-large {
+            width: 72px;
+            height: 72px;
             border-radius: 50%;
             background: linear-gradient(135deg, var(--accent), var(--accent-pink));
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 28px;
+            font-size: 36px;
+            border: 3px solid var(--bg-card);
         }
-        .profile-name-lg { font-size: 15px; font-weight: 700; }
-        .profile-stats {
-            display: flex;
-            gap: 20px;
-            margin: 12px 0;
-            padding-bottom: 12px;
-            border-bottom: 1px solid var(--border-light);
-        }
-        .badges-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 8px;
-        }
-        .badge {
+        .profile-edit-btn {
             background: var(--bg-elevated);
             border: 1px solid var(--border);
             border-radius: 30px;
             padding: 4px 10px;
             font-size: 9px;
+            cursor: pointer;
+        }
+        .profile-name-row {
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+        .profile-name-lg { font-size: 18px; font-weight: 700; }
+        .profile-badge {
+            background: var(--gold);
+            color: #000;
+            padding: 2px 8px;
+            border-radius: 30px;
+            font-size: 8px;
+            font-weight: 600;
+        }
+        .profile-handle { font-size: 10px; color: var(--text-muted); margin-bottom: 8px; }
+        .profile-bio { font-size: 11px; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.4; }
+        
+        /* Profile Stats Row */
+        .profile-stats-row {
+            display: flex;
+            gap: 16px;
+            padding: 12px 0;
+            border-top: 1px solid var(--border-light);
+            border-bottom: 1px solid var(--border-light);
+            margin-bottom: 12px;
+        }
+        .stat-item { text-align: center; flex: 1; }
+        .stat-number { font-size: 16px; font-weight: 700; color: var(--accent); }
+        .stat-label { font-size: 8px; color: var(--text-muted); text-transform: uppercase; }
+
+        /* Action Buttons */
+        .profile-actions {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .follow-btn {
+            flex: 1;
+            background: var(--accent);
+            border: none;
+            border-radius: 30px;
+            padding: 8px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #000;
+            cursor: pointer;
+        }
+        .message-btn {
+            flex: 1;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            padding: 8px;
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text);
+            cursor: pointer;
+        }
+        .more-btn {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            padding: 8px 12px;
+            cursor: pointer;
         }
 
-        /* ============ PET PAGE ============ */
-        .pet-hero {
-            text-align: center;
-            padding: 16px;
-            background: linear-gradient(135deg, rgba(57,255,20,0.04), rgba(0,240,255,0.02));
-            border-radius: var(--radius-xl);
+        /* Tabs under profile */
+        .profile-tabs {
+            display: flex;
+            gap: 2px;
+            background: var(--bg-elevated);
+            border-radius: var(--radius-lg);
+            padding: 4px;
+            margin-bottom: 16px;
         }
-        .pet-avatar-large {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 10px;
+        .profile-tab {
+            flex: 1;
+            text-align: center;
+            padding: 8px;
+            font-size: 10px;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: var(--radius-md);
+            color: var(--text-muted);
+        }
+        .profile-tab.active {
+            background: var(--bg-card);
+            color: var(--accent);
+        }
+
+        /* Tab Content */
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* Map Widget */
+        .map-widget {
+            background: var(--bg-elevated);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            margin-bottom: 16px;
+            cursor: pointer;
+        }
+        .map-preview {
+            height: 120px;
+            background: repeating-linear-gradient(45deg, var(--bg-card) 0px, var(--bg-card) 20px, var(--bg-elevated) 20px, var(--bg-elevated) 40px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .map-preview-content {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+        }
+        .user-location-marker {
+            width: 40px;
+            height: 40px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+        .location-info { flex: 1; }
+        .location-name { font-size: 12px; font-weight: 600; }
+        .location-address { font-size: 9px; color: var(--text-muted); }
+        .expand-map { font-size: 20px; }
+
+        /* Pet Card in Profile */
+        .pet-card-mini {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .pet-avatar-mini {
+            width: 48px;
+            height: 48px;
             background: linear-gradient(135deg, var(--accent), var(--accent-pink));
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 44px;
+            font-size: 24px;
         }
-        .evolution-bar {
-            background: var(--bg-elevated);
-            border-radius: var(--radius-lg);
-            padding: 10px;
-            margin: 12px 0;
-        }
-        .evolution-progress {
-            height: 4px;
+        .pet-info-mini { flex: 1; }
+        .pet-name-mini { font-size: 13px; font-weight: 600; }
+        .pet-level-mini { font-size: 9px; color: var(--accent); }
+        .pet-exp-bar {
+            height: 3px;
             background: var(--bg-card);
             border-radius: 2px;
             overflow: hidden;
-            margin: 6px 0;
+            margin-top: 6px;
         }
-        .abilities-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-top: 12px;
+        .pet-exp-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--accent-blue));
+            width: 60%;
         }
 
-        /* ============ COMPARE ============ */
-        .compare-result {
-            background: var(--bg-elevated);
-            border-radius: var(--radius-lg);
-            padding: 10px;
+        /* Friends Grid */
+        .friends-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 16px;
         }
-        .price-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid var(--border-light);
-            font-size: 10px;
-        }
-        .best-price { color: var(--accent); font-weight: 600; }
-
-        /* ============ BUTTONS ============ */
-        .btn-primary {
-            background: linear-gradient(135deg, var(--accent), #00c853);
-            border: none;
-            border-radius: 40px;
-            padding: 8px;
-            font-weight: 600;
-            font-size: 11px;
-            color: #000;
-            cursor: pointer;
-            width: 100%;
-        }
-        .btn-secondary {
+        .friend-card {
             background: var(--bg-elevated);
             border: 1px solid var(--border);
-            border-radius: 40px;
-            padding: 6px;
-            font-weight: 500;
-            font-size: 10px;
-            color: var(--text);
+            border-radius: var(--radius-lg);
+            padding: 8px;
+            text-align: center;
+        }
+        .friend-avatar { font-size: 28px; margin-bottom: 4px; }
+        .friend-name { font-size: 9px; font-weight: 500; }
+
+        /* Activity Feed */
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .activity-icon { font-size: 16px; width: 28px; }
+        .activity-text { flex: 1; font-size: 10px; color: var(--text-secondary); }
+        .activity-time { font-size: 8px; color: var(--text-muted); }
+
+        /* My Ads (Marketplace) */
+        .ad-card {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 10px;
+            margin-bottom: 8px;
+            display: flex;
+            gap: 10px;
+        }
+        .ad-emoji { font-size: 32px; }
+        .ad-info { flex: 1; }
+        .ad-title { font-size: 11px; font-weight: 600; }
+        .ad-price { font-size: 10px; color: var(--accent); }
+        .ad-status { font-size: 8px; color: var(--text-muted); }
+
+        /* Posts Grid */
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4px;
+        }
+        .post-grid-item {
+            aspect-ratio: 1;
+            background: var(--bg-elevated);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
             cursor: pointer;
-            width: 100%;
         }
 
-        /* ============ BOTTOM NAV ============ */
+        /* Full Map Modal */
+        .fullscreen-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 300;
+            background: var(--bg);
+            display: none;
+            flex-direction: column;
+        }
+        .fullscreen-modal.active { display: flex; }
+        .modal-header {
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+        }
+        .full-map {
+            flex: 1;
+            background: repeating-linear-gradient(45deg, var(--bg-card) 0px, var(--bg-card) 30px, var(--bg-elevated) 30px, var(--bg-elevated) 60px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .full-map-content {
+            text-align: center;
+        }
+        .full-map-marker {
+            width: 60px;
+            height: 60px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            margin: 0 auto 16px;
+            animation: pulse 2s infinite;
+        }
+
+        /* Bottom Nav */
         .bottom-nav {
             background: rgba(15,15,18,0.95);
             backdrop-filter: blur(20px);
@@ -562,203 +536,6 @@
             box-shadow: 0 0 12px rgba(57,255,20,0.3);
         }
 
-        /* ============ MODALS ============ */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            z-index: 100;
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(12px);
-            display: flex;
-            align-items: flex-end;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.2s;
-        }
-        .modal-overlay.open { opacity: 1; pointer-events: all; }
-        .modal-sheet {
-            width: 100%;
-            max-width: 480px;
-            margin: 0 auto;
-            background: var(--bg-card);
-            border-radius: 24px 24px 0 0;
-            border: 1px solid var(--border);
-            padding: 16px;
-            transform: translateY(100%);
-            transition: transform 0.3s;
-        }
-        .modal-overlay.open .modal-sheet { transform: translateY(0); }
-        .modal-handle { width: 32px; height: 3px; background: var(--border); border-radius: 2px; margin: 0 auto 12px; }
-        .modal-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 6px;
-        }
-        .modal-item {
-            background: var(--bg-elevated);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-md);
-            padding: 10px;
-            text-align: center;
-            cursor: pointer;
-            font-size: 11px;
-            font-weight: 500;
-        }
-
-        /* ============ CAMERA/UPLOAD ============ */
-        .camera-overlay {
-            position: fixed;
-            inset: 0;
-            z-index: 100;
-            background: rgba(0,0,0,0.95);
-            backdrop-filter: blur(20px);
-            display: flex;
-            align-items: flex-end;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.2s;
-        }
-        .camera-overlay.open { opacity: 1; pointer-events: all; }
-        .camera-sheet {
-            width: 100%;
-            max-width: 480px;
-            margin: 0 auto;
-            background: var(--bg-card);
-            border-radius: 24px 24px 0 0;
-            border: 1px solid var(--border);
-            padding: 16px;
-            transform: translateY(100%);
-            transition: transform 0.3s;
-        }
-        .camera-overlay.open .camera-sheet { transform: translateY(0); }
-        .camera-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-        .camera-close {
-            background: var(--bg-elevated);
-            border: 1px solid var(--border);
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            cursor: pointer;
-        }
-        .upload-type {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-        .upload-type-btn {
-            flex: 1;
-            background: var(--bg-elevated);
-            border: 1px solid var(--border);
-            border-radius: 30px;
-            padding: 6px;
-            text-align: center;
-            cursor: pointer;
-            font-size: 10px;
-        }
-        .upload-type-btn.active {
-            background: var(--accent-dim);
-            border-color: var(--accent);
-            color: var(--accent);
-        }
-        .post-textarea {
-            width: 100%;
-            background: var(--bg-elevated);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-md);
-            padding: 10px;
-            color: var(--text);
-            font-size: 11px;
-            resize: none;
-            margin: 12px 0;
-        }
-        .post-preview {
-            width: 100%;
-            border-radius: var(--radius-md);
-            margin-bottom: 12px;
-            display: none;
-            max-height: 200px;
-            object-fit: cover;
-        }
-
-        /* ============ AI CHAT ============ */
-        .ai-chat-window {
-            position: fixed;
-            inset: 0;
-            z-index: 200;
-            background: var(--bg);
-            display: flex;
-            flex-direction: column;
-            transform: translateY(100%);
-            transition: transform 0.3s;
-        }
-        .ai-chat-window.open { transform: translateY(0); }
-        .ai-chat-header {
-            padding: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            border-bottom: 1px solid var(--border);
-        }
-        .ai-chat-back {
-            background: none;
-            border: none;
-            font-size: 20px;
-            color: var(--text);
-            cursor: pointer;
-        }
-        .ai-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        .msg {
-            max-width: 85%;
-            padding: 8px 12px;
-            border-radius: 16px;
-            font-size: 10px;
-        }
-        .msg.user {
-            align-self: flex-end;
-            background: linear-gradient(135deg, rgba(57,255,20,0.12), rgba(0,240,255,0.08));
-        }
-        .msg.ai {
-            align-self: flex-start;
-            background: var(--bg-elevated);
-        }
-        .ai-input-row {
-            padding: 10px;
-            display: flex;
-            gap: 6px;
-            border-top: 1px solid var(--border);
-        }
-        .ai-input {
-            flex: 1;
-            background: var(--bg-elevated);
-            border: 1px solid var(--border);
-            border-radius: 30px;
-            padding: 8px 12px;
-            color: var(--text);
-            outline: none;
-            font-size: 10px;
-        }
-        .ai-send {
-            width: 34px;
-            height: 34px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent), var(--accent-blue));
-            border: none;
-            cursor: pointer;
-        }
-
-        /* ============ TOAST ============ */
         .toast {
             position: fixed;
             bottom: 80px;
@@ -769,7 +546,6 @@
             border-radius: 40px;
             padding: 5px 12px;
             font-size: 10px;
-            font-weight: 500;
             z-index: 999;
             opacity: 0;
             transition: all 0.2s;
@@ -777,8 +553,6 @@
             white-space: nowrap;
         }
         .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-        .toast.success { border-color: var(--accent); color: var(--accent); }
-        .toast.error { border-color: var(--accent-pink); color: var(--accent-pink); }
     </style>
 </head>
 <body>
@@ -789,9 +563,9 @@
     <div class="top-bar">
         <div class="logo">⚡ PETPET</div>
         <div class="stats-group">
-            <div class="stat-pill">🐉 Lv.<span class="value" id="lvl">5</span></div>
-            <div class="stat-pill">💰 <span class="value" id="coins">2840</span></div>
-            <div class="stat-pill">🔥 <span class="value" id="streak">12</span></div>
+            <div class="stat-pill">🐉 Lv.<span class="value" id="lvl">8</span></div>
+            <div class="stat-pill">💰 <span class="value" id="coins">3475</span></div>
+            <div class="stat-pill">🔥 <span class="value" id="streak">13</span></div>
             <div class="stat-pill">⚡ <span class="value" id="energy">100</span></div>
         </div>
         <button class="menu-btn" id="menuBtn">☰</button>
@@ -800,441 +574,352 @@
     <!-- QUICK ACTIONS -->
     <div class="quick-actions">
         <div class="quick-btn" onclick="switchWorld('feed')">🔥 Flöde</div>
+        <div class="quick-btn" onclick="switchWorld('profile')">👤 Profil</div>
         <div class="quick-btn" onclick="switchWorld('map')">🗺️ Karta</div>
-        <div class="quick-btn" onclick="switchWorld('bounties')">🎯 Uppdrag</div>
-        <div class="quick-btn" onclick="switchWorld('pacts')">🤝 Pakter</div>
         <div class="quick-btn" onclick="switchWorld('shop')">🛍️ Shop</div>
-        <div class="quick-btn" onclick="switchWorld('pet')">🐉 Pet</div>
         <div class="quick-btn" onclick="openAIChat()">🤖 AI</div>
     </div>
 
     <!-- STORIES -->
     <div class="stories-row" id="storiesRow"></div>
 
-    <!-- MAIN CONTENT - ALLA VÄRLDAR -->
+    <!-- MAIN CONTENT -->
     <div class="main-content">
-        <!-- WORLD 1: VIDEO FEED (TikTok/Instagram) -->
-        <div class="world active" id="world-feed">
-            <div class="upload-btn" onclick="openCamera()">📤 + Ladda upp video/bild</div>
-            <div id="feedList" class="video-feed"></div>
+        <!-- FEED WORLD -->
+        <div class="world" id="world-feed">
+            <div id="feedList" style="display:flex;flex-direction:column;gap:12px;"></div>
         </div>
 
-        <!-- WORLD 2: MAP -->
+        <!-- PERFECT PROFILE WORLD -->
+        <div class="world active" id="world-profile">
+            <!-- Cover & Avatar -->
+            <div class="profile-cover">
+                <div class="profile-avatar-section">
+                    <div class="profile-avatar-large">🐉</div>
+                    <div class="profile-edit-btn" onclick="showToast('✏️ Redigera profil')">Redigera profil</div>
+                </div>
+                <div class="profile-name-row">
+                    <div class="profile-name-lg">Äventyrare</div>
+                    <div class="profile-badge">⭐ VERIFIERAD</div>
+                </div>
+                <div class="profile-handle">@petpet_user · Gick med april 2026</div>
+                <div class="profile-bio">🐉 Pet lover | Explorer | Level 8 | Digital skapare ✨</div>
+                
+                <!-- Stats -->
+                <div class="profile-stats-row">
+                    <div class="stat-item"><div class="stat-number" id="profilePosts">24</div><div class="stat-label">INLÄGG</div></div>
+                    <div class="stat-item"><div class="stat-number" id="profileFollowers">1.2K</div><div class="stat-label">FÖLJARE</div></div>
+                    <div class="stat-item"><div class="stat-number" id="profileFollowing">342</div><div class="stat-label">FÖLJER</div></div>
+                    <div class="stat-item"><div class="stat-number">8</div><div class="stat-label">LEVEL</div></div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="profile-actions">
+                    <button class="follow-btn" id="followBtn" onclick="toggleFollow()">Följ</button>
+                    <button class="message-btn" onclick="showToast('💬 Meddelande skickat!')">Meddelande</button>
+                    <button class="more-btn" onclick="showToast('⚙️ Mer alternativ')">⋯</button>
+                </div>
+            </div>
+
+            <!-- Profile Tabs -->
+            <div class="profile-tabs">
+                <div class="profile-tab active" data-tab="posts">📷 Inlägg</div>
+                <div class="profile-tab" data-tab="pet">🐉 Pet</div>
+                <div class="profile-tab" data-tab="friends">👥 Vänner</div>
+                <div class="profile-tab" data-tab="ads">📢 Annonser</div>
+                <div class="profile-tab" data-tab="activity">⏱️ Aktivitet</div>
+            </div>
+
+            <!-- TAB: POSTS -->
+            <div class="tab-content active" id="tab-posts">
+                <div class="posts-grid" id="postsGrid"></div>
+            </div>
+
+            <!-- TAB: PET -->
+            <div class="tab-content" id="tab-pet">
+                <div class="pet-card-mini">
+                    <div class="pet-avatar-mini">🐉</div>
+                    <div class="pet-info-mini">
+                        <div class="pet-name-mini">Eldraken</div>
+                        <div class="pet-level-mini">Level 8 · Legendary</div>
+                        <div class="pet-exp-bar"><div class="pet-exp-fill" style="width:60%"></div></div>
+                    </div>
+                </div>
+                <div class="map-widget" onclick="openFullMap()">
+                    <div class="map-preview">
+                        <div class="map-preview-content">
+                            <div class="user-location-marker">📍</div>
+                            <div class="location-info">
+                                <div class="location-name">Din plats</div>
+                                <div class="location-address">Stockholm, Sverige</div>
+                                <div style="font-size:8px;color:var(--accent);">Uppdaterad nyss</div>
+                            </div>
+                            <div class="expand-map">🗺️</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="abilities-grid" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;">
+                    <div class="badge" style="background:var(--bg-elevated);padding:6px 12px;border-radius:30px;">🔥 Fire Breath</div>
+                    <div class="badge" style="background:var(--bg-elevated);padding:6px 12px;border-radius:30px;">🪽 Fly</div>
+                    <div class="badge" style="background:var(--bg-elevated);padding:6px 12px;border-radius:30px;">⚡ Lightning Strike</div>
+                </div>
+            </div>
+
+            <!-- TAB: FRIENDS -->
+            <div class="tab-content" id="tab-friends">
+                <div class="friends-grid" id="friendsGrid"></div>
+                <button class="follow-btn" style="margin-top:8px;" onclick="showToast('👥 Hitta vänner')">🔍 Hitta vänner</button>
+            </div>
+
+            <!-- TAB: ADS (Marketplace) -->
+            <div class="tab-content" id="tab-ads">
+                <div id="adsList"></div>
+                <button class="follow-btn" style="margin-top:8px;" onclick="createAd()">➕ Skapa annons</button>
+            </div>
+
+            <!-- TAB: ACTIVITY -->
+            <div class="tab-content" id="tab-activity">
+                <div id="activityList"></div>
+            </div>
+        </div>
+
+        <!-- MAP WORLD -->
         <div class="world" id="world-map">
-            <div class="map-container">
-                <div class="map-canvas" id="mapCanvas"></div>
+            <div class="map-widget" style="margin-bottom:0;" onclick="openFullMap()">
+                <div class="map-preview" style="height:200px;">
+                    <div class="map-preview-content">
+                        <div class="user-location-marker">📍</div>
+                        <div class="location-info">
+                            <div class="location-name">Din plats</div>
+                            <div class="location-address">Stockholm, Sverige</div>
+                            <div style="font-size:8px;color:var(--accent);">Uppdaterad nyss</div>
+                        </div>
+                        <div class="expand-map">🗺️</div>
+                    </div>
+                </div>
             </div>
-            <div class="card"><div class="card-header"><div class="card-title">🌍 UTFORSKA PLATSER</div></div><div id="worldGrid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;"></div></div>
+            <div id="nearbyFriends"></div>
         </div>
 
-        <!-- WORLD 3: SERIOUS BOUNTIES (Fiverr-style) -->
-        <div class="world" id="world-bounties">
-            <div class="earnings-card">
-                <div>💰 TOTALA INTÄKTER</div>
-                <div class="earnings-amount" id="totalEarnings">0 SEK</div>
-                <div style="font-size:9px;">+<span id="monthEarnings">0</span> SEK denna månad</div>
-            </div>
-            <div class="card-header"><div class="card-title">🎯 AKTIVA UPPDRAG</div><div class="card-link" style="cursor:pointer;" onclick="showCreateBountyModal()">+ Skapa uppdrag</div></div>
-            <div id="bountiesList"></div>
-        </div>
-
-        <!-- WORLD 4: PACTS -->
-        <div class="world" id="world-pacts">
-            <div class="card-header"><div class="card-title">🤝 PAKTER MED VÄNNER</div><div class="card-link" style="cursor:pointer;" onclick="showCreatePactModal()">+ Skapa pact</div></div>
-            <div id="pactsList"></div>
-        </div>
-
-        <!-- WORLD 5: SHOPPING PLAZA (Complete) -->
+        <!-- SHOP WORLD -->
         <div class="world" id="world-shop">
             <div class="search-bar" style="display:flex;gap:6px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:30px;padding:6px 12px;margin-bottom:12px;">
                 <span>🔍</span>
-                <input id="shopSearch" placeholder="Sök produkter..." oninput="filterShop(this.value)" style="flex:1;background:none;border:none;outline:none;color:var(--text);font-size:11px;">
+                <input id="shopSearch" placeholder="Sök produkter..." style="flex:1;background:none;border:none;outline:none;color:var(--text);font-size:11px;">
             </div>
-            <div class="category-row" id="categoriesRow"></div>
-            <div class="product-grid" id="shopGrid"></div>
-            <div class="card"><div class="card-header"><div class="card-title">🎟️ RABATTKODER</div></div><div id="codesList"></div></div>
-        </div>
-
-        <!-- WORLD 6: COMPARE -->
-        <div class="world" id="world-compare">
-            <div class="search-bar" style="display:flex;gap:6px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:30px;padding:6px 12px;">
-                <span>🔍</span>
-                <input id="compareInput" placeholder="Sök produkt..." oninput="runCompare(this.value)" style="flex:1;background:none;border:none;outline:none;color:var(--text);font-size:11px;">
-            </div>
-            <div id="compareResults"></div>
-        </div>
-
-        <!-- WORLD 7: PET -->
-        <div class="world" id="world-pet">
-            <div class="pet-hero">
-                <div class="pet-avatar-large">🐉</div>
-                <div class="pet-name-large">Eldraken</div>
-                <div class="pet-stats-row" style="display:flex;justify-content:center;gap:16px;margin:12px 0;">
-                    <div><div class="stat-value-sm" id="petLevel">5</div><div class="stat-label-sm">Level</div></div>
-                    <div><div class="stat-value-sm" id="petHp">120</div><div class="stat-label-sm">HP</div></div>
-                    <div><div class="stat-value-sm" id="petAttack">35</div><div class="stat-label-sm">Attack</div></div>
-                </div>
-                <div class="evolution-bar">
-                    <div class="evolution-title">⭐ Nästa evolution: Lv.10 → Ancient Dragon</div>
-                    <div class="evolution-progress"><div class="evolution-fill" id="evolutionFill" style="width:50%"></div></div>
-                </div>
-                <div class="abilities-grid" id="abilitiesGrid"></div>
-            </div>
-            <button class="btn-primary" onclick="trainPet()">🎮 Träna pet (+5 XP)</button>
-        </div>
-
-        <!-- WORLD 8: PROFILE -->
-        <div class="world" id="world-profile">
-            <div class="card">
-                <div class="profile-header">
-                    <div class="profile-avatar-lg">🐉</div>
-                    <div><div class="profile-name-lg" id="profileName">Äventyrare</div><div class="profile-handle">@petpet_user</div></div>
-                </div>
-                <div class="profile-stats">
-                    <div><div class="stat-value-sm" id="profilePosts">0</div><div class="stat-label-sm">Inlägg</div></div>
-                    <div><div class="stat-value-sm" id="profileFollowers">1.2K</div><div class="stat-label-sm">Följare</div></div>
-                    <div><div class="stat-value-sm" id="profileFollowing">342</div><div class="stat-label-sm">Följer</div></div>
-                </div>
-                <div class="badges-grid" id="badgesGrid"></div>
-                <button class="btn-primary" onclick="shareProfile()" style="margin-top:12px;">📤 Dela profil</button>
-            </div>
+            <div class="product-grid" id="shopGrid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;"></div>
         </div>
     </div>
 
     <!-- BOTTOM NAV -->
     <div class="bottom-nav">
-        <button class="nav-item active" data-world="feed"><div class="nav-icon">🔥</div><div class="nav-label">Flöde</div></button>
+        <button class="nav-item" data-world="feed"><div class="nav-icon">🔥</div><div class="nav-label">Flöde</div></button>
+        <button class="nav-item active" data-world="profile"><div class="nav-icon">👤</div><div class="nav-label">Profil</div></button>
         <button class="nav-item" data-world="map"><div class="nav-icon">🗺️</div><div class="nav-label">Karta</div></button>
-        <button class="nav-item" data-world="bounties"><div class="nav-icon">🎯</div><div class="nav-label">Uppdrag</div></button>
         <button class="nav-cam-btn" id="cameraBtn"><div class="nav-camera">📸</div><div class="nav-label" style="font-size:8px;margin-top:3px;">Nytt</div></button>
         <button class="nav-item" data-world="shop"><div class="nav-icon">🛍️</div><div class="nav-label">Shop</div></button>
-        <button class="nav-item" data-world="profile"><div class="nav-icon">👤</div><div class="nav-label">Profil</div></button>
     </div>
 </div>
 
-<!-- MODAL MENU -->
-<div class="modal-overlay" id="modalOverlay"><div class="modal-sheet"><div class="modal-handle"></div><div class="modal-logo" style="font-size:14px;font-weight:600;margin-bottom:12px;">PETPET</div><div class="modal-grid" id="modalGrid"></div></div></div>
-
-<!-- CAMERA UPLOAD MODAL -->
-<div class="camera-overlay" id="camOverlay">
-    <div class="camera-sheet">
-        <div class="camera-header"><div class="camera-title">📸 Ladda upp</div><button class="camera-close" id="camClose">✕</button></div>
-        <div class="upload-type">
-            <div class="upload-type-btn active" data-type="image" onclick="setUploadType('image')">📷 Bild</div>
-            <div class="upload-type-btn" data-type="video" onclick="setUploadType('video')">🎬 Video</div>
+<!-- FULLSCREEN MAP MODAL -->
+<div class="fullscreen-modal" id="fullMapModal">
+    <div class="modal-header">
+        <span style="font-weight:600;">📍 Din plats</span>
+        <button onclick="closeFullMap()" style="background:none;border:none;color:var(--text);font-size:20px;">✕</button>
+    </div>
+    <div class="full-map">
+        <div class="full-map-content">
+            <div class="full-map-marker">📍</div>
+            <div style="font-size:16px;font-weight:600;">Stockholm, Sverige</div>
+            <div style="font-size:10px;color:var(--text-muted);margin-top:4px;">Lat: 59.3293° N, Lon: 18.0686° E</div>
+            <button class="follow-btn" style="margin-top:20px;width:auto;padding:8px 24px;" onclick="showToast('📍 Plats delad!')">Dela plats</button>
         </div>
-        <button class="btn-secondary" onclick="pickFile()">🖼️ Välj fil</button>
-        <img id="postPreview" class="post-preview">
-        <video id="videoPreview" class="post-preview" style="display:none;" controls></video>
-        <textarea class="post-textarea" id="postContent" placeholder="Vad händer? 🔥" rows="2"></textarea>
-        <button class="btn-primary" onclick="publishPost()">📤 Publicera</button>
     </div>
 </div>
 
-<!-- AI CHAT -->
-<div class="ai-chat-window" id="aiChatWindow"><div class="ai-chat-header"><button class="ai-chat-back" id="aiChatBack">←</button><div class="ai-chat-avatar">🤖</div><div><div style="font-weight:600;">PetPal AI</div><div style="font-size:9px;color:var(--accent);">● Online</div></div></div><div class="ai-messages" id="aiMessages"><div class="msg ai">Hej! 👋 Jag är PetPal AI. Fråga om tips, uppdrag eller hjälp!</div></div><div class="ai-input-row"><input class="ai-input" id="aiInput" placeholder="Skriv..."><button class="ai-send" id="aiSendBtn">➤</button></div></div>
+<!-- AI CHAT WINDOW -->
+<div class="ai-chat-window" id="aiChatWindow" style="position:fixed;inset:0;z-index:200;background:var(--bg);display:flex;flex-direction:column;transform:translateY(100%);transition:transform 0.3s;">
+    <div class="ai-chat-header" style="padding:12px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border);">
+        <button class="ai-chat-back" id="aiChatBack" style="background:none;border:none;font-size:20px;color:var(--text);cursor:pointer;">←</button>
+        <div class="ai-chat-avatar" style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--accent-blue),var(--accent-pink));display:flex;align-items:center;justify-content:center;font-size:18px;">🤖</div>
+        <div><div style="font-weight:600;">PetPal AI</div><div style="font-size:9px;color:var(--accent);">● Online</div></div>
+    </div>
+    <div class="ai-messages" id="aiMessages" style="flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px;">
+        <div class="msg ai" style="max-width:85%;padding:8px 12px;border-radius:16px;font-size:10px;background:var(--bg-elevated);">Hej! 👋 Jag är PetPal AI. Fråga om tips, uppdrag eller hjälp!</div>
+    </div>
+    <div class="ai-input-row" style="padding:10px;display:flex;gap:6px;border-top:1px solid var(--border);">
+        <input class="ai-input" id="aiInput" placeholder="Skriv..." style="flex:1;background:var(--bg-elevated);border:1px solid var(--border);border-radius:30px;padding:8px 12px;color:var(--text);outline:none;font-size:10px;">
+        <button class="ai-send" id="aiSendBtn" style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-blue));border:none;cursor:pointer;">➤</button>
+    </div>
+</div>
 
 <div class="toast" id="toast"></div>
 
 <script>
 // ============ STATE ==========
-let STATE = {
-    level: 5, exp: 60, coins: 2840, energy: 100, streak: 12, totalEarned: 1250,
-    abilities: ['🔥 Fire Breath', '🪽 Fly', '⚡ Lightning'],
-    likedPosts: new Set(),
-    videos: []
-};
-
-// ============ VIDEO POSTS ==========
-let videoPosts = [
-    {id:'v1',user:'Ella',avatar:'👩‍🎤',pet:'🐉',caption:'Check out my dragon! 🔥',likes:47,comments:12,time:'15 min',type:'image',url:'https://picsum.photos/400/500?random=1'},
-    {id:'v2',user:'Max',avatar:'🧑‍🚀',pet:'🐺',caption:'Level 10! 🎉',likes:132,comments:23,time:'1 tim',type:'image',url:'https://picsum.photos/400/500?random=2'},
-    {id:'v3',user:'Clara',avatar:'👩‍💻',pet:'🦊',caption:'Legendary skin! ✨',likes:89,comments:15,time:'3 tim',type:'image',url:'https://picsum.photos/400/500?random=3'}
+let STATE = { level: 8, coins: 3475, streak: 13, energy: 100, totalEarned: 1250, following: false, followers: 1200, followingCount: 342 };
+let feedPosts = [
+    { id: 'p1', user: 'Ella', avatar: '👩‍🎤', pet: '🐉', caption: 'Check out my new dragon skin! 🔥', likes: 47, time: '15 min', url: 'https://picsum.photos/400/500?random=1' },
+    { id: 'p2', user: 'Max', avatar: '🧑‍🚀', pet: '🐺', caption: 'Level 10! Finally! 🎉', likes: 132, time: '1 tim', url: 'https://picsum.photos/400/500?random=2' }
 ];
-
-// ============ SHOP ==========
 let shopItems = [
-    {id:'s1',emoji:'🔥',name:'Fire Wings',price:199,category:'skins'},
-    {id:'s2',emoji:'✨',name:'Legendary Glow',price:499,category:'skins'},
-    {id:'s3',emoji:'⚡',name:'XP Boost',price:99,category:'powerups'},
-    {id:'s4',emoji:'👑',name:'Royal Crown',price:799,category:'skins'},
-    {id:'s5',emoji:'💊',name:'Health Potion',price:49,category:'items'},
-    {id:'s6',emoji:'🎨',name:'Custom Skin',price:299,category:'skins'}
+    { id: 's1', emoji: '🔥', name: 'Fire Wings', price: 199 },
+    { id: 's2', emoji: '✨', name: 'Legendary Glow', price: 499 },
+    { id: 's3', emoji: '⚡', name: 'XP Boost', price: 99 },
+    { id: 's4', emoji: '👑', name: 'Royal Crown', price: 799 }
 ];
-let categories = ['all','skins','powerups','items'];
-let currentCategory = 'all';
-let CODES = [{code:'WELCOME10',reward:100,used:false},{code:'DRAGON50',reward:500,used:false}];
-
-// ============ BOUNTIES (Serious/Fiverr-style) ==========
-let bounties = [
-    {id:'b1',title:'📸 Fota produkt på Ica',desc:'Gå till Ica Maxi och fotografera den nya produkten',rewardSEK:50,rewardCoins:100,deadline:'3 dagar',company:'Ica',doers:127,rating:4.8},
-    {id:'b2',title:'🎥 TikTok med vår produkt',desc:'Spela in en TikTok-dans med vår energidryck',rewardSEK:500,rewardCoins:500,deadline:'7 dagar',company:'Fun Beverages',doers:23,rating:4.9},
-    {id:'b3',title:'✍️ Skriv recension',desc:'Recensera vår restaurang på Google Maps',rewardSEK:20,rewardCoins:30,deadline:'2 dagar',company:'Restaurang X',doers:89,rating:4.5}
+let friends = [
+    { name: 'Ella', avatar: '👩‍🎤' },
+    { name: 'Max', avatar: '🧑‍🚀' },
+    { name: 'Clara', avatar: '👩‍💻' },
+    { name: 'Leo', avatar: '🧑‍🎤' },
+    { name: 'Stella', avatar: '🌟' },
+    { name: 'Wendela', avatar: '😂' }
 ];
-let userBounties = [];
-
-// ============ PACTS ==========
-let pacts = [
-    {id:'pt1',name:'🔥 Ingen skräpmat',members:['Ella','Max'],streak:5,totalDays:7,completedDays:5,penalty:'Bjuder på fika'},
-    {id:'pt2',name:'💪 Träna varje dag',members:['Du','Clara'],streak:3,totalDays:30,completedDays:3,penalty:'Swishar 50kr'}
+let ads = [
+    { id: 'a1', emoji: '🎮', title: 'Säljer PS5', price: '5000 SEK', status: 'Aktiv' },
+    { id: 'a2', emoji: '👟', title: 'Nike Air Max', price: '800 SEK', status: 'Såld' }
 ];
-
-// ============ MAP ==========
-let mapPets = [
-    {name:'Ella',emoji:'🐉',distance:'500m',level:7},
-    {name:'Max',emoji:'🐺',distance:'1.2km',level:10},
-    {name:'Clara',emoji:'🦊',distance:'2km',level:6}
+let activities = [
+    { icon: '🐉', text: 'Level up! Nu level 8', time: '2 tim sedan' },
+    { icon: '💰', text: 'Tjänade 500 SEK på uppdrag', time: '1 dag sedan' },
+    { icon: '🛍️', text: 'Köpte Fire Wings i shoppen', time: '2 dagar sedan' }
 ];
-let locations = [
-    {emoji:'🏠',name:'Hemvärlden',users:127,locked:false,coins:10,xp:5},
-    {emoji:'🛍️',name:'Shopping Plaza',users:45,locked:false,coins:15,xp:8},
-    {emoji:'⚔️',name:'Battle Arena',users:18,locked:false,coins:25,xp:12}
-];
-
 let stories = [
-    {name:'Din story',ava:'📸',seen:false},
-    {name:'Stella',ava:'🌟',seen:false},
-    {name:'Max',ava:'🧑‍🚀',seen:true}
+    { name: 'Din story', ava: '📸', seen: false },
+    { name: 'Stella', ava: '🌟', seen: false },
+    { name: 'Max', ava: '🧑‍🚀', seen: true }
 ];
 
-let uploadType = 'image';
-let selectedFile = null;
+function $(id) { return document.getElementById(id); }
+function showToast(msg) { const t = $('toast'); t.textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2000); }
 
-function $(id){ return document.getElementById(id); }
-
-function showToast(msg, type='success'){
-    const t = $('toast'); t.textContent = msg; t.className = `toast show ${type}`;
-    setTimeout(()=>t.className='toast', 2000);
-}
-
-function updateHUD(){
+function updateHUD() {
     $('lvl').textContent = STATE.level;
     $('coins').textContent = STATE.coins;
     $('streak').textContent = STATE.streak;
     $('energy').textContent = STATE.energy;
-    $('petLevel').textContent = STATE.level;
-    $('petHp').textContent = 100 + (STATE.level-1)*5;
-    $('petAttack').textContent = 25 + (STATE.level-1)*2;
-    $('evolutionFill').style.width = (STATE.level/10)*100 + '%';
-    $('totalEarnings').textContent = STATE.totalEarned + ' SEK';
-    $('abilitiesGrid').innerHTML = STATE.abilities.map(a=>`<div class="badge">${a}</div>`).join('');
-    $('profilePosts').textContent = videoPosts.length;
-    $('badgesGrid').innerHTML = `<div class="badge">🏆 Early Bird</div><div class="badge">🔥 Streak ${STATE.streak}</div><div class="badge">🎯 Bounty Hunter</div>`;
+    $('profileFollowers').textContent = STATE.followers >= 1000 ? (STATE.followers/1000).toFixed(1)+'K' : STATE.followers;
+    $('profileFollowing').textContent = STATE.followingCount;
+    $('profilePosts').textContent = feedPosts.length;
+    const followBtn = $('followBtn');
+    if (followBtn) followBtn.textContent = STATE.following ? 'Följer' : 'Följ';
 }
 
-function gainCoins(amount){ STATE.coins += amount; updateHUD(); saveState(); showToast(`+${amount}💰`); }
-function gainXP(amount){
-    STATE.exp += amount;
-    if(STATE.exp >= 100){ STATE.exp -= 100; STATE.level++; showToast(`🎉 LEVEL ${STATE.level}!`); }
-    updateHUD(); saveState();
-}
-function trainPet(){ gainXP(5); showToast('🐉 Din pet tränade! +5 XP'); }
-
-function saveState(){
-    localStorage.setItem('petpet_state', JSON.stringify({
-        level:STATE.level, exp:STATE.exp, coins:STATE.coins, energy:STATE.energy, streak:STATE.streak,
-        totalEarned:STATE.totalEarned, likedPosts:[...STATE.likedPosts], userBounties, bounties, codes:CODES, videoPosts, pacts
-    }));
-}
-function loadState(){
-    const s = localStorage.getItem('petpet_state');
-    if(s){
-        const d = JSON.parse(s);
-        STATE.level = d.level ?? 5; STATE.exp = d.exp ?? 60; STATE.coins = d.coins ?? 2840;
-        STATE.energy = d.energy ?? 100; STATE.streak = d.streak ?? 12; STATE.totalEarned = d.totalEarned ?? 1250;
-        if(d.likedPosts) STATE.likedPosts = new Set(d.likedPosts);
-        if(d.userBounties) userBounties = d.userBounties;
-        if(d.bounties) bounties.splice(0, bounties.length, ...d.bounties);
-        if(d.codes) CODES.splice(0, CODES.length, ...d.codes);
-        if(d.videoPosts) videoPosts.splice(0, videoPosts.length, ...d.videoPosts);
-        if(d.pacts) pacts.splice(0, pacts.length, ...d.pacts);
-    }
+function toggleFollow() {
+    STATE.following = !STATE.following;
+    if (STATE.following) { STATE.followers++; showToast(`✅ Du följer nu!`); }
+    else { STATE.followers--; showToast(`❌ Slutade följa`); }
     updateHUD();
 }
 
-function renderFeed(){
-    $('feedList').innerHTML = videoPosts.map(p=>`
-        <div class="video-post">
-            <div class="video-header">
-                <div class="video-avatar" onclick="viewProfile('${p.user}')">${p.avatar}</div>
-                <div class="video-info"><div class="video-username" onclick="viewProfile('${p.user}')">${p.user}</div><div class="video-time">${p.time}</div></div>
-                <div>🐉 ${p.pet}</div>
+function renderStories() {
+    $('storiesRow').innerHTML = stories.map(s => `<div class="story-item" onclick="viewStory('${s.name}')"><div class="story-ring ${s.seen ? 'seen' : ''}"><div class="story-inner">${s.ava}</div></div><div class="story-name">${s.name}</div></div>`).join('');
+}
+function viewStory(name) { const s = stories.find(x => x.name === name); if (s) s.seen = true; renderStories(); showToast(`👁️ ${name}s story`); }
+
+function renderFeed() {
+    $('feedList').innerHTML = feedPosts.map(p => `
+        <div class="post-card" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;">
+            <div class="post-header" style="padding:10px;display:flex;align-items:center;gap:8px;">
+                <div class="post-avatar" style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-pink));display:flex;align-items:center;justify-content:center;font-size:18px;">${p.avatar}</div>
+                <div><div class="post-name" style="font-size:12px;font-weight:600;">${p.user}</div><div class="post-time" style="font-size:8px;color:var(--text-muted);">${p.time}</div></div>
+                <div>${p.pet}</div>
             </div>
-            <div class="video-container">
-                ${p.type === 'video' ? 
-                    `<video class="video-preview" src="${p.url}" controls style="max-height:400px;width:100%;"></video>` :
-                    `<img class="video-preview" src="${p.url}" style="max-height:400px;width:100%;cursor:pointer;" onclick="viewImage('${p.url}')">`
-                }
-            </div>
-            <div class="video-caption">${p.caption}</div>
-            <div class="video-actions">
-                <button class="action-btn" onclick="toggleLike('${p.id}',this)">❤️ <span id="lc-${p.id}">${p.likes}</span></button>
-                <button class="action-btn" onclick="sharePost('${p.id}')">📤 Dela</button>
-                <button class="action-btn" onclick="showToast('💬 Kommentarer kommer!', 'success')">💬 ${p.comments}</button>
+            <img class="post-media" src="${p.url}" style="width:100%;max-height:300px;object-fit:cover;" onclick="showToast('📸 Bild visad')">
+            <div class="post-content" style="padding:0 10px 8px;font-size:11px;color:var(--text-secondary);">${p.caption}</div>
+            <div class="post-actions" style="padding:8px 10px;display:flex;gap:16px;border-top:1px solid var(--border-light);">
+                <button class="action-btn" onclick="likePost('${p.id}')" style="background:none;border:none;display:flex;align-items:center;gap:4px;color:var(--text-muted);font-size:10px;">❤️ <span id="likes-${p.id}">${p.likes}</span></button>
+                <button class="action-btn" onclick="showToast('📤 Delat!')">📤 Dela</button>
             </div>
         </div>
     `).join('');
 }
-function toggleLike(id,btn){ const p = videoPosts.find(x=>x.id===id); if(STATE.likedPosts.has(id)){ STATE.likedPosts.delete(id); p.likes--; }else{ STATE.likedPosts.add(id); p.likes++; showToast('❤️ Gillade!'); } $(`lc-${id}`).textContent = p.likes; saveState(); }
-function sharePost(id){ const p = videoPosts.find(x=>x.id===id); if(navigator.share) navigator.share({title:'PETPET',text:p.caption}); else showToast('📋 Kopierat!'); }
-function viewImage(url){ window.open(url, '_blank'); }
-function viewProfile(name){ showToast(`👤 Profil: ${name}`, 'success'); switchWorld('profile'); }
+function likePost(id) { const p = feedPosts.find(x => x.id === id); if (p) { p.likes++; $(`likes-${id}`).textContent = p.likes; showToast('❤️ Gillade!'); } }
 
-function renderMap(){
-    $('mapCanvas').innerHTML = mapPets.map(p=>`<div class="map-pet" onclick="showToast('🐉 Besök ${p.name}s pet!')"><div class="map-pet-emoji">${p.emoji}</div><div class="map-pet-name">${p.name}</div><div class="map-pet-distance">${p.distance}</div></div>`).join('');
-    $('worldGrid').innerHTML = locations.map(l=>`<div style="background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-lg);padding:10px;text-align:center;cursor:pointer;" onclick="visitLoc('${l.name}')"><div style="font-size:24px;">${l.emoji}</div><div style="font-size:11px;font-weight:500;">${l.name}</div><div style="font-size:8px;color:var(--text-muted);">👥 ${l.users}</div><div style="font-size:9px;color:var(--accent);">+${l.coins}💰</div></div>`).join('');
-}
-function visitLoc(name){ const l = locations.find(x=>x.name===name); gainCoins(l.coins); gainXP(l.xp); showToast(`✨ +${l.coins}💰 +${l.xp}XP`); }
-
-function renderStories(){
-    $('storiesRow').innerHTML = stories.map(s=>`<div class="story-item" onclick="viewStory('${s.name}')"><div class="story-ring ${s.seen?'seen':''}"><div class="story-inner">${s.ava}</div></div><div class="story-name">${s.name}</div></div>`).join('');
-}
-function viewStory(name){ const s = stories.find(x=>x.name===name); if(s) s.seen=true; renderStories(); showToast(`👁️ ${name}s story`); saveState(); }
-
-function renderBounties(){
-    $('bountiesList').innerHTML = bounties.map(b=>`
-        <div class="bounty-card-serious" onclick="doBounty('${b.id}',this)">
-            <div class="bounty-header-serious"><span class="bounty-title-serious">${b.title}</span><span class="bounty-price-serious">${b.rewardSEK} SEK</span></div>
-            <div class="bounty-company-serious">🏢 ${b.company} ⭐ ${b.rating}</div>
-            <div class="bounty-desc-serious">${b.desc}</div>
-            <div class="bounty-footer-serious"><div class="bounty-stats"><span>👥 ${b.doers} gjort</span><span>⏰ ${b.deadline}</span></div><button class="bounty-do-btn">🎯 Ta uppdrag</button></div>
-        </div>
-    `).join('');
-}
-function doBounty(id,el){ const b = bounties.find(x=>x.id===id); if(!b) return; userBounties.push(b); bounties.splice(bounties.indexOf(b),1); STATE.totalEarned += b.rewardSEK; gainCoins(b.rewardCoins); gainXP(15); showToast(`✅ Uppdrag klart! +${b.rewardSEK} SEK, +${b.rewardCoins}💰`); renderBounties(); saveState(); }
-function showCreateBountyModal(){ const title = prompt('Uppdragsnamn:'); if(!title) return; const rewardSEK = parseInt(prompt('Belöning i SEK:'))||50; const desc = prompt('Beskrivning:'); bounties.push({id:'b'+Date.now(),title,desc,rewardSEK,rewardCoins:Math.floor(rewardSEK*2),deadline:'7 dagar',company:'Användare',doers:0,rating:5.0}); renderBounties(); showToast('✅ Uppdrag skapat!'); saveState(); }
-
-function renderPacts(){
-    $('pactsList').innerHTML = pacts.map(p=>`
-        <div class="pact-card">
-            <div class="pact-header"><span class="pact-name">🤝 ${p.name}</span><span class="pact-streak">🔥 ${p.streak} dagar</span></div>
-            <div class="pact-members" style="font-size:8px;color:var(--text-muted);margin-bottom:6px;">👥 ${p.members.join(', ')}</div>
-            <div class="pact-progress"><div class="pact-fill" style="width:${(p.completedDays/p.totalDays)*100}%"></div></div>
-            <div class="bounty-footer-serious" style="margin-top:6px;"><span>${p.completedDays}/${p.totalDays} dagar</span><span>⚡ ${p.penalty}</span><button class="bounty-do-btn" onclick="confirmPactDay('${p.id}')">✅ Klar</button></div>
-        </div>
-    `).join('');
-}
-function confirmPactDay(id){ const p = pacts.find(x=>x.id===id); if(p){ p.completedDays++; p.streak++; showToast(`🔥 ${p.name}: ${p.completedDays}/${p.totalDays} dagar!`); renderPacts(); saveState(); } }
-function showCreatePactModal(){ const name = prompt('Paktens namn:'); if(!name) return; const days = parseInt(prompt('Antal dagar:'))||7; const members = prompt('Medlemmar (separera med kommatecken):'); const penalty = prompt('Straff:'); pacts.push({id:'pt'+Date.now(),name,members:members.split(','),streak:0,totalDays:days,completedDays:0,penalty}); renderPacts(); showToast('✅ Pakt skapad!'); saveState(); }
-
-function renderShop(){
-    let filtered = currentCategory === 'all' ? shopItems : shopItems.filter(i => i.category === currentCategory);
-    $('shopGrid').innerHTML = filtered.map(p=>`<div class="product-card" onclick="buyItem('${p.id}',this)"><div class="product-emoji">${p.emoji}</div><div class="product-name">${p.name}</div><div class="product-price">${p.price}💰</div></div>`).join('');
-    $('categoriesRow').innerHTML = categories.map(c=>`<div class="category-chip ${currentCategory===c?'active':''}" onclick="setCategory('${c}')">${c.toUpperCase()}</div>`).join('');
-    $('codesList').innerHTML = CODES.map(c=>`<div style="display:flex;justify-content:space-between;padding:8px;border-bottom:1px solid var(--border-light);"><span style="font-size:10px;">${c.code}</span><span style="color:var(--accent);">+${c.reward}💰</span><button class="btn-secondary" style="padding:2px 8px;width:auto;" onclick="useCode('${c.code}',this)" ${c.used?'disabled':''}>Använd</button></div>`).join('');
-}
-function setCategory(cat){ currentCategory = cat; renderShop(); }
-function filterShop(q){ let filtered = shopItems.filter(p=>p.name.toLowerCase().includes(q.toLowerCase())); $('shopGrid').innerHTML = filtered.map(p=>`<div class="product-card" onclick="buyItem('${p.id}',this)"><div class="product-emoji">${p.emoji}</div><div class="product-name">${p.name}</div><div class="product-price">${p.price}💰</div></div>`).join(''); }
-function buyItem(id,el){ const p = shopItems.find(x=>x.id===id); if(STATE.coins < p.price){ showToast(`❌ Behöver ${p.price-STATE.coins} mer!`,'error'); return; } STATE.coins -= p.price; updateHUD(); saveState(); showToast(`✅ Köpte ${p.name}!`); }
-function useCode(code,btn){ const c = CODES.find(x=>x.code===code); if(c.used) return; c.used=true; gainCoins(c.reward); showToast(`🎟️ +${c.reward}💰`); renderShop(); saveState(); }
-
-let compareTimeout;
-function runCompare(val){
-    clearTimeout(compareTimeout);
-    if(!val.trim()){ $('compareResults').innerHTML=''; return; }
-    compareTimeout = setTimeout(()=>{
-        const base = Math.floor(Math.random()*400)+150;
-        const results = [{store:'🛍️ Prisjakt',price:base+Math.floor(Math.random()*100)},{store:'🎯 Tradera',price:base+Math.floor(Math.random()*80)-20},{store:'📦 Amazon',price:base+Math.floor(Math.random()*120)}].sort((a,b)=>a.price-b.price);
-        $('compareResults').innerHTML = `<div class="compare-result"><div style="font-size:10px;color:var(--accent);margin-bottom:8px;">🔍 ${val}</div>${results.map((r,i)=>`<div class="price-row"><span>${r.store}</span><span class="${i===0?'best-price':''}">${r.price} kr</span></div>`).join('')}</div>`;
-    },400);
+function renderPostsGrid() {
+    $('postsGrid').innerHTML = feedPosts.map(p => `<div class="post-grid-item" onclick="showToast('📷 Inlägg')"><img src="${p.url}" style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius-md);"></div>`).join('');
 }
 
-function shareProfile(){ const txt = `🔥 Jag är Level ${STATE.level} på PETPET! ${STATE.streak} dagars streak!`; if(navigator.share) navigator.share({title:'PETPET',text:txt}); else showToast('📋 Profil kopierad!'); }
-
-// ============ CAMERA UPLOAD ==========
-function setUploadType(type){ uploadType = type; document.querySelectorAll('.upload-type-btn').forEach(b=>b.classList.remove('active')); document.querySelector(`.upload-type-btn[data-type="${type}"]`).classList.add('active'); }
-function pickFile(){ const input = document.createElement('input'); input.type='file'; input.accept=uploadType==='video'?'video/*':'image/*'; input.onchange=e=>{ const f=e.target.files[0]; if(!f) return; const reader=new FileReader(); reader.onload=ev=>{ selectedFile=ev.target.result; if(uploadType==='video'){ $('videoPreview').style.display='block'; $('postPreview').style.display='none'; $('videoPreview').src=selectedFile; }else{ $('postPreview').style.display='block'; $('videoPreview').style.display='none'; $('postPreview').src=selectedFile; } }; reader.readAsDataURL(f); }; input.click(); }
-function openCamera(){ $('camOverlay').classList.add('open'); selectedFile=null; $('postPreview').style.display='none'; $('videoPreview').style.display='none'; $('postContent').value=''; }
-function closeCamera(){ $('camOverlay').classList.remove('open'); }
-function publishPost(){
-    const caption = $('postContent').value.trim();
-    if(!caption && !selectedFile){ showToast('✏️ Skriv något eller välj fil!','error'); return; }
-    const newPost = {
-        id:'v'+Date.now(), user:'Du', avatar:'👤', pet:'🐉', caption:caption||'Kolla inlägg! 🔥',
-        likes:0, comments:0, time:'just nu', type:uploadType, url:selectedFile || 'https://picsum.photos/400/500?random='+Date.now()
-    };
-    videoPosts.unshift(newPost);
-    closeCamera();
-    gainCoins(5);
-    renderFeed();
-    saveState();
-    showToast('✅ Publicerat! +5 coins');
-    switchWorld('feed');
+function renderFriends() {
+    $('friendsGrid').innerHTML = friends.map(f => `<div class="friend-card"><div class="friend-avatar">${f.avatar}</div><div class="friend-name">${f.name}</div></div>`).join('');
 }
-$('cameraBtn').addEventListener('click', openCamera);
-$('camClose').addEventListener('click', closeCamera);
 
-// ============ AI CHAT ==========
+function renderAds() {
+    $('adsList').innerHTML = ads.map(a => `<div class="ad-card"><div class="ad-emoji">${a.emoji}</div><div class="ad-info"><div class="ad-title">${a.title}</div><div class="ad-price">💰 ${a.price}</div><div class="ad-status">${a.status}</div></div></div>`).join('');
+}
+
+function renderActivity() {
+    $('activityList').innerHTML = activities.map(a => `<div class="activity-item"><div class="activity-icon">${a.icon}</div><div class="activity-text">${a.text}</div><div class="activity-time">${a.time}</div></div>`).join('');
+}
+
+function renderShop() {
+    $('shopGrid').innerHTML = shopItems.map(p => `<div class="product-card" onclick="buyItem('${p.id}')" style="background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-lg);padding:10px;text-align:center;cursor:pointer;"><div class="product-emoji" style="font-size:24px;">${p.emoji}</div><div class="product-name" style="font-size:10px;font-weight:500;">${p.name}</div><div class="product-price" style="font-size:9px;color:var(--accent);">${p.price}💰</div></div>`).join('');
+}
+function buyItem(id) { const p = shopItems.find(x => x.id === id); if (STATE.coins < p.price) { showToast(`❌ Behöver ${p.price - STATE.coins} mer!`); return; } STATE.coins -= p.price; updateHUD(); showToast(`✅ Köpte ${p.name}!`); }
+
+function createAd() { const title = prompt('Annonsrubrik:'); if (!title) return; const price = prompt('Pris:'); ads.unshift({ id: 'a' + Date.now(), emoji: '📦', title, price, status: 'Aktiv' }); renderAds(); showToast('✅ Annons skapad!'); }
+
+// Tab switching
+document.querySelectorAll('.profile-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+        document.querySelectorAll('.profile-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        tab.classList.add('active');
+        $(`tab-${tab.dataset.tab}`).classList.add('active');
+    });
+});
+
+// Map functions
+function openFullMap() { $('fullMapModal').classList.add('active'); }
+function closeFullMap() { $('fullMapModal').classList.remove('active'); }
+
+// AI Chat
 const aiWindow = $('aiChatWindow');
-function openAIChat(){ aiWindow.classList.add('open'); }
-$('aiChatBack')?.addEventListener('click', ()=>aiWindow.classList.remove('open'));
+function openAIChat() { aiWindow.classList.add('open'); }
+$('aiChatBack')?.addEventListener('click', () => aiWindow.classList.remove('open'));
 $('aiSendBtn')?.addEventListener('click', sendAI);
-$('aiInput')?.addEventListener('keypress', e=>{ if(e.key==='Enter') sendAI(); });
-function addMsg(txt, type){ const el = document.createElement('div'); el.className = `msg ${type}`; el.textContent = txt; $('aiMessages').appendChild(el); $('aiMessages').scrollTop = $('aiMessages').scrollHeight; return el; }
-function sendAI(){
+$('aiInput')?.addEventListener('keypress', e => { if (e.key === 'Enter') sendAI(); });
+function addMsg(txt, type) { const el = document.createElement('div'); el.className = `msg ${type}`; el.textContent = txt; $('aiMessages').appendChild(el); $('aiMessages').scrollTop = $('aiMessages').scrollHeight; return el; }
+function sendAI() {
     const msg = $('aiInput').value.trim();
-    if(!msg) return;
+    if (!msg) return;
     $('aiInput').value = '';
     addMsg(msg, 'user');
     const loadEl = addMsg('✦ Tänker...', 'ai loading');
-    setTimeout(()=>{
-        const replies = [`💡 Gör betalda uppdrag för att tjäna riktiga pengar! Du har tjänat ${STATE.totalEarned} SEK.`, `⚔️ Träna din pet (level ${STATE.level}) för att låsa upp nya abilities!`, `🔥 Din streak är ${STATE.streak} dagar! Fortsätt så!`, `🛍️ Kolla Shopping Plaza för nya skins och items!`, `📍 På kartan ser du vart dina vänner är!`];
-        loadEl.textContent = replies[Math.floor(Math.random()*replies.length)];
+    setTimeout(() => {
+        const replies = [`💡 Du har tjänat ${STATE.totalEarned} SEK på uppdrag!`, `⚔️ Din pet är level ${STATE.level}!`, `🔥 ${STATE.streak} dagars streak! Fortsätt så!`, `🛍️ Kolla Shopping Plaza för nya skins!`];
+        loadEl.textContent = replies[Math.floor(Math.random() * replies.length)];
         loadEl.classList.remove('loading');
     }, 800);
 }
 
-// ============ WORLD SWITCHING ==========
-function switchWorld(world){
-    document.querySelectorAll('.world').forEach(w=>w.classList.remove('active'));
-    document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
+// World switching
+function switchWorld(world) {
+    document.querySelectorAll('.world').forEach(w => w.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
     $(`world-${world}`).classList.add('active');
     const btn = document.querySelector(`.nav-item[data-world="${world}"]`);
-    if(btn) btn.classList.add('active');
-    if(world==='feed') renderFeed();
-    if(world==='map') renderMap();
-    if(world==='bounties') renderBounties();
-    if(world==='pacts') renderPacts();
-    if(world==='shop') renderShop();
-    if(world==='compare') $('compareResults').innerHTML='';
-    if(world==='pet') updateHUD();
-    if(world==='profile') updateHUD();
+    if (btn) btn.classList.add('active');
+    if (world === 'feed') renderFeed();
+    if (world === 'profile') { renderPostsGrid(); renderFriends(); renderAds(); renderActivity(); updateHUD(); }
+    if (world === 'shop') renderShop();
 }
-document.querySelectorAll('.nav-item[data-world]').forEach(btn=>btn.addEventListener('click', ()=>switchWorld(btn.dataset.world)));
+document.querySelectorAll('.nav-item[data-world]').forEach(btn => btn.addEventListener('click', () => switchWorld(btn.dataset.world)));
 
-// ============ MODAL MENU ==========
-$('menuBtn').addEventListener('click', ()=>$('modalOverlay').classList.add('open'));
-$('modalOverlay').addEventListener('click', e=>{ if(e.target===$('modalOverlay')) $('modalOverlay').classList.remove('open'); });
-const MENU_ITEMS = [
-    {world:'feed',label:'🔥 Flöde'},{world:'map',label:'🗺️ Världen'},{world:'bounties',label:'🎯 Uppdrag'},
-    {world:'pacts',label:'🤝 Pakter'},{world:'shop',label:'🛍️ Shop'},{world:'pet',label:'🐉 Min pet'},
-    {world:'profile',label:'👤 Profil'},{world:'compare',label:'🔍 Jämför'}
-];
-$('modalGrid').innerHTML = MENU_ITEMS.map(m=>`<div class="modal-item" data-world="${m.world}">${m.label}</div>`).join('');
-document.querySelectorAll('.modal-item').forEach(item=>{ item.addEventListener('click', ()=>{ $('modalOverlay').classList.remove('open'); switchWorld(item.dataset.world); }); });
+// Camera
+$('cameraBtn').addEventListener('click', () => showToast('📸 Kamera kommer snart!'));
 
-// ============ DAILY BONUS ==========
-function claimDailyBonus(){
-    const today = new Date().toDateString();
-    const last = localStorage.getItem('pp_daily');
-    if(last===today){ showToast('❌ Kom tillbaka imorgon!','error'); return; }
-    localStorage.setItem('pp_daily', today);
-    const bonus = 50 + STATE.streak * 5;
-    STATE.streak++;
-    gainCoins(bonus);
-    showToast(`🎉 Daglig bonus! +${bonus} coins`);
-    saveState();
-}
-document.querySelector('.quick-btn[onclick*="Bonus"]')?.addEventListener('click', claimDailyBonus);
-document.querySelector('.quick-btn[onclick*="Bonus"]')?.addEventListener('click', claimDailyBonus);
+// Menu
+$('menuBtn').addEventListener('click', () => showToast('☰ Meny kommer snart!'));
 
-// ============ ENERGY REGEN ==========
-setInterval(()=>{ if(STATE.energy<100){ STATE.energy = Math.min(100, STATE.energy+5); updateHUD(); saveState(); } }, 60000);
+// Daily bonus check
+setInterval(() => { if (STATE.energy < 100) { STATE.energy = Math.min(100, STATE.energy + 5); updateHUD(); } }, 60000);
 
-// ============ INIT ==========
-loadState();
+// Init
 renderStories();
 renderFeed();
+switchWorld('profile');
 </script>
 </body>
 </html>
