@@ -4,856 +4,1746 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<title>PETFOTO — AI Kamera</title>
-<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Fragment+Mono&display=swap" rel="stylesheet">
+<title>PETPET</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;400;500;600;700;800&family=Azeret+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #080810;
-  --l1: #0f0f1c;
-  --l2: #181828;
-  --l3: #222236;
-  --b: rgba(255,255,255,0.07);
-  --b2: rgba(255,255,255,0.12);
-  --tx: #e8e8f8;
-  --mu: #55557a;
-  --g: #39FF14;
-  --p: #d97bff;
-  --c: #00f0c8;
-  --r: #ff3c5a;
-  --o: #ff9900;
-  --y: #ffe033;
-  --ff: 'Familjen Grotesk', sans-serif;
-  --fm: 'Fragment Mono', monospace;
-  --sb: env(safe-area-inset-bottom, 0px);
+/* ══════════════════════════════════
+   TOKENS
+══════════════════════════════════ */
+:root{
+  --g:#39FF14; --g2:#00c853;
+  --p:#c77dff; --p2:#7b2ff7;
+  --c:#00f5d4; --c2:#0099cc;
+  --r:#ff453a; --o:#ff9f0a;
+  --y:#ffd60a;
+  --bg:#06060f;
+  --l1:#0c0c1a; --l2:#121220; --l3:#1a1a2e;
+  --b:rgba(255,255,255,0.055);
+  --b2:rgba(255,255,255,0.09);
+  --tx:#dde0f0; --mu:#4a4a72;
+  --ff:'Bricolage Grotesque',sans-serif;
+  --fm:'Azeret Mono',monospace;
+  --sb:env(safe-area-inset-bottom,0px);
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 html,body{height:100%;width:100%;overflow:hidden;background:var(--bg);font-family:var(--ff);color:var(--tx);overscroll-behavior:none;}
 
-/* NOISE */
-body::after{content:’’;position:fixed;inset:0;z-index:1000;pointer-events:none;opacity:.03;background-image:url(“data:image/svg+xml,%3Csvg viewBox=‘0 0 200 200’ xmlns=‘http://www.w3.org/2000/svg’%3E%3Cfilter id=‘n’%3E%3CfeTurbulence type=‘fractalNoise’ baseFrequency=’.85’ numOctaves=‘4’/%3E%3C/filter%3E%3Crect width=‘100%25’ height=‘100%25’ filter=‘url(%23n)’/%3E%3C/svg%3E”);background-size:180px;}
+/* NOISE TEXTURE */
+body::after{content:’’;position:fixed;inset:0;z-index:1000;pointer-events:none;opacity:.025;background-image:url(“data:image/svg+xml,%3Csvg viewBox=‘0 0 256 256’ xmlns=‘http://www.w3.org/2000/svg’%3E%3Cfilter id=‘n’%3E%3CfeTurbulence type=‘fractalNoise’ baseFrequency=‘0.9’ numOctaves=‘4’/%3E%3C/filter%3E%3Crect width=‘100%25’ height=‘100%25’ filter=‘url(%23n)’/%3E%3C/svg%3E”);background-size:200px;}
 
-.wrap {
-position:relative;z-index:10;
-width:100%;height:100%;
-max-width:430px;margin:0 auto;
-display:flex;flex-direction:column;
-background:var(–bg);
-}
+/* BG GLOW */
+.bg{position:fixed;inset:0;z-index:0;overflow:hidden;background:var(–bg);}
+.bg::before{content:’’;position:absolute;inset:0;
+background:
+radial-gradient(ellipse 80% 60% at 10% 5%,rgba(57,255,20,0.1),transparent 55%),
+radial-gradient(ellipse 60% 50% at 90% 90%,rgba(199,125,255,0.08),transparent 55%),
+radial-gradient(ellipse 50% 40% at 55% 50%,rgba(0,245,212,0.05),transparent 50%);}
+.orb{position:absolute;border-radius:50%;filter:blur(100px);pointer-events:none;
+animation:of var(–d,30s) ease-in-out infinite var(–dl,0s);}
+.o1{width:700px;height:700px;top:-300px;left:-250px;background:radial-gradient(circle,rgba(57,255,20,.1),transparent 65%);–d:35s;}
+.o2{width:550px;height:550px;bottom:-200px;right:-200px;background:radial-gradient(circle,rgba(199,125,255,.09),transparent 65%);–d:28s;–dl:-15s;}
+.o3{width:400px;height:400px;top:40%;left:30%;background:radial-gradient(circle,rgba(0,245,212,.06),transparent 65%);–d:22s;–dl:-8s;}
+@keyframes of{0%,100%{transform:translate(0,0)scale(1);}33%{transform:translate(70px,-90px)scale(1.1);}66%{transform:translate(-60px,70px)scale(.92);}}
 
-/* ── HEADER ── */
-.hdr {
-display:flex;align-items:center;justify-content:space-between;
-padding:14px 16px 10px;
-flex-shrink:0;
-}
-.hdr-logo {
-font-size:17px;font-weight:700;letter-spacing:-.5px;
-background:linear-gradient(135deg,var(–g),var(–c));
--webkit-background-clip:text;-webkit-text-fill-color:transparent;
-}
-.hdr-tabs {
-display:flex;gap:0;background:var(–l2);border-radius:100px;padding:3px;border:1px solid var(–b);
-}
-.htab {
-padding:5px 14px;border-radius:100px;font-size:12px;font-weight:600;cursor:pointer;
-color:var(–mu);transition:all .2s;
-}
-.htab.active {background:var(–l3);color:var(–tx);}
-.hdr-x {
-width:32px;height:32px;background:var(–l2);border:1px solid var(–b);
-border-radius:50%;display:flex;align-items:center;justify-content:center;
-font-size:14px;cursor:pointer;transition:all .15s;
-}
-.hdr-x:active{transform:scale(.88);}
+/* ══ ONBOARDING ══ */
+.ob-wrap{position:fixed;inset:0;z-index:2000;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 20px;background:var(–bg);overflow-y:auto;}
+.ob-logo{font-size:52px;font-weight:800;letter-spacing:-3px;line-height:1;background:linear-gradient(135deg,var(–g),var(–c));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px;}
+.ob-sub{font-size:12px;color:var(–mu);letter-spacing:2px;text-transform:uppercase;margin-bottom:32px;}
+.ob-pet-big{font-size:88px;line-height:1;margin-bottom:6px;animation:bob 2.2s ease-in-out infinite alternate;}
+@keyframes bob{from{transform:translateY(0);}to{transform:translateY(-14px);}}
+.ob-h{font-size:24px;font-weight:800;margin-bottom:8px;text-align:center;}
+.ob-p{font-size:13px;color:var(–mu);text-align:center;line-height:1.6;margin-bottom:24px;max-width:280px;}
+.pet-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:24px;}
+.pp{font-size:42px;cursor:pointer;padding:10px;border-radius:18px;background:var(–l2);border:2px solid transparent;transition:all .2s;}
+.pp.sel{border-color:var(–g);background:rgba(57,255,20,0.1);transform:scale(1.15);}
+.pp:active{transform:scale(.9);}
+.ob-in{width:100%;background:var(–l2);border:1.5px solid var(–b2);border-radius:14px;padding:13px 16px;color:var(–tx);font-size:15px;font-family:var(–ff);outline:none;text-align:center;margin-bottom:14px;transition:border-color .2s;}
+.ob-in:focus{border-color:rgba(57,255,20,.45);}
 
-/* ── MAIN SCROLL ── */
-.main {flex:1;overflow-y:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
-.main::-webkit-scrollbar{display:none;}
+/* ══ APP SHELL ══ */
+.app{position:relative;z-index:10;width:100%;height:100%;display:flex;flex-direction:column;max-width:430px;margin:0 auto;display:none;}
 
-/* ── UPLOAD ZONE ── */
-.upload-zone {
-margin:10px 14px;
-height:260px;
-background:var(–l1);
-border:2px dashed var(–b2);
-border-radius:22px;
-display:flex;flex-direction:column;align-items:center;justify-content:center;
-gap:10px;cursor:pointer;transition:all .25s;position:relative;overflow:hidden;
-flex-shrink:0;
-}
-.upload-zone:active{transform:scale(.98);}
-.upload-zone.has-img{border-style:solid;border-color:rgba(57,255,20,.3);}
-.upload-zone.drag{border-color:var(–g);background:rgba(57,255,20,.05);}
-.uz-preview {
-position:absolute;inset:0;object-fit:cover;width:100%;height:100%;border-radius:20px;
-}
-.uz-overlay {
-position:absolute;inset:0;background:rgba(0,0,0,.55);
-display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
-border-radius:20px;
-}
-.uz-icon{font-size:38px;opacity:.6;}
-.uz-lbl{font-size:13px;font-weight:600;color:var(–mu);}
-.uz-sublbl{font-size:11px;color:var(–mu);opacity:.7;}
-.uz-change{
-position:absolute;bottom:10px;right:10px;
-background:rgba(0,0,0,.75);backdrop-filter:blur(8px);
-border:1px solid var(–b2);border-radius:100px;
-padding:5px 12px;font-size:11px;font-weight:600;cursor:pointer;
-}
-.uz-change:active{opacity:.7;}
+/* ══ TOPBAR ══ */
+.topbar{display:flex;align-items:center;gap:6px;padding:10px 12px 6px;background:rgba(6,6,15,.88);backdrop-filter:blur(24px);border-bottom:1px solid var(–b);flex-shrink:0;z-index:60;}
+.t-logo{font-size:18px;font-weight:800;letter-spacing:-1px;background:linear-gradient(135deg,var(–g),var(–c));-webkit-background-clip:text;-webkit-text-fill-color:transparent;flex-shrink:0;}
+.t-pills{display:flex;gap:4px;flex:1;overflow:hidden;justify-content:center;}
+.pill{background:var(–l2);border:1px solid var(–b);padding:4px 8px;border-radius:100px;font-size:10px;font-weight:600;font-family:var(–fm);white-space:nowrap;display:flex;align-items:center;gap:3px;}
+.pill .v{color:var(–g);}
+.pill.ep .v{color:var(–c);}
+.pill.str .v{color:var(–o);}
+.t-btn{width:32px;height:32px;background:linear-gradient(135deg,var(–g),var(–c));border:none;border-radius:10px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .15s;}
+.t-btn:active{transform:scale(.88);}
 
-/* ── SECTION TITLE ── */
-.sec {
-padding:12px 14px 8px;font-size:11px;font-weight:700;
-color:var(–mu);letter-spacing:1.5px;text-transform:uppercase;
-display:flex;align-items:center;justify-content:space-between;
-flex-shrink:0;
-}
-.sec a{font-size:11px;color:var(–g);cursor:pointer;letter-spacing:0;text-transform:none;font-weight:600;}
+/* ══ PET STATUS BAR (PETCARE) ══ */
+.pet-status-bar{margin:8px 12px 0;display:flex;gap:8px;flex-shrink:0;}
+.ps{flex:1;background:var(–l2);border:1px solid var(–b);border-radius:12px;padding:6px 10px;}
+.ps-lbl{font-size:9px;color:var(–mu);letter-spacing:.8px;text-transform:uppercase;margin-bottom:4px;display:flex;justify-content:space-between;}
+.ps-bar{height:4px;background:var(–l3);border-radius:100px;overflow:hidden;}
+.ps-fill{height:100%;border-radius:100px;transition:width .5s;}
+.ps-fill.hunger{background:linear-gradient(90deg,var(–o),#ff6b00);}
+.ps-fill.energy{background:linear-gradient(90deg,var(–c),var(–c2));}
+.ps-fill.mood{background:linear-gradient(90deg,var(–p),var(–p2));}
 
-/* ── STYLE GRID ── */
-.style-scroll {
-padding:0 14px;overflow-x:auto;white-space:nowrap;scrollbar-width:none;
-display:flex;gap:10px;-webkit-overflow-scrolling:touch;
-}
-.style-scroll::-webkit-scrollbar{display:none;}
-.style-card {
-display:inline-flex;flex-direction:column;align-items:center;gap:6px;
-cursor:pointer;flex-shrink:0;width:82px;
-}
-.sc-img {
-width:82px;height:82px;border-radius:16px;
-background:var(–l2);border:2.5px solid transparent;
-display:flex;align-items:center;justify-content:center;
-font-size:32px;transition:all .2s;overflow:hidden;
-position:relative;
-}
-.sc-img img{width:100%;height:100%;object-fit:cover;border-radius:13px;}
-.sc-img::after{
-content:’’;position:absolute;inset:0;border-radius:13px;
-background:linear-gradient(135deg,rgba(57,255,20,.15),transparent);
-opacity:0;transition:opacity .2s;
-}
-.style-card.active .sc-img{border-color:var(–g);box-shadow:0 0 16px rgba(57,255,20,.3);}
-.style-card.active .sc-img::after{opacity:1;}
-.style-card:active .sc-img{transform:scale(.92);}
-.sc-name{font-size:11px;font-weight:600;color:var(–mu);text-align:center;white-space:normal;}
-.style-card.active .sc-name{color:var(–g);}
+/* ══ STORIES ══ */
+.stories{padding:8px 12px;display:flex;gap:10px;overflow-x:auto;flex-shrink:0;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+.stories::-webkit-scrollbar{display:none;}
+.story{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;flex-shrink:0;}
+.s-ring{width:56px;height:56px;border-radius:50%;background:conic-gradient(var(–g) 0deg,var(–c) 120deg,var(–p) 240deg,var(–g) 360deg);padding:2.5px;display:flex;align-items:center;justify-content:center;transition:transform .18s;}
+.s-ring.seen{background:conic-gradient(var(–l3),var(–l3));}
+.s-ring:active{transform:scale(.87);}
+.s-inner{width:49px;height:49px;border-radius:50%;background:var(–l2);display:flex;align-items:center;justify-content:center;font-size:24px;}
+.s-nm{font-size:9px;color:var(–mu);max-width:56px;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;text-align:center;}
 
-/* STYLE EMOJI BG */
-.sc-bg { width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:34px; }
-.sc-bg.pixel { background:linear-gradient(135deg,#0a0a1a,#1a0a2e); image-rendering:pixelated; }
-.sc-bg.anime { background:linear-gradient(135deg,#ff6b9d22,#c44dff22); }
-.sc-bg.brainrot { background:linear-gradient(135deg,#ff3c5a22,#ff990022); }
-.sc-bg.glow { background:linear-gradient(135deg,#39FF1422,#00f0c822); }
-.sc-bg.clay { background:linear-gradient(135deg,#ffd60a22,#ff9f0a22); }
-.sc-bg.cyber { background:linear-gradient(135deg,#0af0ff22,#7b2ff722); }
-.sc-bg.vhs { background:linear-gradient(135deg,#ffffff11,#00000044); }
-.sc-bg.dragon { background:linear-gradient(135deg,#ff453a22,#ff9f0a22); }
+/* ══ MAIN CONTENT ══ */
+.main{flex:1;overflow:hidden;position:relative;}
 
-/* ── PROMPT INPUT ── */
-.prompt-wrap {
-margin:8px 14px 0;
-background:var(–l1);border:1.5px solid var(–b2);
-border-radius:16px;padding:12px 14px;
-transition:border-color .2s;
-}
-.prompt-wrap:focus-within{border-color:rgba(57,255,20,.4);}
-.prompt-label{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(–mu);margin-bottom:6px;}
-.prompt-ta {
-width:100%;background:none;border:none;outline:none;
-color:var(–tx);font-size:14px;font-family:var(–ff);
-resize:none;min-height:52px;line-height:1.55;
-}
-.prompt-ta::placeholder{color:var(–mu);}
-.prompt-examples {
-display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;padding-top:8px;
-border-top:1px solid var(–b);
-}
-.pe {
-font-size:11px;font-weight:500;color:var(–mu);
-background:var(–l2);border:1px solid var(–b);
-border-radius:100px;padding:4px 10px;cursor:pointer;transition:all .15s;
-white-space:nowrap;
-}
-.pe:active{border-color:rgba(57,255,20,.4);color:var(–g);background:rgba(57,255,20,.06);}
+/* ══ VIEWS ══ */
+.view{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;padding:10px;display:none;flex-direction:column;gap:10px;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+.view::-webkit-scrollbar{display:none;}
+.view.active{display:flex;}
+.vbot{height:12px;flex-shrink:0;}
 
-/* ── GENERATE BTN ── */
-.gen-wrap{padding:12px 14px;flex-shrink:0;}
-.gen-btn {
-width:100%;padding:15px;border-radius:100px;border:none;cursor:pointer;
-font-size:15px;font-weight:700;font-family:var(–ff);letter-spacing:.3px;
-background:linear-gradient(135deg,var(–g),var(–c));
-color:#000;transition:all .15s;position:relative;overflow:hidden;
-}
-.gen-btn:active{transform:scale(.97);}
-.gen-btn::before{
-content:’’;position:absolute;inset:0;
-background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);
-transform:translateX(-100%);transition:transform .6s;
-}
-.gen-btn.loading::before{transform:translateX(100%);}
-.gen-btn:disabled{opacity:.5;cursor:not-allowed;}
-.gen-btn.loading {
-background:linear-gradient(135deg,rgba(57,255,20,.6),rgba(0,240,200,.6));
-animation:pulse 1.5s ease-in-out infinite;
-}
-@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.7;}}
+/* ══ CARDS ══ */
+.card{background:var(–l1);border:1px solid var(–b);border-radius:18px;padding:14px;animation:su .26s ease both;}
+@keyframes su{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.ct{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(–mu);margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;}
+.ct a{font-size:11px;color:var(–g);text-transform:none;letter-spacing:0;cursor:pointer;}
 
-/* ── RESULT SECTION ── */
-.result-section {
-padding:0 14px 14px;
-display:none;
-}
-.result-section.show{display:block;}
-.result-card {
-background:var(–l1);border:1px solid var(–b2);
-border-radius:20px;overflow:hidden;animation:su .35s ease;
-}
-@keyframes su{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
-.result-header {
-padding:12px 14px;border-bottom:1px solid var(–b);
-display:flex;align-items:center;justify-content:space-between;
-}
-.result-style-badge {
-display:flex;align-items:center;gap:6px;
-font-size:12px;font-weight:700;
-}
-.rsb-dot{width:8px;height:8px;border-radius:50%;background:var(–g);}
-.result-time{font-size:10px;color:var(–mu);font-family:var(–fm);}
-.result-img-wrap{position:relative;background:var(–l2);}
-.result-img{width:100%;display:block;max-height:320px;object-fit:cover;}
-.result-img-placeholder {
-width:100%;height:280px;background:var(–l2);
-display:flex;flex-direction:column;align-items:center;justify-content:center;
-gap:10px;font-size:13px;color:var(–mu);
-}
-.result-desc {
-padding:12px 14px;font-size:13px;line-height:1.65;color:var(–tx);
-border-bottom:1px solid var(–b);
-}
-.result-desc strong{color:var(–g);}
-.result-actions{display:flex;gap:0;}
-.ra {
-flex:1;background:none;border:none;border-right:1px solid var(–b);
-padding:12px;cursor:pointer;font-size:11px;font-weight:700;
-color:var(–mu);font-family:var(–ff);transition:all .15s;
-display:flex;align-items:center;justify-content:center;gap:5px;
-}
-.ra:last-child{border-right:none;}
-.ra:active{background:rgba(255,255,255,.04);color:var(–tx);}
-.ra.primary{color:var(–g);}
+/* ══ PETFLO — FEED ══ */
+.flo-item{background:var(–l1);border:1px solid var(–b);border-radius:18px;overflow:hidden;animation:su .26s ease both;}
+.flo-head{padding:12px 12px 0;display:flex;align-items:center;gap:9px;}
+.flo-ava{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(–g),var(–p));display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.flo-uname{font-size:13px;font-weight:700;color:#fff;}
+.flo-sub{font-size:10px;color:var(–mu);}
+.flo-badge{background:rgba(57,255,20,0.1);border:1px solid rgba(57,255,20,0.2);padding:3px 8px;border-radius:100px;font-size:9px;font-weight:700;color:var(–g);margin-left:auto;flex-shrink:0;}
+.flo-txt{padding:8px 12px 0;font-size:14px;line-height:1.6;}
+.flo-vid{width:100%;background:linear-gradient(135deg,var(–l3),var(–l2));margin-top:8px;height:200px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;font-size:13px;color:var(–mu);cursor:pointer;transition:background .2s;}
+.flo-vid:active{background:var(–l3);}
+.flo-acts{padding:8px 6px 12px;display:flex;border-top:1px solid var(–b);margin-top:8px;}
+.fa{flex:1;background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px;color:var(–mu);font-size:11px;padding:7px;border-radius:10px;transition:all .15s;font-family:var(–ff);}
+.fa:active{background:rgba(255,255,255,.04);}
+.fa.liked{color:var(–r);}
+.fa .n{font-family:var(–fm);font-size:10px;}
 
-/* ── PROCESSING ANIMATION ── */
-.processing-overlay {
-position:fixed;inset:0;z-index:500;
-background:rgba(0,0,0,.92);backdrop-filter:blur(20px);
-display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;
-opacity:0;pointer-events:none;transition:opacity .3s;
-}
-.processing-overlay.show{opacity:1;pointer-events:all;}
-.proc-ring {
-width:80px;height:80px;border-radius:50%;
-border:3px solid rgba(255,255,255,.08);
-border-top-color:var(–g);
-animation:spin 1s linear infinite;
-}
+/* ══ PETCARE — LEVANDE PET ══ */
+.petcare-hero{background:linear-gradient(135deg,rgba(57,255,20,.07),rgba(199,125,255,.06));border:1px solid var(–b);border-radius:20px;padding:20px;text-align:center;position:relative;overflow:hidden;}
+.petcare-hero::before{content:’’;position:absolute;inset:0;background:radial-gradient(circle at 50% 70%,rgba(57,255,20,.05),transparent 60%);pointer-events:none;}
+.pc-pet{font-size:90px;line-height:1;margin-bottom:8px;display:inline-block;transition:transform .3s;cursor:pointer;}
+.pc-pet:active{transform:scale(1.15) rotate(-5deg);}
+.pc-pet.bounce{animation:petbounce .4s ease;}
+@keyframes petbounce{0%,100%{transform:scale(1);}50%{transform:scale(1.2) rotate(5deg);}}
+.pc-name{font-size:20px;font-weight:800;margin-bottom:2px;}
+.pc-rank{font-size:12px;color:var(–g);font-weight:600;margin-bottom:14px;}
+.pc-stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;}
+.pc-stat{background:rgba(0,0,0,.3);border-radius:12px;padding:10px 6px;border:1px solid var(–b);}
+.pcs-v{font-size:18px;font-weight:800;font-family:var(–fm);color:var(–g);}
+.pcs-l{font-size:9px;color:var(–mu);letter-spacing:.8px;text-transform:uppercase;}
+.pc-bar-row{margin-bottom:8px;}
+.pc-bar-lbl{display:flex;justify-content:space-between;font-size:11px;margin-bottom:4px;color:var(–mu);}
+.pc-bar{height:6px;background:var(–l3);border-radius:100px;overflow:hidden;}
+.pc-fill{height:100%;border-radius:100px;transition:width .5s;}
+.pc-fill.h{background:linear-gradient(90deg,var(–o),#ff6b00);}
+.pc-fill.e{background:linear-gradient(90deg,var(–c),var(–c2));}
+.pc-fill.m{background:linear-gradient(90deg,var(–p),var(–p2));}
+.pc-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.pca{background:var(–l2);border:1px solid var(–b);border-radius:14px;padding:10px 6px;text-align:center;cursor:pointer;transition:all .18s;font-size:10px;font-weight:600;}
+.pca:active{transform:scale(.93);border-color:rgba(57,255,20,.4);}
+.pca .pca-e{font-size:26px;margin-bottom:4px;}
+.evol-banner{background:linear-gradient(135deg,rgba(255,159,10,.15),rgba(255,69,58,.1));border:1px solid rgba(255,159,10,.35);border-radius:14px;padding:12px;text-align:center;margin-top:10px;cursor:pointer;}
+.evol-txt{font-size:13px;font-weight:700;color:var(–o);margin-bottom:2px;}
+.evol-sub{font-size:11px;color:var(–mu);}
+
+/* ══ PETMAP ══ */
+.map-canvas{height:220px;background:var(–l2);border-radius:16px;overflow:hidden;position:relative;border:1px solid var(–b);}
+.map-grid-lines{position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 28px,rgba(57,255,20,.06) 28px,rgba(57,255,20,.06) 29px),repeating-linear-gradient(90deg,transparent,transparent 28px,rgba(57,255,20,.06) 28px,rgba(57,255,20,.06) 29px);}
+.map-center-pin{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:4px;z-index:5;}
+.map-you-ring{width:18px;height:18px;border-radius:50%;background:var(–g);box-shadow:0 0 0 0 rgba(57,255,20,.5);animation:ping 2s infinite;}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(57,255,20,.5);}70%{box-shadow:0 0 0 16px rgba(57,255,20,0);}100%{box-shadow:0 0 0 0 rgba(57,255,20,0);}}
+.map-you-lbl{font-size:9px;font-weight:700;color:var(–g);background:rgba(0,0,0,.7);padding:2px 7px;border-radius:100px;}
+.map-pin{position:absolute;transform:translate(-50%,-50%);cursor:pointer;z-index:4;}
+.map-pin-dot{width:10px;height:10px;border-radius:50%;border:2px solid #000;}
+.map-pin-lbl{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);font-size:9px;font-weight:700;background:rgba(0,0,0,.85);padding:2px 6px;border-radius:100px;white-space:nowrap;}
+.map-zones{position:absolute;inset:0;pointer-events:none;}
+.map-zone{position:absolute;border-radius:50%;border:1px dashed;opacity:.18;}
+.mf-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(–b);}
+.mf-row:last-child{border-bottom:none;}
+.mf-ava{width:36px;height:36px;border-radius:50%;background:var(–l3);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;position:relative;}
+.on-dot{position:absolute;bottom:0;right:0;width:9px;height:9px;border-radius:50%;background:var(–g);border:2px solid var(–l1);}
+.mf-n{font-size:13px;font-weight:700;}
+.mf-l{font-size:10px;color:var(–mu);}
+.mf-d{font-size:10px;font-family:var(–fm);color:var(–c);flex-shrink:0;}
+
+/* ══ PET BOUNTY ══ */
+.bounty-tabs{display:flex;background:var(–l2);border-radius:12px;padding:3px;gap:2px;margin-bottom:10px;}
+.btab{flex:1;text-align:center;padding:7px;border-radius:10px;font-size:11px;font-weight:700;cursor:pointer;color:var(–mu);transition:all .18s;}
+.btab.active{background:var(–l3);color:var(–tx);}
+.bounty-card{background:var(–l2);border:1px solid var(–b);border-radius:15px;padding:12px;margin-bottom:8px;transition:border-color .2s;cursor:pointer;}
+.bounty-card:active{border-color:rgba(57,255,20,.35);}
+.bc-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:5px;}
+.bc-t{font-size:13px;font-weight:700;flex:1;}
+.bc-r{font-size:12px;font-family:var(–fm);font-weight:700;flex-shrink:0;}
+.bc-r.sek{color:var(–y);}
+.bc-r.coin{color:var(–o);}
+.bc-brand{font-size:10px;font-weight:700;color:var(–p);margin-bottom:4px;}
+.bc-desc{font-size:12px;color:var(–mu);line-height:1.5;}
+.bc-tags{display:flex;gap:5px;margin-top:8px;flex-wrap:wrap;}
+.bc-tag{font-size:9px;font-weight:700;padding:3px 8px;border-radius:100px;letter-spacing:.5px;}
+.bc-tag.brand{background:rgba(199,125,255,.15);color:var(–p);border:1px solid rgba(199,125,255,.25);}
+.bc-tag.photo{background:rgba(57,255,20,.1);color:var(–g);border:1px solid rgba(57,255,20,.2);}
+.bc-tag.video{background:rgba(255,69,58,.1);color:var(–r);border:1px solid rgba(255,69,58,.2);}
+.bc-tag.irl{background:rgba(255,159,10,.1);color:var(–o);border:1px solid rgba(255,159,10,.2);}
+.do-btn{display:inline-flex;align-items:center;gap:5px;margin-top:9px;background:rgba(57,255,20,.1);border:1px solid rgba(57,255,20,.25);color:var(–g);padding:6px 14px;border-radius:100px;font-size:11px;font-weight:700;cursor:pointer;font-family:var(–ff);transition:all .15s;}
+.do-btn:active{background:rgba(57,255,20,.2);}
+.swish-modal{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.85);backdrop-filter:blur(16px);display:flex;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity .25s;}
+.swish-modal.open{opacity:1;pointer-events:all;}
+.swish-sheet{width:100%;max-width:430px;margin:0 auto;background:var(–l1);border-radius:24px 24px 0 0;border:1px solid var(–b);padding:20px 20px calc(32px + var(–sb));transform:translateY(100%);transition:transform .3s cubic-bezier(.32,.72,0,1);}
+.swish-modal.open .swish-sheet{transform:translateY(0);}
+.swish-logo{font-size:28px;font-weight:900;color:#00b3ff;margin-bottom:4px;font-family:var(–fm);}
+.swish-sub{font-size:12px;color:var(–mu);margin-bottom:16px;}
+.swish-amount{font-size:48px;font-weight:900;font-family:var(–fm);text-align:center;color:var(–y);margin:16px 0;}
+.swish-from{text-align:center;font-size:13px;color:var(–mu);margin-bottom:24px;}
+
+/* ══ PETSHOP ══ */
+.shop-tabs{display:flex;background:var(–l2);border-radius:12px;padding:3px;gap:2px;margin-bottom:10px;}
+.stab{flex:1;text-align:center;padding:7px;border-radius:10px;font-size:11px;font-weight:700;cursor:pointer;color:var(–mu);transition:all .18s;}
+.stab.active{background:var(–l3);color:var(–tx);}
+.prod-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
+.prod{background:var(–l2);border:1px solid var(–b);border-radius:14px;padding:12px;text-align:center;cursor:pointer;transition:all .18s;position:relative;}
+.prod:active{transform:scale(.95);border-color:rgba(57,255,20,.4);}
+.prod-badge{position:absolute;top:8px;right:8px;font-size:8px;font-weight:800;padding:2px 7px;border-radius:100px;letter-spacing:.5px;text-transform:uppercase;}
+.pb-hot{background:rgba(255,69,58,.2);color:var(–r);border:1px solid rgba(255,69,58,.3);}
+.pb-leg{background:rgba(255,159,10,.15);color:var(–o);border:1px solid rgba(255,159,10,.25);}
+.pb-new{background:rgba(57,255,20,.12);color:var(–g);border:1px solid rgba(57,255,20,.22);}
+.pb-pre{background:rgba(199,125,255,.15);color:var(–p);border:1px solid rgba(199,125,255,.25);}
+.prod-e{font-size:36px;margin-bottom:6px;}
+.prod-n{font-size:12px;font-weight:700;margin-bottom:3px;}
+.prod-p{font-size:12px;font-family:var(–fm);font-weight:700;}
+.prod-p.coin{color:var(–o);}
+.prod-p.sek{color:var(–y);}
+.deal-card{background:linear-gradient(135deg,rgba(255,214,10,.08),rgba(255,69,58,.06));border:1px solid rgba(255,214,10,.25);border-radius:14px;padding:12px;display:flex;align-items:center;gap:12px;margin-bottom:8px;cursor:pointer;}
+.deal-e{font-size:40px;}
+.deal-info{flex:1;}
+.deal-n{font-size:14px;font-weight:700;}
+.deal-d{font-size:11px;color:var(–mu);}
+.deal-timer{font-family:var(–fm);font-size:14px;font-weight:700;color:var(–y);}
+
+/* ══ BATTLE ══ */
+.opp-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
+.opp-card{background:var(–l2);border:1px solid var(–b);border-radius:15px;padding:14px;text-align:center;cursor:pointer;transition:all .18s;}
+.opp-card:active{transform:scale(.95);border-color:rgba(199,125,255,.45);}
+.opp-card.pvp{border-color:rgba(255,69,58,.25);}
+.oc-e{font-size:38px;}
+.oc-n{font-size:12px;font-weight:700;margin:5px 0 2px;}
+.oc-l{font-size:10px;color:var(–mu);}
+.oc-r{font-size:11px;font-family:var(–fm);margin-top:4px;color:var(–o);}
+.oc-pvp{font-size:10px;color:var(–r);font-weight:700;margin-top:4px;}
+.b-arena{background:linear-gradient(135deg,rgba(57,255,20,.04),rgba(199,125,255,.04));border:1px solid var(–b);border-radius:18px;padding:16px;margin-bottom:8px;}
+.b-row{display:flex;align-items:center;justify-content:space-around;}
+.bf{text-align:center;}
+.bf-e{font-size:52px;line-height:1;}
+.bf-n{font-size:11px;font-weight:700;margin:5px 0 4px;}
+.hp-wrap{width:90px;height:5px;background:var(–l3);border-radius:100px;overflow:hidden;margin:0 auto;}
+.hp-fill{height:100%;border-radius:100px;background:linear-gradient(90deg,var(–r),#ff453a88);transition:width .35s;}
+.hp-fill.mine{background:linear-gradient(90deg,var(–g),var(–c));}
+.hp-n{font-size:10px;color:var(–mu);font-family:var(–fm);margin-top:3px;}
+.b-vs{font-size:22px;font-weight:900;color:var(–mu);}
+.b-log{background:var(–l2);border-radius:12px;padding:8px;max-height:88px;overflow-y:auto;font-size:11px;font-family:var(–fm);display:flex;flex-direction:column;gap:3px;margin-bottom:8px;scrollbar-width:none;}
+.b-log::-webkit-scrollbar{display:none;}
+.ll{animation:su .18s ease;}
+.b-acts{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+
+/* ══ PROFILE ══ */
+.prof-cover{background:linear-gradient(135deg,rgba(57,255,20,.07),rgba(199,125,255,.06));border:1px solid var(–b);border-radius:20px;padding:18px;animation:su .26s ease both;}
+.pava{width:74px;height:74px;margin:0 auto 10px;position:relative;}
+.pava-inner{width:74px;height:74px;border-radius:50%;background:linear-gradient(135deg,var(–g),var(–p));display:flex;align-items:center;justify-content:center;font-size:36px;}
+.pava-ring{position:absolute;inset:-4px;border-radius:50%;background:conic-gradient(var(–g),var(–p),var(–c),var(–g));z-index:-1;animation:spin 6s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
-.proc-pet{font-size:50px;position:absolute;animation:procbob 1s ease-in-out infinite alternate;}
-@keyframes procbob{from{transform:scale(1);}to{transform:scale(1.1);}}
-.proc-ring-wrap{position:relative;width:80px;height:80px;display:flex;align-items:center;justify-content:center;}
-.proc-step{font-size:13px;color:var(–mu);font-family:var(–fm);text-align:center;}
-.proc-bar-wrap{width:200px;height:4px;background:var(–l3);border-radius:100px;overflow:hidden;}
-.proc-bar{height:100%;border-radius:100px;background:linear-gradient(90deg,var(–g),var(–c));width:0%;transition:width .3s;}
-.proc-label{font-size:15px;font-weight:700;text-align:center;}
+.p-uname{font-size:21px;font-weight:800;text-align:center;}
+.p-handle{font-size:12px;color:var(–mu);text-align:center;margin-bottom:10px;}
+.p-badges-row{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:12px;}
+.ptag{font-size:9px;font-weight:700;padding:3px 9px;border-radius:100px;letter-spacing:.5px;}
+.ptag.v{background:rgba(57,255,20,.12);border:1px solid rgba(57,255,20,.25);color:var(–g);}
+.ptag.c{background:rgba(199,125,255,.12);border:1px solid rgba(199,125,255,.25);color:var(–p);}
+.p-stats-row{display:flex;}
+.pst{flex:1;text-align:center;border-right:1px solid var(–b);}
+.pst:last-child{border-right:none;}
+.pst-v{font-size:18px;font-weight:900;font-family:var(–fm);}
+.pst-l{font-size:9px;color:var(–mu);letter-spacing:.8px;text-transform:uppercase;}
+.xp-wrap{background:var(–l3);border-radius:100px;height:5px;margin:12px 0 4px;overflow:hidden;}
+.xp-fill{height:100%;border-radius:100px;background:linear-gradient(90deg,var(–g),var(–c));transition:width .6s;}
+.xp-lbl{font-size:10px;color:var(–mu);font-family:var(–fm);text-align:center;}
+.p-bio{font-size:13px;text-align:center;color:#aaa;line-height:1.6;margin-top:8px;}
+.p-action-row{display:flex;gap:8px;margin-top:12px;}
+.prof-tabs{display:flex;background:var(–l2);border-radius:12px;padding:3px;gap:2px;}
+.ptab{flex:1;text-align:center;padding:7px 4px;border-radius:10px;font-size:10px;font-weight:700;cursor:pointer;color:var(–mu);transition:all .18s;letter-spacing:.3px;}
+.ptab.active{background:var(–l3);color:var(–tx);}
 
-/* ── HISTORY STRIP ── */
-.history-strip {
-padding:0 14px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;
-}
-.history-strip::-webkit-scrollbar{display:none;}
-.hist-item {
-flex-shrink:0;width:58px;height:58px;border-radius:12px;
-background:var(–l2);border:1.5px solid var(–b);
-display:flex;align-items:center;justify-content:center;
-font-size:22px;cursor:pointer;transition:all .2s;overflow:hidden;
-position:relative;
-}
-.hist-item:active{transform:scale(.9);}
-.hist-item img{width:100%;height:100%;object-fit:cover;}
-.hist-item.new-btn{border-style:dashed;border-color:var(–g);background:rgba(57,255,20,.05);}
-.hist-badge{
-position:absolute;bottom:-1px;right:-1px;
-background:var(–g);color:#000;font-size:7px;font-weight:800;
-padding:1px 4px;border-radius:4px;letter-spacing:.3px;
-}
+/* ══ BADGE GRID ══ */
+.badge-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;}
+.badge{background:var(–l2);border:1px solid var(–b);border-radius:14px;padding:10px 6px;text-align:center;cursor:pointer;transition:all .18s;}
+.badge.earned{border-color:rgba(255,159,10,.4);background:rgba(255,159,10,.06);}
+.badge:active{transform:scale(.92);}
+.badge-e{font-size:26px;margin-bottom:4px;}
+.badge-l{font-size:9px;color:var(–mu);font-weight:600;line-height:1.3;}
+.badge.earned .badge-l{color:var(–o);}
 
-/* ── BOTTOM SAMPLE PROMPTS ── */
-.sample-scroll{
-padding:0 14px 6px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;
--webkit-overflow-scrolling:touch;
-}
-.sample-scroll::-webkit-scrollbar{display:none;}
-.sp-card {
-flex-shrink:0;background:var(–l2);border:1px solid var(–b);border-radius:14px;
-padding:10px 12px;max-width:200px;cursor:pointer;transition:all .18s;
-white-space:normal;
-}
-.sp-card:active{border-color:rgba(57,255,20,.4);background:rgba(57,255,20,.05);}
-.sp-card p{font-size:12px;color:var(–mu);line-height:1.5;}
+/* ══ ACTIVITY ══ */
+.act-item{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(–b);}
+.act-item:last-child{border-bottom:none;}
+.act-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.act-t{flex:1;font-size:12px;line-height:1.4;}
+.act-time{font-size:9px;color:var(–mu);font-family:var(–fm);}
 
-/* ── PUBLISH SUCCESS ── */
-.pub-success {
-position:fixed;inset:0;z-index:600;
-background:rgba(0,0,0,.9);backdrop-filter:blur(20px);
-display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
-opacity:0;pointer-events:none;transition:opacity .3s;
-}
-.pub-success.show{opacity:1;pointer-events:all;}
-.pub-anim{font-size:80px;animation:pop .5s cubic-bezier(.175,.885,.32,1.275);}
-@keyframes pop{from{transform:scale(.2) rotate(-20deg);}to{transform:scale(1) rotate(0);}}
+/* ══ BOTTOM NAV ══ */
+.bnav{display:flex;align-items:center;background:rgba(6,6,15,.97);backdrop-filter:blur(28px);border-top:1px solid var(–b);padding:6px 4px;padding-bottom:calc(6px + var(–sb));flex-shrink:0;z-index:60;}
+.nb{flex:1;background:none;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 0;}
+.ni{font-size:21px;transition:transform .2s;}
+.nl{font-size:8px;font-weight:700;letter-spacing:.4px;color:var(–mu);text-transform:uppercase;}
+.nb.active .ni{transform:scale(1.2);filter:drop-shadow(0 0 6px var(–g));}
+.nb.active .nl{color:var(–g);}
+.nb-cam{flex:1;background:none;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;padding:0;}
+.nc{width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,var(–g),var(–c));display:flex;align-items:center;justify-content:center;font-size:22px;margin-top:-16px;box-shadow:0 0 22px rgba(57,255,20,.45),0 0 50px rgba(57,255,20,.12);transition:transform .18s;}
+.nb-cam:active .nc{transform:scale(.87);}
 
-/* ── TOAST ── */
-.toast{
-position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(12px);
-background:var(–l2);border:1px solid var(–b);border-radius:100px;
-padding:8px 18px;font-size:12px;font-weight:600;z-index:999;
-white-space:nowrap;opacity:0;transition:all .28s;pointer-events:none;
-}
+/* ══ MODALS ══ */
+.overlay{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.78);backdrop-filter:blur(14px);display:flex;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity .25s;}
+.overlay.open{opacity:1;pointer-events:all;}
+.sheet{width:100%;max-width:430px;margin:0 auto;background:var(–l1);border-radius:24px 24px 0 0;border:1px solid var(–b);border-bottom:none;padding:18px 18px calc(36px + var(–sb));transform:translateY(100%);transition:transform .32s cubic-bezier(.32,.72,0,1);}
+.overlay.open .sheet{transform:translateY(0);}
+.handle{width:36px;height:4px;background:var(–l3);border-radius:2px;margin:0 auto 16px;}
+.sheet-logo{font-size:21px;font-weight:800;margin-bottom:14px;background:linear-gradient(135deg,var(–g),var(–c));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
+.mi{background:var(–l2);border:1px solid var(–b);border-radius:14px;padding:12px 10px;cursor:pointer;font-size:13px;font-weight:600;transition:all .15s;display:flex;align-items:center;gap:7px;}
+.mi:active{border-color:rgba(57,255,20,.35);background:rgba(57,255,20,.06);}
+
+/* ══ CAM SHEET (simple post) ══ */
+.cam-ta{width:100%;background:var(–l2);border:1.5px solid var(–b);border-radius:13px;padding:11px;color:var(–tx);font-size:14px;font-family:var(–ff);resize:none;outline:none;min-height:70px;margin-bottom:10px;transition:border-color .2s;}
+.cam-ta:focus{border-color:rgba(57,255,20,.4);}
+.cam-prev{width:100%;border-radius:13px;margin-bottom:10px;max-height:180px;object-fit:cover;display:none;}
+
+/* ══ PETFOTO FULLSCREEN ══ */
+.petfoto-win{position:fixed;inset:0;z-index:250;background:var(–bg);display:flex;flex-direction:column;transform:translateY(100%);transition:transform .32s cubic-bezier(.32,.72,0,1);}
+.petfoto-win.open{transform:translateY(0);}
+.pf-hdr{display:flex;align-items:center;justify-content:space-between;padding:12px 14px 8px;background:rgba(6,6,15,.9);backdrop-filter:blur(20px);border-bottom:1px solid var(–b);flex-shrink:0;}
+.pf-logo{font-size:16px;font-weight:800;letter-spacing:-.5px;background:linear-gradient(135deg,var(–g),var(–c));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.pf-tabs{display:flex;background:var(–l2);border-radius:100px;padding:3px;border:1px solid var(–b);gap:2px;}
+.pf-tab{padding:4px 12px;border-radius:100px;font-size:11px;font-weight:600;cursor:pointer;color:var(–mu);transition:all .18s;}
+.pf-tab.active{background:var(–l3);color:var(–tx);}
+.pf-close{width:30px;height:30px;background:var(–l2);border:1px solid var(–b);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;}
+.pf-scroll{flex:1;overflow-y:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+.pf-scroll::-webkit-scrollbar{display:none;}
+
+/* upload zone */
+.pf-upload{margin:10px 14px;height:240px;background:var(–l2);border:2px dashed var(–b2);border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden;}
+.pf-upload.has-img{border-style:solid;border-color:rgba(57,255,20,.3);}
+.pf-upload:active{transform:scale(.98);}
+.pf-prev{position:absolute;inset:0;object-fit:cover;width:100%;height:100%;border-radius:18px;}
+.pf-ov{position:absolute;inset:0;background:rgba(0,0,0,.5);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;border-radius:18px;}
+.pf-ov-ico{font-size:36px;opacity:.6;}
+.pf-ov-lbl{font-size:13px;font-weight:600;color:var(–mu);}
+.pf-change{position:absolute;bottom:10px;right:10px;background:rgba(0,0,0,.8);backdrop-filter:blur(6px);border:1px solid var(–b2);border-radius:100px;padding:4px 12px;font-size:10px;font-weight:600;cursor:pointer;color:var(–tx);}
+
+/* style picker */
+.pf-styles{padding:0 14px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+.pf-styles::-webkit-scrollbar{display:none;}
+.pf-scard{display:inline-flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;flex-shrink:0;width:76px;}
+.pf-scard-img{width:76px;height:76px;border-radius:14px;background:var(–l2);border:2.5px solid transparent;display:flex;align-items:center;justify-content:center;font-size:30px;transition:all .18s;position:relative;overflow:hidden;}
+.pf-scard.sel .pf-scard-img{border-color:var(–g);box-shadow:0 0 14px rgba(57,255,20,.35);}
+.pf-scard:active .pf-scard-img{transform:scale(.9);}
+.pf-scard-n{font-size:10px;font-weight:600;color:var(–mu);text-align:center;}
+.pf-scard.sel .pf-scard-n{color:var(–g);}
+.sc-bg{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:30px;}
+.sc-bg.anime{background:linear-gradient(135deg,rgba(255,107,157,.15),rgba(196,77,255,.15));}
+.sc-bg.pixel{background:linear-gradient(135deg,rgba(10,10,26,.9),rgba(26,10,46,.9));}
+.sc-bg.brainrot{background:linear-gradient(135deg,rgba(255,60,90,.12),rgba(255,153,0,.12));}
+.sc-bg.glow{background:linear-gradient(135deg,rgba(57,255,20,.12),rgba(0,245,212,.12));}
+.sc-bg.clay{background:linear-gradient(135deg,rgba(255,214,10,.12),rgba(255,159,10,.12));}
+.sc-bg.cyber{background:linear-gradient(135deg,rgba(10,240,255,.12),rgba(123,47,247,.12));}
+.sc-bg.vhs{background:linear-gradient(135deg,rgba(255,255,255,.06),rgba(0,0,0,.3));}
+.sc-bg.dragon{background:linear-gradient(135deg,rgba(255,69,58,.12),rgba(255,159,10,.12));}
+
+/* prompt */
+.pf-prompt-wrap{margin:8px 14px 0;background:var(–l1);border:1.5px solid var(–b2);border-radius:15px;padding:11px 13px;transition:border-color .2s;}
+.pf-prompt-wrap:focus-within{border-color:rgba(57,255,20,.38);}
+.pf-prompt-lbl{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(–mu);margin-bottom:5px;}
+.pf-prompt-ta{width:100%;background:none;border:none;outline:none;color:var(–tx);font-size:13px;font-family:var(–ff);resize:none;min-height:46px;line-height:1.5;}
+.pf-prompt-ta::placeholder{color:var(–mu);}
+.pf-chips{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px;padding-top:7px;border-top:1px solid var(–b);}
+.pf-chip{font-size:11px;font-weight:500;color:var(–mu);background:var(–l2);border:1px solid var(–b);border-radius:100px;padding:4px 10px;cursor:pointer;white-space:nowrap;transition:all .15s;}
+.pf-chip:active{border-color:rgba(57,255,20,.4);color:var(–g);background:rgba(57,255,20,.06);}
+
+/* samples */
+.pf-samples{padding:0 14px;display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+.pf-samples::-webkit-scrollbar{display:none;}
+.pf-sample{flex-shrink:0;background:var(–l2);border:1px solid var(–b);border-radius:13px;padding:9px 11px;max-width:180px;cursor:pointer;transition:all .15s;white-space:normal;}
+.pf-sample:active{border-color:rgba(57,255,20,.4);background:rgba(57,255,20,.05);}
+.pf-sample p{font-size:11px;color:var(–mu);line-height:1.5;}
+
+/* gen btn */
+.pf-gen-wrap{padding:10px 14px 6px;}
+.pf-gen{width:100%;padding:14px;border-radius:100px;border:none;cursor:pointer;font-size:14px;font-weight:700;font-family:var(–ff);background:linear-gradient(135deg,var(–g),var(–c));color:#000;transition:all .15s;position:relative;overflow:hidden;}
+.pf-gen:active{transform:scale(.97);}
+.pf-gen:disabled{opacity:.5;cursor:not-allowed;}
+.pf-gen.loading{animation:genpulse 1.4s ease-in-out infinite;}
+@keyframes genpulse{0%,100%{opacity:1;}50%{opacity:.65;}}
+
+/* result */
+.pf-result{margin:8px 14px;background:var(–l1);border:1px solid var(–b2);border-radius:18px;overflow:hidden;animation:su .3s ease;}
+.pfr-head{padding:10px 13px;border-bottom:1px solid var(–b);display:flex;align-items:center;justify-content:space-between;}
+.pfr-badge{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:700;}
+.pfr-dot{width:7px;height:7px;border-radius:50%;background:var(–g);}
+.pfr-time{font-size:9px;color:var(–mu);font-family:var(–fm);}
+.pfr-img-wrap{position:relative;}
+.pfr-img{width:100%;display:block;max-height:300px;object-fit:cover;}
+.pfr-placeholder{width:100%;height:220px;background:var(–l2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(–mu);font-size:12px;}
+.pfr-desc{padding:11px 13px;font-size:13px;line-height:1.65;color:var(–tx);border-bottom:1px solid var(–b);}
+.pfr-desc strong{color:var(–g);}
+.pfr-acts{display:flex;}
+.pfa{flex:1;background:none;border:none;border-right:1px solid var(–b);padding:11px;cursor:pointer;font-size:11px;font-weight:700;color:var(–mu);font-family:var(–ff);display:flex;align-items:center;justify-content:center;gap:4px;transition:all .15s;}
+.pfa:last-child{border-right:none;}
+.pfa:active{background:rgba(255,255,255,.04);color:var(–tx);}
+.pfa.primary{color:var(–g);}
+
+/* history */
+.pf-hist{padding:0 14px 6px;display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;}
+.pf-hist::-webkit-scrollbar{display:none;}
+.pf-hi{flex-shrink:0;width:54px;height:54px;border-radius:12px;background:var(–l2);border:1.5px solid var(–b);display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;transition:all .18s;overflow:hidden;position:relative;}
+.pf-hi:active{transform:scale(.9);}
+.pf-hi img{width:100%;height:100%;object-fit:cover;}
+.pf-hi.add{border-style:dashed;border-color:var(–g);background:rgba(57,255,20,.05);}
+.pf-hi-badge{position:absolute;bottom:0;right:0;background:var(–g);color:#000;font-size:7px;font-weight:800;padding:1px 4px;border-radius:4px;}
+
+/* processing overlay */
+.pf-proc{position:fixed;inset:0;z-index:350;background:rgba(0,0,0,.93);backdrop-filter:blur(22px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;opacity:0;pointer-events:none;transition:opacity .28s;}
+.pf-proc.show{opacity:1;pointer-events:all;}
+.pf-proc-ring-wrap{position:relative;width:76px;height:76px;display:flex;align-items:center;justify-content:center;}
+.pf-proc-ring{width:76px;height:76px;border-radius:50%;border:3px solid rgba(255,255,255,.07);border-top-color:var(–g);animation:spin 1s linear infinite;}
+.pf-proc-pet{position:absolute;font-size:38px;animation:bob .9s ease-in-out infinite alternate;}
+.pf-proc-lbl{font-size:15px;font-weight:700;text-align:center;}
+.pf-proc-bar-wrap{width:190px;height:4px;background:var(–l3);border-radius:100px;overflow:hidden;}
+.pf-proc-bar{height:100%;border-radius:100px;background:linear-gradient(90deg,var(–g),var(–c));width:0%;transition:width .3s;}
+.pf-proc-step{font-size:11px;color:var(–mu);font-family:var(–fm);text-align:center;}
+
+/* pub success */
+.pf-pub{position:fixed;inset:0;z-index:450;background:rgba(0,0,0,.92);backdrop-filter:blur(22px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;opacity:0;pointer-events:none;transition:opacity .28s;}
+.pf-pub.show{opacity:1;pointer-events:all;}
+.pf-pub-e{font-size:76px;animation:pop .45s cubic-bezier(.175,.885,.32,1.275);}
+
+/* sec label */
+.pf-sec{padding:10px 14px 6px;font-size:10px;font-weight:700;color:var(–mu);letter-spacing:1.5px;text-transform:uppercase;display:flex;align-items:center;justify-content:space-between;}
+.pf-sec a{font-size:11px;color:var(–g);text-transform:none;letter-spacing:0;cursor:pointer;}
+.pf-vbot{height:16px;}
+
+/* ══ AI CHAT ══ */
+.ai-win{position:fixed;inset:0;z-index:400;background:var(–bg);display:flex;flex-direction:column;transform:translateY(100%);transition:transform .32s cubic-bezier(.32,.72,0,1);}
+.ai-win.open{transform:translateY(0);}
+.ai-head{padding:12px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(–b);background:rgba(6,6,15,.92);backdrop-filter:blur(22px);}
+.ai-ava{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(–c),var(–p));display:flex;align-items:center;justify-content:center;font-size:20px;}
+.ai-bk{background:none;border:none;color:var(–tx);font-size:22px;cursor:pointer;}
+.ai-msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:8px;scrollbar-width:none;}
+.ai-msgs::-webkit-scrollbar{display:none;}
+.msg{max-width:82%;padding:10px 13px;border-radius:16px;font-size:13px;line-height:1.55;animation:mp .18s ease;}
+@keyframes mp{from{opacity:0;transform:scale(.9);}to{opacity:1;transform:scale(1);}}
+.msg.u{align-self:flex-end;background:linear-gradient(135deg,rgba(57,255,20,.2),rgba(0,245,212,.12));border:1px solid rgba(57,255,20,.22);}
+.msg.ai{align-self:flex-start;background:var(–l2);border:1px solid var(–b);}
+.msg.ai.ld{color:var(–mu);font-style:italic;}
+.ai-inp-row{padding:10px 14px;display:flex;gap:8px;align-items:center;border-top:1px solid var(–b);background:rgba(6,6,15,.92);backdrop-filter:blur(22px);padding-bottom:calc(10px + var(–sb));}
+.ai-inp{flex:1;background:var(–l2);border:1.5px solid var(–b);border-radius:100px;padding:9px 15px;color:var(–tx);font-size:13px;font-family:var(–ff);outline:none;transition:border-color .2s;}
+.ai-inp:focus{border-color:rgba(57,255,20,.38);}
+.ai-snd{width:40px;height:40px;border-radius:50%;border:none;cursor:pointer;background:linear-gradient(135deg,var(–g),var(–c));display:flex;align-items:center;justify-content:center;font-size:16px;transition:transform .15s;flex-shrink:0;}
+.ai-snd:active{transform:scale(.87);}
+
+/* ══ TOAST ══ */
+.toast{position:fixed;bottom:82px;left:50%;transform:translateX(-50%) translateY(12px);background:var(–l1);border:1px solid var(–b);border-radius:100px;padding:8px 18px;font-size:12px;font-weight:600;z-index:999;white-space:nowrap;opacity:0;transition:all .28s;pointer-events:none;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 .toast.ok{border-color:rgba(57,255,20,.45);color:var(–g);}
-.toast.err{border-color:rgba(255,60,90,.45);color:var(–r);}
-.toast.gold{border-color:rgba(255,200,50,.45);color:var(–y);}
+.toast.err{border-color:rgba(255,69,58,.45);color:var(–r);}
+.toast.gold{border-color:rgba(255,214,10,.45);color:var(–y);}
 
-/* BOTTOM SPACER */
-.bsp{height:calc(20px + var(–sb));flex-shrink:0;}
+/* ══ POPS ══ */
+@keyframes cpop{0%{opacity:1;transform:translateY(0)scale(1);}100%{opacity:0;transform:translateY(-70px)scale(.5);}}
+.coinpop{position:fixed;pointer-events:none;z-index:9999;font-size:14px;font-family:var(–fm);font-weight:700;animation:cpop .7s ease-out forwards;}
+
+.lvl-splash{position:fixed;inset:0;z-index:600;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.87);backdrop-filter:blur(22px);opacity:0;pointer-events:none;transition:opacity .3s;}
+.lvl-splash.show{opacity:1;}
+.lvl-cont{text-align:center;animation:pop .5s cubic-bezier(.175,.885,.32,1.275);}
+@keyframes pop{from{transform:scale(.2);}to{transform:scale(1);}}
+.lvl-e{font-size:78px;display:block;margin-bottom:10px;}
+.lvl-t{font-size:28px;font-weight:800;background:linear-gradient(135deg,var(–g),var(–c));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.lvl-s{font-size:14px;color:var(–mu);margin-top:6px;}
+.evol-splash{position:fixed;inset:0;z-index:700;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.92);backdrop-filter:blur(28px);opacity:0;pointer-events:none;transition:opacity .3s;}
+.evol-splash.show{opacity:1;}
+.evol-cont{text-align:center;animation:pop .6s cubic-bezier(.175,.885,.32,1.275);}
+
+/* ══ SHARED ══ */
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.btn-p{background:linear-gradient(135deg,var(–g),var(–g2));color:#000;font-weight:800;font-size:13px;padding:12px;border-radius:100px;border:none;cursor:pointer;width:100%;font-family:var(–ff);transition:transform .15s;letter-spacing:.2px;}
+.btn-p:active{transform:scale(.96);}
+.btn-s{background:var(–l3);color:var(–tx);font-weight:700;font-size:13px;padding:12px;border-radius:100px;border:1px solid var(–b);cursor:pointer;width:100%;font-family:var(–ff);transition:all .15s;}
+.btn-s:active{border-color:rgba(255,255,255,.3);}
+.sbtn{background:var(–l3);color:var(–tx);font-weight:700;font-size:11px;padding:8px 14px;border-radius:100px;border:1px solid var(–b);cursor:pointer;font-family:var(–ff);transition:all .15s;}
+.srch{background:var(–l2);border:1.5px solid var(–b);border-radius:13px;display:flex;align-items:center;gap:7px;padding:0 12px;margin-bottom:10px;transition:border-color .2s;}
+.srch:focus-within{border-color:rgba(57,255,20,.35);}
+.srch input{flex:1;background:none;border:none;outline:none;padding:11px 0;color:var(–tx);font-size:13px;font-family:var(–ff);}
 </style>
 
 </head>
 <body>
 
-<div class="wrap">
-  <!-- HEADER -->
-  <div class="hdr">
-    <div class="hdr-logo">PETFOTO</div>
-    <div class="hdr-tabs">
-      <div class="htab active" data-mode="ai">✨ AI</div>
-      <div class="htab" data-mode="camera">📷 Kamera</div>
-      <div class="htab" data-mode="live">🔴 Live</div>
-    </div>
-    <div class="hdr-x" onclick="goBack()">✕</div>
+<!-- ══ ONBOARDING ══ -->
+
+<div class="ob-wrap" id="onboard">
+  <div class="ob-logo">PETPET</div>
+  <div class="ob-sub">The Everything Platform</div>
+  <div id="obEmo" class="ob-pet-big">🐉</div>
+  <div class="ob-h">Välj din pet</div>
+  <div class="ob-p">Din digitala tvilling. Din värld. Ditt äventyr.</div>
+  <div class="pet-row">
+    <div class="pp sel" data-p="🐉" onclick="pickP(this)">🐉</div>
+    <div class="pp" data-p="🐺" onclick="pickP(this)">🐺</div>
+    <div class="pp" data-p="🦊" onclick="pickP(this)">🦊</div>
+    <div class="pp" data-p="🐱" onclick="pickP(this)">🐱</div>
+    <div class="pp" data-p="🔥" onclick="pickP(this)">🔥</div>
+    <div class="pp" data-p="🦋" onclick="pickP(this)">🦋</div>
+    <div class="pp" data-p="⚡" onclick="pickP(this)">⚡</div>
+    <div class="pp" data-p="🌊" onclick="pickP(this)">🌊</div>
   </div>
+  <input class="ob-in" id="obName" placeholder="Vad heter du? 👋" maxlength="20">
+  <button class="btn-p" onclick="finishOB()">🚀 Starta äventyret</button>
+</div>
+
+<!-- BG -->
+
+<div class="bg"><div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div></div>
+
+<!-- ══ APP ══ -->
+
+<div class="app" id="app">
+
+  <!-- TOPBAR -->
+
+  <div class="topbar">
+    <div class="t-logo">PETPET</div>
+    <div class="t-pills">
+      <div class="pill" id="tpLvl">🐉 Lv.<span class="v" id="hLvl">1</span></div>
+      <div class="pill">💰<span class="v" id="hCoins">500</span></div>
+      <div class="pill str">🔥<span class="v" id="hStreak">0</span></div>
+      <div class="pill ep">⚡<span class="v" id="hEng">100</span></div>
+    </div>
+    <button class="t-btn" id="menuBtn">☰</button>
+  </div>
+
+  <!-- PET STATUS BAR -->
+
+  <div class="pet-status-bar">
+    <div class="ps">
+      <div class="ps-lbl"><span>🍖 Hunger</span><span id="sbHunger">80%</span></div>
+      <div class="ps-bar"><div class="ps-fill hunger" id="sbHungerBar" style="width:80%"></div></div>
+    </div>
+    <div class="ps">
+      <div class="ps-lbl"><span>⚡ Energi</span><span id="sbEnergy">100%</span></div>
+      <div class="ps-bar"><div class="ps-fill energy" id="sbEnergyBar" style="width:100%"></div></div>
+    </div>
+    <div class="ps">
+      <div class="ps-lbl"><span>😊 Humör</span><span id="sbMood">90%</span></div>
+      <div class="ps-bar"><div class="ps-fill mood" id="sbMoodBar" style="width:90%"></div></div>
+    </div>
+  </div>
+
+  <!-- STORIES -->
+
+  <div class="stories" id="stories"></div>
 
   <!-- MAIN -->
 
-  <div class="main" id="mainScroll">
+  <div class="main">
 
 ```
-<!-- UPLOAD ZONE -->
-<div class="upload-zone" id="uploadZone" onclick="triggerUpload()">
-  <img id="previewImg" class="uz-preview" style="display:none;">
-  <div class="uz-overlay" id="uzOverlay">
-    <div class="uz-icon">📸</div>
-    <div class="uz-lbl">Ladda upp bild</div>
-    <div class="uz-sublbl">eller ta ett foto</div>
-  </div>
-</div>
-<div id="uzChangeBtn" style="display:none;padding:0 14px 4px;">
-  <button style="background:var(--l2);border:1px solid var(--b);border-radius:100px;padding:6px 16px;font-size:11px;font-weight:600;color:var(--mu);cursor:pointer;font-family:var(--ff);" onclick="triggerUpload()">🖼️ Byt bild</button>
-</div>
-<input type="file" id="fileInput" accept="image/*" style="display:none;" onchange="handleFile(this)">
+<!-- 🔥 PETFLO — Feed -->
+<div class="view active" id="view-feed"></div>
 
-<!-- PICK A STYLE -->
-<div class="sec">VÄLJ STIL <a onclick="clearStyle()">Rensa</a></div>
-<div class="style-scroll" id="styleScroll">
-  <!-- populated by JS -->
-</div>
-
-<!-- PROMPT -->
-<div class="sec" style="margin-top:4px;">BESKRIV VAD DU VILL SE</div>
-<div class="prompt-wrap">
-  <div class="prompt-label">Din prompt</div>
-  <textarea class="prompt-ta" id="promptTA" placeholder="Gör om mig med grön hatt och drakfärger…" rows="2"></textarea>
-  <div class="prompt-examples" id="promptExamples">
-    <!-- populated by JS -->
-  </div>
-</div>
-
-<!-- SAMPLE PROMPTS -->
-<div class="sec" style="margin-top:4px;">SAMPLE PROMPTS</div>
-<div class="sample-scroll" id="sampleScroll"></div>
-
-<!-- GENERATE BTN -->
-<div class="gen-wrap">
-  <button class="gen-btn" id="genBtn" onclick="generate()">✨ Generera med AI</button>
-</div>
-
-<!-- RESULT -->
-<div class="result-section" id="resultSection">
-  <div class="sec" style="padding:0 0 8px;">RESULTAT</div>
-  <div class="result-card" id="resultCard">
-    <div class="result-header">
-      <div class="result-style-badge">
-        <div class="rsb-dot"></div>
-        <span id="resultStyleName">AI-genererad</span>
-      </div>
-      <div class="result-time" id="resultTime">just nu</div>
-    </div>
-    <div class="result-img-wrap">
-      <div class="result-img-placeholder" id="resultImgArea">
-        <div style="font-size:40px;">✨</div>
-        <div>Resultatet visas här</div>
-      </div>
-    </div>
-    <div class="result-desc" id="resultDesc">AI-beskrivning av bilden visas här.</div>
-    <div class="result-actions">
-      <button class="ra" onclick="regenResult()">🔄 Gör om</button>
-      <button class="ra" onclick="saveResult()">💾 Spara</button>
-      <button class="ra primary" onclick="publishResult()">📤 Publicera</button>
+<!-- 💬 PETCHAT -->
+<div class="view" id="view-chat">
+  <div class="card"><div class="ct">💬 Meddelanden</div><div id="chatList"></div></div>
+  <div class="card" id="aiOpen" style="cursor:pointer;">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div class="ai-ava">🤖</div>
+      <div><div style="font-size:14px;font-weight:700;">PetPal AI</div><div style="font-size:11px;color:var(--mu);">Din smarta assistent — fråga vad som helst!</div></div>
+      <div style="margin-left:auto;background:rgba(0,245,212,.1);border:1px solid rgba(0,245,212,.25);color:var(--c);font-size:9px;font-weight:700;padding:3px 9px;border-radius:100px;">AI</div>
     </div>
   </div>
+  <div class="vbot"></div>
 </div>
 
-<!-- HISTORY -->
-<div class="sec" id="histSec" style="display:none;">SENASTE SKAPELSER</div>
-<div class="history-strip" id="historyStrip" style="padding-bottom:8px;"></div>
+<!-- 🗺️ PETMAP -->
+<div class="view" id="view-map">
+  <div class="card-t" style="padding:0 2px 8px;color:var(--mu);font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;">🗺️ PETMAP — Vänner nära dig</div>
+  <div class="map-canvas card" style="padding:0;">
+    <div class="map-grid-lines"></div>
+    <div class="map-zones" id="mapZones"></div>
+    <div style="position:absolute;inset:0;" id="mapDots"></div>
+    <div class="map-center-pin">
+      <div class="map-you-ring"></div>
+      <div class="map-you-lbl" id="mapYouLbl">Du · Sthlm</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="ct">Online nu</div>
+    <div id="mapFriends"></div>
+  </div>
+  <div class="vbot"></div>
+</div>
 
-<div class="bsp"></div>
+<!-- 🛍️ PETSHOP -->
+<div class="view" id="view-shop">
+  <div class="srch"><span>🔍</span><input id="shopQ" placeholder="Sök skins, items, merch…" oninput="filterShop(this.value)"></div>
+  <div class="shop-tabs" id="shopTabs">
+    <div class="stab active" data-tab="skins">🎨 Skins</div>
+    <div class="stab" data-tab="items">⚡ Items</div>
+    <div class="stab" data-tab="deals">🔥 Deals</div>
+    <div class="stab" data-tab="codes">🎟️ Koder</div>
+  </div>
+  <div id="shopContent"></div>
+  <div class="vbot"></div>
+</div>
+
+<!-- 🎯 PET BOUNTY -->
+<div class="view" id="view-bounties">
+  <div class="bounty-tabs">
+    <div class="btab active" data-bt="brands">🏢 Brand Missions</div>
+    <div class="btab" data-bt="community">🌍 Community</div>
+    <div class="btab" data-bt="mine">✅ Mina</div>
+  </div>
+  <div id="bountyContent"></div>
+  <div class="vbot"></div>
+</div>
+
+<!-- ⚔️ BATTLE -->
+<div class="view" id="view-battle">
+  <div id="battlePicker">
+    <div class="card-t" style="padding:0 2px 8px;color:var(--mu);font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;">⚔️ Välj motståndare</div>
+    <div class="opp-grid" id="oppGrid"></div>
+  </div>
+  <div id="battleArena" style="display:none;">
+    <div class="b-arena" id="bHero"></div>
+    <div class="b-log" id="bLog"></div>
+    <div class="b-acts row2" id="bActs"></div>
+  </div>
+  <div class="vbot"></div>
+</div>
+
+<!-- 🐣 PETCARE -->
+<div class="view" id="view-petcare">
+  <div class="petcare-hero">
+    <div id="pcPet" class="pc-pet" onclick="petPat()">🐉</div>
+    <div class="pc-name" id="pcName">Eldraken</div>
+    <div class="pc-rank" id="pcRank">Level 1 · Common</div>
+    <div class="pc-stats-grid">
+      <div class="pc-stat"><div class="pcs-v" id="pcsLvl">1</div><div class="pcs-l">Level</div></div>
+      <div class="pc-stat"><div class="pcs-v" id="pcsBat">0</div><div class="pcs-l">Segrar</div></div>
+      <div class="pc-stat"><div class="pcs-v" id="pcsCoins">500</div><div class="pcs-l">Coins</div></div>
+    </div>
+    <div class="pc-bar-row">
+      <div class="pc-bar-lbl"><span>🍖 Hunger</span><span id="pcHn">80%</span></div>
+      <div class="pc-bar"><div class="pc-fill h" id="pcHb" style="width:80%"></div></div>
+    </div>
+    <div class="pc-bar-row">
+      <div class="pc-bar-lbl"><span>⚡ Energi</span><span id="pcEn">100%</span></div>
+      <div class="pc-bar"><div class="pc-fill e" id="pcEb" style="width:100%"></div></div>
+    </div>
+    <div class="pc-bar-row">
+      <div class="pc-bar-lbl"><span>😊 Humör</span><span id="pcMn">90%</span></div>
+      <div class="pc-bar"><div class="pc-fill m" id="pcMb" style="width:90%"></div></div>
+    </div>
+    <div class="pc-actions">
+      <div class="pca" onclick="carefeed()"><div class="pca-e">🍖</div>Mata</div>
+      <div class="pca" onclick="careTrain()"><div class="pca-e">🏋️</div>Träna</div>
+      <div class="pca" onclick="careSleep()"><div class="pca-e">😴</div>Sova</div>
+      <div class="pca" onclick="carePlay()"><div class="pca-e">🎮</div>Lek</div>
+    </div>
+    <div id="evolBanner" style="display:none;" class="evol-banner" onclick="evolve()">
+      <div class="evol-txt">✨ EVOLUTION TILLGÄNGLIG!</div>
+      <div class="evol-sub">Level 10 nått — tryck för att evolvera!</div>
+    </div>
+  </div>
+  <div class="vbot"></div>
+</div>
+
+<!-- 👤 PET PROFILE -->
+<div class="view" id="view-profile">
+  <div class="prof-cover">
+    <div class="pava">
+      <div class="pava-ring"></div>
+      <div class="pava-inner" id="profEmo">🐉</div>
+    </div>
+    <div class="p-uname" id="profName">Äventyrare</div>
+    <div class="p-handle" id="profHandle">@petpet_user</div>
+    <div class="p-badges-row">
+      <div class="ptag v">⭐ VERIFIERAD</div>
+      <div class="ptag c">🎮 CREATOR</div>
+    </div>
+    <div class="p-bio" id="profBio">Pet lover · Explorer · Level 1 ✨</div>
+    <div class="p-stats-row">
+      <div class="pst"><div class="pst-v" id="pnPosts">0</div><div class="pst-l">INLÄGG</div></div>
+      <div class="pst"><div class="pst-v">1.2K</div><div class="pst-l">FÖLJARE</div></div>
+      <div class="pst"><div class="pst-v">342</div><div class="pst-l">FÖLJER</div></div>
+      <div class="pst"><div class="pst-v" id="pnLvl">1</div><div class="pst-l">LEVEL</div></div>
+    </div>
+    <div class="xp-wrap"><div class="xp-fill" id="xpFill" style="width:0%"></div></div>
+    <div class="xp-lbl"><span id="xpVal">0</span>/100 XP</div>
+    <div class="p-action-row">
+      <button class="btn-p" onclick="shareProfile()">📤 Dela profil</button>
+      <button class="sbtn" onclick="showT('⚙️ Inställningar snart!','ok')">⚙️</button>
+    </div>
+  </div>
+  <div class="prof-tabs" id="profTabs">
+    <div class="ptab active" data-ptab="pet">🐉 Pet</div>
+    <div class="ptab" data-ptab="badges">🏆 Badges</div>
+    <div class="ptab" data-ptab="map">🗺️ Karta</div>
+    <div class="ptab" data-ptab="act">⏱️ Aktivitet</div>
+  </div>
+  <div id="ptab-pet"></div>
+  <div id="ptab-badges" style="display:none;"></div>
+  <div id="ptab-map" style="display:none;"></div>
+  <div id="ptab-act" style="display:none;"></div>
+  <div class="vbot"></div>
+</div>
 ```
 
   </div><!-- /main -->
-</div><!-- /wrap -->
 
-<!-- PROCESSING OVERLAY -->
+  <!-- BOTTOM NAV -->
 
-<div class="processing-overlay" id="procOverlay">
-  <div class="proc-ring-wrap">
-    <div class="proc-ring"></div>
-    <div class="proc-pet" id="procPet">✨</div>
+  <div class="bnav">
+    <button class="nb active" data-v="feed"><div class="ni">🔥</div><div class="nl">Flöde</div></button>
+    <button class="nb" data-v="chat"><div class="ni">💬</div><div class="nl">Chat</div></button>
+    <button class="nb" data-v="map"><div class="ni">🗺️</div><div class="nl">Karta</div></button>
+    <button class="nb-cam" id="camBtn"><div class="nc">📸</div><div class="nl" style="font-size:8px;font-weight:700;letter-spacing:.4px;color:var(--mu);text-transform:uppercase;">Nytt</div></button>
+    <button class="nb" data-v="shop"><div class="ni">🛍️</div><div class="nl">Shop</div></button>
+    <button class="nb" data-v="profile"><div class="ni">👤</div><div class="nl">Profil</div></button>
   </div>
-  <div class="proc-label" id="procLabel">Analyserar din bild…</div>
-  <div class="proc-bar-wrap">
-    <div class="proc-bar" id="procBar"></div>
+</div><!-- /app -->
+
+<!-- MENU OVERLAY -->
+
+<div class="overlay" id="menuOv">
+  <div class="sheet">
+    <div class="handle"></div>
+    <div class="sheet-logo">PETPET</div>
+    <div class="menu-grid" id="menuGrid"></div>
   </div>
-  <div class="proc-step" id="procStep">Skickar till AI-modellen</div>
 </div>
 
-<!-- PUBLISH SUCCESS -->
+<!-- CAM OVERLAY (quick post) -->
 
-<div class="pub-success" id="pubSuccess">
-  <div class="pub-anim">🎉</div>
-  <div style="font-size:22px;font-weight:800;">Publicerat!</div>
-  <div style="font-size:13px;color:var(--mu);">Din bild är nu i PETFLO-flödet</div>
-  <button style="margin-top:8px;background:linear-gradient(135deg,var(--g),var(--c));color:#000;font-weight:800;padding:12px 32px;border-radius:100px;border:none;cursor:pointer;font-size:14px;font-family:var(--ff);" onclick="closePubSuccess()">🔥 Visa i flödet</button>
+<div class="overlay" id="camOv">
+  <div class="sheet">
+    <div class="handle"></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+      <div style="font-size:16px;font-weight:800;">📝 Skapa inlägg</div>
+      <button class="sbtn" id="camX">✕</button>
+    </div>
+    <div onclick="openPetfoto();document.getElementById('camOv').classList.remove('open');" style="background:linear-gradient(135deg,rgba(57,255,20,.1),rgba(0,245,212,.08));border:1px solid rgba(57,255,20,.25);border-radius:14px;padding:12px;display:flex;align-items:center;gap:10px;cursor:pointer;margin-bottom:10px;">
+      <div style="font-size:26px;">✨</div>
+      <div>
+        <div style="font-size:13px;font-weight:700;color:var(--g);">PETFOTO — AI Kamera</div>
+        <div style="font-size:11px;color:var(--mu);">Stilar, prompts, AI-analys &amp; mer</div>
+      </div>
+      <div style="margin-left:auto;font-size:16px;color:var(--g);">→</div>
+    </div>
+    <button class="btn-s" style="margin-bottom:10px;font-size:12px;" onclick="pickImg()">🖼️ Enkel bild</button>
+    <img id="camPrev" class="cam-prev">
+    <textarea class="cam-ta" id="camTxt" placeholder="Vad händer i din värld? 🔥" rows="2"></textarea>
+    <button class="btn-p" onclick="publishPost()">📤 Publicera</button>
+  </div>
+</div>
+
+<!-- ══ PETFOTO FULLSCREEN ══ -->
+
+<div class="petfoto-win" id="petfotoWin">
+  <div class="pf-hdr">
+    <div class="pf-logo">PETFOTO ✨</div>
+    <div class="pf-tabs">
+      <div class="pf-tab active">✨ AI</div>
+      <div class="pf-tab" onclick="showT('📷 Kamera snart!','ok')">📷</div>
+      <div class="pf-tab" onclick="showT('🔴 Live i v6!','ok')">🔴</div>
+    </div>
+    <div class="pf-close" onclick="closePetfoto()">✕</div>
+  </div>
+  <div class="pf-scroll" id="pfScroll">
+    <div class="pf-upload" id="pfUpload" onclick="pfTriggerUpload()">
+      <img id="pfPrevImg" class="pf-prev" style="display:none;">
+      <div class="pf-ov" id="pfOv">
+        <div class="pf-ov-ico">📸</div>
+        <div class="pf-ov-lbl">Ladda upp bild</div>
+        <div style="font-size:10px;color:var(--mu);opacity:.7;">tryck för att välja</div>
+      </div>
+    </div>
+    <div id="pfChangeRow" style="display:none;padding:0 14px 4px;">
+      <button style="background:var(--l2);border:1px solid var(--b);border-radius:100px;padding:5px 14px;font-size:10px;font-weight:600;color:var(--mu);cursor:pointer;font-family:var(--ff);" onclick="pfTriggerUpload()">🖼️ Byt bild</button>
+    </div>
+    <input type="file" id="pfFileInput" accept="image/*" style="display:none;" onchange="pfHandleFile(this)">
+    <div class="pf-sec">VÄLJ STIL <a onclick="pfClearStyle()">Rensa</a></div>
+    <div class="pf-styles" id="pfStyleRow"></div>
+    <div class="pf-sec" style="margin-top:2px;">BESKRIV VAD DU VILL SE</div>
+    <div class="pf-prompt-wrap">
+      <div class="pf-prompt-lbl">Din prompt</div>
+      <textarea class="pf-prompt-ta" id="pfPromptTA" placeholder="Gör om mig med grön hatt och drakfärger…" rows="2"></textarea>
+      <div class="pf-chips" id="pfChips"></div>
+    </div>
+    <div class="pf-sec" style="margin-top:2px;">PROVA DESSA</div>
+    <div class="pf-samples" id="pfSamples"></div>
+    <div class="pf-gen-wrap">
+      <button class="pf-gen" id="pfGenBtn" onclick="pfGenerate()">✨ Generera med AI</button>
+    </div>
+    <div id="pfResult" style="display:none;">
+      <div class="pf-sec">RESULTAT</div>
+      <div class="pf-result">
+        <div class="pfr-head">
+          <div class="pfr-badge"><div class="pfr-dot"></div><span id="pfResultStyle">AI-genererad</span></div>
+          <div class="pfr-time">just nu</div>
+        </div>
+        <div id="pfImgArea" class="pfr-placeholder"><div style="font-size:36px;">✨</div><div>Resultatet visas här</div></div>
+        <div class="pfr-desc" id="pfDescArea">–</div>
+        <div class="pfr-acts">
+          <button class="pfa" onclick="pfRegen()">🔄 Gör om</button>
+          <button class="pfa" onclick="pfSave()">💾 Spara</button>
+          <button class="pfa primary" onclick="pfPublish()">📤 Publicera</button>
+        </div>
+      </div>
+    </div>
+    <div class="pf-sec" id="pfHistSec" style="display:none;">SENASTE SKAPELSER</div>
+    <div class="pf-hist" id="pfHistRow"></div>
+    <div class="pf-vbot"></div>
+  </div>
+</div>
+<div class="pf-proc" id="pfProc">
+  <div class="pf-proc-ring-wrap">
+    <div class="pf-proc-ring"></div>
+    <div class="pf-proc-pet" id="pfProcPet">✨</div>
+  </div>
+  <div class="pf-proc-lbl" id="pfProcLbl">Analyserar bild…</div>
+  <div class="pf-proc-bar-wrap"><div class="pf-proc-bar" id="pfProcBar"></div></div>
+  <div class="pf-proc-step" id="pfProcStep">Skickar till AI</div>
+</div>
+<div class="pf-pub" id="pfPub">
+  <div class="pf-pub-e">🎉</div>
+  <div style="font-size:21px;font-weight:800;">Publicerat!</div>
+  <div style="font-size:13px;color:var(--mu);">Finns nu i PETFLO-flödet</div>
+  <button class="btn-p" style="margin-top:10px;width:auto;padding:11px 28px;" onclick="pfClosePub()">🔥 Se i flödet</button>
+</div>
+
+<!-- SWISH MODAL -->
+
+<div class="swish-modal" id="swishMod">
+  <div class="swish-sheet">
+    <div class="swish-logo">Swish</div>
+    <div class="swish-sub">Betalning via Swish</div>
+    <div class="swish-amount" id="swishAmt">50 SEK</div>
+    <div class="swish-from">Till: <strong>PETPET AB</strong> · <span style="color:var(--mu);">123-456 78 90</span></div>
+    <div class="row2">
+      <button class="btn-p" onclick="confirmSwish()">✅ Betala</button>
+      <button class="btn-s" onclick="closeSwish()">Avbryt</button>
+    </div>
+  </div>
+</div>
+
+<!-- AI CHAT -->
+
+<div class="ai-win" id="aiWin">
+  <div class="ai-head">
+    <button class="ai-bk" id="aiBack">←</button>
+    <div class="ai-ava">🤖</div>
+    <div>
+      <div style="font-size:15px;font-weight:700;">PetPal AI</div>
+      <div style="font-size:10px;color:var(--g);font-family:var(--fm);">● Online</div>
+    </div>
+  </div>
+  <div class="ai-msgs" id="aiMsgs">
+    <div class="msg ai">Hej! 👋 Jag är PetPal AI. Fråga mig om pet-tips, uppdrag, battle-strategi – eller vad som helst!</div>
+  </div>
+  <div class="ai-inp-row">
+    <input class="ai-inp" id="aiInp" placeholder="Skriv ett meddelande…">
+    <button class="ai-snd" id="aiSnd">➤</button>
+  </div>
 </div>
 
 <!-- TOAST -->
 
 <div class="toast" id="toast"></div>
 
+<!-- LEVEL UP -->
+
+<div class="lvl-splash" id="lvlSplash">
+  <div class="lvl-cont">
+    <span class="lvl-e">🎉</span>
+    <div class="lvl-t" id="lvlT">LEVEL UP!</div>
+    <div class="lvl-s" id="lvlS">Grattis!</div>
+  </div>
+</div>
+
+<!-- EVOLUTION SPLASH -->
+
+<div class="evol-splash" id="evolSplash">
+  <div class="evol-cont">
+    <span style="font-size:100px;display:block;margin-bottom:12px;" id="evolE">🐉</span>
+    <div style="font-size:28px;font-weight:800;background:linear-gradient(135deg,#ffd60a,#ff453a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">EVOLUTION!</div>
+    <div id="evolDesc" style="font-size:15px;color:var(--mu);margin-top:8px;"></div>
+    <button class="btn-p" style="margin-top:20px;width:auto;padding:12px 32px;" onclick="closeSplash('evolSplash')">✨ Episkt!</button>
+  </div>
+</div>
+
 <script>
-// ══════════════════════════════════════
-// CONFIG
-// ══════════════════════════════════════
-const STYLES = [
-  { id:'normal',  name:'Normal',   bg:'🌿', cls:'',       prompt: 'Behåll bildstilen exakt som den är, analysera och beskriv bilden detaljerat.' },
-  { id:'anime',   name:'Anime',    bg:'🌸', cls:'anime',   prompt: 'Föreställ dig denna bild omgjord i japansk anime-stil med stora expressiva ögon, vibranta färger och mangaestetik.' },
-  { id:'pixel',   name:'Pixel Art',bg:'👾', cls:'pixel',   prompt: 'Föreställ dig denna bild i retro pixel art-stil, 16-bitars, med tydliga pixlar och limiterad färgpalett.' },
-  { id:'brainrot',name:'Brainrot', bg:'🤪', cls:'brainrot',prompt: 'Gör om bilden i absurd internet-brainrot-stil med overdramatisk belysning, glitcheffekter och kaotisk energi.' },
-  { id:'glow',    name:'Glow Up',  bg:'✨', cls:'glow',    prompt: 'Föreställ dig en dramatisk "glow up" av denna bild – maximalt glamorös, glittrande och estetisk.' },
-  { id:'clay',    name:'Clay',     bg:'🏺', cls:'clay',    prompt: 'Föreställ dig bilden i stop-motion clay/claymation-stil, mjuka texturer och pastellfärger.' },
-  { id:'cyber',   name:'Cyberpunk',bg:'🤖', cls:'cyber',   prompt: 'Omvandla till neonbelyst cyberpunk-estetik med neonskyltfärger, regnvåta gator och dystopisk framtid.' },
-  { id:'vhs',     name:'VHS',      bg:'📼', cls:'vhs',     prompt: 'Applicera en nostalgisk VHS/retro-video-effekt med scanlines, färgfel, grynig textur och 90-talskänsla.' },
-  { id:'dragon',  name:'Draken 🐉',bg:'🐉', cls:'dragon',  prompt: 'Föreställ dig bilden i en episk fantasy-värld med drakar, eld, magisk glöd och fantasiinspirerad konst.' },
+// ══════════════════════════════════
+// STATE
+// ══════════════════════════════════
+const G = {
+  name:'Äventyrare', pet:'🐉', petName:'Eldraken',
+  level:1, exp:0, coins:500, energy:100, streak:0,
+  hunger:80, petEnergy:100, mood:90,
+  battlesWon:0, bountiesDone:0, postsCreated:0,
+  evolved: false, evolStage:0,
+  likedPosts: new Set(),
+  activities:[{dot:'g',t:'Välkommen till PETPET! 🎉',time:'just nu'}],
+};
+
+const PET_NAMES = {
+  '🐉':'Eldraken','🐺':'Ulvjakten','🦊':'Räven','🐱':'Kattungen',
+  '🔥':'Eldsanden','🦋':'Fjärilen','⚡':'Blixten','🌊':'Havsdansen'
+};
+
+const EVOLUTIONS = {
+  '🐉':['🐲','🔥🐲'],
+  '🐺':['🦴🐺','👑🐺'],
+  '🦊':['🔮🦊','✨🦊'],
+  '🐱':['👑🐱','🌟🐱'],
+  '🔥':['💫🔥','⭐🔥'],
+  '🦋':['🌈🦋','✨🦋'],
+  '⚡':['⚡💫','⚡🌟'],
+  '🌊':['🌊🌟','💎🌊'],
+};
+
+// ══ DATA ══
+const POSTS = [
+  {id:'p1',user:'Ella',ava:'👩‍🎤',pet:'🐉',lvl:7,txt:'Fire Wings köpta!! 🔥 Min drake flyger nu snabbare än någonsin. Värt varenda coin!',likes:47,t:'15 min'},
+  {id:'p2',user:'Max',ava:'🧑‍🚀',pet:'🐺',lvl:10,txt:'LEVEL 10!! 🎉 Min varg evolverade till en Silvervarg idag. 3 månader av slit – men OMG värt det!',likes:132,t:'1 tim'},
+  {id:'p3',user:'Clara',ava:'👩‍💻',pet:'🦊',lvl:6,txt:'Legendary skin hittad vid Drakberget!! ✨ Den lyste och allt. Någon annan sett den?',likes:89,t:'3 tim'},
+  {id:'p4',user:'Leo',ava:'🧑‍🎤',pet:'🐻',lvl:4,txt:'Klarade min första Brand Mission för Espresso House ☕ 50 SEK direkt till Swish. PETPET är för real fr fr',likes:55,t:'5 tim'},
+  {id:'p5',user:'Wendela',ava:'😂',pet:'🐱',lvl:3,txt:'Min katt hittade hemlig grotta vid Kristallsjön 🗺️ Spoiler: sällsynt skin inuti!! Gå dit ASAP',likes:201,t:'8 tim'},
+  {id:'p6',user:'Saga',ava:'🧝',pet:'🦋',lvl:5,txt:'Fairy Dust ability unlocked 🦋✨ Den vackraste förmågan i spelet imo. Level 12 och kronan är min',likes:103,t:'12 tim'},
 ];
 
-const SAMPLE_PROMPTS = [
-  'Gör om mig med grön hatt och glittrande ögon',
-  'Sätt mig i en rymdfarkost med draken som pilot',
-  'Min pet är en koffert och reser runt världen',
-  'Gör bakgrunden till ett magiskt slott',
-  'Ge mig drakkostym och eldsflammor',
-  'Cyberpunk-version av mig i Tokyo',
-  'Fota om mig som anime-hjälte',
-  'Vad ser AI:n i den här bilden?',
-  'Beskriv stämningen i bilden',
-  'Vad händer i bilden?',
+const STORIES = [
+  {n:'Din story',a:'📸',own:true,seen:false},
+  {n:'Ella',a:'👩‍🎤',seen:false},
+  {n:'Max',a:'🧑‍🚀',seen:true},
+  {n:'Leo',a:'🧑‍🎤',seen:false},
+  {n:'Clara',a:'👩‍💻',seen:false},
+  {n:'Wendela',a:'😂',seen:true},
+  {n:'Saga',a:'🧝',seen:false},
 ];
 
-const PROMPT_CHIPS = [
-  { label: '🎩 Grön hatt', text: 'Lägg till en stor grön trollkarlshatt' },
-  { label: '🐉 Drak-stil', text: 'Gör om i drakestetik med eld och fjäll' },
-  { label: '🌸 Anime', text: 'Konvertera till anime-stil' },
-  { label: '✨ Glow up', text: 'Maximalt glamorös glow up' },
-  { label: '🌌 Rymd', text: 'Placera i ett rymdskepp eller galax' },
-  { label: '🏰 Fantasy', text: 'Lägg i en fantasy-miljö med slott och magi' },
+const CHATS = [
+  {n:'Stella 🥰',a:'🌟',prev:'Haha ja!! 😄',t:'15 min',streak:103,unread:true},
+  {n:'Mackan',a:'👨‍💻',prev:'Jobbar sent idag igen',t:'2 d',streak:0,unread:false},
+  {n:'Jack ❤️',a:'🐶',prev:'Vi ses imorgon! 🔥',t:'17 h',streak:0,unread:true},
+  {n:'Wendela',a:'😂',prev:'Hahaha bästa!!',t:'5 h',streak:143,unread:false},
 ];
 
-// ══ STATE ══
-let selectedStyle = null;
-let uploadedImage = null; // base64
-let history = [];
-let lastResult = null;
-let isGenerating = false;
+const SHOP_SKINS = [
+  {id:'sk1',e:'🔥',n:'Fire Wings',p:199,pt:'coin',badge:'hot'},
+  {id:'sk2',e:'✨',n:'Legendary Glow',p:499,pt:'coin',badge:'leg'},
+  {id:'sk3',e:'👑',n:'Royal Crown',p:799,pt:'coin',badge:'pre'},
+  {id:'sk4',e:'🎨',n:'Custom Skin',p:299,pt:'coin',badge:'new'},
+  {id:'sk5',e:'🌪️',n:'Storm Aura',p:349,pt:'coin',badge:''},
+  {id:'sk6',e:'💎',n:'Diamond Armor',p:999,pt:'coin',badge:'leg'},
+];
+const SHOP_ITEMS = [
+  {id:'it1',e:'⚡',n:'XP Boost x2',p:99,pt:'coin',badge:''},
+  {id:'it2',e:'💊',n:'Health Potion',p:49,pt:'coin',badge:''},
+  {id:'it3',e:'🍖',n:'Pet Food',p:29,pt:'coin',badge:''},
+  {id:'it4',e:'⚗️',n:'Evolution Potion',p:999,pt:'coin',badge:'leg'},
+  {id:'it5',e:'🛡️',n:'Battle Shield',p:149,pt:'coin',badge:'new'},
+  {id:'it6',e:'🎯',n:'Aim Enhancer',p:199,pt:'coin',badge:''},
+];
+const SHOP_DEALS = [
+  {e:'🔥',n:'Fire Bundle',desc:'Fire Wings + Health Potion',p:199,orig:248,time:'2h 14m'},
+  {e:'⚡',n:'XP Mega Pack',desc:'5x XP Boost — levla snabbt!',p:349,orig:495,time:'5h 30m'},
+  {e:'🎪',n:'Starter Kit',desc:'Allt en ny spelare behöver',p:99,orig:180,time:'23h 59m'},
+];
+const CODES = [
+  {c:'WELCOME10',r:100,used:false},
+  {c:'DRAGON50',r:500,used:false},
+  {c:'PETPET25',r:250,used:false},
+];
 
-// ══ RENDER STYLES ══
-function renderStyles() {
-  const c = document.getElementById('styleScroll');
-  c.innerHTML = STYLES.map(s => `
-    <div class="style-card ${selectedStyle===s.id?'active':''}" data-id="${s.id}" onclick="selectStyle('${s.id}')">
-      <div class="sc-img">
-        <div class="sc-bg ${s.cls}">${s.bg}</div>
+const BRAND_BOUNTIES = [
+  {id:'bb1',brand:'☕ Espresso House',t:'📸 Fota dig med vår kopp',r:50,rt:'sek',desc:'Ta en bild på dig med en Espresso House-kopp och tagga oss!',tags:['brand','photo']},
+  {id:'bb2',brand:'👟 Stadium',t:'🎥 TikTok-video med nya skor',r:500,rt:'sek',desc:'Spela in 30 sek video med Stadiums nya kollektion',tags:['brand','video']},
+  {id:'bb3',brand:'🍕 Dominos',t:'📸 Betygsätt vår pizza',r:30,rt:'sek',desc:'Skriv en recension och fota din pizza',tags:['brand','photo']},
+  {id:'bb4',brand:'🎮 Embracer',t:'🎥 Spela 15 min av vårt spel',r:200,rt:'sek',desc:'Strömma eller spela in gameplay från Embracers senaste titel',tags:['brand','video']},
+  {id:'bb5',brand:'🏋️ Gymgrossisten',t:'📦 Testa vår nya protein',r:150,rt:'sek',desc:'Testa produkten och lämna video-recension. Behåll produkten!',tags:['brand','irl']},
+];
+const COMMUNITY_BOUNTIES = [
+  {id:'cb1',brand:null,t:'📸 Fota något blått',r:100,rt:'coin',desc:'Hitta något ovanligt blått ute i världen och fota det!',tags:['photo']},
+  {id:'cb2',brand:null,t:'🏃 Gå 5 000 steg',r:150,rt:'coin',desc:'Visa screenshot från din stegräknare',tags:['irl']},
+  {id:'cb3',brand:null,t:'🌅 Fota en soluppgång',r:250,rt:'coin',desc:'Tidigt på morgonen – fota solen som stiger',tags:['photo']},
+  {id:'cb4',brand:null,t:'🌱 Ovanlig planta',r:175,rt:'coin',desc:'Hitta en planta du aldrig sett förut',tags:['photo','irl']},
+];
+let doneBounties = [];
+
+const OPPONENTS = [
+  {e:'🌲',n:'Skogsvätte',lv:1,hp:60,mhp:60,atk:10,r:50,pvp:false},
+  {e:'🔥',n:'Eldsprutare',lv:3,hp:100,mhp:100,atk:16,r:120,pvp:false},
+  {e:'❄️',n:'Isdemon',lv:5,hp:150,mhp:150,atk:22,r:220,pvp:false},
+  {e:'🐲',n:'Uradrake',lv:8,hp:260,mhp:260,atk:32,r:500,pvp:false},
+  {e:'🧑‍🚀',n:'Max (PvP)',lv:10,hp:200,mhp:200,atk:28,r:300,pvp:true},
+  {e:'👩‍🎤',n:'Ella (PvP)',lv:7,hp:180,mhp:180,atk:24,r:250,pvp:true},
+];
+
+const MAP_FRIENDS = [
+  {a:'👩‍🎤',n:'Ella',loc:'MagiSkogen',d:'500m',online:true,x:30,y:35,c:'#39FF14'},
+  {a:'🧑‍🚀',n:'Max',loc:'Battle Arena',d:'1.2km',online:true,x:65,y:55,c:'#c77dff'},
+  {a:'👩‍💻',n:'Clara',loc:'Drakberget',d:'2km',online:false,x:78,y:22,c:'#00f5d4'},
+  {a:'🧑‍🎤',n:'Leo',loc:'MagiSkogen',d:'3.5km',online:true,x:42,y:72,c:'#ff9f0a'},
+  {a:'🧝',n:'Saga',loc:'Kristallsjön',d:'4.2km',online:false,x:18,y:60,c:'#ff453a'},
+];
+
+const BADGES_DATA = [
+  {e:'🔥',l:'Streak 7d',check:()=>G.streak>=7},
+  {e:'⚔️',l:'Första seger',check:()=>G.battlesWon>=1},
+  {e:'🛍️',l:'Shopaholic',check:()=>false},
+  {e:'🌍',l:'Utforskare',check:()=>false},
+  {e:'📸',l:'Fotografen',check:()=>G.postsCreated>=1},
+  {e:'🎯',l:'Bounty Hunter',check:()=>G.bountiesDone>=3},
+  {e:'💰',l:'Rik som kung',check:()=>G.coins>=1000},
+  {e:'🏆',l:'Legend',check:()=>G.level>=10},
+  {e:'✨',l:'Evolution',check:()=>G.evolved},
+  {e:'🐣',l:'Pet Tamer',check:()=>true},
+  {e:'🌟',l:'Populär',check:()=>false},
+  {e:'👑',l:'PETPET King',check:()=>G.level>=20},
+];
+
+const MENU_ITEMS = [
+  {v:'feed',l:'🔥 PETFLO'},
+  {v:'chat',l:'💬 PETCHAT'},
+  {v:'map',l:'🗺️ PETMAP'},
+  {v:'shop',l:'🛍️ PETSHOP'},
+  {v:'bounties',l:'🎯 PET BOUNTY'},
+  {v:'battle',l:'⚔️ Battle Arena'},
+  {v:'petcare',l:'🐣 PETCARE'},
+  {v:'profile',l:'👤 Pet Profile'},
+];
+
+// ══════════════════════════════════
+// HELPERS
+// ══════════════════════════════════
+const $ = id => document.getElementById(id);
+let toastT;
+function showT(m,t='ok'){const el=$('toast');el.textContent=m;el.className=`toast show ${t}`;clearTimeout(toastT);toastT=setTimeout(()=>{el.className='toast';},2800);}
+function pop(n,el,col='#ff9f0a'){const d=document.createElement('div');d.className='coinpop';d.textContent=`+${n}`;d.style.color=col;const r=el?el.getBoundingClientRect():{left:window.innerWidth/2,top:window.innerHeight/2};d.style.left=(r.left+r.width/2)+'px';d.style.top=r.top+'px';document.body.appendChild(d);setTimeout(()=>d.remove(),750);}
+function closeSplash(id){$(id).classList.remove('show');}
+
+function addAct(txt,dot='g'){G.activities.unshift({dot,t:txt,time:'just nu'});if(G.activities.length>30)G.activities.pop();}
+
+function updateHUD(){
+  $('hLvl').textContent=G.level;
+  $('hCoins').textContent=G.coins.toLocaleString();
+  $('hStreak').textContent=G.streak;
+  $('hEng').textContent=G.energy;
+  $('tpLvl').innerHTML=`${G.pet} Lv.<span class="v">${G.level}</span>`;
+  // status bar
+  $('sbHunger').textContent=G.hunger+'%';
+  $('sbHungerBar').style.width=G.hunger+'%';
+  $('sbEnergy').textContent=G.petEnergy+'%';
+  $('sbEnergyBar').style.width=G.petEnergy+'%';
+  $('sbMood').textContent=G.mood+'%';
+  $('sbMoodBar').style.width=G.mood+'%';
+  // profile
+  $('profEmo').textContent=G.pet;
+  $('profName').textContent=G.name;
+  $('profHandle').textContent=`@${G.name.toLowerCase().replace(/\s/g,'_')}`;
+  $('profBio').textContent=`${G.pet} Pet lover · Explorer · Level ${G.level} ✨`;
+  $('pnLvl').textContent=G.level;
+  $('pnPosts').textContent=POSTS.filter(p=>p.user==='Du').length;
+  $('xpFill').style.width=G.exp+'%';
+  $('xpVal').textContent=G.exp;
+  // petcare
+  $('pcPet').textContent=G.pet;
+  $('pcName').textContent=G.petName;
+  const rank=['Common','Uncommon','Rare','Epic','Legendary'][Math.min(4,Math.floor(G.level/5))];
+  $('pcRank').textContent=`Level ${G.level} · ${rank}`;
+  $('pcsLvl').textContent=G.level;
+  $('pcsBat').textContent=G.battlesWon;
+  $('pcsCoins').textContent=G.coins.toLocaleString();
+  $('pcHn').textContent=G.hunger+'%'; $('pcHb').style.width=G.hunger+'%';
+  $('pcEn').textContent=G.petEnergy+'%'; $('pcEb').style.width=G.petEnergy+'%';
+  $('pcMn').textContent=G.mood+'%'; $('pcMb').style.width=G.mood+'%';
+  $('evolBanner').style.display=G.level>=10&&!G.evolved?'block':'none';
+  autoSave();
+}
+
+function gainCoins(n,el){G.coins+=n;updateHUD();if(el)pop(`${n}💰`,el);}
+function gainXP(n){
+  G.exp+=n;
+  if(G.exp>=100){G.exp-=100;G.level++;
+    $('lvlT').textContent=`LEVEL ${G.level}!`;
+    $('lvlS').textContent=`Grattis! Du är nu level ${G.level} 🎉`;
+    $('lvlSplash').classList.add('show');
+    setTimeout(()=>$('lvlSplash').classList.remove('show'),2800);
+  }
+  updateHUD();
+}
+
+// ══ PETCARE ══
+function carefeed(){
+  if(G.coins<10){showT('❌ Behöver 10 coins!','err');return;}
+  G.coins-=10; G.hunger=Math.min(100,G.hunger+30); G.mood=Math.min(100,G.mood+5);
+  petBounce(); addAct(`Matade ${G.pet}`,'o'); showT('🍖 Pet matad! +30 hunger'); updateHUD();
+}
+function careTrain(){
+  if(G.petEnergy<20){showT('❌ För lite energi!','err');return;}
+  G.petEnergy-=20; gainXP(15); petBounce(); addAct(`Tränade ${G.pet}`,'g'); showT('🏋️ Tränat! +15 XP');
+}
+function careSleep(){
+  G.petEnergy=Math.min(100,G.petEnergy+40); G.mood=Math.min(100,G.mood+10);
+  petBounce(); addAct(`${G.pet} sov och återhämtade sig`,'c'); showT('😴 +40 energi');updateHUD();
+}
+function carePlay(){
+  if(G.petEnergy<10){showT('❌ Inte nog energi!','err');return;}
+  G.petEnergy-=10; G.mood=Math.min(100,G.mood+25); gainCoins(5); gainXP(5);
+  petBounce(); addAct(`Lekte med ${G.pet}`,'p'); showT('🎮 Lek! +5💰 +5XP +25 humör');
+}
+function petPat(){petBounce();G.mood=Math.min(100,G.mood+5);showT(`${G.pet} gillar klappningar! 💕`);updateHUD();}
+function petBounce(){const el=$('pcPet');el.classList.remove('bounce');void el.offsetWidth;el.classList.add('bounce');setTimeout(()=>el.classList.remove('bounce'),400);}
+
+function evolve(){
+  if(G.level<10){showT('🔒 Level 10 krävs!','err');return;}
+  const stages=EVOLUTIONS[G.pet]||['✨'+G.pet,'🌟'+G.pet];
+  G.evolStage=Math.min(G.evolStage+1,stages.length-1);
+  const newEmo=stages[G.evolStage-1]||stages[0];
+  $('evolE').textContent=newEmo||G.pet;
+  $('evolDesc').textContent=`${G.petName} har evolverat till en kraftfullare form!`;
+  $('evolSplash').classList.add('show');
+  G.evolved=true; gainXP(50); gainCoins(200);
+  addAct(`${G.pet} evolverade! ✨`,'g');
+  showT('✨ EVOLUTION! +200💰 +50XP','gold');
+  updateHUD();
+}
+
+// ══ ONBOARDING ══
+let pickedPet='🐉';
+function pickP(el){document.querySelectorAll('.pp').forEach(p=>p.classList.remove('sel'));el.classList.add('sel');pickedPet=el.dataset.p;$('obEmo').textContent=pickedPet;}
+function finishOB(){
+  const n=$('obName').value.trim();
+  G.name=n||'Äventyrare'; G.pet=pickedPet;
+  G.petName=PET_NAMES[pickedPet]||'Din pet';
+  $('onboard').style.display='none';
+  $('app').style.display='flex';
+  localStorage.setItem('pp_name',G.name);
+  localStorage.setItem('pp_pet',G.pet);
+  updateHUD(); renderAll();
+  showT(`🎉 Välkommen, ${G.name}!`);
+}
+
+// ══ STORIES ══
+function renderStories(){
+  $('stories').innerHTML=STORIES.map(s=>`
+    <div class="story" onclick="clickStory('${s.n}',${!!s.own})">
+      <div class="s-ring ${s.seen&&!s.own?'seen':''}">
+        <div class="s-inner">${s.own?G.pet:s.a}</div>
       </div>
-      <div class="sc-name">${s.name}</div>
+      <div class="s-nm">${s.own?'Din story':s.n}</div>
+    </div>
+  `).join('');
+}
+function clickStory(n,own){
+  if(own){$('camOv').classList.add('open');return;}
+  const s=STORIES.find(x=>x.n===n);if(s)s.seen=true;
+  renderStories();showT(`👁️ ${n}s story`);
+}
+
+// ══ FEED ══
+function renderFeed(){
+  $('view-feed').innerHTML=POSTS.map((p,i)=>`
+    <div class="flo-item" style="animation-delay:${i*.05}s">
+      <div class="flo-head">
+        <div class="flo-ava">${p.user==='Du'?G.pet:p.ava}</div>
+        <div>
+          <div class="flo-uname">${p.user==='Du'?G.name:p.user}</div>
+          <div class="flo-sub">${p.t} · ${p.pet} Lv.${p.lvl}</div>
+        </div>
+        <div class="flo-badge">${p.pet} Lv.${p.lvl}</div>
+      </div>
+      <div class="flo-txt">${p.txt}</div>
+      <div class="flo-acts">
+        <button class="fa ${G.likedPosts.has(p.id)?'liked':''}" onclick="like('${p.id}',this)">❤️ <span class="n" id="lc${p.id}">${p.likes}</span></button>
+        <button class="fa" onclick="sharePost('${p.id}')">📤 <span class="n">Dela</span></button>
+        <button class="fa" onclick="showT('💬 Kommentarer snart!')">💬 <span class="n">Svar</span></button>
+        <button class="fa" onclick="showT('🔖 Sparad!')">🔖</button>
+      </div>
+    </div>
+  `).join('');
+}
+function like(id,btn){
+  const p=POSTS.find(x=>x.id===id);
+  if(G.likedPosts.has(id)){G.likedPosts.delete(id);p.likes--;btn.classList.remove('liked');}
+  else{G.likedPosts.add(id);p.likes++;btn.classList.add('liked');showT('❤️ Gillat!');}
+  $(`lc${id}`).textContent=p.likes;
+}
+function sharePost(id){const p=POSTS.find(x=>x.id===id);if(navigator.share)navigator.share({title:'PETPET',text:p.txt});else{navigator.clipboard?.writeText(p.txt);showT('📋 Kopierat!');}}
+
+// ══ CHAT ══
+function renderChat(){
+  $('chatList').innerHTML=CHATS.map(c=>`
+    <div onclick="showT('💬 ${c.n} — snart!');this.querySelector('.ud')?.remove();" style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--b);cursor:pointer;">
+      <div style="width:38px;height:38px;border-radius:50%;background:var(--l3);display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;position:relative;">
+        ${c.a}${c.unread?`<div class="on-dot ud"></div>`:''}
+      </div>
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:13px;font-weight:700;">${c.n}</div>
+        <div style="font-size:11px;color:var(--mu);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${c.prev}</div>
+      </div>
+      <div style="text-align:right;flex-shrink:0;">
+        <div style="font-size:9px;color:var(--mu);font-family:var(--fm);">${c.t}</div>
+        ${c.streak>0?`<div style="font-size:9px;color:var(--r);font-weight:700;margin-top:3px;">🔥${c.streak}</div>`:''}
+      </div>
     </div>
   `).join('');
 }
 
-function selectStyle(id) {
-  selectedStyle = id;
-  renderStyles();
-  // auto-fill prompt hint
-  const s = STYLES.find(x => x.id === id);
-  if (s && s.id !== 'normal') {
-    const ta = document.getElementById('promptTA');
-    if (!ta.value.trim()) {
-      ta.placeholder = s.prompt.substring(0, 60) + '…';
-    }
-  }
-  showT(`✅ Stil: ${STYLES.find(x=>x.id===id)?.name}`, 'ok');
-}
-
-function clearStyle() {
-  selectedStyle = null;
-  renderStyles();
-}
-
-// ══ RENDER PROMPT CHIPS ══
-function renderChips() {
-  document.getElementById('promptExamples').innerHTML = PROMPT_CHIPS.map(c =>
-    `<div class="pe" onclick="appendPrompt('${c.text}')">${c.label}</div>`
-  ).join('');
-}
-
-function appendPrompt(text) {
-  const ta = document.getElementById('promptTA');
-  ta.value = (ta.value.trim() ? ta.value.trim() + ', ' : '') + text;
-  ta.focus();
-}
-
-// ══ RENDER SAMPLES ══
-function renderSamples() {
-  document.getElementById('sampleScroll').innerHTML = SAMPLE_PROMPTS.map(p =>
-    `<div class="sp-card" onclick="setPrompt('${p.replace(/'/g,"\\'")}')"><p>${p}</p></div>`
-  ).join('');
-}
-
-function setPrompt(text) {
-  document.getElementById('promptTA').value = text;
-  document.getElementById('promptTA').focus();
-}
-
-// ══ FILE UPLOAD ══
-function triggerUpload() {
-  document.getElementById('fileInput').click();
-}
-
-function handleFile(input) {
-  const file = input.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    uploadedImage = e.target.result;
-    const img = document.getElementById('previewImg');
-    img.src = uploadedImage;
-    img.style.display = 'block';
-    const overlay = document.getElementById('uzOverlay');
-    overlay.style.display = 'none';
-    document.getElementById('uploadZone').classList.add('has-img');
-    document.getElementById('uzChangeBtn').style.display = 'block';
-    showT('✅ Bild uppladdad!', 'ok');
-  };
-  reader.readAsDataURL(file);
-}
-
-// ══ GENERATE ══
-async function generate() {
-  if (isGenerating) return;
-  const prompt = document.getElementById('promptTA').value.trim();
-  const style = STYLES.find(x => x.id === selectedStyle);
-
-  if (!uploadedImage && !prompt) {
-    showT('📸 Ladda upp en bild eller skriv en prompt!', 'err');
-    return;
-  }
-
-  isGenerating = true;
-  const btn = document.getElementById('genBtn');
-  btn.disabled = true;
-  btn.classList.add('loading');
-  btn.textContent = '✨ Genererar…';
-
-  showProcessing();
-
-  try {
-    const systemPrompt = `Du är PETFOTO AI i appen PETPET – en kreativ bildanalysator och berättare. 
-    Din uppgift är att ${uploadedImage ? 'analysera den uppladdade bilden och ' : ''}${style ? `applicera stilen "${style.name}" (${style.prompt}) och ` : ''}${prompt ? `följa promoten: "${prompt}" och ` : ''}
-    ge ett kreativt, engagerande svar på svenska.
-    
-    Svara alltid med:
-    1. En **kreativ bildbeskriving** (2-3 meningar) som beskriver vad du "ser" eller föreställer dig
-    2. **AI-stil-transformation**: Beskriv hur bilden skulle se ut i den valda stilen
-    3. **Fun fact eller uppmuntran** om bilden/prompten
-    
-    Håll svaret till max 120 ord. Svara på svenska. Var kreativ, ungdomlig och uppmuntrande med rätt emojis!`;
-
-    const messages = [];
-    
-    if (uploadedImage) {
-      const base64Data = uploadedImage.split(',')[1];
-      const mimeType = uploadedImage.split(';')[0].split(':')[1];
-      messages.push({
-        role: 'user',
-        content: [
-          {
-            type: 'image',
-            source: { type: 'base64', media_type: mimeType, data: base64Data }
-          },
-          {
-            type: 'text',
-            text: `${style ? `Applicera stilen: ${style.name}. ` : ''}${prompt || 'Analysera och beskriv bilden kreativt på svenska.'}`
-          }
-        ]
-      });
-    } else {
-      messages.push({
-        role: 'user',
-        content: `${style ? `Stil: ${style.name}. ` : ''}${prompt}`
-      });
-    }
-
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        system: systemPrompt,
-        messages: messages
-      })
-    });
-
-    const data = await response.json();
-    const text = data.content?.map(c => c.text || '').join('') || 'Något gick fel!';
-
-    hideProcessing();
-    showResult(text, style);
-
-  } catch (err) {
-    hideProcessing();
-    showT('⚠️ Kunde inte nå AI. Försök igen!', 'err');
-    console.error(err);
-  } finally {
-    isGenerating = false;
-    btn.disabled = false;
-    btn.classList.remove('loading');
-    btn.textContent = '✨ Generera med AI';
-  }
-}
-
-// ══ PROCESSING ══
-const PROC_STEPS = [
-  'Analyserar din bild…',
-  'Applicerar AI-magi…',
-  'Skapar din unika stil…',
-  'Polerar detaljerna…',
-  'Nästan klart…',
-];
-
-let procInterval = null;
-let procStep = 0;
-
-function showProcessing() {
-  const overlay = document.getElementById('procOverlay');
-  overlay.classList.add('show');
-  const bar = document.getElementById('procBar');
-  const stepEl = document.getElementById('procStep');
-  const labelEl = document.getElementById('procLabel');
-  const petEl = document.getElementById('procPet');
-  
-  const style = STYLES.find(x => x.id === selectedStyle);
-  petEl.textContent = style ? style.bg : '✨';
-  labelEl.textContent = style ? `Applicerar ${style.name}-stil…` : 'Analyserar bilden…';
-
-  procStep = 0;
-  bar.style.width = '0%';
-  
-  procInterval = setInterval(() => {
-    procStep++;
-    const pct = Math.min(95, procStep * 20);
-    bar.style.width = pct + '%';
-    stepEl.textContent = PROC_STEPS[Math.min(procStep-1, PROC_STEPS.length-1)];
-    if (procStep >= 5) clearInterval(procInterval);
-  }, 600);
-}
-
-function hideProcessing() {
-  clearInterval(procInterval);
-  document.getElementById('procBar').style.width = '100%';
-  setTimeout(() => {
-    document.getElementById('procOverlay').classList.remove('show');
-  }, 400);
-}
-
-// ══ RESULT ══
-function showResult(text, style) {
-  lastResult = { text, style, img: uploadedImage, time: new Date() };
-  
-  // Update result card
-  document.getElementById('resultStyleName').textContent = style ? style.name : 'AI-analys';
-  document.getElementById('resultTime').textContent = 'just nu';
-  
-  // Show image if uploaded
-  const imgArea = document.getElementById('resultImgArea');
-  if (uploadedImage) {
-    imgArea.innerHTML = `<img src="${uploadedImage}" class="result-img" style="filter:${getStyleFilter(style?.id)}">`;
-  } else {
-    imgArea.innerHTML = `<div class="result-img-placeholder"><div style="font-size:40px;">${style?.bg || '✨'}</div><div style="font-size:13px;color:var(--mu);">Textbaserad generation</div></div>`;
-  }
-
-  // Format the AI text
-  const formatted = text
-    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\n/g, '<br>');
-  document.getElementById('resultDesc').innerHTML = formatted;
-
-  // Show section
-  document.getElementById('resultSection').classList.add('show');
-
-  // Add to history
-  addToHistory();
-  
-  // Scroll to result
-  setTimeout(() => {
-    document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, 200);
-
-  showT('🎉 AI-generation klar!', 'gold');
-}
-
-function getStyleFilter(id) {
-  const filters = {
-    anime: 'saturate(1.8) contrast(1.1)',
-    pixel: 'contrast(1.3) saturate(1.5)',
-    brainrot: 'saturate(2) hue-rotate(20deg)',
-    glow: 'brightness(1.2) saturate(1.6)',
-    clay: 'saturate(.8) contrast(.9)',
-    cyber: 'hue-rotate(180deg) saturate(2)',
-    vhs: 'grayscale(.4) contrast(1.2) sepia(.3)',
-    dragon: 'saturate(1.4) hue-rotate(-10deg) contrast(1.1)',
-  };
-  return filters[id] || 'none';
-}
-
-// ══ HISTORY ══
-function addToHistory() {
-  if (!lastResult) return;
-  history.unshift({ ...lastResult, id: Date.now() });
-  if (history.length > 12) history.pop();
-  renderHistory();
-}
-
-function renderHistory() {
-  const sec = document.getElementById('histSec');
-  const strip = document.getElementById('historyStrip');
-  if (history.length === 0) { sec.style.display = 'none'; return; }
-  sec.style.display = 'flex';
-  strip.innerHTML = history.map((h, i) => `
-    <div class="hist-item" onclick="loadHistory(${i})">
-      ${h.img ? `<img src="${h.img}" style="filter:${getStyleFilter(h.style?.id)}">` : `<div style="font-size:22px;">${h.style?.bg||'✨'}</div>`}
-      ${i===0 ? `<div class="hist-badge">NY</div>` : ''}
+// ══ MAP ══
+function renderMap(){
+  $('mapDots').innerHTML=MAP_FRIENDS.map(f=>`
+    <div class="map-pin" style="left:${f.x}%;top:${f.y}%;" onclick="showT('${f.a} ${f.n} · ${f.loc}')">
+      <div class="map-pin-dot" style="background:${f.c};"></div>
+      <div class="map-pin-lbl" style="color:${f.c};">${f.a} ${f.n}</div>
     </div>
-  `).join('') + `<div class="hist-item new-btn" onclick="triggerUpload()"><div style="font-size:22px;">➕</div></div>`;
+  `).join('');
+  $('mapYouLbl').textContent=`${G.pet} ${G.name}`;
+  $('mapFriends').innerHTML=MAP_FRIENDS.map(f=>`
+    <div class="mf-row">
+      <div class="mf-ava">${f.a}${f.online?`<div class="on-dot"></div>`:''}</div>
+      <div style="flex:1;"><div class="mf-n">${f.n}</div><div class="mf-l">📍 ${f.loc}</div></div>
+      <div class="mf-d">${f.d}</div>
+    </div>
+  `).join('');
 }
 
-function loadHistory(idx) {
-  const h = history[idx];
-  if (!h) return;
-  showResult(h.text, h.style);
-  if (h.img) {
-    uploadedImage = h.img;
-    const img = document.getElementById('previewImg');
-    img.src = h.img;
-    img.style.display = 'block';
-    document.getElementById('uzOverlay').style.display = 'none';
-    document.getElementById('uploadZone').classList.add('has-img');
-  }
-}
-
-// ══ RESULT ACTIONS ══
-function regenResult() {
-  if (!uploadedImage && !document.getElementById('promptTA').value.trim()) {
-    showT('✏️ Lägg till prompt eller bild!', 'err');
-    return;
-  }
-  generate();
-}
-
-function saveResult() {
-  if (!lastResult) return;
-  if (lastResult.img) {
-    const a = document.createElement('a');
-    a.href = lastResult.img;
-    a.download = `petfoto_${Date.now()}.jpg`;
-    a.click();
-    showT('💾 Sparad till enhet!', 'ok');
+// ══ SHOP ══
+let shopTab='skins';
+function renderShop(items=null){
+  const content=$('shopContent');
+  if(shopTab==='skins'){
+    const list=items||SHOP_SKINS;
+    content.innerHTML=`<div class="prod-grid">${list.map(p=>`
+      <div class="prod" onclick="buyItem('${p.id}',this)">
+        ${p.badge?`<div class="prod-badge pb-${p.badge}">${{hot:'🔥 HET',leg:'👑 LEGEND',new:'🆕 NY',pre:'💎 PREMIUM'}[p.badge]||''}</div>`:''}
+        <div class="prod-e">${p.e}</div>
+        <div class="prod-n">${p.n}</div>
+        <div class="prod-p coin">${p.p} 💰</div>
+      </div>
+    `).join('')}</div>`;
+  } else if(shopTab==='items'){
+    const list=items||SHOP_ITEMS;
+    content.innerHTML=`<div class="prod-grid">${list.map(p=>`
+      <div class="prod" onclick="buyItem('${p.id}',this)">
+        ${p.badge?`<div class="prod-badge pb-${p.badge}">${{hot:'🔥',leg:'👑',new:'🆕',pre:'💎'}[p.badge]||''}</div>`:''}
+        <div class="prod-e">${p.e}</div>
+        <div class="prod-n">${p.n}</div>
+        <div class="prod-p coin">${p.p} 💰</div>
+      </div>
+    `).join('')}</div>`;
+  } else if(shopTab==='deals'){
+    content.innerHTML=SHOP_DEALS.map(d=>`
+      <div class="deal-card" onclick="showT('🔥 ${d.n} köpt! ⏳ Begränsat erbjudande')">
+        <div class="deal-e">${d.e}</div>
+        <div class="deal-info">
+          <div class="deal-n">${d.n}</div>
+          <div class="deal-d">${d.desc}</div>
+          <div style="margin-top:4px;font-size:11px;color:var(--mu);font-family:var(--fm);text-decoration:line-through;">${d.orig} 💰</div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:15px;font-weight:800;color:var(--g);font-family:var(--fm);">${d.p} 💰</div>
+          <div class="deal-timer">⏳${d.time}</div>
+        </div>
+      </div>
+    `).join('');
   } else {
-    navigator.clipboard?.writeText(lastResult.text);
-    showT('📋 AI-text kopierad!', 'ok');
+    content.innerHTML=CODES.map(c=>`
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--b);">
+        <span style="font-family:var(--fm);font-size:12px;background:var(--l3);padding:4px 9px;border-radius:8px;">${c.c}</span>
+        <span style="font-size:11px;color:var(--mu);">+${c.r}💰</span>
+        <button class="do-btn" ${c.used?'disabled style="opacity:.4"':''} onclick="useCode('${c.c}',this)">${c.used?'ANVÄND':'ANVÄND'}</button>
+      </div>
+    `).join('');
   }
 }
-
-function publishResult() {
-  if (!lastResult) return;
-  document.getElementById('pubSuccess').classList.add('show');
-  setTimeout(() => document.getElementById('pubSuccess').classList.remove('show'), 3500);
+function filterShop(q){
+  const all=[...SHOP_SKINS,...SHOP_ITEMS];
+  if(!q){renderShop();return;}
+  const f=all.filter(p=>p.n.toLowerCase().includes(q.toLowerCase()));
+  $('shopContent').innerHTML=`<div class="prod-grid">${f.map(p=>`<div class="prod" onclick="buyItem('${p.id}',this)"><div class="prod-e">${p.e}</div><div class="prod-n">${p.n}</div><div class="prod-p coin">${p.p} 💰</div></div>`).join('')}</div>`;
 }
-
-function closePubSuccess() {
-  document.getElementById('pubSuccess').classList.remove('show');
-  showT('🔥 Publicerat i PETFLO!', 'gold');
+function buyItem(id,el){
+  const p=[...SHOP_SKINS,...SHOP_ITEMS].find(x=>x.id===id);if(!p)return;
+  if(G.coins<p.p){showT(`❌ Behöver ${p.p-G.coins} mer coins!`,'err');return;}
+  G.coins-=p.p;updateHUD();pop(`-${p.p}💰`,el,'#ff453a');showT(`✅ Köpte ${p.n}!`);addAct(`Köpte ${p.n} 🛍️`,'p');
 }
-
-// ══ HEADER TABS ══
-document.querySelectorAll('.htab').forEach(t => {
-  t.addEventListener('click', () => {
-    document.querySelectorAll('.htab').forEach(x => x.classList.remove('active'));
-    t.classList.add('active');
-    const mode = t.dataset.mode;
-    if (mode === 'camera') showT('📷 Kamera — öppnar snart!', 'ok');
-    if (mode === 'live') showT('🔴 Live-streaming — kommer i v5!', 'ok');
+function useCode(c,btn){const code=CODES.find(x=>x.c===c);if(!code||code.used)return;code.used=true;gainCoins(code.r,btn);showT(`🎟️ +${code.r} coins!`,'gold');renderShop();}
+document.querySelectorAll('.stab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.stab').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active'); shopTab=t.dataset.tab; renderShop();
   });
 });
 
-function goBack() {
-  showT('← Tillbaka till PETPET', 'ok');
+// ══ BOUNTIES ══
+let bTab='brands';
+function renderBounties(){
+  const list=bTab==='brands'?BRAND_BOUNTIES:bTab==='community'?COMMUNITY_BOUNTIES:doneBounties;
+  if(bTab==='mine'){
+    $('bountyContent').innerHTML=doneBounties.length?doneBounties.map(b=>`
+      <div class="bounty-card" style="border-color:rgba(57,255,20,.2);">
+        <div class="bc-top"><div class="bc-t">${b.t}</div><div class="bc-r" style="color:var(--g);">✅ Klar</div></div>
+      </div>
+    `).join(''):`<div style="color:var(--mu);text-align:center;padding:20px;font-size:13px;">Inga klara uppdrag än</div>`;
+    return;
+  }
+  $('bountyContent').innerHTML=list.map(b=>`
+    <div class="bounty-card">
+      ${b.brand?`<div class="bc-brand">${b.brand}</div>`:''}
+      <div class="bc-top">
+        <div class="bc-t">${b.t}</div>
+        <div class="bc-r ${b.rt}">${b.r} ${b.rt==='sek'?'SEK':'💰'}</div>
+      </div>
+      <div class="bc-desc">${b.desc}</div>
+      <div class="bc-tags">${b.tags.map(t=>`<div class="bc-tag ${t}">${{brand:'🏢 Brand',photo:'📸 Foto',video:'🎥 Video',irl:'📍 IRL'}[t]||t}</div>`).join('')}</div>
+      <div class="do-btn" onclick="${b.rt==='sek'?`openSwish(${b.r},'${b.id}')`:`doBounty('${b.id}',this)`}">
+        ${b.rt==='sek'?`💳 Swish ${b.r} SEK`:'🎯 Gör uppdraget'}
+      </div>
+    </div>
+  `).join('');
+}
+function doBounty(id,el){
+  const b=[...BRAND_BOUNTIES,...COMMUNITY_BOUNTIES].find(x=>x.id===id);if(!b)return;
+  const idx=COMMUNITY_BOUNTIES.indexOf(b);if(idx>-1)COMMUNITY_BOUNTIES.splice(idx,1);
+  doneBounties.push(b);G.bountiesDone++;gainCoins(b.r,el);gainXP(10);
+  addAct(`Klarade: ${b.t}`,'o');showT(`🎯 +${b.r}💰`);renderBounties();
+}
+document.querySelectorAll('.btab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.btab').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');bTab=t.dataset.bt;renderBounties();
+  });
+});
+
+// ══ SWISH ══
+let pendingBounty=null;
+function openSwish(amt,id){
+  pendingBounty=id;$('swishAmt').textContent=`${amt} SEK`;$('swishMod').classList.add('open');
+}
+function closeSwish(){$('swishMod').classList.remove('open');pendingBounty=null;}
+function confirmSwish(){
+  $('swishMod').classList.remove('open');
+  const b=[...BRAND_BOUNTIES,...COMMUNITY_BOUNTIES].find(x=>x.id===pendingBounty);
+  if(b){doneBounties.push(b);G.bountiesDone++;gainXP(15);addAct(`Slutförde Brand Mission: ${b.t} 💳`,'p');}
+  showT('💳 Swish skickat! Väntar på verifiering…','gold');renderBounties();
 }
 
-// ══ TOAST ══
-let toastT;
-function showT(m, t = 'ok') {
-  const el = document.getElementById('toast');
-  el.textContent = m;
-  el.className = `toast show ${t}`;
-  clearTimeout(toastT);
-  toastT = setTimeout(() => { el.className = 'toast'; }, 2600);
+// ══ BATTLE ══
+function renderBattle(){
+  $('battlePicker').style.display='block';$('battleArena').style.display='none';
+  $('oppGrid').innerHTML=OPPONENTS.map(o=>`
+    <div class="opp-card ${o.pvp?'pvp':''}" onclick="startBattle('${o.n}')">
+      <div class="oc-e">${o.e}</div>
+      <div class="oc-n">${o.n}</div>
+      <div class="oc-l">Lv.${o.lv}</div>
+      <div class="oc-r">+${o.r}💰</div>
+      ${o.pvp?`<div class="oc-pvp">⚔️ PvP</div>`:''}
+    </div>
+  `).join('');
 }
+let battle=null;
+function startBattle(name){
+  const o=OPPONENTS.find(x=>x.n===name);if(!o)return;
+  battle={opp:{...o,hp:o.mhp},php:100,log:[]};
+  $('battlePicker').style.display='none';$('battleArena').style.display='block';updBattle();
+}
+function updBattle(){
+  if(!battle)return;
+  $('bHero').innerHTML=`
+    <div class="b-row">
+      <div class="bf"><div class="bf-e">${G.pet}</div><div class="bf-n">${G.name}</div>
+        <div class="hp-wrap"><div class="hp-fill mine" style="width:${battle.php}%"></div></div>
+        <div class="hp-n">❤️${battle.php}/100</div></div>
+      <div class="b-vs">VS</div>
+      <div class="bf"><div class="bf-e">${battle.opp.e}</div><div class="bf-n">${battle.opp.n}</div>
+        <div class="hp-wrap"><div class="hp-fill" style="width:${battle.opp.hp/battle.opp.mhp*100}%"></div></div>
+        <div class="hp-n">❤️${battle.opp.hp}/${battle.opp.mhp}</div></div>
+    </div>`;
+  $('bLog').innerHTML=battle.log.slice(0,6).map(l=>`<div class="ll">${l}</div>`).join('');
+  $('bLog').scrollTop=0;
+  $('bActs').innerHTML=`
+    <button class="btn-p" onclick="bAtk()">⚔️ Attackera</button>
+    <button class="btn-s" onclick="bHeal()">💊 Heala (20⚡)</button>
+    <button class="btn-s" onclick="bSpec()">✨ Special (30⚡)</button>
+    <button class="btn-s" onclick="renderBattle()">🏳️ Ge upp</button>`;
+}
+function bAtk(){if(!battle)return;const d=Math.floor(Math.random()*28)+12;battle.opp.hp=Math.max(0,battle.opp.hp-d);battle.log.unshift(`⚔️ Du slog ${d}!`);if(battle.opp.hp<=0){bWin();return;}const ed=Math.floor(Math.random()*battle.opp.atk)+5;battle.php=Math.max(0,battle.php-ed);battle.log.unshift(`💀 ${battle.opp.n} slog ${ed}!`);if(battle.php<=0){bLose();return;}updBattle();}
+function bHeal(){if(!battle)return;if(G.energy<20){showT('❌ Inte nog energi!','err');return;}G.energy-=20;battle.php=Math.min(100,battle.php+35);battle.log.unshift(`✅ Healade 35HP`);updateHUD();updBattle();}
+function bSpec(){if(!battle)return;if(G.energy<30){showT('❌ Inte nog energi!','err');return;}G.energy-=30;const d=Math.floor(Math.random()*50)+40;battle.opp.hp=Math.max(0,battle.opp.hp-d);battle.log.unshift(`✨ SPECIAL! ${d} massiv skada!`);if(battle.opp.hp<=0){bWin();return;}updateHUD();updBattle();}
+function bWin(){G.battlesWon++;gainCoins(battle.opp.r);gainXP(25);addAct(`Besegrade ${battle.opp.n} ⚔️`,'p');showT(`🏆 VINST! +${battle.opp.r}💰`,'gold');setTimeout(renderBattle,1600);}
+function bLose(){showT('💀 Du förlorade…','err');setTimeout(renderBattle,1500);}
+
+// ══ PROFILE TABS ══
+document.querySelectorAll('.ptab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.ptab').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    ['pet','badges','map','act'].forEach(n=>{const el=$(`ptab-${n}`);if(el)el.style.display='none';});
+    $(`ptab-${t.dataset.ptab}`).style.display='block';
+    if(t.dataset.ptab==='badges')renderBadges();
+    if(t.dataset.ptab==='act')renderAct();
+    if(t.dataset.ptab==='map')renderProfileMap();
+    if(t.dataset.ptab==='pet')renderPetTab();
+  });
+});
+function renderPetTab(){
+  $('ptab-pet').innerHTML=`
+    <div style="background:linear-gradient(135deg,rgba(57,255,20,.07),rgba(0,245,212,.05));border:1px solid rgba(57,255,20,.2);border-radius:16px;padding:14px;display:flex;gap:12px;align-items:center;">
+      <div style="font-size:56px;">${G.pet}</div>
+      <div style="flex:1;">
+        <div style="font-size:16px;font-weight:800;">${G.petName}</div>
+        <div style="font-size:11px;color:var(--g);font-weight:600;margin:3px 0 10px;">Level ${G.level} · ${['Common','Uncommon','Rare','Epic','Legendary'][Math.min(4,Math.floor(G.level/5))]}</div>
+        <div style="display:flex;flex-wrap:wrap;gap:5px;">
+          ${['🔥 Fire Breath','🪽 Flykt','⚡ Blixtnedslag'].map(a=>`<div style="font-size:11px;font-weight:600;padding:4px 10px;border-radius:100px;background:rgba(57,255,20,.1);border:1px solid rgba(57,255,20,.2);color:var(--g);">${a}</div>`).join('')}
+        </div>
+      </div>
+    </div>`;
+}
+function renderBadges(){
+  $('ptab-badges').innerHTML=`<div class="card"><div class="badge-grid">${BADGES_DATA.map(b=>`
+    <div class="badge ${b.check()?'earned':''}" onclick="showT('${b.check()?'✅ '+b.l:'🔒 '+b.l}','${b.check()?'ok':'err'}')">
+      <div class="badge-e" style="${!b.check()?'filter:grayscale(1)opacity(.4)':''}">${b.e}</div>
+      <div class="badge-l">${b.l}</div>
+    </div>
+  `).join('')}</div></div>`;
+}
+function renderAct(){
+  $('ptab-act').innerHTML=`<div class="card">${G.activities.map(a=>`
+    <div class="act-item">
+      <div class="act-dot" style="background:${{'g':'var(--g)','p':'var(--p)','o':'var(--o)','c':'var(--c)','r':'var(--r)'}[a.dot]||'var(--mu)'}"></div>
+      <div class="act-t">${a.t}</div>
+      <div class="act-time">${a.time}</div>
+    </div>
+  `).join('')}</div>`;
+}
+function renderProfileMap(){
+  $('ptab-map').innerHTML=`<div class="card"><div class="ct">🗺️ Din aktivitetskarta</div>
+    <div style="background:var(--l2);border-radius:12px;height:150px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;font-size:12px;color:var(--mu);">
+      <div style="font-size:32px;">🗺️</div>
+      <div>Besök platser för att bygga din karta</div>
+      <div style="font-size:10px;">${G.activities.filter(a=>a.t.includes('Besökte')).length} platser registrerade</div>
+    </div>
+  </div>`;
+}
+
+// ══ CAM / POST ══
+let selImg=null;
+$('camBtn').addEventListener('click',()=>$('camOv').classList.add('open'));
+$('camX').addEventListener('click',()=>{$('camOv').classList.remove('open');selImg=null;$('camTxt').value='';$('camPrev').style.display='none';});
+function pickImg(){const i=document.createElement('input');i.type='file';i.accept='image/*';i.onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{selImg=ev.target.result;$('camPrev').src=selImg;$('camPrev').style.display='block';};r.readAsDataURL(f);};i.click();}
+function publishPost(){
+  const txt=$('camTxt').value.trim();if(!txt&&!selImg){showT('✏️ Skriv något!','err');return;}
+  POSTS.unshift({id:'u'+Date.now(),user:'Du',ava:G.pet,pet:G.pet,lvl:G.level,txt:txt||'🔥',likes:0,t:'just nu'});
+  G.postsCreated++;$('camOv').classList.remove('open');selImg=null;$('camTxt').value='';$('camPrev').style.display='none';
+  gainCoins(5);addAct('Publicerade ett inlägg 📸','g');renderFeed();switchView('feed');showT('✅ Publicerat! +5💰');
+}
+
+// ══ SHARE ══
+function shareProfile(){const txt=`${G.pet} ${G.name} — Level ${G.level} på PETPET!\n🔥 ${G.streak} dagars streak · 💰 ${G.coins} coins\nLadda ner PETPET!`;if(navigator.share)navigator.share({title:'PETPET',text:txt});else{navigator.clipboard?.writeText(txt);showT('📋 Kopierat!');}}
+
+// ══ AI CHAT ══
+$('aiOpen').addEventListener('click',()=>$('aiWin').classList.add('open'));
+$('aiBack').addEventListener('click',()=>$('aiWin').classList.remove('open'));
+$('aiSnd').addEventListener('click',sendAI);
+$('aiInp').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendAI();}});
+function addMsg(txt,type){const el=document.createElement('div');el.className=`msg ${type}`;el.textContent=txt;$('aiMsgs').appendChild(el);$('aiMsgs').scrollTop=$('aiMsgs').scrollHeight;return el;}
+async function sendAI(){
+  const m=$('aiInp').value.trim();if(!m)return;$('aiInp').value='';addMsg(m,'u');
+  const ld=addMsg('✦ Tänker…','ai ld');
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+      model:'claude-sonnet-4-20250514',max_tokens:1000,
+      system:`Du är PetPal AI i appen PETPET – "The Everything Platform". Appen har 7 världar: PETFLO (feed), PETCHAT, PETMAP, PETSHOP, PET BOUNTY (betalda uppdrag med Swish), PETCARE (mata/träna/levla sin pet) och PET PROFILE. Spelarens pet: ${G.pet} (${G.petName}), level ${G.level}, ${G.coins} coins, ${G.streak} dagars streak. Svara alltid på svenska, personligt och entusiastiskt, max 3 meningar, med relevanta emojis och konkreta tips.`,
+      messages:[{role:'user',content:m}]})});
+    const data=await res.json();
+    const txt=data.content?.map(c=>c.text||'').join('')||'Oj, något gick fel!';
+    ld.textContent=txt;ld.classList.remove('ld');
+  }catch(e){ld.textContent='⚠️ Kunde inte nå AI just nu.';}
+}
+
+// ══ PETFOTO ══
+const PF_STYLES = [
+  {id:'normal', n:'Normal',   bg:'🌿', cls:'',       sys:'Analysera och beskriv bilden kreativt och detaljerat på svenska.'},
+  {id:'anime',  n:'Anime',    bg:'🌸', cls:'anime',  sys:'Föreställ dig denna bild i japansk anime-stil med stora ögon, vibranta färger och mangaestetik. Beskriv resultatet på svenska.'},
+  {id:'pixel',  n:'Pixel Art',bg:'👾', cls:'pixel',  sys:'Föreställ dig bilden i retro pixel art-stil, 16-bitars. Beskriv resultatet på svenska.'},
+  {id:'brainrot',n:'Brainrot',bg:'🤪', cls:'brainrot',sys:'Gör om bilden i absurd internet-brainrot-stil med overdramatisk belysning och kaotisk energi. Beskriv på svenska.'},
+  {id:'glow',   n:'Glow Up',  bg:'✨', cls:'glow',   sys:'En dramatisk "glow up" — maximalt glamorös, glittrande och estetisk. Beskriv på svenska.'},
+  {id:'clay',   n:'Clay',     bg:'🏺', cls:'clay',   sys:'Claymation-stil, stop-motion, mjuka texturer och pastellfärger. Beskriv på svenska.'},
+  {id:'cyber',  n:'Cyberpunk',bg:'🤖', cls:'cyber',  sys:'Neonbelyst cyberpunk-estetik, dystopisk framtid. Beskriv på svenska.'},
+  {id:'vhs',    n:'VHS Retro',bg:'📼', cls:'vhs',    sys:'Nostalgisk VHS-effekt med scanlines och 90-talskänsla. Beskriv på svenska.'},
+  {id:'dragon', n:'Draken 🐉',bg:'🐉', cls:'dragon', sys:'Episk fantasy-värld med drakar, eld och magisk glöd. Beskriv på svenska.'},
+];
+
+const PF_CHIPS = [
+  {l:'🎩 Grön hatt', t:'Lägg till en stor grön trollkarlshatt'},
+  {l:'🐉 Drak-stil', t:'Drakestetik med eld och fjäll'},
+  {l:'🌸 Anime',     t:'Konvertera till anime-stil'},
+  {l:'✨ Glow up',   t:'Maximalt glamorös glow up'},
+  {l:'🌌 Rymd',      t:'Placera i ett rymdskepp'},
+  {l:'🏰 Fantasy',   t:'Fantasy-miljö med slott och magi'},
+  {l:'😂 Brainrot',  t:'Absurd brainrot internet-meme stil'},
+];
+
+const PF_SAMPLES = [
+  'Gör om mig med grön hatt och glittrande ögon',
+  'Sätt mig i en rymdfarkost med draken som pilot',
+  'Cyberpunk-version av mig i neon Tokyo',
+  'Vad ser AI:n i den här bilden?',
+  'Ge mig drakrustning och eldsflammor',
+  'Fota om mig som anime-hjälte',
+  'Gör bakgrunden till ett magiskt slott',
+  'Beskriv stämningen i bilden',
+];
+
+let pfSelStyle = null;
+let pfUploadedImg = null;
+let pfHistory = [];
+let pfLastResult = null;
+let pfGenerating = false;
+
+function openPetfoto() { $('petfotoWin').classList.add('open'); pfRenderStyles(); pfRenderChips(); pfRenderSamples(); }
+function closePetfoto() { $('petfotoWin').classList.remove('open'); }
+
+function pfRenderStyles() {
+  $('pfStyleRow').innerHTML = PF_STYLES.map(s => `
+    <div class="pf-scard ${pfSelStyle===s.id?'sel':''}" onclick="pfSelectStyle('${s.id}')">
+      <div class="pf-scard-img"><div class="sc-bg ${s.cls}">${s.bg}</div></div>
+      <div class="pf-scard-n">${s.n}</div>
+    </div>
+  `).join('');
+}
+function pfSelectStyle(id) {
+  pfSelStyle = id;
+  pfRenderStyles();
+  showT(`✅ Stil: ${PF_STYLES.find(x=>x.id===id)?.n}`, 'ok');
+}
+function pfClearStyle() { pfSelStyle = null; pfRenderStyles(); }
+
+function pfRenderChips() {
+  $('pfChips').innerHTML = PF_CHIPS.map(c =>
+    `<div class="pf-chip" onclick="pfAppendPrompt('${c.t.replace(/'/g,"\\'")}')">${c.l}</div>`
+  ).join('');
+}
+function pfAppendPrompt(t) {
+  const ta = $('pfPromptTA');
+  ta.value = (ta.value.trim() ? ta.value.trim() + ', ' : '') + t;
+  ta.focus();
+}
+
+function pfRenderSamples() {
+  $('pfSamples').innerHTML = PF_SAMPLES.map(p =>
+    `<div class="pf-sample" onclick="pfSetPrompt('${p.replace(/'/g,"\\'")}')"><p>${p}</p></div>`
+  ).join('');
+}
+function pfSetPrompt(t) { $('pfPromptTA').value = t; $('pfPromptTA').focus(); }
+
+function pfTriggerUpload() { $('pfFileInput').click(); }
+function pfHandleFile(input) {
+  const f = input.files[0]; if (!f) return;
+  const r = new FileReader();
+  r.onload = e => {
+    pfUploadedImg = e.target.result;
+    $('pfPrevImg').src = pfUploadedImg; $('pfPrevImg').style.display = 'block';
+    $('pfOv').style.display = 'none';
+    $('pfUpload').classList.add('has-img');
+    $('pfChangeRow').style.display = 'block';
+    showT('✅ Bild uppladdad!', 'ok');
+  };
+  r.readAsDataURL(f);
+}
+
+const PF_PROC_STEPS = ['Analyserar din bild…','Applicerar AI-magi…','Skapar din stil…','Polerar detaljer…','Nästan klart…'];
+let pfProcInt = null, pfProcStep = 0;
+
+function pfShowProc() {
+  const s = PF_STYLES.find(x => x.id === pfSelStyle);
+  $('pfProcPet').textContent = s ? s.bg : G.pet;
+  $('pfProcLbl').textContent = s ? `Applicerar ${s.n}…` : 'AI analyserar…';
+  $('pfProcBar').style.width = '0%';
+  $('pfProc').classList.add('show');
+  pfProcStep = 0;
+  pfProcInt = setInterval(() => {
+    pfProcStep++;
+    $('pfProcBar').style.width = Math.min(95, pfProcStep * 20) + '%';
+    $('pfProcStep').textContent = PF_PROC_STEPS[Math.min(pfProcStep-1, 4)];
+    if (pfProcStep >= 5) clearInterval(pfProcInt);
+  }, 550);
+}
+function pfHideProc() {
+  clearInterval(pfProcInt);
+  $('pfProcBar').style.width = '100%';
+  setTimeout(() => $('pfProc').classList.remove('show'), 380);
+}
+
+function pfGetFilter(id) {
+  return {anime:'saturate(1.8)contrast(1.1)',pixel:'contrast(1.4)saturate(1.5)',brainrot:'saturate(2)hue-rotate(20deg)',glow:'brightness(1.2)saturate(1.6)',clay:'saturate(.8)contrast(.9)',cyber:'hue-rotate(180deg)saturate(2)',vhs:'grayscale(.4)contrast(1.2)sepia(.3)',dragon:'saturate(1.4)hue-rotate(-10deg)'}[id] || 'none';
+}
+
+async function pfGenerate() {
+  if (pfGenerating) return;
+  const prompt = $('pfPromptTA').value.trim();
+  const style = PF_STYLES.find(x => x.id === pfSelStyle);
+  if (!pfUploadedImg && !prompt) { showT('📸 Ladda upp bild eller skriv prompt!', 'err'); return; }
+  pfGenerating = true;
+  const btn = $('pfGenBtn');
+  btn.disabled = true; btn.classList.add('loading'); btn.textContent = '✨ Genererar…';
+  pfShowProc();
+  try {
+    const sys = `Du är PETFOTO AI i appen PETPET — en kreativ bildanalysator och berättare för ungdomar. ${style ? style.sys : 'Analysera och beskriv kreativt.'} ${prompt ? `Följ promoten: "${prompt}". ` : ''} Svara på svenska, kreativt, ungdomligt och engagerande med emojis. Max 100 ord. Format: 1) Bildbeskriving 2) Stil-transformation 3) Uppmuntran`;
+    const msgs = pfUploadedImg ? [{role:'user',content:[{type:'image',source:{type:'base64',media_type:pfUploadedImg.split(';')[0].split(':')[1],data:pfUploadedImg.split(',')[1]}},{type:'text',text:prompt||'Analysera kreativt!'}]}] : [{role:'user',content:prompt}];
+    const res = await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:sys,messages:msgs})});
+    const data = await res.json();
+    const txt = data.content?.map(c=>c.text||'').join('')||'Något gick fel!';
+    pfHideProc();
+    pfShowResult(txt, style);
+  } catch(e) {
+    pfHideProc();
+    showT('⚠️ Kunde inte nå AI!', 'err');
+  } finally {
+    pfGenerating = false;
+    btn.disabled = false; btn.classList.remove('loading'); btn.textContent = '✨ Generera med AI';
+  }
+}
+
+function pfShowResult(txt, style) {
+  pfLastResult = {txt, style, img: pfUploadedImg, time: new Date()};
+  $('pfResultStyle').textContent = style ? style.n : 'AI-analys';
+  $('pfImgArea').innerHTML = pfUploadedImg
+    ? `<img src="${pfUploadedImg}" class="pfr-img" style="filter:${pfGetFilter(style?.id)}">`
+    : `<div class="pfr-placeholder"><div style="font-size:36px;">${style?.bg||'✨'}</div><div style="font-size:12px;color:var(--mu);">Textbaserad</div></div>`;
+  $('pfDescArea').innerHTML = txt.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');
+  $('pfResult').style.display = 'block';
+  pfAddHistory();
+  setTimeout(() => { $('pfResult').scrollIntoView({behavior:'smooth',block:'start'}); }, 200);
+  showT('🎉 AI-generation klar!', 'gold');
+  // give coins + xp
+  gainCoins(3); gainXP(5); addAct(`Skapade AI-foto med PETFOTO ✨`,'g');
+}
+
+function pfAddHistory() {
+  if (!pfLastResult) return;
+  pfHistory.unshift({...pfLastResult, id:Date.now()});
+  if (pfHistory.length > 10) pfHistory.pop();
+  pfRenderHistory();
+}
+function pfRenderHistory() {
+  const sec = $('pfHistSec'), row = $('pfHistRow');
+  if (!pfHistory.length) { sec.style.display='none'; return; }
+  sec.style.display = 'flex';
+  row.innerHTML = pfHistory.map((h,i) => `
+    <div class="pf-hi" onclick="pfLoadHistory(${i})">
+      ${h.img ? `<img src="${h.img}" style="filter:${pfGetFilter(h.style?.id)}">` : `<div style="font-size:20px;">${h.style?.bg||'✨'}</div>`}
+      ${i===0?`<div class="pf-hi-badge">NY</div>`:''}
+    </div>
+  `).join('') + `<div class="pf-hi add" onclick="pfTriggerUpload()"><div>➕</div></div>`;
+}
+function pfLoadHistory(i) { const h=pfHistory[i]; if(h){pfShowResult(h.txt,h.style);} }
+
+function pfRegen() { if(pfUploadedImg||$('pfPromptTA').value.trim()) pfGenerate(); else showT('✏️ Lägg till bild/prompt!','err'); }
+function pfSave() {
+  if (!pfLastResult) return;
+  if (pfLastResult.img) { const a=document.createElement('a');a.href=pfLastResult.img;a.download=`petfoto_${Date.now()}.jpg`;a.click();showT('💾 Sparad!','ok'); }
+  else { navigator.clipboard?.writeText(pfLastResult.txt); showT('📋 Text kopierad!','ok'); }
+}
+function pfPublish() {
+  if (!pfLastResult) return;
+  // Add to feed
+  const txt = $('pfPromptTA').value.trim() || (pfLastResult.style ? `AI-stil: ${pfLastResult.style.n} ✨` : '✨ PETFOTO creation');
+  POSTS.unshift({id:'pf'+Date.now(),user:'Du',ava:G.pet,pet:G.pet,lvl:G.level,txt,likes:0,t:'just nu',pfImg:pfLastResult.img,pfStyle:pfLastResult.style?.n});
+  G.postsCreated++;
+  $('pfPub').classList.add('show');
+}
+function pfClosePub() { $('pfPub').classList.remove('show'); closePetfoto(); switchView('feed'); showT('🔥 Publicerat i PETFLO!','gold'); }
+
+// Override camBtn to open cam overlay (which has PETFOTO shortcut)
+$('camBtn').addEventListener('click', () => $('camOv').classList.add('open'));
+$('camX').addEventListener('click', () => { $('camOv').classList.remove('open'); selImg=null; $('camTxt').value=''; $('camPrev').style.display='none'; });
+
+// Also add petfoto to menu
+MENU_ITEMS.push({v:'petfoto',l:'✨ PETFOTO AI'});
+// petfoto switchView hook
+const _origSwitch = switchView;
+window.switchView = function(name) {
+  if (name === 'petfoto') { openPetfoto(); return; }
+  _origSwitch(name);
+};
+
+// ══ VIEW SWITCH ══
+function switchView(name){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
+  const v=$(`view-${name}`);if(v)v.classList.add('active');
+  const b=document.querySelector(`.nb[data-v="${name}"]`);if(b)b.classList.add('active');
+  const renders={feed:renderFeed,chat:renderChat,map:renderMap,shop:()=>renderShop(),bounties:renderBounties,battle:renderBattle,petcare:updateHUD,profile:()=>{updateHUD();renderPetTab();}};
+  if(renders[name])renders[name]();
+}
+document.querySelectorAll('.nb[data-v]').forEach(b=>b.addEventListener('click',()=>switchView(b.dataset.v)));
+
+// ══ MENU ══
+$('menuBtn').addEventListener('click',()=>$('menuOv').classList.add('open'));
+$('menuOv').addEventListener('click',e=>{if(e.target===$('menuOv'))$('menuOv').classList.remove('open');});
+$('menuGrid').innerHTML=MENU_ITEMS.map(m=>`<div class="mi" data-v="${m.v}">${m.l}</div>`).join('');
+document.querySelectorAll('#menuGrid .mi').forEach(el=>el.addEventListener('click',()=>{$('menuOv').classList.remove('open');switchView(el.dataset.v);}));
+
+// ══ SAVE/LOAD ══
+function autoSave(){
+  localStorage.setItem('pp4_name',G.name);
+  localStorage.setItem('pp4_pet',G.pet);
+  localStorage.setItem('pp4_level',G.level);
+  localStorage.setItem('pp4_coins',G.coins);
+  localStorage.setItem('pp4_streak',G.streak);
+  localStorage.setItem('pp4_xp',G.exp);
+}
+setInterval(autoSave,5000);
+
+// ══ PET HUNGER DRAIN (every 3 min) ══
+setInterval(()=>{
+  if($('app').style.display==='none')return;
+  G.hunger=Math.max(0,G.hunger-5);
+  G.petEnergy=Math.max(0,G.petEnergy-3);
+  if(G.hunger<30)showT(`⚠️ ${G.petName} är hungrig!`,'err');
+  updateHUD();
+},180000);
 
 // ══ INIT ══
-renderStyles();
-renderChips();
-renderSamples();
+function renderAll(){renderStories();renderFeed();renderChat();renderShop();renderBounties();renderBattle();renderMap();renderPetTab();switchView('feed');}
+
+// Check saved state
+const sn=localStorage.getItem('pp4_name');
+if(sn){
+  G.name=sn; G.pet=localStorage.getItem('pp4_pet')||'🐉';
+  G.petName=PET_NAMES[G.pet]||'Din pet';
+  G.level=parseInt(localStorage.getItem('pp4_level')||'1');
+  G.coins=parseInt(localStorage.getItem('pp4_coins')||'500');
+  G.streak=parseInt(localStorage.getItem('pp4_streak')||'0');
+  G.exp=parseInt(localStorage.getItem('pp4_xp')||'0');
+  $('onboard').style.display='none';
+  $('app').style.display='flex';
+  updateHUD(); renderAll();
+}
 </script>
 
 </body>
