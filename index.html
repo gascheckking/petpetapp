@@ -1,810 +1,973 @@
 <!DOCTYPE html>
-
 <html lang="sv">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<title>PETPET</title>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;400;500;600;700;800&family=Azeret+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<title>VIBE — The Everything App</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-/* ══════════════════════════════════
-   TOKENS
-══════════════════════════════════ */
-:root{
-  --g:#39FF14; --g2:#00c853;
-  --p:#c77dff; --p2:#7b2ff7;
-  --c:#00f5d4; --c2:#0099cc;
-  --r:#ff453a; --o:#ff9f0a;
-  --y:#ffd60a;
-  --bg:#06060f;
-  --l1:#0c0c1a; --l2:#121220; --l3:#1a1a2e;
-  --b:rgba(255,255,255,0.055);
-  --b2:rgba(255,255,255,0.09);
-  --tx:#dde0f0; --mu:#4a4a72;
-  --ff:'Bricolage Grotesque',sans-serif;
-  --fm:'Azeret Mono',monospace;
-  --sb:env(safe-area-inset-bottom,0px);
+:root {
+  /* WARM EARTHY PALETTE — not neon, not generic */
+  --cream:  #f5f0e8;
+  --warm:   #ede5d4;
+  --sand:   #d4c4a8;
+  --brown:  #8b6f47;
+  --dark:   #1a1410;
+  --card:   #241e18;
+  --card2:  #2e2820;
+  --card3:  #3a3028;
+  --border: rgba(255,220,170,0.1);
+  --border2:rgba(255,220,170,0.18);
+
+  /* ACCENT COLORS — warm, unique */
+  --coral:  #ff6b47;   /* action / CTA */
+  --amber:  #f5a623;   /* coins / gold */
+  --sage:   #7eb89a;   /* success / health */
+  --sky:    #5b9bd5;   /* info / links */
+  --rose:   #e8607a;   /* likes / love */
+  --violet: #9b7fe8;   /* special / premium */
+
+  --tx:     #f0e8d8;
+  --tx2:    #b8a888;
+  --muted:  #6b5f4a;
+
+  --ff: 'DM Sans', sans-serif;
+  --fm: 'DM Mono', monospace;
+  --sb: env(safe-area-inset-bottom, 0px);
+  --r: 16px;
 }
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-html,body{height:100%;width:100%;overflow:hidden;background:var(--bg);font-family:var(--ff);color:var(--tx);overscroll-behavior:none;}
 
-/* NOISE TEXTURE */
-body::after{content:’’;position:fixed;inset:0;z-index:1000;pointer-events:none;opacity:.025;background-image:url(“data:image/svg+xml,%3Csvg viewBox=‘0 0 256 256’ xmlns=‘http://www.w3.org/2000/svg’%3E%3Cfilter id=‘n’%3E%3CfeTurbulence type=‘fractalNoise’ baseFrequency=‘0.9’ numOctaves=‘4’/%3E%3C/filter%3E%3Crect width=‘100%25’ height=‘100%25’ filter=‘url(%23n)’/%3E%3C/svg%3E”);background-size:200px;}
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html, body { height:100%; width:100%; overflow:hidden; background:var(--dark); font-family:var(--ff); color:var(--tx); overscroll-behavior:none; }
 
-/* BG GLOW */
-.bg{position:fixed;inset:0;z-index:0;overflow:hidden;background:var(–bg);}
-.bg::before{content:’’;position:absolute;inset:0;
-background:
-radial-gradient(ellipse 80% 60% at 10% 5%,rgba(57,255,20,0.1),transparent 55%),
-radial-gradient(ellipse 60% 50% at 90% 90%,rgba(199,125,255,0.08),transparent 55%),
-radial-gradient(ellipse 50% 40% at 55% 50%,rgba(0,245,212,0.05),transparent 50%);}
-.orb{position:absolute;border-radius:50%;filter:blur(100px);pointer-events:none;
-animation:of var(–d,30s) ease-in-out infinite var(–dl,0s);}
-.o1{width:700px;height:700px;top:-300px;left:-250px;background:radial-gradient(circle,rgba(57,255,20,.1),transparent 65%);–d:35s;}
-.o2{width:550px;height:550px;bottom:-200px;right:-200px;background:radial-gradient(circle,rgba(199,125,255,.09),transparent 65%);–d:28s;–dl:-15s;}
-.o3{width:400px;height:400px;top:40%;left:30%;background:radial-gradient(circle,rgba(0,245,212,.06),transparent 65%);–d:22s;–dl:-8s;}
-@keyframes of{0%,100%{transform:translate(0,0)scale(1);}33%{transform:translate(70px,-90px)scale(1.1);}66%{transform:translate(-60px,70px)scale(.92);}}
+/* WARM PAPER TEXTURE */
+body::before {
+  content:''; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 300px;
+}
 
-/* ══ ONBOARDING ══ */
-.ob-wrap{position:fixed;inset:0;z-index:2000;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 20px;background:var(–bg);overflow-y:auto;}
-.ob-logo{font-size:52px;font-weight:800;letter-spacing:-3px;line-height:1;background:linear-gradient(135deg,var(–g),var(–c));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px;}
-.ob-sub{font-size:12px;color:var(–mu);letter-spacing:2px;text-transform:uppercase;margin-bottom:32px;}
-.ob-pet-big{font-size:88px;line-height:1;margin-bottom:6px;animation:bob 2.2s ease-in-out infinite alternate;}
-@keyframes bob{from{transform:translateY(0);}to{transform:translateY(-14px);}}
-.ob-h{font-size:24px;font-weight:800;margin-bottom:8px;text-align:center;}
-.ob-p{font-size:13px;color:var(–mu);text-align:center;line-height:1.6;margin-bottom:24px;max-width:280px;}
-.pet-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:24px;}
-.pp{font-size:42px;cursor:pointer;padding:10px;border-radius:18px;background:var(–l2);border:2px solid transparent;transition:all .2s;}
-.pp.sel{border-color:var(–g);background:rgba(57,255,20,0.1);transform:scale(1.15);}
-.pp:active{transform:scale(.9);}
-.ob-in{width:100%;background:var(–l2);border:1.5px solid var(–b2);border-radius:14px;padding:13px 16px;color:var(–tx);font-size:15px;font-family:var(–ff);outline:none;text-align:center;margin-bottom:14px;transition:border-color .2s;}
-.ob-in:focus{border-color:rgba(57,255,20,.45);}
+/* WARM AMBIENT GLOW */
+body::after {
+  content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(ellipse 70% 50% at 20% 10%, rgba(245,166,35,.06), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 80% 85%, rgba(255,107,71,.05), transparent 50%);
+}
 
-/* ══ APP SHELL ══ */
-.app{position:relative;z-index:10;width:100%;height:100%;display:flex;flex-direction:column;max-width:430px;margin:0 auto;display:none;}
+/* ── ONBOARDING ── */
+.ob {
+  position:fixed; inset:0; z-index:2000;
+  background:var(--dark); overflow-y:auto;
+  display:flex; flex-direction:column; align-items:center;
+  padding:32px 24px calc(40px + var(--sb));
+}
+.ob-wordmark {
+  font-size:42px; font-weight:800; letter-spacing:-2px;
+  color:var(--coral); margin-bottom:4px; line-height:1;
+}
+.ob-tagline { font-size:12px; color:var(--muted); letter-spacing:2px; text-transform:uppercase; margin-bottom:40px; }
+.ob-step { width:100%; max-width:360px; }
+.ob-h { font-size:22px; font-weight:700; margin-bottom:6px; color:var(--tx); }
+.ob-p { font-size:13px; color:var(--tx2); line-height:1.6; margin-bottom:24px; }
 
-/* ══ TOPBAR ══ */
-.topbar{display:flex;align-items:center;gap:6px;padding:10px 12px 6px;background:rgba(6,6,15,.88);backdrop-filter:blur(24px);border-bottom:1px solid var(–b);flex-shrink:0;z-index:60;}
-.t-logo{font-size:18px;font-weight:800;letter-spacing:-1px;background:linear-gradient(135deg,var(–g),var(–c));-webkit-background-clip:text;-webkit-text-fill-color:transparent;flex-shrink:0;}
-.t-pills{display:flex;gap:4px;flex:1;overflow:hidden;justify-content:center;}
-.pill{background:var(–l2);border:1px solid var(–b);padding:4px 8px;border-radius:100px;font-size:10px;font-weight:600;font-family:var(–fm);white-space:nowrap;display:flex;align-items:center;gap:3px;}
-.pill .v{color:var(–g);}
-.pill.ep .v{color:var(–c);}
-.pill.str .v{color:var(–o);}
-.t-btn{width:32px;height:32px;background:linear-gradient(135deg,var(–g),var(–c));border:none;border-radius:10px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .15s;}
-.t-btn:active{transform:scale(.88);}
+/* PET CREATOR */
+.pet-canvas {
+  width:160px; height:160px; margin:0 auto 20px;
+  background:var(--card2); border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size:80px; border:3px solid var(--border2);
+  position:relative; cursor:pointer; transition:transform .2s;
+}
+.pet-canvas:active { transform:scale(.95); }
+.pet-canvas-ring {
+  position:absolute; inset:-4px; border-radius:50%;
+  background:conic-gradient(var(--coral), var(--amber), var(--sage), var(--coral));
+  z-index:-1; animation:spin 6s linear infinite; opacity:.6;
+}
+@keyframes spin { to { transform:rotate(360deg); } }
+.pet-body-picker {
+  display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-bottom:16px;
+}
+.pb { font-size:28px; cursor:pointer; padding:8px; border-radius:12px; background:var(--card2);
+  border:2px solid transparent; transition:all .18s; }
+.pb.sel { border-color:var(--coral); background:rgba(255,107,71,.12); transform:scale(1.1); }
+.pb:active { transform:scale(.9); }
+.pet-color-row { display:flex; gap:8px; justify-content:center; margin-bottom:20px; }
+.pc-dot { width:32px; height:32px; border-radius:50%; cursor:pointer; border:3px solid transparent; transition:all .18s; }
+.pc-dot.sel { border-color:var(--cream); transform:scale(1.2); }
+.pet-name-input {
+  width:100%; background:var(--card2); border:1.5px solid var(--border2);
+  border-radius:12px; padding:12px 16px; color:var(--tx); font-size:15px;
+  font-family:var(--ff); outline:none; text-align:center; margin-bottom:12px;
+  transition:border-color .2s;
+}
+.pet-name-input:focus { border-color:rgba(255,107,71,.5); }
+.ob-input {
+  width:100%; background:var(--card2); border:1.5px solid var(--border2);
+  border-radius:12px; padding:12px 16px; color:var(--tx); font-size:15px;
+  font-family:var(--ff); outline:none; margin-bottom:12px; transition:border-color .2s;
+}
+.ob-input:focus { border-color:rgba(255,107,71,.5); }
+.ob-next {
+  width:100%; padding:14px; border-radius:100px; border:none; cursor:pointer;
+  background:var(--coral); color:#fff; font-size:15px; font-weight:700;
+  font-family:var(--ff); transition:all .15s; margin-top:4px;
+}
+.ob-next:active { transform:scale(.97); opacity:.9; }
+.ob-step-dots { display:flex; gap:6px; margin:0 auto 20px; }
+.ob-dot { width:8px; height:8px; border-radius:50%; background:var(--card3); transition:all .2s; }
+.ob-dot.active { background:var(--coral); width:20px; border-radius:4px; }
 
-/* ══ PET STATUS BAR (PETCARE) ══ */
-.pet-status-bar{margin:8px 12px 0;display:flex;gap:8px;flex-shrink:0;}
-.ps{flex:1;background:var(–l2);border:1px solid var(–b);border-radius:12px;padding:6px 10px;}
-.ps-lbl{font-size:9px;color:var(–mu);letter-spacing:.8px;text-transform:uppercase;margin-bottom:4px;display:flex;justify-content:space-between;}
-.ps-bar{height:4px;background:var(–l3);border-radius:100px;overflow:hidden;}
-.ps-fill{height:100%;border-radius:100px;transition:width .5s;}
-.ps-fill.hunger{background:linear-gradient(90deg,var(–o),#ff6b00);}
-.ps-fill.energy{background:linear-gradient(90deg,var(–c),var(–c2));}
-.ps-fill.mood{background:linear-gradient(90deg,var(–p),var(–p2));}
+/* ── APP ── */
+.app {
+  position:relative; z-index:10;
+  width:100%; height:100%; max-width:430px; margin:0 auto;
+  display:none; flex-direction:column; background:var(--dark);
+}
 
-/* ══ STORIES ══ */
-.stories{padding:8px 12px;display:flex;gap:10px;overflow-x:auto;flex-shrink:0;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
-.stories::-webkit-scrollbar{display:none;}
-.story{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;flex-shrink:0;}
-.s-ring{width:56px;height:56px;border-radius:50%;background:conic-gradient(var(–g) 0deg,var(–c) 120deg,var(–p) 240deg,var(–g) 360deg);padding:2.5px;display:flex;align-items:center;justify-content:center;transition:transform .18s;}
-.s-ring.seen{background:conic-gradient(var(–l3),var(–l3));}
-.s-ring:active{transform:scale(.87);}
-.s-inner{width:49px;height:49px;border-radius:50%;background:var(–l2);display:flex;align-items:center;justify-content:center;font-size:24px;}
-.s-nm{font-size:9px;color:var(–mu);max-width:56px;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;text-align:center;}
+/* ── TOPBAR ── */
+.topbar {
+  display:flex; align-items:center; gap:8px; padding:10px 14px 8px;
+  background:rgba(26,20,16,.92); backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border); flex-shrink:0; z-index:60;
+}
+.logo {
+  font-size:22px; font-weight:800; letter-spacing:-1px; color:var(--coral); flex-shrink:0;
+  line-height:1;
+}
+.topbar-center { flex:1; display:flex; justify-content:center; gap:5px; }
+.hpill {
+  background:var(--card2); border:1px solid var(--border);
+  padding:4px 9px; border-radius:8px; font-size:10px; font-weight:600;
+  font-family:var(--fm); display:flex; align-items:center; gap:3px; color:var(--tx2);
+}
+.hpill .v { color:var(--amber); font-weight:700; }
+.hpill.s .v { color:var(--sage); }
+.hpill.f .v { color:var(--coral); }
+.tb-menu {
+  width:34px; height:34px; background:var(--card2); border:1px solid var(--border);
+  border-radius:10px; cursor:pointer; font-size:16px;
+  display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:all .15s;
+}
+.tb-menu:active { background:var(--card3); }
 
-/* ══ MAIN CONTENT ══ */
-.main{flex:1;overflow:hidden;position:relative;}
+/* ── PET BAR ── */
+.pet-bar {
+  display:flex; align-items:center; gap:10px;
+  margin:8px 14px 0; background:var(--card2); border:1px solid var(--border);
+  border-radius:14px; padding:8px 12px; flex-shrink:0; cursor:pointer;
+  transition:border-color .2s;
+}
+.pet-bar:active { border-color:rgba(255,107,71,.4); }
+.pb-face { font-size:32px; flex-shrink:0; }
+.pb-info { flex:1; min-width:0; }
+.pb-name { font-size:12px; font-weight:700; color:var(--tx); }
+.pb-rank { font-size:10px; color:var(--tx2); }
+.pb-bars { display:flex; gap:6px; align-items:center; }
+.pb-bar-item { flex:1; }
+.pb-bar-lbl { font-size:8px; color:var(--muted); margin-bottom:2px; font-family:var(--fm); }
+.pb-bar-track { height:3px; background:var(--card3); border-radius:100px; overflow:hidden; }
+.pb-bar-fill { height:100%; border-radius:100px; transition:width .5s; }
+.pb-bar-fill.h { background:var(--amber); }
+.pb-bar-fill.e { background:var(--sky); }
+.pb-bar-fill.m { background:var(--sage); }
+.pb-xp-wrap { display:flex; flex-direction:column; align-items:center; flex-shrink:0; }
+.pb-level { font-size:16px; font-weight:800; color:var(--coral); font-family:var(--fm); line-height:1; }
+.pb-lvl-lbl { font-size:8px; color:var(--muted); letter-spacing:.5px; }
 
-/* ══ VIEWS ══ */
-.view{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;padding:10px;display:none;flex-direction:column;gap:10px;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
-.view::-webkit-scrollbar{display:none;}
-.view.active{display:flex;}
-.vbot{height:12px;flex-shrink:0;}
+/* ── STORIES ── */
+.stories {
+  padding:8px 14px; display:flex; gap:10px; overflow-x:auto;
+  flex-shrink:0; scrollbar-width:none; -webkit-overflow-scrolling:touch;
+}
+.stories::-webkit-scrollbar { display:none; }
+.story { display:flex; flex-direction:column; align-items:center; gap:4px; cursor:pointer; flex-shrink:0; }
+.s-ring {
+  width:54px; height:54px; border-radius:50%; padding:2px;
+  background:conic-gradient(var(--coral), var(--amber), var(--coral));
+  display:flex; align-items:center; justify-content:center; transition:transform .18s;
+}
+.s-ring.seen { background:var(--card3); }
+.s-ring:active { transform:scale(.88); }
+.s-inner {
+  width:48px; height:48px; border-radius:50%; background:var(--card2);
+  display:flex; align-items:center; justify-content:center; font-size:22px;
+  overflow:hidden;
+}
+.s-inner img { width:100%; height:100%; object-fit:cover; }
+.s-nm { font-size:9px; color:var(--tx2); max-width:54px; text-overflow:ellipsis; white-space:nowrap; overflow:hidden; text-align:center; }
 
-/* ══ CARDS ══ */
-.card{background:var(–l1);border:1px solid var(–b);border-radius:18px;padding:14px;animation:su .26s ease both;}
-@keyframes su{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
-.ct{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(–mu);margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;}
-.ct a{font-size:11px;color:var(–g);text-transform:none;letter-spacing:0;cursor:pointer;}
+/* ── MAIN ── */
+.main { flex:1; overflow:hidden; position:relative; }
 
-/* ══ PETFLO — FEED ══ */
-.flo-item{background:var(–l1);border:1px solid var(–b);border-radius:18px;overflow:hidden;animation:su .26s ease both;}
-.flo-head{padding:12px 12px 0;display:flex;align-items:center;gap:9px;}
-.flo-ava{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(–g),var(–p));display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
-.flo-uname{font-size:13px;font-weight:700;color:#fff;}
-.flo-sub{font-size:10px;color:var(–mu);}
-.flo-badge{background:rgba(57,255,20,0.1);border:1px solid rgba(57,255,20,0.2);padding:3px 8px;border-radius:100px;font-size:9px;font-weight:700;color:var(–g);margin-left:auto;flex-shrink:0;}
-.flo-txt{padding:8px 12px 0;font-size:14px;line-height:1.6;}
-.flo-vid{width:100%;background:linear-gradient(135deg,var(–l3),var(–l2));margin-top:8px;height:200px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;font-size:13px;color:var(–mu);cursor:pointer;transition:background .2s;}
-.flo-vid:active{background:var(–l3);}
-.flo-acts{padding:8px 6px 12px;display:flex;border-top:1px solid var(–b);margin-top:8px;}
-.fa{flex:1;background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px;color:var(–mu);font-size:11px;padding:7px;border-radius:10px;transition:all .15s;font-family:var(–ff);}
-.fa:active{background:rgba(255,255,255,.04);}
-.fa.liked{color:var(–r);}
-.fa .n{font-family:var(–fm);font-size:10px;}
+/* ── VIEWS ── */
+.view {
+  position:absolute; inset:0; overflow-y:auto; overflow-x:hidden;
+  padding:10px 14px; display:none; flex-direction:column; gap:10px;
+  scrollbar-width:none; -webkit-overflow-scrolling:touch;
+}
+.view::-webkit-scrollbar { display:none; }
+.view.active { display:flex; }
+.vend { height:16px; flex-shrink:0; }
 
-/* ══ PETCARE — LEVANDE PET ══ */
-.petcare-hero{background:linear-gradient(135deg,rgba(57,255,20,.07),rgba(199,125,255,.06));border:1px solid var(–b);border-radius:20px;padding:20px;text-align:center;position:relative;overflow:hidden;}
-.petcare-hero::before{content:’’;position:absolute;inset:0;background:radial-gradient(circle at 50% 70%,rgba(57,255,20,.05),transparent 60%);pointer-events:none;}
-.pc-pet{font-size:90px;line-height:1;margin-bottom:8px;display:inline-block;transition:transform .3s;cursor:pointer;}
-.pc-pet:active{transform:scale(1.15) rotate(-5deg);}
-.pc-pet.bounce{animation:petbounce .4s ease;}
-@keyframes petbounce{0%,100%{transform:scale(1);}50%{transform:scale(1.2) rotate(5deg);}}
-.pc-name{font-size:20px;font-weight:800;margin-bottom:2px;}
-.pc-rank{font-size:12px;color:var(–g);font-weight:600;margin-bottom:14px;}
-.pc-stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;}
-.pc-stat{background:rgba(0,0,0,.3);border-radius:12px;padding:10px 6px;border:1px solid var(–b);}
-.pcs-v{font-size:18px;font-weight:800;font-family:var(–fm);color:var(–g);}
-.pcs-l{font-size:9px;color:var(–mu);letter-spacing:.8px;text-transform:uppercase;}
-.pc-bar-row{margin-bottom:8px;}
-.pc-bar-lbl{display:flex;justify-content:space-between;font-size:11px;margin-bottom:4px;color:var(–mu);}
-.pc-bar{height:6px;background:var(–l3);border-radius:100px;overflow:hidden;}
-.pc-fill{height:100%;border-radius:100px;transition:width .5s;}
-.pc-fill.h{background:linear-gradient(90deg,var(–o),#ff6b00);}
-.pc-fill.e{background:linear-gradient(90deg,var(–c),var(–c2));}
-.pc-fill.m{background:linear-gradient(90deg,var(–p),var(–p2));}
-.pc-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
-.pca{background:var(–l2);border:1px solid var(–b);border-radius:14px;padding:10px 6px;text-align:center;cursor:pointer;transition:all .18s;font-size:10px;font-weight:600;}
-.pca:active{transform:scale(.93);border-color:rgba(57,255,20,.4);}
-.pca .pca-e{font-size:26px;margin-bottom:4px;}
-.evol-banner{background:linear-gradient(135deg,rgba(255,159,10,.15),rgba(255,69,58,.1));border:1px solid rgba(255,159,10,.35);border-radius:14px;padding:12px;text-align:center;margin-top:10px;cursor:pointer;}
-.evol-txt{font-size:13px;font-weight:700;color:var(–o);margin-bottom:2px;}
-.evol-sub{font-size:11px;color:var(–mu);}
+/* ── CARDS ── */
+.card {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:var(--r); padding:14px; animation:fadeUp .25s ease both;
+}
+@keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+.card-title {
+  font-size:10px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase;
+  color:var(--muted); margin-bottom:10px; display:flex; align-items:center; justify-content:space-between;
+}
+.card-title a { font-size:11px; color:var(--coral); text-transform:none; letter-spacing:0; cursor:pointer; font-weight:600; }
 
-/* ══ PETMAP ══ */
-.map-canvas{height:220px;background:var(–l2);border-radius:16px;overflow:hidden;position:relative;border:1px solid var(–b);}
-.map-grid-lines{position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 28px,rgba(57,255,20,.06) 28px,rgba(57,255,20,.06) 29px),repeating-linear-gradient(90deg,transparent,transparent 28px,rgba(57,255,20,.06) 28px,rgba(57,255,20,.06) 29px);}
-.map-center-pin{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:4px;z-index:5;}
-.map-you-ring{width:18px;height:18px;border-radius:50%;background:var(–g);box-shadow:0 0 0 0 rgba(57,255,20,.5);animation:ping 2s infinite;}
-@keyframes ping{0%{box-shadow:0 0 0 0 rgba(57,255,20,.5);}70%{box-shadow:0 0 0 16px rgba(57,255,20,0);}100%{box-shadow:0 0 0 0 rgba(57,255,20,0);}}
-.map-you-lbl{font-size:9px;font-weight:700;color:var(–g);background:rgba(0,0,0,.7);padding:2px 7px;border-radius:100px;}
-.map-pin{position:absolute;transform:translate(-50%,-50%);cursor:pointer;z-index:4;}
-.map-pin-dot{width:10px;height:10px;border-radius:50%;border:2px solid #000;}
-.map-pin-lbl{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);font-size:9px;font-weight:700;background:rgba(0,0,0,.85);padding:2px 6px;border-radius:100px;white-space:nowrap;}
-.map-zones{position:absolute;inset:0;pointer-events:none;}
-.map-zone{position:absolute;border-radius:50%;border:1px dashed;opacity:.18;}
-.mf-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(–b);}
-.mf-row:last-child{border-bottom:none;}
-.mf-ava{width:36px;height:36px;border-radius:50%;background:var(–l3);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;position:relative;}
-.on-dot{position:absolute;bottom:0;right:0;width:9px;height:9px;border-radius:50%;background:var(–g);border:2px solid var(–l1);}
-.mf-n{font-size:13px;font-weight:700;}
-.mf-l{font-size:10px;color:var(–mu);}
-.mf-d{font-size:10px;font-family:var(–fm);color:var(–c);flex-shrink:0;}
+/* ── SECTION LABEL ── */
+.sec { font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); padding:2px 0 6px; }
 
-/* ══ PET BOUNTY ══ */
-.bounty-tabs{display:flex;background:var(–l2);border-radius:12px;padding:3px;gap:2px;margin-bottom:10px;}
-.btab{flex:1;text-align:center;padding:7px;border-radius:10px;font-size:11px;font-weight:700;cursor:pointer;color:var(–mu);transition:all .18s;}
-.btab.active{background:var(–l3);color:var(–tx);}
-.bounty-card{background:var(–l2);border:1px solid var(–b);border-radius:15px;padding:12px;margin-bottom:8px;transition:border-color .2s;cursor:pointer;}
-.bounty-card:active{border-color:rgba(57,255,20,.35);}
-.bc-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:5px;}
-.bc-t{font-size:13px;font-weight:700;flex:1;}
-.bc-r{font-size:12px;font-family:var(–fm);font-weight:700;flex-shrink:0;}
-.bc-r.sek{color:var(–y);}
-.bc-r.coin{color:var(–o);}
-.bc-brand{font-size:10px;font-weight:700;color:var(–p);margin-bottom:4px;}
-.bc-desc{font-size:12px;color:var(–mu);line-height:1.5;}
-.bc-tags{display:flex;gap:5px;margin-top:8px;flex-wrap:wrap;}
-.bc-tag{font-size:9px;font-weight:700;padding:3px 8px;border-radius:100px;letter-spacing:.5px;}
-.bc-tag.brand{background:rgba(199,125,255,.15);color:var(–p);border:1px solid rgba(199,125,255,.25);}
-.bc-tag.photo{background:rgba(57,255,20,.1);color:var(–g);border:1px solid rgba(57,255,20,.2);}
-.bc-tag.video{background:rgba(255,69,58,.1);color:var(–r);border:1px solid rgba(255,69,58,.2);}
-.bc-tag.irl{background:rgba(255,159,10,.1);color:var(–o);border:1px solid rgba(255,159,10,.2);}
-.do-btn{display:inline-flex;align-items:center;gap:5px;margin-top:9px;background:rgba(57,255,20,.1);border:1px solid rgba(57,255,20,.25);color:var(–g);padding:6px 14px;border-radius:100px;font-size:11px;font-weight:700;cursor:pointer;font-family:var(–ff);transition:all .15s;}
-.do-btn:active{background:rgba(57,255,20,.2);}
-.swish-modal{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.85);backdrop-filter:blur(16px);display:flex;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity .25s;}
-.swish-modal.open{opacity:1;pointer-events:all;}
-.swish-sheet{width:100%;max-width:430px;margin:0 auto;background:var(–l1);border-radius:24px 24px 0 0;border:1px solid var(–b);padding:20px 20px calc(32px + var(–sb));transform:translateY(100%);transition:transform .3s cubic-bezier(.32,.72,0,1);}
-.swish-modal.open .swish-sheet{transform:translateY(0);}
-.swish-logo{font-size:28px;font-weight:900;color:#00b3ff;margin-bottom:4px;font-family:var(–fm);}
-.swish-sub{font-size:12px;color:var(–mu);margin-bottom:16px;}
-.swish-amount{font-size:48px;font-weight:900;font-family:var(–fm);text-align:center;color:var(–y);margin:16px 0;}
-.swish-from{text-align:center;font-size:13px;color:var(–mu);margin-bottom:24px;}
+/* ── FEED POSTS ── */
+.post {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:var(--r); overflow:hidden; animation:fadeUp .25s ease both;
+}
+.post-head { padding:12px 12px 0; display:flex; align-items:center; gap:10px; }
+.post-ava {
+  width:38px; height:38px; border-radius:50%; flex-shrink:0;
+  background:var(--card3); display:flex; align-items:center; justify-content:center; font-size:20px;
+  overflow:hidden; border:1.5px solid var(--border2);
+}
+.post-ava img { width:100%; height:100%; object-fit:cover; }
+.post-uname { font-size:13px; font-weight:700; }
+.post-meta { font-size:10px; color:var(--tx2); margin-top:1px; }
+.post-pet-tag {
+  margin-left:auto; background:rgba(245,166,35,.12); border:1px solid rgba(245,166,35,.25);
+  color:var(--amber); font-size:9px; font-weight:700; padding:3px 8px; border-radius:6px; flex-shrink:0;
+}
+.post-txt { padding:8px 12px 0; font-size:14px; line-height:1.6; color:var(--tx); }
+.post-img { width:100%; margin-top:8px; max-height:260px; object-fit:cover; display:block; }
+.post-actions { display:flex; padding:8px 4px 10px; border-top:1px solid var(--border); margin-top:8px; }
+.pa {
+  flex:1; background:none; border:none; cursor:pointer;
+  display:flex; align-items:center; justify-content:center; gap:4px;
+  color:var(--tx2); font-size:12px; padding:7px; border-radius:10px;
+  transition:all .15s; font-family:var(--ff);
+}
+.pa:active { background:rgba(255,255,255,.04); }
+.pa.liked { color:var(--rose); }
+.pa .n { font-family:var(--fm); font-size:10px; }
 
-/* ══ PETSHOP ══ */
-.shop-tabs{display:flex;background:var(–l2);border-radius:12px;padding:3px;gap:2px;margin-bottom:10px;}
-.stab{flex:1;text-align:center;padding:7px;border-radius:10px;font-size:11px;font-weight:700;cursor:pointer;color:var(–mu);transition:all .18s;}
-.stab.active{background:var(–l3);color:var(–tx);}
-.prod-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
-.prod{background:var(–l2);border:1px solid var(–b);border-radius:14px;padding:12px;text-align:center;cursor:pointer;transition:all .18s;position:relative;}
-.prod:active{transform:scale(.95);border-color:rgba(57,255,20,.4);}
-.prod-badge{position:absolute;top:8px;right:8px;font-size:8px;font-weight:800;padding:2px 7px;border-radius:100px;letter-spacing:.5px;text-transform:uppercase;}
-.pb-hot{background:rgba(255,69,58,.2);color:var(–r);border:1px solid rgba(255,69,58,.3);}
-.pb-leg{background:rgba(255,159,10,.15);color:var(–o);border:1px solid rgba(255,159,10,.25);}
-.pb-new{background:rgba(57,255,20,.12);color:var(–g);border:1px solid rgba(57,255,20,.22);}
-.pb-pre{background:rgba(199,125,255,.15);color:var(–p);border:1px solid rgba(199,125,255,.25);}
-.prod-e{font-size:36px;margin-bottom:6px;}
-.prod-n{font-size:12px;font-weight:700;margin-bottom:3px;}
-.prod-p{font-size:12px;font-family:var(–fm);font-weight:700;}
-.prod-p.coin{color:var(–o);}
-.prod-p.sek{color:var(–y);}
-.deal-card{background:linear-gradient(135deg,rgba(255,214,10,.08),rgba(255,69,58,.06));border:1px solid rgba(255,214,10,.25);border-radius:14px;padding:12px;display:flex;align-items:center;gap:12px;margin-bottom:8px;cursor:pointer;}
-.deal-e{font-size:40px;}
-.deal-info{flex:1;}
-.deal-n{font-size:14px;font-weight:700;}
-.deal-d{font-size:11px;color:var(–mu);}
-.deal-timer{font-family:var(–fm);font-size:14px;font-weight:700;color:var(–y);}
+/* ── CHAT ── */
+.chat-row {
+  display:flex; align-items:center; gap:10px; padding:10px 0;
+  border-bottom:1px solid var(--border); cursor:pointer; transition:all .15s;
+}
+.chat-row:last-child { border-bottom:none; }
+.chat-row:active { opacity:.7; }
+.chat-ava {
+  width:44px; height:44px; border-radius:14px; flex-shrink:0;
+  background:var(--card3); display:flex; align-items:center; justify-content:center;
+  font-size:22px; position:relative; border:1px solid var(--border);
+}
+.chat-online { position:absolute; bottom:-1px; right:-1px; width:10px; height:10px; border-radius:50%; background:var(--sage); border:2px solid var(--card); }
+.chat-info { flex:1; min-width:0; }
+.chat-name { font-size:14px; font-weight:600; }
+.chat-prev { font-size:12px; color:var(--tx2); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; margin-top:2px; }
+.chat-right { text-align:right; flex-shrink:0; }
+.chat-time { font-size:10px; color:var(--muted); font-family:var(--fm); }
+.chat-badge { width:18px; height:18px; background:var(--coral); border-radius:50%; font-size:10px; font-weight:700; color:#fff; display:flex; align-items:center; justify-content:center; margin:3px 0 0 auto; }
+.chat-streak { font-size:10px; color:var(--amber); font-weight:700; margin-top:2px; }
 
-/* ══ BATTLE ══ */
-.opp-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
-.opp-card{background:var(–l2);border:1px solid var(–b);border-radius:15px;padding:14px;text-align:center;cursor:pointer;transition:all .18s;}
-.opp-card:active{transform:scale(.95);border-color:rgba(199,125,255,.45);}
-.opp-card.pvp{border-color:rgba(255,69,58,.25);}
-.oc-e{font-size:38px;}
-.oc-n{font-size:12px;font-weight:700;margin:5px 0 2px;}
-.oc-l{font-size:10px;color:var(–mu);}
-.oc-r{font-size:11px;font-family:var(–fm);margin-top:4px;color:var(–o);}
-.oc-pvp{font-size:10px;color:var(–r);font-weight:700;margin-top:4px;}
-.b-arena{background:linear-gradient(135deg,rgba(57,255,20,.04),rgba(199,125,255,.04));border:1px solid var(–b);border-radius:18px;padding:16px;margin-bottom:8px;}
-.b-row{display:flex;align-items:center;justify-content:space-around;}
-.bf{text-align:center;}
-.bf-e{font-size:52px;line-height:1;}
-.bf-n{font-size:11px;font-weight:700;margin:5px 0 4px;}
-.hp-wrap{width:90px;height:5px;background:var(–l3);border-radius:100px;overflow:hidden;margin:0 auto;}
-.hp-fill{height:100%;border-radius:100px;background:linear-gradient(90deg,var(–r),#ff453a88);transition:width .35s;}
-.hp-fill.mine{background:linear-gradient(90deg,var(–g),var(–c));}
-.hp-n{font-size:10px;color:var(–mu);font-family:var(–fm);margin-top:3px;}
-.b-vs{font-size:22px;font-weight:900;color:var(–mu);}
-.b-log{background:var(–l2);border-radius:12px;padding:8px;max-height:88px;overflow-y:auto;font-size:11px;font-family:var(–fm);display:flex;flex-direction:column;gap:3px;margin-bottom:8px;scrollbar-width:none;}
-.b-log::-webkit-scrollbar{display:none;}
-.ll{animation:su .18s ease;}
-.b-acts{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+/* ── MARKETPLACE (SHOP + BLOCKET) ── */
+.market-tabs { display:flex; gap:0; background:var(--card2); border-radius:10px; padding:3px; margin-bottom:10px; border:1px solid var(--border); }
+.mtab { flex:1; text-align:center; padding:7px; border-radius:8px; font-size:11px; font-weight:600; cursor:pointer; color:var(--muted); transition:all .18s; }
+.mtab.active { background:var(--card3); color:var(--tx); }
 
-/* ══ PROFILE ══ */
-.prof-cover{background:linear-gradient(135deg,rgba(57,255,20,.07),rgba(199,125,255,.06));border:1px solid var(–b);border-radius:20px;padding:18px;animation:su .26s ease both;}
-.pava{width:74px;height:74px;margin:0 auto 10px;position:relative;}
-.pava-inner{width:74px;height:74px;border-radius:50%;background:linear-gradient(135deg,var(–g),var(–p));display:flex;align-items:center;justify-content:center;font-size:36px;}
-.pava-ring{position:absolute;inset:-4px;border-radius:50%;background:conic-gradient(var(–g),var(–p),var(–c),var(–g));z-index:-1;animation:spin 6s linear infinite;}
-@keyframes spin{to{transform:rotate(360deg);}}
-.p-uname{font-size:21px;font-weight:800;text-align:center;}
-.p-handle{font-size:12px;color:var(–mu);text-align:center;margin-bottom:10px;}
-.p-badges-row{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:12px;}
-.ptag{font-size:9px;font-weight:700;padding:3px 9px;border-radius:100px;letter-spacing:.5px;}
-.ptag.v{background:rgba(57,255,20,.12);border:1px solid rgba(57,255,20,.25);color:var(–g);}
-.ptag.c{background:rgba(199,125,255,.12);border:1px solid rgba(199,125,255,.25);color:var(–p);}
-.p-stats-row{display:flex;}
-.pst{flex:1;text-align:center;border-right:1px solid var(–b);}
-.pst:last-child{border-right:none;}
-.pst-v{font-size:18px;font-weight:900;font-family:var(–fm);}
-.pst-l{font-size:9px;color:var(–mu);letter-spacing:.8px;text-transform:uppercase;}
-.xp-wrap{background:var(–l3);border-radius:100px;height:5px;margin:12px 0 4px;overflow:hidden;}
-.xp-fill{height:100%;border-radius:100px;background:linear-gradient(90deg,var(–g),var(–c));transition:width .6s;}
-.xp-lbl{font-size:10px;color:var(–mu);font-family:var(–fm);text-align:center;}
-.p-bio{font-size:13px;text-align:center;color:#aaa;line-height:1.6;margin-top:8px;}
-.p-action-row{display:flex;gap:8px;margin-top:12px;}
-.prof-tabs{display:flex;background:var(–l2);border-radius:12px;padding:3px;gap:2px;}
-.ptab{flex:1;text-align:center;padding:7px 4px;border-radius:10px;font-size:10px;font-weight:700;cursor:pointer;color:var(–mu);transition:all .18s;letter-spacing:.3px;}
-.ptab.active{background:var(–l3);color:var(–tx);}
+/* SHOP GRID */
+.shop-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.shop-item {
+  background:var(--card2); border:1px solid var(--border); border-radius:14px;
+  overflow:hidden; cursor:pointer; transition:all .18s;
+}
+.shop-item:active { transform:scale(.96); border-color:rgba(255,107,71,.35); }
+.si-img { height:110px; background:var(--card3); display:flex; align-items:center; justify-content:center; font-size:48px; position:relative; }
+.si-badge { position:absolute; top:6px; left:6px; font-size:8px; font-weight:800; padding:2px 7px; border-radius:5px; letter-spacing:.4px; text-transform:uppercase; }
+.si-badge.new { background:var(--coral); color:#fff; }
+.si-badge.sale { background:var(--rose); color:#fff; }
+.si-badge.hot { background:var(--amber); color:#000; }
+.si-info { padding:8px 10px 10px; }
+.si-name { font-size:12px; font-weight:600; margin-bottom:3px; }
+.si-seller { font-size:10px; color:var(--tx2); margin-bottom:5px; }
+.si-price { font-size:14px; font-weight:700; color:var(--coral); font-family:var(--fm); }
+.si-price.coins { color:var(--amber); }
+.si-price span { font-size:10px; font-weight:400; color:var(--muted); text-decoration:line-through; margin-left:4px; }
 
-/* ══ BADGE GRID ══ */
-.badge-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;}
-.badge{background:var(–l2);border:1px solid var(–b);border-radius:14px;padding:10px 6px;text-align:center;cursor:pointer;transition:all .18s;}
-.badge.earned{border-color:rgba(255,159,10,.4);background:rgba(255,159,10,.06);}
-.badge:active{transform:scale(.92);}
-.badge-e{font-size:26px;margin-bottom:4px;}
-.badge-l{font-size:9px;color:var(–mu);font-weight:600;line-height:1.3;}
-.badge.earned .badge-l{color:var(–o);}
+/* BLOCKET STYLE */
+.blocket-item {
+  background:var(--card2); border:1px solid var(--border); border-radius:14px;
+  display:flex; gap:10px; padding:10px; cursor:pointer; transition:all .18s; margin-bottom:8px;
+}
+.blocket-item:active { opacity:.8; }
+.bl-img { width:72px; height:72px; border-radius:10px; background:var(--card3); flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:32px; overflow:hidden; }
+.bl-img img { width:100%; height:100%; object-fit:cover; }
+.bl-info { flex:1; min-width:0; }
+.bl-name { font-size:13px; font-weight:600; margin-bottom:3px; }
+.bl-desc { font-size:11px; color:var(--tx2); line-height:1.4; margin-bottom:6px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.bl-bot { display:flex; align-items:center; justify-content:space-between; }
+.bl-price { font-size:15px; font-weight:700; color:var(--coral); font-family:var(--fm); }
+.bl-loc { font-size:10px; color:var(--muted); }
 
-/* ══ ACTIVITY ══ */
-.act-item{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(–b);}
-.act-item:last-child{border-bottom:none;}
-.act-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
-.act-t{flex:1;font-size:12px;line-height:1.4;}
-.act-time{font-size:9px;color:var(–mu);font-family:var(–fm);}
+/* ── MISSIONS (BOUNTIES) ── */
+.mission-card {
+  background:var(--card2); border:1px solid var(--border); border-radius:14px;
+  padding:12px; margin-bottom:8px; cursor:pointer; transition:border-color .18s;
+}
+.mission-card:active { border-color:rgba(255,107,71,.4); }
+.mc-head { display:flex; align-items:flex-start; justify-content:space-between; gap:8px; margin-bottom:5px; }
+.mc-title { font-size:13px; font-weight:700; flex:1; line-height:1.3; }
+.mc-reward { font-size:13px; font-weight:800; font-family:var(--fm); flex-shrink:0; }
+.mc-reward.sek { color:var(--sage); }
+.mc-reward.coins { color:var(--amber); }
+.mc-brand { font-size:10px; color:var(--violet); font-weight:600; margin-bottom:4px; }
+.mc-desc { font-size:12px; color:var(--tx2); line-height:1.5; }
+.mc-tags { display:flex; gap:5px; margin-top:8px; flex-wrap:wrap; }
+.mc-tag { font-size:9px; font-weight:700; padding:3px 8px; border-radius:5px; letter-spacing:.3px; text-transform:uppercase; }
+.mc-tag.brand { background:rgba(155,127,232,.15); color:var(--violet); }
+.mc-tag.photo { background:rgba(126,184,154,.15); color:var(--sage); }
+.mc-tag.video { background:rgba(255,107,71,.12); color:var(--coral); }
+.mc-tag.irl { background:rgba(245,166,35,.12); color:var(--amber); }
+.mc-do { display:inline-flex; align-items:center; gap:4px; margin-top:9px; background:rgba(255,107,71,.12); border:1px solid rgba(255,107,71,.25); color:var(--coral); padding:6px 14px; border-radius:8px; font-size:11px; font-weight:700; cursor:pointer; font-family:var(--ff); transition:all .15s; }
+.mc-do:active { background:rgba(255,107,71,.22); }
 
-/* ══ BOTTOM NAV ══ */
-.bnav{display:flex;align-items:center;background:rgba(6,6,15,.97);backdrop-filter:blur(28px);border-top:1px solid var(–b);padding:6px 4px;padding-bottom:calc(6px + var(–sb));flex-shrink:0;z-index:60;}
-.nb{flex:1;background:none;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 0;}
-.ni{font-size:21px;transition:transform .2s;}
-.nl{font-size:8px;font-weight:700;letter-spacing:.4px;color:var(–mu);text-transform:uppercase;}
-.nb.active .ni{transform:scale(1.2);filter:drop-shadow(0 0 6px var(–g));}
-.nb.active .nl{color:var(–g);}
-.nb-cam{flex:1;background:none;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;padding:0;}
-.nc{width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,var(–g),var(–c));display:flex;align-items:center;justify-content:center;font-size:22px;margin-top:-16px;box-shadow:0 0 22px rgba(57,255,20,.45),0 0 50px rgba(57,255,20,.12);transition:transform .18s;}
-.nb-cam:active .nc{transform:scale(.87);}
+/* ── PETCARE ── */
+.petcare-card {
+  background:linear-gradient(135deg, rgba(245,166,35,.08), rgba(255,107,71,.06));
+  border:1px solid var(--border2); border-radius:20px; padding:20px;
+  text-align:center; position:relative; overflow:hidden;
+}
+.petcare-card::before { content:''; position:absolute; inset:0; background:radial-gradient(circle at 50% 80%, rgba(245,166,35,.06), transparent 60%); pointer-events:none; }
+.pc-pet { font-size:88px; line-height:1; margin-bottom:4px; display:inline-block; cursor:pointer; transition:transform .2s; filter:drop-shadow(0 4px 12px rgba(245,166,35,.3)); }
+.pc-pet:active { transform:scale(1.1) rotate(-3deg); }
+.pc-pet.bounce { animation:petbounce .4s ease; }
+@keyframes petbounce { 0%,100%{transform:scale(1);}50%{transform:scale(1.15) rotate(4deg);} }
+.pc-name { font-size:20px; font-weight:800; margin-bottom:2px; }
+.pc-rank { font-size:12px; color:var(--amber); font-weight:600; margin-bottom:14px; }
+.pc-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:14px; }
+.pcs { background:rgba(0,0,0,.25); border-radius:10px; padding:10px 6px; border:1px solid var(--border); }
+.pcs-v { font-size:18px; font-weight:800; font-family:var(--fm); color:var(--amber); }
+.pcs-l { font-size:9px; color:var(--muted); letter-spacing:.5px; text-transform:uppercase; }
+.pc-bar-row { margin-bottom:8px; text-align:left; }
+.pc-bar-lbl { display:flex; justify-content:space-between; font-size:11px; margin-bottom:4px; color:var(--tx2); }
+.pc-bar-track { height:6px; background:rgba(0,0,0,.3); border-radius:100px; overflow:hidden; }
+.pc-fill { height:100%; border-radius:100px; transition:width .5s; }
+.pc-fill.h { background:linear-gradient(90deg, var(--amber), #ff6b47); }
+.pc-fill.e { background:linear-gradient(90deg, var(--sky), #3a7bd5); }
+.pc-fill.m { background:linear-gradient(90deg, var(--sage), #5a9b7c); }
+.pc-actions { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:4px; }
+.pca { background:var(--card2); border:1px solid var(--border); border-radius:12px; padding:10px 4px; text-align:center; cursor:pointer; transition:all .18s; font-size:10px; font-weight:600; color:var(--tx2); }
+.pca:active { transform:scale(.93); border-color:rgba(255,107,71,.4); color:var(--tx); }
+.pca .pca-e { font-size:24px; margin-bottom:3px; }
+.upgrade-btn { display:flex; align-items:center; justify-content:space-between; margin-top:12px; background:linear-gradient(135deg, rgba(155,127,232,.15), rgba(245,166,35,.1)); border:1px solid rgba(155,127,232,.3); border-radius:12px; padding:12px 14px; cursor:pointer; transition:all .18s; }
+.upgrade-btn:active { opacity:.8; }
+.ub-l { text-align:left; }
+.ub-title { font-size:13px; font-weight:700; color:var(--violet); }
+.ub-sub { font-size:11px; color:var(--muted); margin-top:1px; }
 
-/* ══ MODALS ══ */
-.overlay{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.78);backdrop-filter:blur(14px);display:flex;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity .25s;}
-.overlay.open{opacity:1;pointer-events:all;}
-.sheet{width:100%;max-width:430px;margin:0 auto;background:var(–l1);border-radius:24px 24px 0 0;border:1px solid var(–b);border-bottom:none;padding:18px 18px calc(36px + var(–sb));transform:translateY(100%);transition:transform .32s cubic-bezier(.32,.72,0,1);}
-.overlay.open .sheet{transform:translateY(0);}
-.handle{width:36px;height:4px;background:var(–l3);border-radius:2px;margin:0 auto 16px;}
-.sheet-logo{font-size:21px;font-weight:800;margin-bottom:14px;background:linear-gradient(135deg,var(–g),var(–c));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
-.mi{background:var(–l2);border:1px solid var(–b);border-radius:14px;padding:12px 10px;cursor:pointer;font-size:13px;font-weight:600;transition:all .15s;display:flex;align-items:center;gap:7px;}
-.mi:active{border-color:rgba(57,255,20,.35);background:rgba(57,255,20,.06);}
+/* ── PROFILE ── */
+.prof-hero {
+  background:linear-gradient(135deg, rgba(255,107,71,.07), rgba(245,166,35,.05));
+  border:1px solid var(--border2); border-radius:20px; padding:18px; text-align:center;
+}
+.prof-ava-wrap { position:relative; width:80px; height:80px; margin:0 auto 12px; }
+.prof-ava { width:80px; height:80px; border-radius:50%; font-size:40px; display:flex; align-items:center; justify-content:center; }
+.prof-ava-ring { position:absolute; inset:-4px; border-radius:50%; background:conic-gradient(var(--coral), var(--amber), var(--sage), var(--coral)); z-index:-1; animation:spin 8s linear infinite; opacity:.7; }
+.prof-uname { font-size:21px; font-weight:800; }
+.prof-handle { font-size:12px; color:var(--tx2); margin-bottom:10px; }
+.prof-tags { display:flex; justify-content:center; gap:5px; flex-wrap:wrap; margin-bottom:12px; }
+.ptag { font-size:9px; font-weight:700; padding:3px 9px; border-radius:6px; letter-spacing:.3px; text-transform:uppercase; }
+.ptag.v { background:rgba(126,184,154,.15); color:var(--sage); }
+.ptag.c { background:rgba(155,127,232,.15); color:var(--violet); }
+.prof-stats { display:flex; }
+.pstat { flex:1; text-align:center; border-right:1px solid var(--border); }
+.pstat:last-child { border-right:none; }
+.pstat-v { font-size:18px; font-weight:800; font-family:var(--fm); }
+.pstat-l { font-size:9px; color:var(--muted); letter-spacing:.8px; text-transform:uppercase; }
+.xp-wrap { background:var(--card3); border-radius:100px; height:5px; margin:12px 0 4px; overflow:hidden; }
+.xp-fill { height:100%; border-radius:100px; background:linear-gradient(90deg, var(--coral), var(--amber)); transition:width .6s; }
+.xp-lbl { font-size:10px; color:var(--muted); font-family:var(--fm); text-align:center; }
+.prof-bio { font-size:13px; color:var(--tx2); line-height:1.6; margin-top:8px; }
+.prof-btns { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:12px; }
+.prof-tabs { display:flex; background:var(--card2); border-radius:10px; padding:3px; gap:2px; border:1px solid var(--border); }
+.prof-tab { flex:1; text-align:center; padding:7px 4px; border-radius:8px; font-size:10px; font-weight:700; cursor:pointer; color:var(--muted); transition:all .18s; letter-spacing:.3px; text-transform:uppercase; }
+.prof-tab.active { background:var(--card3); color:var(--tx); }
 
-/* ══ CAM SHEET (simple post) ══ */
-.cam-ta{width:100%;background:var(–l2);border:1.5px solid var(–b);border-radius:13px;padding:11px;color:var(–tx);font-size:14px;font-family:var(–ff);resize:none;outline:none;min-height:70px;margin-bottom:10px;transition:border-color .2s;}
-.cam-ta:focus{border-color:rgba(57,255,20,.4);}
-.cam-prev{width:100%;border-radius:13px;margin-bottom:10px;max-height:180px;object-fit:cover;display:none;}
+/* BADGE GRID */
+.badge-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:7px; }
+.badge { background:var(--card2); border:1px solid var(--border); border-radius:12px; padding:10px 6px; text-align:center; cursor:pointer; transition:all .18s; }
+.badge.earned { border-color:rgba(245,166,35,.4); background:rgba(245,166,35,.06); }
+.badge:active { transform:scale(.92); }
+.badge-e { font-size:24px; margin-bottom:4px; }
+.badge-l { font-size:9px; color:var(--muted); font-weight:600; line-height:1.3; }
+.badge.earned .badge-l { color:var(--amber); }
 
-/* ══ PETFOTO FULLSCREEN ══ */
-.petfoto-win{position:fixed;inset:0;z-index:250;background:var(–bg);display:flex;flex-direction:column;transform:translateY(100%);transition:transform .32s cubic-bezier(.32,.72,0,1);}
-.petfoto-win.open{transform:translateY(0);}
-.pf-hdr{display:flex;align-items:center;justify-content:space-between;padding:12px 14px 8px;background:rgba(6,6,15,.9);backdrop-filter:blur(20px);border-bottom:1px solid var(–b);flex-shrink:0;}
-.pf-logo{font-size:16px;font-weight:800;letter-spacing:-.5px;background:linear-gradient(135deg,var(–g),var(–c));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.pf-tabs{display:flex;background:var(–l2);border-radius:100px;padding:3px;border:1px solid var(–b);gap:2px;}
-.pf-tab{padding:4px 12px;border-radius:100px;font-size:11px;font-weight:600;cursor:pointer;color:var(–mu);transition:all .18s;}
-.pf-tab.active{background:var(–l3);color:var(–tx);}
-.pf-close{width:30px;height:30px;background:var(–l2);border:1px solid var(–b);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;}
-.pf-scroll{flex:1;overflow-y:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
-.pf-scroll::-webkit-scrollbar{display:none;}
+/* ACT FEED */
+.act-item { display:flex; align-items:center; gap:8px; padding:7px 0; border-bottom:1px solid var(--border); }
+.act-item:last-child { border-bottom:none; }
+.act-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+.act-t { flex:1; font-size:12px; line-height:1.4; }
+.act-time { font-size:9px; color:var(--muted); font-family:var(--fm); }
 
-/* upload zone */
-.pf-upload{margin:10px 14px;height:240px;background:var(–l2);border:2px dashed var(–b2);border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden;}
-.pf-upload.has-img{border-style:solid;border-color:rgba(57,255,20,.3);}
-.pf-upload:active{transform:scale(.98);}
-.pf-prev{position:absolute;inset:0;object-fit:cover;width:100%;height:100%;border-radius:18px;}
-.pf-ov{position:absolute;inset:0;background:rgba(0,0,0,.5);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;border-radius:18px;}
-.pf-ov-ico{font-size:36px;opacity:.6;}
-.pf-ov-lbl{font-size:13px;font-weight:600;color:var(–mu);}
-.pf-change{position:absolute;bottom:10px;right:10px;background:rgba(0,0,0,.8);backdrop-filter:blur(6px);border:1px solid var(–b2);border-radius:100px;padding:4px 12px;font-size:10px;font-weight:600;cursor:pointer;color:var(–tx);}
+/* ── MAP ── */
+.map-box { height:210px; background:var(--card2); border-radius:14px; overflow:hidden; position:relative; border:1px solid var(--border); }
+.map-grid { position:absolute; inset:0; background-image: repeating-linear-gradient(0deg,transparent,transparent 32px,rgba(255,200,100,.05) 32px,rgba(255,200,100,.05) 33px), repeating-linear-gradient(90deg,transparent,transparent 32px,rgba(255,200,100,.05) 32px,rgba(255,200,100,.05) 33px); }
+.map-you { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); display:flex; flex-direction:column; align-items:center; gap:3px; z-index:5; }
+.map-you-dot { width:16px; height:16px; border-radius:50%; background:var(--coral); box-shadow:0 0 0 0 rgba(255,107,71,.5); animation:mapring 2s infinite; }
+@keyframes mapring { 0%{box-shadow:0 0 0 0 rgba(255,107,71,.5);}70%{box-shadow:0 0 0 14px rgba(255,107,71,0);}100%{box-shadow:0 0 0 0 rgba(255,107,71,0);} }
+.map-you-lbl { font-size:9px; font-weight:700; color:var(--coral); background:rgba(0,0,0,.7); padding:2px 7px; border-radius:100px; white-space:nowrap; }
+.map-pin { position:absolute; transform:translate(-50%,-50%); cursor:pointer; z-index:4; }
+.map-pin-dot { width:9px; height:9px; border-radius:50%; border:2px solid var(--dark); }
+.map-pin-lbl { position:absolute; bottom:13px; left:50%; transform:translateX(-50%); font-size:9px; font-weight:600; background:rgba(26,20,16,.85); padding:2px 6px; border-radius:5px; white-space:nowrap; }
+.friend-row { display:flex; align-items:center; gap:10px; padding:9px 0; border-bottom:1px solid var(--border); }
+.friend-row:last-child { border-bottom:none; }
+.fr-ava { width:38px; height:38px; border-radius:12px; background:var(--card3); display:flex; align-items:center; justify-content:center; font-size:19px; flex-shrink:0; position:relative; border:1px solid var(--border); }
+.fr-online { position:absolute; bottom:-1px; right:-1px; width:9px; height:9px; border-radius:50%; background:var(--sage); border:2px solid var(--card); }
 
-/* style picker */
-.pf-styles{padding:0 14px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
-.pf-styles::-webkit-scrollbar{display:none;}
-.pf-scard{display:inline-flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;flex-shrink:0;width:76px;}
-.pf-scard-img{width:76px;height:76px;border-radius:14px;background:var(–l2);border:2.5px solid transparent;display:flex;align-items:center;justify-content:center;font-size:30px;transition:all .18s;position:relative;overflow:hidden;}
-.pf-scard.sel .pf-scard-img{border-color:var(–g);box-shadow:0 0 14px rgba(57,255,20,.35);}
-.pf-scard:active .pf-scard-img{transform:scale(.9);}
-.pf-scard-n{font-size:10px;font-weight:600;color:var(–mu);text-align:center;}
-.pf-scard.sel .pf-scard-n{color:var(–g);}
-.sc-bg{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:30px;}
-.sc-bg.anime{background:linear-gradient(135deg,rgba(255,107,157,.15),rgba(196,77,255,.15));}
-.sc-bg.pixel{background:linear-gradient(135deg,rgba(10,10,26,.9),rgba(26,10,46,.9));}
-.sc-bg.brainrot{background:linear-gradient(135deg,rgba(255,60,90,.12),rgba(255,153,0,.12));}
-.sc-bg.glow{background:linear-gradient(135deg,rgba(57,255,20,.12),rgba(0,245,212,.12));}
-.sc-bg.clay{background:linear-gradient(135deg,rgba(255,214,10,.12),rgba(255,159,10,.12));}
-.sc-bg.cyber{background:linear-gradient(135deg,rgba(10,240,255,.12),rgba(123,47,247,.12));}
-.sc-bg.vhs{background:linear-gradient(135deg,rgba(255,255,255,.06),rgba(0,0,0,.3));}
-.sc-bg.dragon{background:linear-gradient(135deg,rgba(255,69,58,.12),rgba(255,159,10,.12));}
+/* ── BOTTOM NAV ── */
+.bnav {
+  display:flex; align-items:center;
+  background:rgba(26,20,16,.97); backdrop-filter:blur(24px);
+  border-top:1px solid var(--border); padding:6px 4px;
+  padding-bottom:calc(6px + var(--sb)); flex-shrink:0; z-index:60;
+}
+.nb {
+  flex:1; background:none; border:none; cursor:pointer;
+  display:flex; flex-direction:column; align-items:center; gap:2px; padding:4px 0;
+  transition:all .18s;
+}
+.nb-ico { font-size:22px; transition:transform .2s; }
+.nb-lbl { font-size:8px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:.4px; }
+.nb.active .nb-ico { transform:scale(1.18); filter:drop-shadow(0 2px 6px rgba(255,107,71,.5)); }
+.nb.active .nb-lbl { color:var(--coral); }
+.nb-center { flex:1; background:none; border:none; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:2px; padding:0; }
+.nb-cam {
+  width:50px; height:50px; border-radius:50%;
+  background:var(--coral); display:flex; align-items:center; justify-content:center;
+  font-size:22px; margin-top:-14px;
+  box-shadow:0 4px 16px rgba(255,107,71,.5), 0 0 40px rgba(255,107,71,.15);
+  transition:transform .18s;
+}
+.nb-center:active .nb-cam { transform:scale(.88); }
 
-/* prompt */
-.pf-prompt-wrap{margin:8px 14px 0;background:var(–l1);border:1.5px solid var(–b2);border-radius:15px;padding:11px 13px;transition:border-color .2s;}
-.pf-prompt-wrap:focus-within{border-color:rgba(57,255,20,.38);}
-.pf-prompt-lbl{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(–mu);margin-bottom:5px;}
-.pf-prompt-ta{width:100%;background:none;border:none;outline:none;color:var(–tx);font-size:13px;font-family:var(–ff);resize:none;min-height:46px;line-height:1.5;}
-.pf-prompt-ta::placeholder{color:var(–mu);}
-.pf-chips{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px;padding-top:7px;border-top:1px solid var(–b);}
-.pf-chip{font-size:11px;font-weight:500;color:var(–mu);background:var(–l2);border:1px solid var(–b);border-radius:100px;padding:4px 10px;cursor:pointer;white-space:nowrap;transition:all .15s;}
-.pf-chip:active{border-color:rgba(57,255,20,.4);color:var(–g);background:rgba(57,255,20,.06);}
+/* ── FULLSCREEN WINDOWS ── */
+.win {
+  position:fixed; inset:0; z-index:200;
+  background:var(--dark); display:flex; flex-direction:column;
+  transform:translateY(100%); transition:transform .3s cubic-bezier(.32,.72,0,1);
+}
+.win.open { transform:translateY(0); }
+.win-hdr {
+  display:flex; align-items:center; gap:10px; padding:12px 14px 10px;
+  background:rgba(26,20,16,.92); backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border); flex-shrink:0;
+}
+.win-back { background:none; border:none; color:var(--tx2); font-size:22px; cursor:pointer; padding:0 4px; }
+.win-title { font-size:16px; font-weight:700; flex:1; }
+.win-scroll { flex:1; overflow-y:auto; scrollbar-width:none; }
+.win-scroll::-webkit-scrollbar { display:none; }
 
-/* samples */
-.pf-samples{padding:0 14px;display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
-.pf-samples::-webkit-scrollbar{display:none;}
-.pf-sample{flex-shrink:0;background:var(–l2);border:1px solid var(–b);border-radius:13px;padding:9px 11px;max-width:180px;cursor:pointer;transition:all .15s;white-space:normal;}
-.pf-sample:active{border-color:rgba(57,255,20,.4);background:rgba(57,255,20,.05);}
-.pf-sample p{font-size:11px;color:var(–mu);line-height:1.5;}
+/* ── MODALS (bottom sheets) ── */
+.modal-ov { position:fixed; inset:0; z-index:300; background:rgba(0,0,0,.7); backdrop-filter:blur(10px); display:flex; align-items:flex-end; opacity:0; pointer-events:none; transition:opacity .25s; }
+.modal-ov.open { opacity:1; pointer-events:all; }
+.modal-sh { width:100%; max-width:430px; margin:0 auto; background:var(--card); border-radius:20px 20px 0 0; border:1px solid var(--border); padding:16px 16px calc(32px + var(--sb)); transform:translateY(100%); transition:transform .3s cubic-bezier(.32,.72,0,1); }
+.modal-ov.open .modal-sh { transform:translateY(0); }
+.modal-handle { width:36px; height:4px; background:var(--card3); border-radius:2px; margin:0 auto 14px; }
+.menu-grid { display:grid; grid-template-columns:1fr 1fr; gap:7px; }
+.mi { background:var(--card2); border:1px solid var(--border); border-radius:12px; padding:12px 10px; cursor:pointer; font-size:13px; font-weight:600; transition:all .15s; display:flex; align-items:center; gap:7px; }
+.mi:active { border-color:rgba(255,107,71,.35); background:rgba(255,107,71,.06); }
 
-/* gen btn */
-.pf-gen-wrap{padding:10px 14px 6px;}
-.pf-gen{width:100%;padding:14px;border-radius:100px;border:none;cursor:pointer;font-size:14px;font-weight:700;font-family:var(–ff);background:linear-gradient(135deg,var(–g),var(–c));color:#000;transition:all .15s;position:relative;overflow:hidden;}
-.pf-gen:active{transform:scale(.97);}
-.pf-gen:disabled{opacity:.5;cursor:not-allowed;}
-.pf-gen.loading{animation:genpulse 1.4s ease-in-out infinite;}
-@keyframes genpulse{0%,100%{opacity:1;}50%{opacity:.65;}}
+/* ── AI CHAT WIN ── */
+.ai-win { position:fixed; inset:0; z-index:280; background:var(--dark); display:flex; flex-direction:column; transform:translateY(100%); transition:transform .3s cubic-bezier(.32,.72,0,1); }
+.ai-win.open { transform:translateY(0); }
+.ai-hdr { padding:12px 14px; display:flex; align-items:center; gap:10px; border-bottom:1px solid var(--border); background:rgba(26,20,16,.92); backdrop-filter:blur(20px); }
+.ai-ava-wrap { width:40px; height:40px; border-radius:12px; background:linear-gradient(135deg, var(--coral), var(--amber)); display:flex; align-items:center; justify-content:center; font-size:20px; }
+.ai-back { background:none; border:none; color:var(--tx2); font-size:22px; cursor:pointer; }
+.ai-msgs { flex:1; overflow-y:auto; padding:14px; display:flex; flex-direction:column; gap:8px; scrollbar-width:none; }
+.ai-msgs::-webkit-scrollbar { display:none; }
+.msg { max-width:82%; padding:10px 13px; border-radius:14px; font-size:14px; line-height:1.55; animation:fadeUp .18s ease; }
+.msg.u { align-self:flex-end; background:var(--coral); color:#fff; }
+.msg.ai { align-self:flex-start; background:var(--card2); border:1px solid var(--border); }
+.msg.ai.ld { color:var(--muted); font-style:italic; }
+.ai-inp-row { padding:10px 14px; display:flex; gap:8px; align-items:center; border-top:1px solid var(--border); background:rgba(26,20,16,.92); backdrop-filter:blur(20px); padding-bottom:calc(10px + var(--sb)); }
+.ai-inp { flex:1; background:var(--card2); border:1.5px solid var(--border); border-radius:100px; padding:9px 15px; color:var(--tx); font-size:14px; font-family:var(--ff); outline:none; transition:border-color .2s; }
+.ai-inp:focus { border-color:rgba(255,107,71,.45); }
+.ai-snd { width:40px; height:40px; border-radius:50%; border:none; cursor:pointer; background:var(--coral); display:flex; align-items:center; justify-content:center; font-size:16px; transition:transform .15s; flex-shrink:0; }
+.ai-snd:active { transform:scale(.88); }
 
-/* result */
-.pf-result{margin:8px 14px;background:var(–l1);border:1px solid var(–b2);border-radius:18px;overflow:hidden;animation:su .3s ease;}
-.pfr-head{padding:10px 13px;border-bottom:1px solid var(–b);display:flex;align-items:center;justify-content:space-between;}
-.pfr-badge{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:700;}
-.pfr-dot{width:7px;height:7px;border-radius:50%;background:var(–g);}
-.pfr-time{font-size:9px;color:var(–mu);font-family:var(–fm);}
-.pfr-img-wrap{position:relative;}
-.pfr-img{width:100%;display:block;max-height:300px;object-fit:cover;}
-.pfr-placeholder{width:100%;height:220px;background:var(–l2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(–mu);font-size:12px;}
-.pfr-desc{padding:11px 13px;font-size:13px;line-height:1.65;color:var(–tx);border-bottom:1px solid var(–b);}
-.pfr-desc strong{color:var(–g);}
-.pfr-acts{display:flex;}
-.pfa{flex:1;background:none;border:none;border-right:1px solid var(–b);padding:11px;cursor:pointer;font-size:11px;font-weight:700;color:var(–mu);font-family:var(–ff);display:flex;align-items:center;justify-content:center;gap:4px;transition:all .15s;}
-.pfa:last-child{border-right:none;}
-.pfa:active{background:rgba(255,255,255,.04);color:var(–tx);}
-.pfa.primary{color:var(–g);}
+/* ── PETFOTO ── */
+.pf-upload { margin:10px 14px; height:220px; background:var(--card2); border:2px dashed var(--border2); border-radius:16px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; cursor:pointer; position:relative; overflow:hidden; transition:all .2s; }
+.pf-upload.has { border-style:solid; border-color:rgba(255,107,71,.4); }
+.pf-upload:active { transform:scale(.98); }
+.pf-prev { position:absolute; inset:0; object-fit:cover; width:100%; height:100%; border-radius:14px; }
+.pf-ov { position:absolute; inset:0; background:rgba(0,0,0,.45); border-radius:14px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; }
+.pf-styles { padding:0 14px; display:flex; gap:8px; overflow-x:auto; scrollbar-width:none; }
+.pf-styles::-webkit-scrollbar { display:none; }
+.pf-sc { display:inline-flex; flex-direction:column; align-items:center; gap:4px; cursor:pointer; flex-shrink:0; width:72px; }
+.pf-sc-img { width:72px; height:72px; border-radius:14px; background:var(--card2); border:2.5px solid transparent; display:flex; align-items:center; justify-content:center; font-size:28px; transition:all .18s; }
+.pf-sc.sel .pf-sc-img { border-color:var(--coral); box-shadow:0 0 12px rgba(255,107,71,.3); }
+.pf-sc:active .pf-sc-img { transform:scale(.9); }
+.pf-sc-n { font-size:10px; font-weight:600; color:var(--muted); text-align:center; }
+.pf-sc.sel .pf-sc-n { color:var(--coral); }
+.pf-prompt-box { margin:8px 14px 0; background:var(--card); border:1.5px solid var(--border2); border-radius:14px; padding:11px 13px; }
+.pf-prompt-box:focus-within { border-color:rgba(255,107,71,.4); }
+.pf-prompt-lbl { font-size:9px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--muted); margin-bottom:5px; }
+.pf-ta { width:100%; background:none; border:none; outline:none; color:var(--tx); font-size:14px; font-family:var(--ff); resize:none; min-height:44px; line-height:1.5; }
+.pf-ta::placeholder { color:var(--muted); }
+.pf-chips { display:flex; gap:5px; flex-wrap:wrap; margin-top:7px; padding-top:7px; border-top:1px solid var(--border); }
+.pf-chip { font-size:11px; font-weight:500; color:var(--tx2); background:var(--card2); border:1px solid var(--border); border-radius:7px; padding:4px 10px; cursor:pointer; transition:all .15s; }
+.pf-chip:active { border-color:rgba(255,107,71,.4); color:var(--coral); background:rgba(255,107,71,.06); }
+.pf-samples { padding:0 14px; display:flex; gap:7px; overflow-x:auto; scrollbar-width:none; }
+.pf-samples::-webkit-scrollbar { display:none; }
+.pf-sample { flex-shrink:0; background:var(--card2); border:1px solid var(--border); border-radius:12px; padding:9px 11px; max-width:170px; cursor:pointer; transition:all .15s; }
+.pf-sample:active { border-color:rgba(255,107,71,.4); background:rgba(255,107,71,.05); }
+.pf-sample p { font-size:11px; color:var(--tx2); line-height:1.5; white-space:normal; }
+.pf-result { margin:8px 14px; background:var(--card); border:1px solid var(--border2); border-radius:16px; overflow:hidden; animation:fadeUp .3s ease; }
+.pfr-hd { padding:10px 13px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
+.pfr-badge { display:flex; align-items:center; gap:5px; font-size:11px; font-weight:700; }
+.pfr-dot { width:7px; height:7px; border-radius:50%; background:var(--coral); }
+.pfr-img { width:100%; display:block; max-height:280px; object-fit:cover; }
+.pfr-ph { width:100%; height:200px; background:var(--card2); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; color:var(--muted); font-size:12px; }
+.pfr-desc { padding:11px 13px; font-size:13px; line-height:1.65; border-bottom:1px solid var(--border); }
+.pfr-desc strong { color:var(--amber); }
+.pfr-acts { display:flex; }
+.pfa { flex:1; background:none; border:none; border-right:1px solid var(--border); padding:11px; cursor:pointer; font-size:11px; font-weight:700; color:var(--muted); font-family:var(--ff); display:flex; align-items:center; justify-content:center; gap:4px; transition:all .15s; }
+.pfa:last-child { border-right:none; }
+.pfa:active { background:rgba(255,255,255,.04); color:var(--tx); }
+.pfa.primary { color:var(--coral); }
+.proc-ov { position:fixed; inset:0; z-index:350; background:rgba(26,20,16,.95); backdrop-filter:blur(20px); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; opacity:0; pointer-events:none; transition:opacity .25s; }
+.proc-ov.show { opacity:1; pointer-events:all; }
+.proc-ring-wrap { position:relative; width:72px; height:72px; display:flex; align-items:center; justify-content:center; }
+.proc-ring { width:72px; height:72px; border-radius:50%; border:3px solid rgba(255,255,255,.06); border-top-color:var(--coral); animation:spin 1s linear infinite; }
+.proc-pet { position:absolute; font-size:36px; animation:bob .9s ease-in-out infinite alternate; }
+@keyframes bob { from{transform:scale(1);}to{transform:scale(1.12);} }
+.proc-bar-wrap { width:180px; height:4px; background:var(--card3); border-radius:100px; overflow:hidden; }
+.proc-bar { height:100%; border-radius:100px; background:linear-gradient(90deg, var(--coral), var(--amber)); width:0%; transition:width .3s; }
 
-/* history */
-.pf-hist{padding:0 14px 6px;display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;}
-.pf-hist::-webkit-scrollbar{display:none;}
-.pf-hi{flex-shrink:0;width:54px;height:54px;border-radius:12px;background:var(–l2);border:1.5px solid var(–b);display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;transition:all .18s;overflow:hidden;position:relative;}
-.pf-hi:active{transform:scale(.9);}
-.pf-hi img{width:100%;height:100%;object-fit:cover;}
-.pf-hi.add{border-style:dashed;border-color:var(–g);background:rgba(57,255,20,.05);}
-.pf-hi-badge{position:absolute;bottom:0;right:0;background:var(–g);color:#000;font-size:7px;font-weight:800;padding:1px 4px;border-radius:4px;}
+/* ── PET UPGRADE SHEET ── */
+.upgrade-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.upgrade-item { background:var(--card2); border:1px solid var(--border); border-radius:14px; padding:12px; text-align:center; cursor:pointer; transition:all .18s; }
+.upgrade-item:active { transform:scale(.95); border-color:rgba(155,127,232,.4); }
+.ui-e { font-size:32px; margin-bottom:6px; }
+.ui-name { font-size:12px; font-weight:700; margin-bottom:3px; }
+.ui-desc { font-size:10px; color:var(--tx2); margin-bottom:6px; line-height:1.4; }
+.ui-cost { font-size:12px; font-family:var(--fm); font-weight:700; color:var(--violet); }
 
-/* processing overlay */
-.pf-proc{position:fixed;inset:0;z-index:350;background:rgba(0,0,0,.93);backdrop-filter:blur(22px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;opacity:0;pointer-events:none;transition:opacity .28s;}
-.pf-proc.show{opacity:1;pointer-events:all;}
-.pf-proc-ring-wrap{position:relative;width:76px;height:76px;display:flex;align-items:center;justify-content:center;}
-.pf-proc-ring{width:76px;height:76px;border-radius:50%;border:3px solid rgba(255,255,255,.07);border-top-color:var(–g);animation:spin 1s linear infinite;}
-.pf-proc-pet{position:absolute;font-size:38px;animation:bob .9s ease-in-out infinite alternate;}
-.pf-proc-lbl{font-size:15px;font-weight:700;text-align:center;}
-.pf-proc-bar-wrap{width:190px;height:4px;background:var(–l3);border-radius:100px;overflow:hidden;}
-.pf-proc-bar{height:100%;border-radius:100px;background:linear-gradient(90deg,var(–g),var(–c));width:0%;transition:width .3s;}
-.pf-proc-step{font-size:11px;color:var(–mu);font-family:var(–fm);text-align:center;}
+/* ── SWISH ── */
+.swish-ov { position:fixed; inset:0; z-index:400; background:rgba(0,0,0,.8); backdrop-filter:blur(14px); display:flex; align-items:flex-end; opacity:0; pointer-events:none; transition:opacity .25s; }
+.swish-ov.open { opacity:1; pointer-events:all; }
+.swish-sh { width:100%; max-width:430px; margin:0 auto; background:var(--card); border-radius:20px 20px 0 0; border:1px solid var(--border); padding:20px 20px calc(36px + var(--sb)); transform:translateY(100%); transition:transform .3s cubic-bezier(.32,.72,0,1); }
+.swish-ov.open .swish-sh { transform:translateY(0); }
+.swish-logo { font-size:26px; font-weight:900; color:#00b3ff; font-family:var(--fm); margin-bottom:4px; }
+.swish-sub { font-size:12px; color:var(--muted); margin-bottom:16px; }
+.swish-amt { font-size:52px; font-weight:900; font-family:var(--fm); text-align:center; color:var(--sage); margin:16px 0; }
+.swish-to { text-align:center; font-size:13px; color:var(--muted); margin-bottom:24px; }
 
-/* pub success */
-.pf-pub{position:fixed;inset:0;z-index:450;background:rgba(0,0,0,.92);backdrop-filter:blur(22px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;opacity:0;pointer-events:none;transition:opacity .28s;}
-.pf-pub.show{opacity:1;pointer-events:all;}
-.pf-pub-e{font-size:76px;animation:pop .45s cubic-bezier(.175,.885,.32,1.275);}
+/* ── BUTTONS ── */
+.btn-p { background:var(--coral); color:#fff; font-weight:700; font-size:13px; padding:12px; border-radius:10px; border:none; cursor:pointer; width:100%; font-family:var(--ff); transition:all .15s; }
+.btn-p:active { transform:scale(.97); opacity:.9; }
+.btn-s { background:var(--card2); color:var(--tx); font-weight:600; font-size:13px; padding:12px; border-radius:10px; border:1px solid var(--border2); cursor:pointer; width:100%; font-family:var(--ff); transition:all .15s; }
+.btn-s:active { border-color:rgba(255,255,255,.25); }
+.btn-sm { background:var(--card2); color:var(--tx2); font-weight:600; font-size:11px; padding:7px 14px; border-radius:8px; border:1px solid var(--border); cursor:pointer; font-family:var(--ff); transition:all .15s; white-space:nowrap; }
+.btn-sm:active { border-color:rgba(255,255,255,.25); }
+.row2 { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
 
-/* sec label */
-.pf-sec{padding:10px 14px 6px;font-size:10px;font-weight:700;color:var(–mu);letter-spacing:1.5px;text-transform:uppercase;display:flex;align-items:center;justify-content:space-between;}
-.pf-sec a{font-size:11px;color:var(–g);text-transform:none;letter-spacing:0;cursor:pointer;}
-.pf-vbot{height:16px;}
+/* SEARCH */
+.srch { background:var(--card2); border:1.5px solid var(--border); border-radius:10px; display:flex; align-items:center; gap:7px; padding:0 12px; transition:border-color .2s; }
+.srch:focus-within { border-color:rgba(255,107,71,.4); }
+.srch input { flex:1; background:none; border:none; outline:none; padding:11px 0; color:var(--tx); font-size:13px; font-family:var(--ff); }
 
-/* ══ AI CHAT ══ */
-.ai-win{position:fixed;inset:0;z-index:400;background:var(–bg);display:flex;flex-direction:column;transform:translateY(100%);transition:transform .32s cubic-bezier(.32,.72,0,1);}
-.ai-win.open{transform:translateY(0);}
-.ai-head{padding:12px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(–b);background:rgba(6,6,15,.92);backdrop-filter:blur(22px);}
-.ai-ava{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(–c),var(–p));display:flex;align-items:center;justify-content:center;font-size:20px;}
-.ai-bk{background:none;border:none;color:var(–tx);font-size:22px;cursor:pointer;}
-.ai-msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:8px;scrollbar-width:none;}
-.ai-msgs::-webkit-scrollbar{display:none;}
-.msg{max-width:82%;padding:10px 13px;border-radius:16px;font-size:13px;line-height:1.55;animation:mp .18s ease;}
-@keyframes mp{from{opacity:0;transform:scale(.9);}to{opacity:1;transform:scale(1);}}
-.msg.u{align-self:flex-end;background:linear-gradient(135deg,rgba(57,255,20,.2),rgba(0,245,212,.12));border:1px solid rgba(57,255,20,.22);}
-.msg.ai{align-self:flex-start;background:var(–l2);border:1px solid var(–b);}
-.msg.ai.ld{color:var(–mu);font-style:italic;}
-.ai-inp-row{padding:10px 14px;display:flex;gap:8px;align-items:center;border-top:1px solid var(–b);background:rgba(6,6,15,.92);backdrop-filter:blur(22px);padding-bottom:calc(10px + var(–sb));}
-.ai-inp{flex:1;background:var(–l2);border:1.5px solid var(–b);border-radius:100px;padding:9px 15px;color:var(–tx);font-size:13px;font-family:var(–ff);outline:none;transition:border-color .2s;}
-.ai-inp:focus{border-color:rgba(57,255,20,.38);}
-.ai-snd{width:40px;height:40px;border-radius:50%;border:none;cursor:pointer;background:linear-gradient(135deg,var(–g),var(–c));display:flex;align-items:center;justify-content:center;font-size:16px;transition:transform .15s;flex-shrink:0;}
-.ai-snd:active{transform:scale(.87);}
+/* TOAST */
+.toast { position:fixed; bottom:80px; left:50%; transform:translateX(-50%) translateY(10px); background:var(--card); border:1px solid var(--border2); border-radius:10px; padding:9px 18px; font-size:12px; font-weight:600; z-index:999; white-space:nowrap; opacity:0; transition:all .28s; pointer-events:none; max-width:calc(100vw - 28px); text-align:center; }
+.toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+.toast.ok { border-color:rgba(126,184,154,.5); color:var(--sage); }
+.toast.err { border-color:rgba(255,107,71,.5); color:var(--coral); }
+.toast.gold { border-color:rgba(245,166,35,.5); color:var(--amber); }
 
-/* ══ TOAST ══ */
-.toast{position:fixed;bottom:82px;left:50%;transform:translateX(-50%) translateY(12px);background:var(–l1);border:1px solid var(–b);border-radius:100px;padding:8px 18px;font-size:12px;font-weight:600;z-index:999;white-space:nowrap;opacity:0;transition:all .28s;pointer-events:none;}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
-.toast.ok{border-color:rgba(57,255,20,.45);color:var(–g);}
-.toast.err{border-color:rgba(255,69,58,.45);color:var(–r);}
-.toast.gold{border-color:rgba(255,214,10,.45);color:var(–y);}
+/* COIN POP */
+@keyframes cpop { 0%{opacity:1;transform:translateY(0);}100%{opacity:0;transform:translateY(-60px);} }
+.coinpop { position:fixed; pointer-events:none; z-index:9999; font-size:13px; font-family:var(--fm); font-weight:700; color:var(--amber); animation:cpop .7s ease-out forwards; }
 
-/* ══ POPS ══ */
-@keyframes cpop{0%{opacity:1;transform:translateY(0)scale(1);}100%{opacity:0;transform:translateY(-70px)scale(.5);}}
-.coinpop{position:fixed;pointer-events:none;z-index:9999;font-size:14px;font-family:var(–fm);font-weight:700;animation:cpop .7s ease-out forwards;}
+/* LEVEL UP */
+.lvl-splash { position:fixed; inset:0; z-index:500; display:flex; align-items:center; justify-content:center; background:rgba(26,20,16,.9); backdrop-filter:blur(20px); opacity:0; pointer-events:none; transition:opacity .3s; }
+.lvl-splash.show { opacity:1; }
+.lvl-cont { text-align:center; animation:lvlpop .5s cubic-bezier(.175,.885,.32,1.275); }
+@keyframes lvlpop { from{transform:scale(.2);}to{transform:scale(1);} }
 
-.lvl-splash{position:fixed;inset:0;z-index:600;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.87);backdrop-filter:blur(22px);opacity:0;pointer-events:none;transition:opacity .3s;}
-.lvl-splash.show{opacity:1;}
-.lvl-cont{text-align:center;animation:pop .5s cubic-bezier(.175,.885,.32,1.275);}
-@keyframes pop{from{transform:scale(.2);}to{transform:scale(1);}}
-.lvl-e{font-size:78px;display:block;margin-bottom:10px;}
-.lvl-t{font-size:28px;font-weight:800;background:linear-gradient(135deg,var(–g),var(–c));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.lvl-s{font-size:14px;color:var(–mu);margin-top:6px;}
-.evol-splash{position:fixed;inset:0;z-index:700;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.92);backdrop-filter:blur(28px);opacity:0;pointer-events:none;transition:opacity .3s;}
-.evol-splash.show{opacity:1;}
-.evol-cont{text-align:center;animation:pop .6s cubic-bezier(.175,.885,.32,1.275);}
-
-/* ══ SHARED ══ */
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
-.btn-p{background:linear-gradient(135deg,var(–g),var(–g2));color:#000;font-weight:800;font-size:13px;padding:12px;border-radius:100px;border:none;cursor:pointer;width:100%;font-family:var(–ff);transition:transform .15s;letter-spacing:.2px;}
-.btn-p:active{transform:scale(.96);}
-.btn-s{background:var(–l3);color:var(–tx);font-weight:700;font-size:13px;padding:12px;border-radius:100px;border:1px solid var(–b);cursor:pointer;width:100%;font-family:var(–ff);transition:all .15s;}
-.btn-s:active{border-color:rgba(255,255,255,.3);}
-.sbtn{background:var(–l3);color:var(–tx);font-weight:700;font-size:11px;padding:8px 14px;border-radius:100px;border:1px solid var(–b);cursor:pointer;font-family:var(–ff);transition:all .15s;}
-.srch{background:var(–l2);border:1.5px solid var(–b);border-radius:13px;display:flex;align-items:center;gap:7px;padding:0 12px;margin-bottom:10px;transition:border-color .2s;}
-.srch:focus-within{border-color:rgba(57,255,20,.35);}
-.srch input{flex:1;background:none;border:none;outline:none;padding:11px 0;color:var(–tx);font-size:13px;font-family:var(–ff);}
+/* PET CREATOR SKIN GLOW */
+.skin-glow { filter:drop-shadow(0 4px 16px rgba(245,166,35,.4)); }
 </style>
-
 </head>
 <body>
 
 <!-- ══ ONBOARDING ══ -->
-
-<div class="ob-wrap" id="onboard">
-  <div class="ob-logo">PETPET</div>
-  <div class="ob-sub">The Everything Platform</div>
-  <div id="obEmo" class="ob-pet-big">🐉</div>
-  <div class="ob-h">Välj din pet</div>
-  <div class="ob-p">Din digitala tvilling. Din värld. Ditt äventyr.</div>
-  <div class="pet-row">
-    <div class="pp sel" data-p="🐉" onclick="pickP(this)">🐉</div>
-    <div class="pp" data-p="🐺" onclick="pickP(this)">🐺</div>
-    <div class="pp" data-p="🦊" onclick="pickP(this)">🦊</div>
-    <div class="pp" data-p="🐱" onclick="pickP(this)">🐱</div>
-    <div class="pp" data-p="🔥" onclick="pickP(this)">🔥</div>
-    <div class="pp" data-p="🦋" onclick="pickP(this)">🦋</div>
-    <div class="pp" data-p="⚡" onclick="pickP(this)">⚡</div>
-    <div class="pp" data-p="🌊" onclick="pickP(this)">🌊</div>
+<div class="ob" id="ob">
+  <div class="ob-wordmark">VIBE</div>
+  <div class="ob-tagline">The Everything App</div>
+  <div class="ob-step-dots">
+    <div class="ob-dot active" id="dot0"></div>
+    <div class="ob-dot" id="dot1"></div>
+    <div class="ob-dot" id="dot2"></div>
   </div>
-  <input class="ob-in" id="obName" placeholder="Vad heter du? 👋" maxlength="20">
-  <button class="btn-p" onclick="finishOB()">🚀 Starta äventyret</button>
+
+  <!-- Step 0: Welcome -->
+  <div class="ob-step" id="obStep0">
+    <div style="text-align:center;margin-bottom:24px;">
+      <div style="font-size:72px;margin-bottom:16px;animation:bob 2s ease-in-out infinite alternate;">🌟</div>
+      <div class="ob-h" style="text-align:center;">Välkommen till VIBE</div>
+      <div class="ob-p" style="text-align:center;">Chatta. Shoppa. Tjäna pengar. Utforska. Allt på ett ställe – med din egen pet vid din sida.</div>
+    </div>
+    <input class="ob-input" id="obNameIn" placeholder="Vad heter du? 👋" maxlength="20">
+    <button class="ob-next" onclick="obNext(1)">Nästa →</button>
+  </div>
+
+  <!-- Step 1: Create Pet -->
+  <div class="ob-step" id="obStep1" style="display:none;">
+    <div class="ob-h">Skapa din pet</div>
+    <div class="ob-p">Välj kropp, färg och namn – den är helt din.</div>
+    <div class="pet-canvas" id="obPetCanvas" onclick="obRandomizePet()">
+      <div class="pet-canvas-ring"></div>
+      <div id="obPetDisplay" style="font-size:80px;position:relative;z-index:1;">🐉</div>
+    </div>
+    <div class="sec" style="text-align:center;margin-bottom:8px;">KROPP</div>
+    <div class="pet-body-picker" id="petBodyPicker"></div>
+    <div class="sec" style="text-align:center;margin-bottom:8px;margin-top:8px;">FÄRG</div>
+    <div class="pet-color-row" id="petColorRow"></div>
+    <input class="pet-name-input" id="obPetNameIn" placeholder="Ge din pet ett namn 🐉" maxlength="16">
+    <button class="ob-next" onclick="obNext(2)">Nästa →</button>
+  </div>
+
+  <!-- Step 2: Choose world -->
+  <div class="ob-step" id="obStep2" style="display:none;">
+    <div class="ob-h">Vad vill du göra mest?</div>
+    <div class="ob-p">Vi anpassar din upplevelse — du kan alltid ändra.</div>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px;" id="interestPicker">
+      <div class="mi" style="border-radius:12px;padding:14px;" onclick="obToggleInterest(this,'social')">💬 Chatta med vänner</div>
+      <div class="mi" style="border-radius:12px;padding:14px;" onclick="obToggleInterest(this,'shop')">🛍️ Shoppa grejer</div>
+      <div class="mi" style="border-radius:12px;padding:14px;" onclick="obToggleInterest(this,'earn')">💰 Tjäna pengar på uppdrag</div>
+      <div class="mi" style="border-radius:12px;padding:14px;" onclick="obToggleInterest(this,'create')">✨ Skapa AI-content</div>
+      <div class="mi" style="border-radius:12px;padding:14px;" onclick="obToggleInterest(this,'explore')">🗺️ Utforska & äventyra</div>
+    </div>
+    <button class="ob-next" onclick="finishOB()">🚀 Kör igång!</button>
+  </div>
 </div>
 
-<!-- BG -->
-
-<div class="bg"><div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div></div>
-
 <!-- ══ APP ══ -->
-
 <div class="app" id="app">
 
   <!-- TOPBAR -->
-
   <div class="topbar">
-    <div class="t-logo">PETPET</div>
-    <div class="t-pills">
-      <div class="pill" id="tpLvl">🐉 Lv.<span class="v" id="hLvl">1</span></div>
-      <div class="pill">💰<span class="v" id="hCoins">500</span></div>
-      <div class="pill str">🔥<span class="v" id="hStreak">0</span></div>
-      <div class="pill ep">⚡<span class="v" id="hEng">100</span></div>
+    <div class="logo">vibe</div>
+    <div class="topbar-center">
+      <div class="hpill">💰 <span class="v" id="hCoins">500</span></div>
+      <div class="hpill s">⭐ <span class="v" id="hStreak">0</span>d</div>
+      <div class="hpill f">⚡ <span class="v" id="hEng">100</span></div>
     </div>
-    <button class="t-btn" id="menuBtn">☰</button>
+    <button class="tb-menu" id="menuBtn">☰</button>
   </div>
 
-  <!-- PET STATUS BAR -->
-
-  <div class="pet-status-bar">
-    <div class="ps">
-      <div class="ps-lbl"><span>🍖 Hunger</span><span id="sbHunger">80%</span></div>
-      <div class="ps-bar"><div class="ps-fill hunger" id="sbHungerBar" style="width:80%"></div></div>
+  <!-- PET BAR -->
+  <div class="pet-bar" id="petBar" onclick="switchView('petcare')">
+    <div class="pb-face" id="pbFace">🐉</div>
+    <div class="pb-info">
+      <div class="pb-name" id="pbName">Eldraken</div>
+      <div class="pb-rank" id="pbRank">Level 1 · Common</div>
+      <div class="pb-bars">
+        <div class="pb-bar-item">
+          <div class="pb-bar-lbl">🍖</div>
+          <div class="pb-bar-track"><div class="pb-bar-fill h" id="pbHunger" style="width:80%"></div></div>
+        </div>
+        <div class="pb-bar-item">
+          <div class="pb-bar-lbl">⚡</div>
+          <div class="pb-bar-track"><div class="pb-bar-fill e" id="pbEnergy" style="width:100%"></div></div>
+        </div>
+        <div class="pb-bar-item">
+          <div class="pb-bar-lbl">😊</div>
+          <div class="pb-bar-track"><div class="pb-bar-fill m" id="pbMood" style="width:90%"></div></div>
+        </div>
+      </div>
     </div>
-    <div class="ps">
-      <div class="ps-lbl"><span>⚡ Energi</span><span id="sbEnergy">100%</span></div>
-      <div class="ps-bar"><div class="ps-fill energy" id="sbEnergyBar" style="width:100%"></div></div>
-    </div>
-    <div class="ps">
-      <div class="ps-lbl"><span>😊 Humör</span><span id="sbMood">90%</span></div>
-      <div class="ps-bar"><div class="ps-fill mood" id="sbMoodBar" style="width:90%"></div></div>
+    <div class="pb-xp-wrap">
+      <div class="pb-level" id="pbLevel">1</div>
+      <div class="pb-lvl-lbl">LVL</div>
     </div>
   </div>
 
   <!-- STORIES -->
-
-  <div class="stories" id="stories"></div>
+  <div class="stories" id="storiesRow"></div>
 
   <!-- MAIN -->
-
   <div class="main">
 
-```
-<!-- 🔥 PETFLO — Feed -->
-<div class="view active" id="view-feed"></div>
+    <!-- 🔥 FLÖDE -->
+    <div class="view active" id="view-feed"></div>
 
-<!-- 💬 PETCHAT -->
-<div class="view" id="view-chat">
-  <div class="card"><div class="ct">💬 Meddelanden</div><div id="chatList"></div></div>
-  <div class="card" id="aiOpen" style="cursor:pointer;">
-    <div style="display:flex;align-items:center;gap:12px;">
-      <div class="ai-ava">🤖</div>
-      <div><div style="font-size:14px;font-weight:700;">PetPal AI</div><div style="font-size:11px;color:var(--mu);">Din smarta assistent — fråga vad som helst!</div></div>
-      <div style="margin-left:auto;background:rgba(0,245,212,.1);border:1px solid rgba(0,245,212,.25);color:var(--c);font-size:9px;font-weight:700;padding:3px 9px;border-radius:100px;">AI</div>
+    <!-- 💬 CHATT -->
+    <div class="view" id="view-chat">
+      <div class="card">
+        <div class="card-title">Meddelanden</div>
+        <div id="chatList"></div>
+      </div>
+      <!-- AI CARD -->
+      <div class="card" id="aiCardBtn" style="cursor:pointer;border-color:rgba(255,107,71,.2);">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div class="ai-ava-wrap" style="width:44px;height:44px;font-size:22px;border-radius:12px;flex-shrink:0;">🤖</div>
+          <div>
+            <div style="font-size:14px;font-weight:700;">VIBE AI</div>
+            <div style="font-size:12px;color:var(--tx2);">Din smarta assistent — fråga vad som helst</div>
+          </div>
+          <div style="margin-left:auto;background:rgba(255,107,71,.12);border:1px solid rgba(255,107,71,.25);color:var(--coral);font-size:9px;font-weight:700;padding:3px 9px;border-radius:6px;letter-spacing:.5px;">AI</div>
+        </div>
+      </div>
+      <div class="vend"></div>
     </div>
-  </div>
-  <div class="vbot"></div>
-</div>
 
-<!-- 🗺️ PETMAP -->
-<div class="view" id="view-map">
-  <div class="card-t" style="padding:0 2px 8px;color:var(--mu);font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;">🗺️ PETMAP — Vänner nära dig</div>
-  <div class="map-canvas card" style="padding:0;">
-    <div class="map-grid-lines"></div>
-    <div class="map-zones" id="mapZones"></div>
-    <div style="position:absolute;inset:0;" id="mapDots"></div>
-    <div class="map-center-pin">
-      <div class="map-you-ring"></div>
-      <div class="map-you-lbl" id="mapYouLbl">Du · Sthlm</div>
+    <!-- 🛍️ MARKETPLACE -->
+    <div class="view" id="view-market">
+      <div class="srch"><span>🔍</span><input id="mktQ" placeholder="Sök produkter, skins, begagnat…" oninput="filterMarket(this.value)"></div>
+      <div class="market-tabs">
+        <div class="mtab active" data-mt="shop">🛍️ Shop</div>
+        <div class="mtab" data-mt="second">♻️ Begagnat</div>
+        <div class="mtab" data-mt="deals">🔥 Deals</div>
+      </div>
+      <div id="mktContent"></div>
+      <div class="vend"></div>
     </div>
-  </div>
-  <div class="card">
-    <div class="ct">Online nu</div>
-    <div id="mapFriends"></div>
-  </div>
-  <div class="vbot"></div>
-</div>
 
-<!-- 🛍️ PETSHOP -->
-<div class="view" id="view-shop">
-  <div class="srch"><span>🔍</span><input id="shopQ" placeholder="Sök skins, items, merch…" oninput="filterShop(this.value)"></div>
-  <div class="shop-tabs" id="shopTabs">
-    <div class="stab active" data-tab="skins">🎨 Skins</div>
-    <div class="stab" data-tab="items">⚡ Items</div>
-    <div class="stab" data-tab="deals">🔥 Deals</div>
-    <div class="stab" data-tab="codes">🎟️ Koder</div>
-  </div>
-  <div id="shopContent"></div>
-  <div class="vbot"></div>
-</div>
+    <!-- 🎯 MISSIONS -->
+    <div class="view" id="view-missions">
+      <div style="display:flex;align-items:center;gap:8px;padding:2px 0 8px;">
+        <div style="flex:1;font-size:18px;font-weight:800;">Missions</div>
+        <button class="btn-sm" onclick="createMission()">+ Skapa</button>
+      </div>
+      <div class="market-tabs" id="missionTabs">
+        <div class="mtab active" data-bt="brands">🏢 Brand</div>
+        <div class="mtab" data-bt="community">🌍 Community</div>
+        <div class="mtab" data-bt="mine">✅ Mina</div>
+      </div>
+      <div id="missionContent"></div>
+      <div class="vend"></div>
+    </div>
 
-<!-- 🎯 PET BOUNTY -->
-<div class="view" id="view-bounties">
-  <div class="bounty-tabs">
-    <div class="btab active" data-bt="brands">🏢 Brand Missions</div>
-    <div class="btab" data-bt="community">🌍 Community</div>
-    <div class="btab" data-bt="mine">✅ Mina</div>
-  </div>
-  <div id="bountyContent"></div>
-  <div class="vbot"></div>
-</div>
+    <!-- 🗺️ KARTA -->
+    <div class="view" id="view-map">
+      <div class="card" style="padding:0;overflow:hidden;">
+        <div class="map-box">
+          <div class="map-grid"></div>
+          <div style="position:absolute;inset:0;" id="mapDots"></div>
+          <div class="map-you">
+            <div class="map-you-dot"></div>
+            <div class="map-you-lbl" id="mapYouLbl">Du</div>
+          </div>
+        </div>
+        <div style="padding:10px 14px;" id="mapFriends"></div>
+      </div>
+      <div class="vend"></div>
+    </div>
 
-<!-- ⚔️ BATTLE -->
-<div class="view" id="view-battle">
-  <div id="battlePicker">
-    <div class="card-t" style="padding:0 2px 8px;color:var(--mu);font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;">⚔️ Välj motståndare</div>
-    <div class="opp-grid" id="oppGrid"></div>
-  </div>
-  <div id="battleArena" style="display:none;">
-    <div class="b-arena" id="bHero"></div>
-    <div class="b-log" id="bLog"></div>
-    <div class="b-acts row2" id="bActs"></div>
-  </div>
-  <div class="vbot"></div>
-</div>
+    <!-- 🐣 PETCARE -->
+    <div class="view" id="view-petcare">
+      <div class="petcare-card">
+        <div id="pcPet" class="pc-pet" onclick="petPat()">🐉</div>
+        <div class="pc-name" id="pcName">Eldraken</div>
+        <div class="pc-rank" id="pcRank">Level 1 · Common</div>
+        <div class="pc-stats">
+          <div class="pcs"><div class="pcs-v" id="pcsLvl">1</div><div class="pcs-l">Level</div></div>
+          <div class="pcs"><div class="pcs-v" id="pcsBat">0</div><div class="pcs-l">Segrar</div></div>
+          <div class="pcs"><div class="pcs-v" id="pcsCoins">500</div><div class="pcs-l">Coins</div></div>
+        </div>
+        <div class="pc-bar-row"><div class="pc-bar-lbl"><span>🍖 Hunger</span><span id="pcHn">80%</span></div><div class="pc-bar-track"><div class="pc-fill h" id="pcHb" style="width:80%"></div></div></div>
+        <div class="pc-bar-row"><div class="pc-bar-lbl"><span>⚡ Energi</span><span id="pcEn">100%</span></div><div class="pc-bar-track"><div class="pc-fill e" id="pcEb" style="width:100%"></div></div></div>
+        <div class="pc-bar-row"><div class="pc-bar-lbl"><span>😊 Humör</span><span id="pcMn">90%</span></div><div class="pc-bar-track"><div class="pc-fill m" id="pcMb" style="width:90%"></div></div></div>
+        <div class="pc-actions">
+          <div class="pca" onclick="pcFeed()"><div class="pca-e">🍖</div>Mata</div>
+          <div class="pca" onclick="pcTrain()"><div class="pca-e">🏋️</div>Träna</div>
+          <div class="pca" onclick="pcSleep()"><div class="pca-e">😴</div>Sova</div>
+          <div class="pca" onclick="pcPlay()"><div class="pca-e">🎮</div>Lek</div>
+        </div>
+        <!-- UPGRADE BUTTON — på petcare-sidan, inte i shoppen -->
+        <div class="upgrade-btn" onclick="openUpgrade()">
+          <div class="ub-l">
+            <div class="ub-title">✨ Uppgradera din pet</div>
+            <div class="ub-sub">Nya förmågor, skins &amp; evolution</div>
+          </div>
+          <div style="font-size:22px;">→</div>
+        </div>
+      </div>
+      <div class="vend"></div>
+    </div>
 
-<!-- 🐣 PETCARE -->
-<div class="view" id="view-petcare">
-  <div class="petcare-hero">
-    <div id="pcPet" class="pc-pet" onclick="petPat()">🐉</div>
-    <div class="pc-name" id="pcName">Eldraken</div>
-    <div class="pc-rank" id="pcRank">Level 1 · Common</div>
-    <div class="pc-stats-grid">
-      <div class="pc-stat"><div class="pcs-v" id="pcsLvl">1</div><div class="pcs-l">Level</div></div>
-      <div class="pc-stat"><div class="pcs-v" id="pcsBat">0</div><div class="pcs-l">Segrar</div></div>
-      <div class="pc-stat"><div class="pcs-v" id="pcsCoins">500</div><div class="pcs-l">Coins</div></div>
+    <!-- 👤 PROFIL -->
+    <div class="view" id="view-profile">
+      <div class="prof-hero">
+        <div class="prof-ava-wrap">
+          <div class="prof-ava-ring"></div>
+          <div class="prof-ava" id="profAva">🐉</div>
+        </div>
+        <div class="prof-uname" id="profName">Äventyrare</div>
+        <div class="prof-handle" id="profHandle">@vibe_user</div>
+        <div class="prof-tags">
+          <div class="ptag v">✅ VERIFIERAD</div>
+          <div class="ptag c">🎮 CREATOR</div>
+        </div>
+        <div class="prof-bio" id="profBio">🌟 VIBE-användare · Level 1</div>
+        <div class="prof-stats">
+          <div class="pstat"><div class="pstat-v" id="pnPosts">0</div><div class="pstat-l">INLÄGG</div></div>
+          <div class="pstat"><div class="pstat-v">1.2K</div><div class="pstat-l">FÖLJARE</div></div>
+          <div class="pstat"><div class="pstat-v">342</div><div class="pstat-l">FÖLJER</div></div>
+          <div class="pstat"><div class="pstat-v" id="pnLvl">1</div><div class="pstat-l">LEVEL</div></div>
+        </div>
+        <div class="xp-wrap"><div class="xp-fill" id="xpFill" style="width:0%"></div></div>
+        <div class="xp-lbl"><span id="xpVal">0</span>/100 XP till nästa level</div>
+        <div class="prof-btns">
+          <button class="btn-p" onclick="shareProfile()">📤 Dela profil</button>
+          <button class="btn-s" onclick="showT('⚙️ Inställningar snart!','ok')">⚙️ Inställningar</button>
+        </div>
+      </div>
+      <div class="prof-tabs">
+        <div class="prof-tab active" data-ptab="activity">⏱️ Aktivitet</div>
+        <div class="prof-tab" data-ptab="badges">🏆 Badges</div>
+        <div class="prof-tab" data-ptab="stats">📊 Stats</div>
+      </div>
+      <div id="ptab-activity"></div>
+      <div id="ptab-badges" style="display:none;"></div>
+      <div id="ptab-stats" style="display:none;"></div>
+      <div class="vend"></div>
     </div>
-    <div class="pc-bar-row">
-      <div class="pc-bar-lbl"><span>🍖 Hunger</span><span id="pcHn">80%</span></div>
-      <div class="pc-bar"><div class="pc-fill h" id="pcHb" style="width:80%"></div></div>
-    </div>
-    <div class="pc-bar-row">
-      <div class="pc-bar-lbl"><span>⚡ Energi</span><span id="pcEn">100%</span></div>
-      <div class="pc-bar"><div class="pc-fill e" id="pcEb" style="width:100%"></div></div>
-    </div>
-    <div class="pc-bar-row">
-      <div class="pc-bar-lbl"><span>😊 Humör</span><span id="pcMn">90%</span></div>
-      <div class="pc-bar"><div class="pc-fill m" id="pcMb" style="width:90%"></div></div>
-    </div>
-    <div class="pc-actions">
-      <div class="pca" onclick="carefeed()"><div class="pca-e">🍖</div>Mata</div>
-      <div class="pca" onclick="careTrain()"><div class="pca-e">🏋️</div>Träna</div>
-      <div class="pca" onclick="careSleep()"><div class="pca-e">😴</div>Sova</div>
-      <div class="pca" onclick="carePlay()"><div class="pca-e">🎮</div>Lek</div>
-    </div>
-    <div id="evolBanner" style="display:none;" class="evol-banner" onclick="evolve()">
-      <div class="evol-txt">✨ EVOLUTION TILLGÄNGLIG!</div>
-      <div class="evol-sub">Level 10 nått — tryck för att evolvera!</div>
-    </div>
-  </div>
-  <div class="vbot"></div>
-</div>
-
-<!-- 👤 PET PROFILE -->
-<div class="view" id="view-profile">
-  <div class="prof-cover">
-    <div class="pava">
-      <div class="pava-ring"></div>
-      <div class="pava-inner" id="profEmo">🐉</div>
-    </div>
-    <div class="p-uname" id="profName">Äventyrare</div>
-    <div class="p-handle" id="profHandle">@petpet_user</div>
-    <div class="p-badges-row">
-      <div class="ptag v">⭐ VERIFIERAD</div>
-      <div class="ptag c">🎮 CREATOR</div>
-    </div>
-    <div class="p-bio" id="profBio">Pet lover · Explorer · Level 1 ✨</div>
-    <div class="p-stats-row">
-      <div class="pst"><div class="pst-v" id="pnPosts">0</div><div class="pst-l">INLÄGG</div></div>
-      <div class="pst"><div class="pst-v">1.2K</div><div class="pst-l">FÖLJARE</div></div>
-      <div class="pst"><div class="pst-v">342</div><div class="pst-l">FÖLJER</div></div>
-      <div class="pst"><div class="pst-v" id="pnLvl">1</div><div class="pst-l">LEVEL</div></div>
-    </div>
-    <div class="xp-wrap"><div class="xp-fill" id="xpFill" style="width:0%"></div></div>
-    <div class="xp-lbl"><span id="xpVal">0</span>/100 XP</div>
-    <div class="p-action-row">
-      <button class="btn-p" onclick="shareProfile()">📤 Dela profil</button>
-      <button class="sbtn" onclick="showT('⚙️ Inställningar snart!','ok')">⚙️</button>
-    </div>
-  </div>
-  <div class="prof-tabs" id="profTabs">
-    <div class="ptab active" data-ptab="pet">🐉 Pet</div>
-    <div class="ptab" data-ptab="badges">🏆 Badges</div>
-    <div class="ptab" data-ptab="map">🗺️ Karta</div>
-    <div class="ptab" data-ptab="act">⏱️ Aktivitet</div>
-  </div>
-  <div id="ptab-pet"></div>
-  <div id="ptab-badges" style="display:none;"></div>
-  <div id="ptab-map" style="display:none;"></div>
-  <div id="ptab-act" style="display:none;"></div>
-  <div class="vbot"></div>
-</div>
-```
 
   </div><!-- /main -->
 
   <!-- BOTTOM NAV -->
-
   <div class="bnav">
-    <button class="nb active" data-v="feed"><div class="ni">🔥</div><div class="nl">Flöde</div></button>
-    <button class="nb" data-v="chat"><div class="ni">💬</div><div class="nl">Chat</div></button>
-    <button class="nb" data-v="map"><div class="ni">🗺️</div><div class="nl">Karta</div></button>
-    <button class="nb-cam" id="camBtn"><div class="nc">📸</div><div class="nl" style="font-size:8px;font-weight:700;letter-spacing:.4px;color:var(--mu);text-transform:uppercase;">Nytt</div></button>
-    <button class="nb" data-v="shop"><div class="ni">🛍️</div><div class="nl">Shop</div></button>
-    <button class="nb" data-v="profile"><div class="ni">👤</div><div class="nl">Profil</div></button>
+    <button class="nb active" data-v="feed"><div class="nb-ico">🔥</div><div class="nb-lbl">Flöde</div></button>
+    <button class="nb" data-v="chat"><div class="nb-ico">💬</div><div class="nb-lbl">Chatt</div></button>
+    <button class="nb-center" id="camBtn"><div class="nb-cam">📸</div><div class="nb-lbl" style="font-size:8px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;">Nytt</div></button>
+    <button class="nb" data-v="market"><div class="nb-ico">🛍️</div><div class="nb-lbl">Market</div></button>
+    <button class="nb" data-v="profile"><div class="nb-ico">👤</div><div class="nb-lbl">Profil</div></button>
   </div>
+
 </div><!-- /app -->
 
-<!-- MENU OVERLAY -->
-
-<div class="overlay" id="menuOv">
-  <div class="sheet">
-    <div class="handle"></div>
-    <div class="sheet-logo">PETPET</div>
+<!-- ══ MENU MODAL ══ -->
+<div class="modal-ov" id="menuMod">
+  <div class="modal-sh">
+    <div class="modal-handle"></div>
+    <div style="font-size:20px;font-weight:800;color:var(--coral);margin-bottom:14px;">vibe</div>
     <div class="menu-grid" id="menuGrid"></div>
   </div>
 </div>
 
-<!-- CAM OVERLAY (quick post) -->
-
-<div class="overlay" id="camOv">
-  <div class="sheet">
-    <div class="handle"></div>
+<!-- ══ POST MODAL ══ -->
+<div class="modal-ov" id="postMod">
+  <div class="modal-sh">
+    <div class="modal-handle"></div>
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-      <div style="font-size:16px;font-weight:800;">📝 Skapa inlägg</div>
-      <button class="sbtn" id="camX">✕</button>
+      <div style="font-size:16px;font-weight:800;">Skapa inlägg</div>
+      <button class="btn-sm" id="postClose">✕</button>
     </div>
-    <div onclick="openPetfoto();document.getElementById('camOv').classList.remove('open');" style="background:linear-gradient(135deg,rgba(57,255,20,.1),rgba(0,245,212,.08));border:1px solid rgba(57,255,20,.25);border-radius:14px;padding:12px;display:flex;align-items:center;gap:10px;cursor:pointer;margin-bottom:10px;">
-      <div style="font-size:26px;">✨</div>
-      <div>
-        <div style="font-size:13px;font-weight:700;color:var(--g);">PETFOTO — AI Kamera</div>
-        <div style="font-size:11px;color:var(--mu);">Stilar, prompts, AI-analys &amp; mer</div>
-      </div>
-      <div style="margin-left:auto;font-size:16px;color:var(--g);">→</div>
+    <!-- PETFOTO shortcut -->
+    <div onclick="openPetfoto();document.getElementById('postMod').classList.remove('open');" style="background:rgba(255,107,71,.06);border:1px solid rgba(255,107,71,.2);border-radius:12px;padding:11px;display:flex;align-items:center;gap:10px;cursor:pointer;margin-bottom:10px;transition:all .15s;">
+      <div style="font-size:24px;">✨</div>
+      <div><div style="font-size:13px;font-weight:700;color:var(--coral);">AI Kamera — PETFOTO</div><div style="font-size:11px;color:var(--tx2);">Stilar, AI-analys, prompts</div></div>
+      <div style="margin-left:auto;color:var(--coral);">→</div>
     </div>
-    <button class="btn-s" style="margin-bottom:10px;font-size:12px;" onclick="pickImg()">🖼️ Enkel bild</button>
-    <img id="camPrev" class="cam-prev">
-    <textarea class="cam-ta" id="camTxt" placeholder="Vad händer i din värld? 🔥" rows="2"></textarea>
+    <button class="btn-s" style="margin-bottom:10px;font-size:12px;" onclick="pickImg()">🖼️ Välj bild</button>
+    <img id="postPrev" style="width:100%;border-radius:10px;margin-bottom:10px;max-height:180px;object-fit:cover;display:none;">
+    <textarea id="postTxt" style="width:100%;background:var(--card2);border:1.5px solid var(--border);border-radius:10px;padding:11px;color:var(--tx);font-size:14px;font-family:var(--ff);resize:none;outline:none;min-height:70px;margin-bottom:10px;transition:border-color .2s;" placeholder="Vad händer i din värld? 🌟" rows="2"></textarea>
     <button class="btn-p" onclick="publishPost()">📤 Publicera</button>
   </div>
 </div>
 
-<!-- ══ PETFOTO FULLSCREEN ══ -->
-
-<div class="petfoto-win" id="petfotoWin">
-  <div class="pf-hdr">
-    <div class="pf-logo">PETFOTO ✨</div>
-    <div class="pf-tabs">
-      <div class="pf-tab active">✨ AI</div>
-      <div class="pf-tab" onclick="showT('📷 Kamera snart!','ok')">📷</div>
-      <div class="pf-tab" onclick="showT('🔴 Live i v6!','ok')">🔴</div>
-    </div>
-    <div class="pf-close" onclick="closePetfoto()">✕</div>
+<!-- ══ UPGRADE MODAL ══ -->
+<div class="modal-ov" id="upgradeMod">
+  <div class="modal-sh">
+    <div class="modal-handle"></div>
+    <div style="font-size:17px;font-weight:800;margin-bottom:14px;">✨ Uppgradera <span id="upgradeNameLbl">din pet</span></div>
+    <div class="upgrade-grid" id="upgradeGrid"></div>
+    <button class="btn-s" style="margin-top:12px;" onclick="document.getElementById('upgradeMod').classList.remove('open')">Stäng</button>
   </div>
-  <div class="pf-scroll" id="pfScroll">
+</div>
+
+<!-- ══ SWISH MODAL ══ -->
+<div class="swish-ov" id="swishOv">
+  <div class="swish-sh">
+    <div class="swish-logo">Swish</div>
+    <div class="swish-sub">Betalning via Swish</div>
+    <div class="swish-amt" id="swishAmt">50 SEK</div>
+    <div class="swish-to">Till: <strong>VIBE AB</strong> · <span style="color:var(--muted);">123-456 78 90</span></div>
+    <div class="row2">
+      <button class="btn-p" onclick="confirmSwish()">✅ Betala</button>
+      <button class="btn-s" onclick="document.getElementById('swishOv').classList.remove('open')">Avbryt</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ AI CHAT WIN ══ -->
+<div class="ai-win" id="aiWin">
+  <div class="ai-hdr">
+    <button class="ai-back" id="aiBack">←</button>
+    <div class="ai-ava-wrap">🤖</div>
+    <div><div style="font-size:15px;font-weight:700;">VIBE AI</div><div style="font-size:10px;color:var(--sage);">● Online</div></div>
+  </div>
+  <div class="ai-msgs" id="aiMsgs">
+    <div class="msg ai">Hej! 👋 Jag är VIBE AI. Fråga om tips, uppdrag, din pet – eller vad som helst!</div>
+  </div>
+  <div class="ai-inp-row">
+    <input class="ai-inp" id="aiInp" placeholder="Skriv ett meddelande…">
+    <button class="ai-snd" id="aiSnd">→</button>
+  </div>
+</div>
+
+<!-- ══ PETFOTO WIN ══ -->
+<div class="win" id="pfWin">
+  <div class="win-hdr">
+    <button class="win-back" onclick="document.getElementById('pfWin').classList.remove('open')">←</button>
+    <div class="win-title">✨ PETFOTO AI</div>
+    <div style="display:flex;gap:6px;">
+      <div style="background:var(--card2);border:1px solid var(--border);padding:4px 10px;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;color:var(--tx2);" onclick="showT('📷 Kamera snart!','ok')">📷</div>
+      <div style="background:var(--card2);border:1px solid var(--border);padding:4px 10px;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;color:var(--tx2);" onclick="showT('🔴 Live snart!','ok')">🔴</div>
+    </div>
+  </div>
+  <div class="win-scroll" id="pfScroll">
     <div class="pf-upload" id="pfUpload" onclick="pfTriggerUpload()">
-      <img id="pfPrevImg" class="pf-prev" style="display:none;">
+      <img id="pfPrev" class="pf-prev" style="display:none;">
       <div class="pf-ov" id="pfOv">
-        <div class="pf-ov-ico">📸</div>
-        <div class="pf-ov-lbl">Ladda upp bild</div>
-        <div style="font-size:10px;color:var(--mu);opacity:.7;">tryck för att välja</div>
+        <div style="font-size:36px;opacity:.6;">📸</div>
+        <div style="font-size:13px;font-weight:600;color:var(--tx2);">Ladda upp bild</div>
+        <div style="font-size:10px;color:var(--muted);">tryck för att välja</div>
       </div>
     </div>
+    <input type="file" id="pfFile" accept="image/*" style="display:none;" onchange="pfHandleFile(this)">
     <div id="pfChangeRow" style="display:none;padding:0 14px 4px;">
-      <button style="background:var(--l2);border:1px solid var(--b);border-radius:100px;padding:5px 14px;font-size:10px;font-weight:600;color:var(--mu);cursor:pointer;font-family:var(--ff);" onclick="pfTriggerUpload()">🖼️ Byt bild</button>
+      <button class="btn-sm" onclick="pfTriggerUpload()">🖼️ Byt bild</button>
     </div>
-    <input type="file" id="pfFileInput" accept="image/*" style="display:none;" onchange="pfHandleFile(this)">
-    <div class="pf-sec">VÄLJ STIL <a onclick="pfClearStyle()">Rensa</a></div>
+    <div style="padding:10px 14px 6px;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;justify-content:space-between;">VÄLJ STIL <a style="font-size:11px;color:var(--coral);cursor:pointer;text-transform:none;letter-spacing:0;font-weight:600;" onclick="pfClearStyle()">Rensa</a></div>
     <div class="pf-styles" id="pfStyleRow"></div>
-    <div class="pf-sec" style="margin-top:2px;">BESKRIV VAD DU VILL SE</div>
-    <div class="pf-prompt-wrap">
+    <div style="padding:8px 14px 6px;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);">BESKRIV VAD DU VILL SE</div>
+    <div class="pf-prompt-box">
       <div class="pf-prompt-lbl">Din prompt</div>
-      <textarea class="pf-prompt-ta" id="pfPromptTA" placeholder="Gör om mig med grön hatt och drakfärger…" rows="2"></textarea>
+      <textarea class="pf-ta" id="pfPrompt" placeholder="Gör om mig med grön hatt och drakfärger…" rows="2"></textarea>
       <div class="pf-chips" id="pfChips"></div>
     </div>
-    <div class="pf-sec" style="margin-top:2px;">PROVA DESSA</div>
+    <div style="padding:8px 14px 6px;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);">PROVA DESSA</div>
     <div class="pf-samples" id="pfSamples"></div>
-    <div class="pf-gen-wrap">
-      <button class="pf-gen" id="pfGenBtn" onclick="pfGenerate()">✨ Generera med AI</button>
+    <div style="padding:10px 14px 6px;">
+      <button class="btn-p" id="pfGenBtn" onclick="pfGenerate()" style="font-size:14px;padding:14px;border-radius:10px;">✨ Generera med AI</button>
     </div>
-    <div id="pfResult" style="display:none;">
-      <div class="pf-sec">RESULTAT</div>
+    <div id="pfResultWrap" style="display:none;">
+      <div style="padding:0 14px 6px;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);">RESULTAT</div>
       <div class="pf-result">
-        <div class="pfr-head">
-          <div class="pfr-badge"><div class="pfr-dot"></div><span id="pfResultStyle">AI-genererad</span></div>
-          <div class="pfr-time">just nu</div>
-        </div>
-        <div id="pfImgArea" class="pfr-placeholder"><div style="font-size:36px;">✨</div><div>Resultatet visas här</div></div>
-        <div class="pfr-desc" id="pfDescArea">–</div>
+        <div class="pfr-hd"><div class="pfr-badge"><div class="pfr-dot"></div><span id="pfResStyle">AI</span></div><div style="font-size:9px;color:var(--muted);font-family:var(--fm);">just nu</div></div>
+        <div id="pfImgArea" class="pfr-ph"><div style="font-size:36px;">✨</div><div>Resultatet visas här</div></div>
+        <div class="pfr-desc" id="pfDesc">–</div>
         <div class="pfr-acts">
           <button class="pfa" onclick="pfRegen()">🔄 Gör om</button>
           <button class="pfa" onclick="pfSave()">💾 Spara</button>
@@ -812,660 +975,405 @@ animation:of var(–d,30s) ease-in-out infinite var(–dl,0s);}
         </div>
       </div>
     </div>
-    <div class="pf-sec" id="pfHistSec" style="display:none;">SENASTE SKAPELSER</div>
-    <div class="pf-hist" id="pfHistRow"></div>
-    <div class="pf-vbot"></div>
-  </div>
-</div>
-<div class="pf-proc" id="pfProc">
-  <div class="pf-proc-ring-wrap">
-    <div class="pf-proc-ring"></div>
-    <div class="pf-proc-pet" id="pfProcPet">✨</div>
-  </div>
-  <div class="pf-proc-lbl" id="pfProcLbl">Analyserar bild…</div>
-  <div class="pf-proc-bar-wrap"><div class="pf-proc-bar" id="pfProcBar"></div></div>
-  <div class="pf-proc-step" id="pfProcStep">Skickar till AI</div>
-</div>
-<div class="pf-pub" id="pfPub">
-  <div class="pf-pub-e">🎉</div>
-  <div style="font-size:21px;font-weight:800;">Publicerat!</div>
-  <div style="font-size:13px;color:var(--mu);">Finns nu i PETFLO-flödet</div>
-  <button class="btn-p" style="margin-top:10px;width:auto;padding:11px 28px;" onclick="pfClosePub()">🔥 Se i flödet</button>
-</div>
-
-<!-- SWISH MODAL -->
-
-<div class="swish-modal" id="swishMod">
-  <div class="swish-sheet">
-    <div class="swish-logo">Swish</div>
-    <div class="swish-sub">Betalning via Swish</div>
-    <div class="swish-amount" id="swishAmt">50 SEK</div>
-    <div class="swish-from">Till: <strong>PETPET AB</strong> · <span style="color:var(--mu);">123-456 78 90</span></div>
-    <div class="row2">
-      <button class="btn-p" onclick="confirmSwish()">✅ Betala</button>
-      <button class="btn-s" onclick="closeSwish()">Avbryt</button>
-    </div>
+    <div id="pfHistSec" style="display:none;padding:8px 14px 6px;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);">SENASTE</div>
+    <div style="padding:0 14px;display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;padding-bottom:6px;" id="pfHist"></div>
+    <div style="height:20px;"></div>
   </div>
 </div>
 
-<!-- AI CHAT -->
+<!-- PROC -->
+<div class="proc-ov" id="procOv">
+  <div class="proc-ring-wrap"><div class="proc-ring"></div><div class="proc-pet" id="procPet">✨</div></div>
+  <div style="font-size:14px;font-weight:700;" id="procLbl">Analyserar…</div>
+  <div class="proc-bar-wrap"><div class="proc-bar" id="procBar"></div></div>
+  <div style="font-size:10px;color:var(--muted);font-family:var(--fm);" id="procStep">Skickar till AI</div>
+</div>
 
-<div class="ai-win" id="aiWin">
-  <div class="ai-head">
-    <button class="ai-bk" id="aiBack">←</button>
-    <div class="ai-ava">🤖</div>
-    <div>
-      <div style="font-size:15px;font-weight:700;">PetPal AI</div>
-      <div style="font-size:10px;color:var(--g);font-family:var(--fm);">● Online</div>
-    </div>
-  </div>
-  <div class="ai-msgs" id="aiMsgs">
-    <div class="msg ai">Hej! 👋 Jag är PetPal AI. Fråga mig om pet-tips, uppdrag, battle-strategi – eller vad som helst!</div>
-  </div>
-  <div class="ai-inp-row">
-    <input class="ai-inp" id="aiInp" placeholder="Skriv ett meddelande…">
-    <button class="ai-snd" id="aiSnd">➤</button>
+<!-- LVL SPLASH -->
+<div class="lvl-splash" id="lvlSplash">
+  <div class="lvl-cont">
+    <div style="font-size:72px;margin-bottom:10px;">🎉</div>
+    <div style="font-size:26px;font-weight:800;color:var(--amber);" id="lvlT">LEVEL UP!</div>
+    <div style="font-size:14px;color:var(--tx2);margin-top:6px;" id="lvlS">Grattis!</div>
   </div>
 </div>
 
 <!-- TOAST -->
-
 <div class="toast" id="toast"></div>
 
-<!-- LEVEL UP -->
-
-<div class="lvl-splash" id="lvlSplash">
-  <div class="lvl-cont">
-    <span class="lvl-e">🎉</span>
-    <div class="lvl-t" id="lvlT">LEVEL UP!</div>
-    <div class="lvl-s" id="lvlS">Grattis!</div>
-  </div>
-</div>
-
-<!-- EVOLUTION SPLASH -->
-
-<div class="evol-splash" id="evolSplash">
-  <div class="evol-cont">
-    <span style="font-size:100px;display:block;margin-bottom:12px;" id="evolE">🐉</span>
-    <div style="font-size:28px;font-weight:800;background:linear-gradient(135deg,#ffd60a,#ff453a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">EVOLUTION!</div>
-    <div id="evolDesc" style="font-size:15px;color:var(--mu);margin-top:8px;"></div>
-    <button class="btn-p" style="margin-top:20px;width:auto;padding:12px 32px;" onclick="closeSplash('evolSplash')">✨ Episkt!</button>
-  </div>
-</div>
-
 <script>
-// ══════════════════════════════════
+// ════════════════════════════════════════
 // STATE
-// ══════════════════════════════════
+// ════════════════════════════════════════
 const G = {
-  name:'Äventyrare', pet:'🐉', petName:'Eldraken',
+  name:'Äventyrare', petEmoji:'🐉', petColor:'', petName:'Eldraken',
   level:1, exp:0, coins:500, energy:100, streak:0,
   hunger:80, petEnergy:100, mood:90,
-  battlesWon:0, bountiesDone:0, postsCreated:0,
-  evolved: false, evolStage:0,
-  likedPosts: new Set(),
-  activities:[{dot:'g',t:'Välkommen till PETPET! 🎉',time:'just nu'}],
+  battlesWon:0, bountiesDone:0, postsCreated:0, evolved:false,
+  likedPosts:new Set(),
+  activities:[{dot:'coral',t:'Välkommen till VIBE! 🎉',time:'just nu'}],
 };
 
-const PET_NAMES = {
-  '🐉':'Eldraken','🐺':'Ulvjakten','🦊':'Räven','🐱':'Kattungen',
-  '🔥':'Eldsanden','🦋':'Fjärilen','⚡':'Blixten','🌊':'Havsdansen'
-};
+const PET_BODIES = ['🐉','🐺','🦊','🐱','🐸','🦋','🐻','🦁','🐯','🐨','🦄','🐼'];
+const PET_COLORS = ['#ff6b47','#f5a623','#7eb89a','#9b7fe8','#5b9bd5','#e8607a','#4ecdc4','#ffe66d'];
 
-const EVOLUTIONS = {
-  '🐉':['🐲','🔥🐲'],
-  '🐺':['🦴🐺','👑🐺'],
-  '🦊':['🔮🦊','✨🦊'],
-  '🐱':['👑🐱','🌟🐱'],
-  '🔥':['💫🔥','⭐🔥'],
-  '🦋':['🌈🦋','✨🦋'],
-  '⚡':['⚡💫','⚡🌟'],
-  '🌊':['🌊🌟','💎🌊'],
-};
-
-// ══ DATA ══
+// ── DATA ──
 const POSTS = [
-  {id:'p1',user:'Ella',ava:'👩‍🎤',pet:'🐉',lvl:7,txt:'Fire Wings köpta!! 🔥 Min drake flyger nu snabbare än någonsin. Värt varenda coin!',likes:47,t:'15 min'},
-  {id:'p2',user:'Max',ava:'🧑‍🚀',pet:'🐺',lvl:10,txt:'LEVEL 10!! 🎉 Min varg evolverade till en Silvervarg idag. 3 månader av slit – men OMG värt det!',likes:132,t:'1 tim'},
-  {id:'p3',user:'Clara',ava:'👩‍💻',pet:'🦊',lvl:6,txt:'Legendary skin hittad vid Drakberget!! ✨ Den lyste och allt. Någon annan sett den?',likes:89,t:'3 tim'},
-  {id:'p4',user:'Leo',ava:'🧑‍🎤',pet:'🐻',lvl:4,txt:'Klarade min första Brand Mission för Espresso House ☕ 50 SEK direkt till Swish. PETPET är för real fr fr',likes:55,t:'5 tim'},
-  {id:'p5',user:'Wendela',ava:'😂',pet:'🐱',lvl:3,txt:'Min katt hittade hemlig grotta vid Kristallsjön 🗺️ Spoiler: sällsynt skin inuti!! Gå dit ASAP',likes:201,t:'8 tim'},
-  {id:'p6',user:'Saga',ava:'🧝',pet:'🦋',lvl:5,txt:'Fairy Dust ability unlocked 🦋✨ Den vackraste förmågan i spelet imo. Level 12 och kronan är min',likes:103,t:'12 tim'},
+  {id:'p1',user:'Ella',ava:'👩‍🎤',pet:'🐉',lvl:7,txt:'Nya skor hittar på VIBEs marketplace! 150kr inkl frakt, storlek 38 💙 DM för köp',likes:47,t:'15 min'},
+  {id:'p2',user:'Max',ava:'🧑‍🚀',pet:'🐺',lvl:10,txt:'LEVEL 10!! Min varg evolverade 🎉 Alla uppdrag och utforskningar var värda det',likes:132,t:'1 tim'},
+  {id:'p3',user:'Clara',ava:'👩‍💻',pet:'🦊',lvl:6,txt:'Klarade Espresso House-uppdraget idag ☕ 50 SEK rakt in på Swish på 10 minuter lmao',likes:89,t:'3 tim'},
+  {id:'p4',user:'Leo',ava:'🧑‍🎤',pet:'🐻',lvl:4,txt:'Säljer min gamla Samsung på VIBE Market 🔥 Priset är lågt, kolla in!',likes:23,t:'5 tim'},
+  {id:'p5',user:'Saga',ava:'🧝',pet:'🦋',lvl:5,txt:'AI-kameran är absurt bra 🤯 La in mitt foto → fick tillbaka cyberpunk-version av mig. Ni MÅSTE testa',likes:201,t:'7 tim'},
 ];
 
 const STORIES = [
-  {n:'Din story',a:'📸',own:true,seen:false},
+  {n:'Din story',a:null,own:true,seen:false},
   {n:'Ella',a:'👩‍🎤',seen:false},
   {n:'Max',a:'🧑‍🚀',seen:true},
   {n:'Leo',a:'🧑‍🎤',seen:false},
   {n:'Clara',a:'👩‍💻',seen:false},
-  {n:'Wendela',a:'😂',seen:true},
   {n:'Saga',a:'🧝',seen:false},
 ];
 
 const CHATS = [
-  {n:'Stella 🥰',a:'🌟',prev:'Haha ja!! 😄',t:'15 min',streak:103,unread:true},
-  {n:'Mackan',a:'👨‍💻',prev:'Jobbar sent idag igen',t:'2 d',streak:0,unread:false},
-  {n:'Jack ❤️',a:'🐶',prev:'Vi ses imorgon! 🔥',t:'17 h',streak:0,unread:true},
-  {n:'Wendela',a:'😂',prev:'Hahaha bästa!!',t:'5 h',streak:143,unread:false},
+  {n:'Stella 🥰',a:'🌟',prev:'Haha ja!! 😄',t:'15 min',streak:103,unread:2,online:true},
+  {n:'Mackan',a:'👨‍💻',prev:'Jobbar sent idag',t:'2 d',streak:0,unread:0,online:false},
+  {n:'Jack ❤️',a:'🐶',prev:'Vi ses imorgon! 🔥',t:'17 h',streak:0,unread:1,online:true},
+  {n:'Wendela',a:'😂',prev:'Hahaha bästa!!',t:'5 h',streak:143,unread:0,online:false},
 ];
 
-const SHOP_SKINS = [
-  {id:'sk1',e:'🔥',n:'Fire Wings',p:199,pt:'coin',badge:'hot'},
-  {id:'sk2',e:'✨',n:'Legendary Glow',p:499,pt:'coin',badge:'leg'},
-  {id:'sk3',e:'👑',n:'Royal Crown',p:799,pt:'coin',badge:'pre'},
-  {id:'sk4',e:'🎨',n:'Custom Skin',p:299,pt:'coin',badge:'new'},
-  {id:'sk5',e:'🌪️',n:'Storm Aura',p:349,pt:'coin',badge:''},
-  {id:'sk6',e:'💎',n:'Diamond Armor',p:999,pt:'coin',badge:'leg'},
-];
 const SHOP_ITEMS = [
-  {id:'it1',e:'⚡',n:'XP Boost x2',p:99,pt:'coin',badge:''},
-  {id:'it2',e:'💊',n:'Health Potion',p:49,pt:'coin',badge:''},
-  {id:'it3',e:'🍖',n:'Pet Food',p:29,pt:'coin',badge:''},
-  {id:'it4',e:'⚗️',n:'Evolution Potion',p:999,pt:'coin',badge:'leg'},
-  {id:'it5',e:'🛡️',n:'Battle Shield',p:149,pt:'coin',badge:'new'},
-  {id:'it6',e:'🎯',n:'Aim Enhancer',p:199,pt:'coin',badge:''},
-];
-const SHOP_DEALS = [
-  {e:'🔥',n:'Fire Bundle',desc:'Fire Wings + Health Potion',p:199,orig:248,time:'2h 14m'},
-  {e:'⚡',n:'XP Mega Pack',desc:'5x XP Boost — levla snabbt!',p:349,orig:495,time:'5h 30m'},
-  {e:'🎪',n:'Starter Kit',desc:'Allt en ny spelare behöver',p:99,orig:180,time:'23h 59m'},
-];
-const CODES = [
-  {c:'WELCOME10',r:100,used:false},
-  {c:'DRAGON50',r:500,used:false},
-  {c:'PETPET25',r:250,used:false},
+  {id:'sh1',e:'👟',n:'Nike Air Max 270',seller:'Stadium',price:'1 299 kr',badge:'new',coins:null},
+  {id:'sh2',e:'🎧',n:'AirPods Pro 2',seller:'Elgiganten',price:'2 499 kr',badge:'hot',coins:null},
+  {id:'sh3',e:'🔥',n:'Fire Wings Skin',seller:'VIBE Store',price:null,badge:'',coins:199},
+  {id:'sh4',e:'👑',n:'Royal Crown Skin',seller:'VIBE Store',price:null,badge:'',coins:499},
+  {id:'sh5',e:'🎮',n:'Steam Gift Card 200',seller:'Webhallen',price:'209 kr',badge:'',coins:null},
+  {id:'sh6',e:'✨',n:'Legendary Glow',seller:'VIBE Store',price:null,badge:'',coins:799},
 ];
 
-const BRAND_BOUNTIES = [
-  {id:'bb1',brand:'☕ Espresso House',t:'📸 Fota dig med vår kopp',r:50,rt:'sek',desc:'Ta en bild på dig med en Espresso House-kopp och tagga oss!',tags:['brand','photo']},
-  {id:'bb2',brand:'👟 Stadium',t:'🎥 TikTok-video med nya skor',r:500,rt:'sek',desc:'Spela in 30 sek video med Stadiums nya kollektion',tags:['brand','video']},
-  {id:'bb3',brand:'🍕 Dominos',t:'📸 Betygsätt vår pizza',r:30,rt:'sek',desc:'Skriv en recension och fota din pizza',tags:['brand','photo']},
-  {id:'bb4',brand:'🎮 Embracer',t:'🎥 Spela 15 min av vårt spel',r:200,rt:'sek',desc:'Strömma eller spela in gameplay från Embracers senaste titel',tags:['brand','video']},
-  {id:'bb5',brand:'🏋️ Gymgrossisten',t:'📦 Testa vår nya protein',r:150,rt:'sek',desc:'Testa produkten och lämna video-recension. Behåll produkten!',tags:['brand','irl']},
+const SECOND_ITEMS = [
+  {id:'bl1',e:'📱',n:'iPhone 13 Pro 256GB',desc:'Bra skick, inga repor. Med skal.',price:'5 500 kr',loc:'Stockholm',img:null},
+  {id:'bl2',e:'🚲',n:'Trek Marlin 5 2022',desc:'Knappt använd, bytter sport.',price:'3 200 kr',loc:'Göteborg',img:null},
+  {id:'bl3',e:'💻',n:'MacBook Air M1',desc:'Perfekt skick, original laddare.',price:'8 900 kr',loc:'Malmö',img:null},
+  {id:'bl4',e:'👟',n:'Yeezy Boost 350 V2 sz42',desc:'Köpt för 2800, säljes billigt.',price:'1 400 kr',loc:'Uppsala',img:null},
 ];
-const COMMUNITY_BOUNTIES = [
-  {id:'cb1',brand:null,t:'📸 Fota något blått',r:100,rt:'coin',desc:'Hitta något ovanligt blått ute i världen och fota det!',tags:['photo']},
-  {id:'cb2',brand:null,t:'🏃 Gå 5 000 steg',r:150,rt:'coin',desc:'Visa screenshot från din stegräknare',tags:['irl']},
-  {id:'cb3',brand:null,t:'🌅 Fota en soluppgång',r:250,rt:'coin',desc:'Tidigt på morgonen – fota solen som stiger',tags:['photo']},
-  {id:'cb4',brand:null,t:'🌱 Ovanlig planta',r:175,rt:'coin',desc:'Hitta en planta du aldrig sett förut',tags:['photo','irl']},
-];
-let doneBounties = [];
 
-const OPPONENTS = [
-  {e:'🌲',n:'Skogsvätte',lv:1,hp:60,mhp:60,atk:10,r:50,pvp:false},
-  {e:'🔥',n:'Eldsprutare',lv:3,hp:100,mhp:100,atk:16,r:120,pvp:false},
-  {e:'❄️',n:'Isdemon',lv:5,hp:150,mhp:150,atk:22,r:220,pvp:false},
-  {e:'🐲',n:'Uradrake',lv:8,hp:260,mhp:260,atk:32,r:500,pvp:false},
-  {e:'🧑‍🚀',n:'Max (PvP)',lv:10,hp:200,mhp:200,atk:28,r:300,pvp:true},
-  {e:'👩‍🎤',n:'Ella (PvP)',lv:7,hp:180,mhp:180,atk:24,r:250,pvp:true},
+const BRAND_MISSIONS = [
+  {id:'bm1',brand:'☕ Espresso House',t:'Fota dig med vår kopp',r:50,rt:'sek',desc:'Ta en bild på dig med en Espresso House-kopp och tagga @espressohouse',tags:['brand','photo']},
+  {id:'bm2',brand:'👟 Stadium',t:'TikTok med nya skor',r:500,rt:'sek',desc:'Spela in 30 sek video med Stadiums nya kollektion',tags:['brand','video']},
+  {id:'bm3',brand:'🍕 Dominos',t:'Recensera vår pizza',r:30,rt:'sek',desc:'Skriv äkta recension och fota din pizza',tags:['brand','photo']},
+  {id:'bm4',brand:'🏋️ Gymgrossisten',t:'Testa vår protein',r:150,rt:'sek',desc:'Testa + video-recension. Behåll produkten! 🎁',tags:['brand','irl']},
 ];
+const COMMUNITY_MISSIONS = [
+  {id:'cm1',brand:null,t:'📸 Fota något ovanligt blått',r:100,rt:'coins',desc:'Hitta något ovanligt blått ute i världen',tags:['photo']},
+  {id:'cm2',brand:null,t:'🏃 Gå 5 000 steg',r:150,rt:'coins',desc:'Visa screenshot från stegräknaren',tags:['irl']},
+  {id:'cm3',brand:null,t:'🌅 Morgonsoluppgång',r:250,rt:'coins',desc:'Fota solen som stiger tidigt på morgonen',tags:['photo']},
+];
+let doneMissions = [];
 
 const MAP_FRIENDS = [
-  {a:'👩‍🎤',n:'Ella',loc:'MagiSkogen',d:'500m',online:true,x:30,y:35,c:'#39FF14'},
-  {a:'🧑‍🚀',n:'Max',loc:'Battle Arena',d:'1.2km',online:true,x:65,y:55,c:'#c77dff'},
-  {a:'👩‍💻',n:'Clara',loc:'Drakberget',d:'2km',online:false,x:78,y:22,c:'#00f5d4'},
-  {a:'🧑‍🎤',n:'Leo',loc:'MagiSkogen',d:'3.5km',online:true,x:42,y:72,c:'#ff9f0a'},
-  {a:'🧝',n:'Saga',loc:'Kristallsjön',d:'4.2km',online:false,x:18,y:60,c:'#ff453a'},
+  {a:'👩‍🎤',n:'Ella',loc:'Södermalm',d:'500m',online:true,x:30,y:35,c:'#ff6b47'},
+  {a:'🧑‍🚀',n:'Max',loc:'Vasastan',d:'1.2km',online:true,x:65,y:55,c:'#9b7fe8'},
+  {a:'👩‍💻',n:'Clara',loc:'Östermalm',d:'2km',online:false,x:76,y:22,c:'#7eb89a'},
+  {a:'🧑‍🎤',n:'Leo',loc:'Kungsholmen',d:'3.5km',online:true,x:42,y:72,c:'#f5a623'},
+];
+
+const UPGRADES = [
+  {e:'🔥',n:'Fire Breath',desc:'Dubbel skada i battle',cost:300,rt:'coins'},
+  {e:'🪽',n:'Vingar',desc:'Flyg till dolda platser',cost:500,rt:'coins'},
+  {e:'⚡',n:'Blixtnedslag',desc:'Instant-attack förmåga',cost:400,rt:'coins'},
+  {e:'🛡️',n:'Skölden',desc:'-50% skada i battle',cost:600,rt:'coins'},
+  {e:'🌟',n:'Stjärnhud',desc:'Legendary skin',cost:999,rt:'coins'},
+  {e:'🧬',n:'Evolution Potion',desc:'Hop till nästa form nu!',cost:1200,rt:'coins'},
 ];
 
 const BADGES_DATA = [
   {e:'🔥',l:'Streak 7d',check:()=>G.streak>=7},
-  {e:'⚔️',l:'Första seger',check:()=>G.battlesWon>=1},
-  {e:'🛍️',l:'Shopaholic',check:()=>false},
+  {e:'💰',l:'1000 coins',check:()=>G.coins>=1000},
+  {e:'📸',l:'Foto-fan',check:()=>G.postsCreated>=1},
+  {e:'🎯',l:'Mission x3',check:()=>G.bountiesDone>=3},
+  {e:'⚔️',l:'Krigar',check:()=>G.battlesWon>=1},
   {e:'🌍',l:'Utforskare',check:()=>false},
-  {e:'📸',l:'Fotografen',check:()=>G.postsCreated>=1},
-  {e:'🎯',l:'Bounty Hunter',check:()=>G.bountiesDone>=3},
-  {e:'💰',l:'Rik som kung',check:()=>G.coins>=1000},
-  {e:'🏆',l:'Legend',check:()=>G.level>=10},
-  {e:'✨',l:'Evolution',check:()=>G.evolved},
-  {e:'🐣',l:'Pet Tamer',check:()=>true},
-  {e:'🌟',l:'Populär',check:()=>false},
-  {e:'👑',l:'PETPET King',check:()=>G.level>=20},
+  {e:'✨',n:'Evolverat',check:()=>G.evolved},
+  {e:'👑',l:'Legend Lv10',check:()=>G.level>=10},
 ];
 
 const MENU_ITEMS = [
-  {v:'feed',l:'🔥 PETFLO'},
-  {v:'chat',l:'💬 PETCHAT'},
-  {v:'map',l:'🗺️ PETMAP'},
-  {v:'shop',l:'🛍️ PETSHOP'},
-  {v:'bounties',l:'🎯 PET BOUNTY'},
-  {v:'battle',l:'⚔️ Battle Arena'},
-  {v:'petcare',l:'🐣 PETCARE'},
-  {v:'profile',l:'👤 Pet Profile'},
+  {v:'feed',l:'🔥 Flöde'},
+  {v:'chat',l:'💬 Chatt'},
+  {v:'market',l:'🛍️ Marketplace'},
+  {v:'missions',l:'🎯 Missions'},
+  {v:'map',l:'🗺️ Karta'},
+  {v:'petcare',l:'🐣 Din pet'},
+  {v:'petfoto',l:'✨ PETFOTO AI'},
+  {v:'profile',l:'👤 Min profil'},
 ];
 
-// ══════════════════════════════════
-// HELPERS
-// ══════════════════════════════════
-const $ = id => document.getElementById(id);
-let toastT;
-function showT(m,t='ok'){const el=$('toast');el.textContent=m;el.className=`toast show ${t}`;clearTimeout(toastT);toastT=setTimeout(()=>{el.className='toast';},2800);}
-function pop(n,el,col='#ff9f0a'){const d=document.createElement('div');d.className='coinpop';d.textContent=`+${n}`;d.style.color=col;const r=el?el.getBoundingClientRect():{left:window.innerWidth/2,top:window.innerHeight/2};d.style.left=(r.left+r.width/2)+'px';d.style.top=r.top+'px';document.body.appendChild(d);setTimeout(()=>d.remove(),750);}
-function closeSplash(id){$(id).classList.remove('show');}
+const PF_STYLES = [
+  {id:'normal',n:'Normal',bg:'🌿',cls:'',sys:'Analysera och beskriv kreativt och detaljerat.'},
+  {id:'anime',n:'Anime',bg:'🌸',cls:'anime',sys:'Anime-stil, manga-estetik, stora expressiva ögon.'},
+  {id:'pixel',n:'Pixel Art',bg:'👾',cls:'pixel',sys:'Retro pixel art, 16-bitars, begränsad färgpalett.'},
+  {id:'brainrot',n:'Brainrot',bg:'🤪',cls:'brainrot',sys:'Absurd internet brainrot-stil, kaotisk energi.'},
+  {id:'glow',n:'Glow Up',bg:'✨',cls:'glow',sys:'Dramatisk glow up — maximalt glamorös.'},
+  {id:'cyber',n:'Cyberpunk',bg:'🤖',cls:'cyber',sys:'Neonbelyst cyberpunk, dystopisk framtid.'},
+  {id:'vhs',n:'VHS',bg:'📼',cls:'vhs',sys:'Nostalgisk VHS-effekt, scanlines, 90-tal.'},
+  {id:'dragon',n:'Draken',bg:'🐉',cls:'dragon',sys:'Episk fantasy med drakar och magisk glöd.'},
+];
+const PF_CHIPS = [{l:'🎩 Grön hatt',t:'Lägg till en stor grön hatt'},{l:'🐉 Drak',t:'Drakestetik med eld'},{l:'🌸 Anime',t:'Anime-stil'},{l:'✨ Glow',t:'Maximalt glamorös glow up'},{l:'🌌 Rymd',t:'Placera i ett rymdskepp'},{l:'😂 Brainrot',t:'Absurd brainrot-stil'}];
+const PF_SAMPLES = ['Gör om mig med grön hatt och glittrande ögon','Cyberpunk-version av mig i neon Tokyo','Vad ser AI:n i den här bilden?','Ge mig drakrustning och eldflammor','Anime-hjälte version','Beskriv stämningen i bilden'];
 
-function addAct(txt,dot='g'){G.activities.unshift({dot,t:txt,time:'just nu'});if(G.activities.length>30)G.activities.pop();}
+let pfSel=null, pfImg=null, pfHist=[], pfLast=null, pfBusy=false;
+
+// ════════════════════════════════════════
+// HELPERS
+// ════════════════════════════════════════
+const $=id=>document.getElementById(id);
+let toastT;
+function showT(m,t='ok'){const el=$('toast');el.textContent=m;el.className=`toast show ${t}`;clearTimeout(toastT);toastT=setTimeout(()=>{el.className='toast';},2700);}
+function pop(n,el,col='var(--amber)'){const d=document.createElement('div');d.className='coinpop';d.textContent=`+${n}`;d.style.color=col;const r=el?el.getBoundingClientRect():{left:innerWidth/2,top:innerHeight/2};d.style.left=(r.left+r.width/2)+'px';d.style.top=r.top+'px';document.body.appendChild(d);setTimeout(()=>d.remove(),750);}
+function addAct(t,dot='coral'){G.activities.unshift({dot,t,time:'just nu'});if(G.activities.length>30)G.activities.pop();}
+function gainCoins(n,el){G.coins+=n;updateHUD();if(el&&n>0)pop(n,el);}
+function gainXP(n){G.exp+=n;if(G.exp>=100){G.exp-=100;G.level++;$('lvlT').textContent=`LEVEL ${G.level}!`;$('lvlS').textContent=`Grattis ${G.name}! Level ${G.level} nådd 🎉`;$('lvlSplash').classList.add('show');setTimeout(()=>$('lvlSplash').classList.remove('show'),2800);}updateHUD();}
+function save(){localStorage.setItem('vb_n',G.name);localStorage.setItem('vb_p',G.petEmoji);localStorage.setItem('vb_pn',G.petName);localStorage.setItem('vb_l',G.level);localStorage.setItem('vb_c',G.coins);localStorage.setItem('vb_s',G.streak);localStorage.setItem('vb_x',G.exp);}
 
 function updateHUD(){
-  $('hLvl').textContent=G.level;
   $('hCoins').textContent=G.coins.toLocaleString();
   $('hStreak').textContent=G.streak;
   $('hEng').textContent=G.energy;
-  $('tpLvl').innerHTML=`${G.pet} Lv.<span class="v">${G.level}</span>`;
-  // status bar
-  $('sbHunger').textContent=G.hunger+'%';
-  $('sbHungerBar').style.width=G.hunger+'%';
-  $('sbEnergy').textContent=G.petEnergy+'%';
-  $('sbEnergyBar').style.width=G.petEnergy+'%';
-  $('sbMood').textContent=G.mood+'%';
-  $('sbMoodBar').style.width=G.mood+'%';
-  // profile
-  $('profEmo').textContent=G.pet;
-  $('profName').textContent=G.name;
-  $('profHandle').textContent=`@${G.name.toLowerCase().replace(/\s/g,'_')}`;
-  $('profBio').textContent=`${G.pet} Pet lover · Explorer · Level ${G.level} ✨`;
-  $('pnLvl').textContent=G.level;
-  $('pnPosts').textContent=POSTS.filter(p=>p.user==='Du').length;
-  $('xpFill').style.width=G.exp+'%';
-  $('xpVal').textContent=G.exp;
+  // pet bar
+  const pet=G.petEmoji+G.petColor;
+  $('pbFace').textContent=pet;
+  $('pbName').textContent=G.petName;
+  const ranks=['Common','Uncommon','Rare','Epic','Legendary'];
+  const rank=ranks[Math.min(4,Math.floor(G.level/5))];
+  $('pbRank').textContent=`Level ${G.level} · ${rank}`;
+  $('pbLevel').textContent=G.level;
+  $('pbHunger').style.width=G.hunger+'%';
+  $('pbEnergy').style.width=G.petEnergy+'%';
+  $('pbMood').style.width=G.mood+'%';
   // petcare
-  $('pcPet').textContent=G.pet;
+  $('pcPet').textContent=pet;
   $('pcName').textContent=G.petName;
-  const rank=['Common','Uncommon','Rare','Epic','Legendary'][Math.min(4,Math.floor(G.level/5))];
   $('pcRank').textContent=`Level ${G.level} · ${rank}`;
   $('pcsLvl').textContent=G.level;
   $('pcsBat').textContent=G.battlesWon;
   $('pcsCoins').textContent=G.coins.toLocaleString();
-  $('pcHn').textContent=G.hunger+'%'; $('pcHb').style.width=G.hunger+'%';
-  $('pcEn').textContent=G.petEnergy+'%'; $('pcEb').style.width=G.petEnergy+'%';
-  $('pcMn').textContent=G.mood+'%'; $('pcMb').style.width=G.mood+'%';
-  $('evolBanner').style.display=G.level>=10&&!G.evolved?'block':'none';
-  autoSave();
+  $('pcHn').textContent=G.hunger+'%';$('pcHb').style.width=G.hunger+'%';
+  $('pcEn').textContent=G.petEnergy+'%';$('pcEb').style.width=G.petEnergy+'%';
+  $('pcMn').textContent=G.mood+'%';$('pcMb').style.width=G.mood+'%';
+  // profile
+  $('profAva').textContent=pet;
+  $('profName').textContent=G.name;
+  $('profHandle').textContent=`@${G.name.toLowerCase().replace(/\s/g,'_')}`;
+  $('profBio').textContent=`🌟 VIBE · Level ${G.level} · ${G.petName}`;
+  $('pnLvl').textContent=G.level;
+  $('pnPosts').textContent=POSTS.filter(p=>p.user==='Du').length;
+  $('xpFill').style.width=G.exp+'%';
+  $('xpVal').textContent=G.exp;
+  $('upgradeNameLbl').textContent=G.petName;
+  save();
 }
 
-function gainCoins(n,el){G.coins+=n;updateHUD();if(el)pop(`${n}💰`,el);}
-function gainXP(n){
-  G.exp+=n;
-  if(G.exp>=100){G.exp-=100;G.level++;
-    $('lvlT').textContent=`LEVEL ${G.level}!`;
-    $('lvlS').textContent=`Grattis! Du är nu level ${G.level} 🎉`;
-    $('lvlSplash').classList.add('show');
-    setTimeout(()=>$('lvlSplash').classList.remove('show'),2800);
-  }
-  updateHUD();
+// ════════════════════════════════════════
+// ONBOARDING
+// ════════════════════════════════════════
+let obPetBody='🐉', obPetColor='';
+
+function obInitPetPicker(){
+  $('petBodyPicker').innerHTML=PET_BODIES.map(b=>`<div class="pb ${b===obPetBody?'sel':''}" data-b="${b}" onclick="obPickBody(this)">${b}</div>`).join('');
+  $('petColorRow').innerHTML=PET_COLORS.map(c=>`<div class="pc-dot ${c===obPetColor?'sel':''}" style="background:${c};" data-c="${c}" onclick="obPickColor(this)"></div>`).join('');
+}
+function obPickBody(el){document.querySelectorAll('.pb').forEach(x=>x.classList.remove('sel'));el.classList.add('sel');obPetBody=el.dataset.b;updateObPet();}
+function obPickColor(el){document.querySelectorAll('.pc-dot').forEach(x=>x.classList.remove('sel'));el.classList.add('sel');obPetColor=el.dataset.c;updateObPet();}
+function updateObPet(){$('obPetDisplay').textContent=obPetBody;$('obPetDisplay').style.filter=obPetColor?`drop-shadow(0 0 12px ${obPetColor})`:'none';}
+function obRandomizePet(){const b=PET_BODIES[Math.floor(Math.random()*PET_BODIES.length)];const c=PET_COLORS[Math.floor(Math.random()*PET_COLORS.length)];obPetBody=b;obPetColor=c;obInitPetPicker();updateObPet();}
+
+function obToggleInterest(el,key){el.classList.toggle('active');if(el.classList.contains('active')){el.style.borderColor='rgba(255,107,71,.4)';el.style.background='rgba(255,107,71,.06)';}else{el.style.borderColor='';el.style.background='';}}
+
+function obNext(step){
+  if(step===1){const n=$('obNameIn').value.trim();if(!n){showT('Skriv ditt namn först!','err');return;}G.name=n;obInitPetPicker();}
+  if(step===2){const pn=$('obPetNameIn').value.trim();if(!pn){showT('Ge din pet ett namn!','err');return;}G.petName=pn;G.petEmoji=obPetBody;G.petColor=obPetColor;}
+  for(let i=0;i<3;i++){const el=$(`obStep${i}`);if(el)el.style.display='none';}
+  for(let i=0;i<3;i++){const el=$(`dot${i}`);if(el)el.classList.remove('active');}
+  const target=$(`obStep${step}`);if(target)target.style.display='block';
+  const dot=$(`dot${step}`);if(dot)dot.classList.add('active');
 }
 
-// ══ PETCARE ══
-function carefeed(){
-  if(G.coins<10){showT('❌ Behöver 10 coins!','err');return;}
-  G.coins-=10; G.hunger=Math.min(100,G.hunger+30); G.mood=Math.min(100,G.mood+5);
-  petBounce(); addAct(`Matade ${G.pet}`,'o'); showT('🍖 Pet matad! +30 hunger'); updateHUD();
-}
-function careTrain(){
-  if(G.petEnergy<20){showT('❌ För lite energi!','err');return;}
-  G.petEnergy-=20; gainXP(15); petBounce(); addAct(`Tränade ${G.pet}`,'g'); showT('🏋️ Tränat! +15 XP');
-}
-function careSleep(){
-  G.petEnergy=Math.min(100,G.petEnergy+40); G.mood=Math.min(100,G.mood+10);
-  petBounce(); addAct(`${G.pet} sov och återhämtade sig`,'c'); showT('😴 +40 energi');updateHUD();
-}
-function carePlay(){
-  if(G.petEnergy<10){showT('❌ Inte nog energi!','err');return;}
-  G.petEnergy-=10; G.mood=Math.min(100,G.mood+25); gainCoins(5); gainXP(5);
-  petBounce(); addAct(`Lekte med ${G.pet}`,'p'); showT('🎮 Lek! +5💰 +5XP +25 humör');
-}
-function petPat(){petBounce();G.mood=Math.min(100,G.mood+5);showT(`${G.pet} gillar klappningar! 💕`);updateHUD();}
-function petBounce(){const el=$('pcPet');el.classList.remove('bounce');void el.offsetWidth;el.classList.add('bounce');setTimeout(()=>el.classList.remove('bounce'),400);}
-
-function evolve(){
-  if(G.level<10){showT('🔒 Level 10 krävs!','err');return;}
-  const stages=EVOLUTIONS[G.pet]||['✨'+G.pet,'🌟'+G.pet];
-  G.evolStage=Math.min(G.evolStage+1,stages.length-1);
-  const newEmo=stages[G.evolStage-1]||stages[0];
-  $('evolE').textContent=newEmo||G.pet;
-  $('evolDesc').textContent=`${G.petName} har evolverat till en kraftfullare form!`;
-  $('evolSplash').classList.add('show');
-  G.evolved=true; gainXP(50); gainCoins(200);
-  addAct(`${G.pet} evolverade! ✨`,'g');
-  showT('✨ EVOLUTION! +200💰 +50XP','gold');
-  updateHUD();
-}
-
-// ══ ONBOARDING ══
-let pickedPet='🐉';
-function pickP(el){document.querySelectorAll('.pp').forEach(p=>p.classList.remove('sel'));el.classList.add('sel');pickedPet=el.dataset.p;$('obEmo').textContent=pickedPet;}
 function finishOB(){
-  const n=$('obName').value.trim();
-  G.name=n||'Äventyrare'; G.pet=pickedPet;
-  G.petName=PET_NAMES[pickedPet]||'Din pet';
-  $('onboard').style.display='none';
-  $('app').style.display='flex';
-  localStorage.setItem('pp_name',G.name);
-  localStorage.setItem('pp_pet',G.pet);
-  updateHUD(); renderAll();
-  showT(`🎉 Välkommen, ${G.name}!`);
+  $('ob').style.display='none';$('app').style.display='flex';
+  localStorage.setItem('vb_n',G.name);
+  updateHUD();renderAll();showT(`🎉 Välkommen, ${G.name}!`,'gold');
 }
 
-// ══ STORIES ══
+// ════════════════════════════════════════
+// RENDER
+// ════════════════════════════════════════
 function renderStories(){
-  $('stories').innerHTML=STORIES.map(s=>`
-    <div class="story" onclick="clickStory('${s.n}',${!!s.own})">
+  $('storiesRow').innerHTML=STORIES.map(s=>`
+    <div class="story" onclick="${s.own?'document.getElementById(\'postMod\').classList.add(\'open\')':'viewStory(\''+s.n+'\')'}">
       <div class="s-ring ${s.seen&&!s.own?'seen':''}">
-        <div class="s-inner">${s.own?G.pet:s.a}</div>
+        <div class="s-inner">${s.own?G.petEmoji:(s.a||'👤')}</div>
       </div>
       <div class="s-nm">${s.own?'Din story':s.n}</div>
-    </div>
-  `).join('');
+    </div>`).join('');
 }
-function clickStory(n,own){
-  if(own){$('camOv').classList.add('open');return;}
-  const s=STORIES.find(x=>x.n===n);if(s)s.seen=true;
-  renderStories();showT(`👁️ ${n}s story`);
-}
+function viewStory(n){const s=STORIES.find(x=>x.n===n);if(s)s.seen=true;renderStories();showT(`👁️ ${n}s story`);}
 
-// ══ FEED ══
 function renderFeed(){
   $('view-feed').innerHTML=POSTS.map((p,i)=>`
-    <div class="flo-item" style="animation-delay:${i*.05}s">
-      <div class="flo-head">
-        <div class="flo-ava">${p.user==='Du'?G.pet:p.ava}</div>
-        <div>
-          <div class="flo-uname">${p.user==='Du'?G.name:p.user}</div>
-          <div class="flo-sub">${p.t} · ${p.pet} Lv.${p.lvl}</div>
-        </div>
-        <div class="flo-badge">${p.pet} Lv.${p.lvl}</div>
+    <div class="post" style="animation-delay:${i*.05}s">
+      <div class="post-head">
+        <div class="post-ava">${p.user==='Du'?G.petEmoji:p.ava}</div>
+        <div><div class="post-uname">${p.user==='Du'?G.name:p.user}</div><div class="post-meta">${p.t} · Lv.${p.lvl}</div></div>
+        <div class="post-pet-tag">${p.pet} ${p.lvl}</div>
       </div>
-      <div class="flo-txt">${p.txt}</div>
-      <div class="flo-acts">
-        <button class="fa ${G.likedPosts.has(p.id)?'liked':''}" onclick="like('${p.id}',this)">❤️ <span class="n" id="lc${p.id}">${p.likes}</span></button>
-        <button class="fa" onclick="sharePost('${p.id}')">📤 <span class="n">Dela</span></button>
-        <button class="fa" onclick="showT('💬 Kommentarer snart!')">💬 <span class="n">Svar</span></button>
-        <button class="fa" onclick="showT('🔖 Sparad!')">🔖</button>
+      <div class="post-txt">${p.txt}</div>
+      ${p.img?`<img src="${p.img}" class="post-img">`:''}
+      <div class="post-actions">
+        <button class="pa ${G.likedPosts.has(p.id)?'liked':''}" onclick="toggleLike('${p.id}',this)">❤️ <span class="n" id="lc${p.id}">${p.likes}</span></button>
+        <button class="pa" onclick="sharePost('${p.id}')">↗️ <span class="n">Dela</span></button>
+        <button class="pa" onclick="showT('💬 Kommentarer snart!')">💬 <span class="n">Svar</span></button>
       </div>
-    </div>
-  `).join('');
+    </div>`).join('');
 }
-function like(id,btn){
-  const p=POSTS.find(x=>x.id===id);
-  if(G.likedPosts.has(id)){G.likedPosts.delete(id);p.likes--;btn.classList.remove('liked');}
-  else{G.likedPosts.add(id);p.likes++;btn.classList.add('liked');showT('❤️ Gillat!');}
-  $(`lc${id}`).textContent=p.likes;
-}
-function sharePost(id){const p=POSTS.find(x=>x.id===id);if(navigator.share)navigator.share({title:'PETPET',text:p.txt});else{navigator.clipboard?.writeText(p.txt);showT('📋 Kopierat!');}}
+function toggleLike(id,btn){const p=POSTS.find(x=>x.id===id);if(G.likedPosts.has(id)){G.likedPosts.delete(id);p.likes--;btn.classList.remove('liked');}else{G.likedPosts.add(id);p.likes++;btn.classList.add('liked');showT('❤️ Gillat!');}$(`lc${id}`).textContent=p.likes;}
+function sharePost(id){const p=POSTS.find(x=>x.id===id);if(navigator.share)navigator.share({title:'VIBE',text:p.txt});else{navigator.clipboard?.writeText(p.txt);showT('📋 Kopierat!');}}
 
-// ══ CHAT ══
 function renderChat(){
   $('chatList').innerHTML=CHATS.map(c=>`
-    <div onclick="showT('💬 ${c.n} — snart!');this.querySelector('.ud')?.remove();" style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--b);cursor:pointer;">
-      <div style="width:38px;height:38px;border-radius:50%;background:var(--l3);display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;position:relative;">
-        ${c.a}${c.unread?`<div class="on-dot ud"></div>`:''}
+    <div class="chat-row" onclick="showT('💬 ${c.n} — snart!')">
+      <div class="chat-ava">${c.a}${c.online?'<div class="chat-online"></div>':''}</div>
+      <div class="chat-info"><div class="chat-name">${c.n}</div><div class="chat-prev">${c.prev}</div></div>
+      <div class="chat-right">
+        <div class="chat-time">${c.t}</div>
+        ${c.unread>0?`<div class="chat-badge">${c.unread}</div>`:''}
+        ${c.streak>0?`<div class="chat-streak">🔥${c.streak}</div>`:''}
       </div>
-      <div style="flex:1;min-width:0;">
-        <div style="font-size:13px;font-weight:700;">${c.n}</div>
-        <div style="font-size:11px;color:var(--mu);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${c.prev}</div>
-      </div>
-      <div style="text-align:right;flex-shrink:0;">
-        <div style="font-size:9px;color:var(--mu);font-family:var(--fm);">${c.t}</div>
-        ${c.streak>0?`<div style="font-size:9px;color:var(--r);font-weight:700;margin-top:3px;">🔥${c.streak}</div>`:''}
-      </div>
-    </div>
-  `).join('');
+    </div>`).join('');
 }
 
-// ══ MAP ══
-function renderMap(){
-  $('mapDots').innerHTML=MAP_FRIENDS.map(f=>`
-    <div class="map-pin" style="left:${f.x}%;top:${f.y}%;" onclick="showT('${f.a} ${f.n} · ${f.loc}')">
-      <div class="map-pin-dot" style="background:${f.c};"></div>
-      <div class="map-pin-lbl" style="color:${f.c};">${f.a} ${f.n}</div>
-    </div>
-  `).join('');
-  $('mapYouLbl').textContent=`${G.pet} ${G.name}`;
-  $('mapFriends').innerHTML=MAP_FRIENDS.map(f=>`
-    <div class="mf-row">
-      <div class="mf-ava">${f.a}${f.online?`<div class="on-dot"></div>`:''}</div>
-      <div style="flex:1;"><div class="mf-n">${f.n}</div><div class="mf-l">📍 ${f.loc}</div></div>
-      <div class="mf-d">${f.d}</div>
-    </div>
-  `).join('');
-}
-
-// ══ SHOP ══
-let shopTab='skins';
-function renderShop(items=null){
-  const content=$('shopContent');
-  if(shopTab==='skins'){
-    const list=items||SHOP_SKINS;
-    content.innerHTML=`<div class="prod-grid">${list.map(p=>`
-      <div class="prod" onclick="buyItem('${p.id}',this)">
-        ${p.badge?`<div class="prod-badge pb-${p.badge}">${{hot:'🔥 HET',leg:'👑 LEGEND',new:'🆕 NY',pre:'💎 PREMIUM'}[p.badge]||''}</div>`:''}
-        <div class="prod-e">${p.e}</div>
-        <div class="prod-n">${p.n}</div>
-        <div class="prod-p coin">${p.p} 💰</div>
-      </div>
-    `).join('')}</div>`;
-  } else if(shopTab==='items'){
-    const list=items||SHOP_ITEMS;
-    content.innerHTML=`<div class="prod-grid">${list.map(p=>`
-      <div class="prod" onclick="buyItem('${p.id}',this)">
-        ${p.badge?`<div class="prod-badge pb-${p.badge}">${{hot:'🔥',leg:'👑',new:'🆕',pre:'💎'}[p.badge]||''}</div>`:''}
-        <div class="prod-e">${p.e}</div>
-        <div class="prod-n">${p.n}</div>
-        <div class="prod-p coin">${p.p} 💰</div>
-      </div>
-    `).join('')}</div>`;
-  } else if(shopTab==='deals'){
-    content.innerHTML=SHOP_DEALS.map(d=>`
-      <div class="deal-card" onclick="showT('🔥 ${d.n} köpt! ⏳ Begränsat erbjudande')">
-        <div class="deal-e">${d.e}</div>
-        <div class="deal-info">
-          <div class="deal-n">${d.n}</div>
-          <div class="deal-d">${d.desc}</div>
-          <div style="margin-top:4px;font-size:11px;color:var(--mu);font-family:var(--fm);text-decoration:line-through;">${d.orig} 💰</div>
-        </div>
-        <div style="text-align:right;">
-          <div style="font-size:15px;font-weight:800;color:var(--g);font-family:var(--fm);">${d.p} 💰</div>
-          <div class="deal-timer">⏳${d.time}</div>
-        </div>
-      </div>
-    `).join('');
-  } else {
-    content.innerHTML=CODES.map(c=>`
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--b);">
-        <span style="font-family:var(--fm);font-size:12px;background:var(--l3);padding:4px 9px;border-radius:8px;">${c.c}</span>
-        <span style="font-size:11px;color:var(--mu);">+${c.r}💰</span>
-        <button class="do-btn" ${c.used?'disabled style="opacity:.4"':''} onclick="useCode('${c.c}',this)">${c.used?'ANVÄND':'ANVÄND'}</button>
-      </div>
-    `).join('');
+let mktTab='shop';
+function renderMarket(items){
+  const el=$('mktContent');
+  if(mktTab==='shop'){
+    el.innerHTML=`<div class="shop-grid">${(items||SHOP_ITEMS).map(p=>`
+      <div class="shop-item" onclick="buyShopItem('${p.id}',this)">
+        <div class="si-img">${p.e}${p.badge?`<div class="si-badge ${p.badge}">${p.badge==='new'?'NY':p.badge==='hot'?'🔥':p.badge}</div>`:''}</div>
+        <div class="si-info"><div class="si-name">${p.n}</div><div class="si-seller">${p.seller}</div><div class="si-price ${p.coins?'coins':''}">${p.coins?p.coins+' 💰':p.price}</div></div>
+      </div>`).join('')}</div>`;
+  }else if(mktTab==='second'){
+    el.innerHTML=(items||SECOND_ITEMS).map(p=>`
+      <div class="blocket-item" onclick="showT('📱 ${p.n} — kontakta säljare!')">
+        <div class="bl-img">${p.e}</div>
+        <div class="bl-info"><div class="bl-name">${p.n}</div><div class="bl-desc">${p.desc}</div><div class="bl-bot"><div class="bl-price">${p.price}</div><div class="bl-loc">📍${p.loc}</div></div></div>
+      </div>`).join('');
+  }else{
+    el.innerHTML=`<div style="display:grid;grid-template-columns:1fr;gap:8px;">${SHOP_ITEMS.filter(x=>x.badge).map(p=>`
+      <div class="card" style="display:flex;align-items:center;gap:12px;cursor:pointer;" onclick="buyShopItem('${p.id}',this)">
+        <div style="font-size:44px;">${p.e}</div>
+        <div style="flex:1;"><div style="font-size:14px;font-weight:700;">${p.n}</div><div style="font-size:11px;color:var(--tx2);margin-top:2px;">Begränsad tid!</div></div>
+        <div style="font-size:15px;font-weight:800;color:var(--coral);font-family:var(--fm);">${p.coins?p.coins+' 💰':p.price}</div>
+      </div>`).join('')}</div>`;
   }
 }
-function filterShop(q){
-  const all=[...SHOP_SKINS,...SHOP_ITEMS];
-  if(!q){renderShop();return;}
-  const f=all.filter(p=>p.n.toLowerCase().includes(q.toLowerCase()));
-  $('shopContent').innerHTML=`<div class="prod-grid">${f.map(p=>`<div class="prod" onclick="buyItem('${p.id}',this)"><div class="prod-e">${p.e}</div><div class="prod-n">${p.n}</div><div class="prod-p coin">${p.p} 💰</div></div>`).join('')}</div>`;
+function filterMarket(q){
+  if(!q){renderMarket();return;}
+  const all=[...SHOP_ITEMS,...SECOND_ITEMS];
+  renderMarket(all.filter(p=>p.n.toLowerCase().includes(q.toLowerCase())));
 }
-function buyItem(id,el){
-  const p=[...SHOP_SKINS,...SHOP_ITEMS].find(x=>x.id===id);if(!p)return;
-  if(G.coins<p.p){showT(`❌ Behöver ${p.p-G.coins} mer coins!`,'err');return;}
-  G.coins-=p.p;updateHUD();pop(`-${p.p}💰`,el,'#ff453a');showT(`✅ Köpte ${p.n}!`);addAct(`Köpte ${p.n} 🛍️`,'p');
+function buyShopItem(id,el){
+  const p=SHOP_ITEMS.find(x=>x.id===id);if(!p)return;
+  if(p.coins){if(G.coins<p.coins){showT(`❌ Behöver ${p.coins-G.coins} mer coins!`,'err');return;}G.coins-=p.coins;updateHUD();addAct(`Köpte ${p.n} 🛍️`,'coral');showT(`✅ ${p.n} köpt!`);}
+  else{showT(`🛍️ ${p.n} — öppnar betalning...`,'gold');}
 }
-function useCode(c,btn){const code=CODES.find(x=>x.c===c);if(!code||code.used)return;code.used=true;gainCoins(code.r,btn);showT(`🎟️ +${code.r} coins!`,'gold');renderShop();}
-document.querySelectorAll('.stab').forEach(t=>{
-  t.addEventListener('click',()=>{
-    document.querySelectorAll('.stab').forEach(x=>x.classList.remove('active'));
-    t.classList.add('active'); shopTab=t.dataset.tab; renderShop();
-  });
-});
+document.querySelectorAll('.mtab').forEach(t=>t.addEventListener('click',()=>{document.querySelectorAll('.mtab').forEach(x=>x.classList.remove('active'));t.classList.add('active');mktTab=t.dataset.mt;renderMarket();}));
 
-// ══ BOUNTIES ══
-let bTab='brands';
-function renderBounties(){
-  const list=bTab==='brands'?BRAND_BOUNTIES:bTab==='community'?COMMUNITY_BOUNTIES:doneBounties;
-  if(bTab==='mine'){
-    $('bountyContent').innerHTML=doneBounties.length?doneBounties.map(b=>`
-      <div class="bounty-card" style="border-color:rgba(57,255,20,.2);">
-        <div class="bc-top"><div class="bc-t">${b.t}</div><div class="bc-r" style="color:var(--g);">✅ Klar</div></div>
-      </div>
-    `).join(''):`<div style="color:var(--mu);text-align:center;padding:20px;font-size:13px;">Inga klara uppdrag än</div>`;
+let missionTab='brands';
+function renderMissions(){
+  const list=missionTab==='brands'?BRAND_MISSIONS:missionTab==='community'?COMMUNITY_MISSIONS:doneMissions;
+  if(missionTab==='mine'){
+    $('missionContent').innerHTML=doneMissions.length?doneMissions.map(m=>`<div class="mission-card" style="border-color:rgba(126,184,154,.3);"><div class="mc-head"><div class="mc-title">${m.t}</div><div class="mc-reward" style="color:var(--sage);">✅ Klar</div></div></div>`).join(''):`<div style="color:var(--muted);text-align:center;padding:20px;font-size:13px;">Inga genomförda missions än</div>`;
     return;
   }
-  $('bountyContent').innerHTML=list.map(b=>`
-    <div class="bounty-card">
-      ${b.brand?`<div class="bc-brand">${b.brand}</div>`:''}
-      <div class="bc-top">
-        <div class="bc-t">${b.t}</div>
-        <div class="bc-r ${b.rt}">${b.r} ${b.rt==='sek'?'SEK':'💰'}</div>
-      </div>
-      <div class="bc-desc">${b.desc}</div>
-      <div class="bc-tags">${b.tags.map(t=>`<div class="bc-tag ${t}">${{brand:'🏢 Brand',photo:'📸 Foto',video:'🎥 Video',irl:'📍 IRL'}[t]||t}</div>`).join('')}</div>
-      <div class="do-btn" onclick="${b.rt==='sek'?`openSwish(${b.r},'${b.id}')`:`doBounty('${b.id}',this)`}">
-        ${b.rt==='sek'?`💳 Swish ${b.r} SEK`:'🎯 Gör uppdraget'}
-      </div>
-    </div>
-  `).join('');
+  $('missionContent').innerHTML=list.map(m=>`
+    <div class="mission-card">
+      ${m.brand?`<div class="mc-brand">${m.brand}</div>`:''}
+      <div class="mc-head"><div class="mc-title">${m.t}</div><div class="mc-reward ${m.rt}">${m.r} ${m.rt==='sek'?'SEK':'💰'}</div></div>
+      <div class="mc-desc">${m.desc}</div>
+      <div class="mc-tags">${m.tags.map(t=>`<div class="mc-tag ${t}">${{brand:'🏢',photo:'📸 foto',video:'🎥 video',irl:'📍 irl'}[t]||t}</div>`).join('')}</div>
+      <div class="mc-do" onclick="${m.rt==='sek'?`openSwish(${m.r},'${m.id}')`:`doMission('${m.id}',this)`}">${m.rt==='sek'?`💳 Gör uppdrag · ${m.r} SEK`:'🎯 Gör mission'}</div>
+    </div>`).join('');
 }
-function doBounty(id,el){
-  const b=[...BRAND_BOUNTIES,...COMMUNITY_BOUNTIES].find(x=>x.id===id);if(!b)return;
-  const idx=COMMUNITY_BOUNTIES.indexOf(b);if(idx>-1)COMMUNITY_BOUNTIES.splice(idx,1);
-  doneBounties.push(b);G.bountiesDone++;gainCoins(b.r,el);gainXP(10);
-  addAct(`Klarade: ${b.t}`,'o');showT(`🎯 +${b.r}💰`);renderBounties();
+function doMission(id,el){
+  const m=[...BRAND_MISSIONS,...COMMUNITY_MISSIONS].find(x=>x.id===id);if(!m)return;
+  const idx=COMMUNITY_MISSIONS.indexOf(m);if(idx>-1)COMMUNITY_MISSIONS.splice(idx,1);
+  doneMissions.push(m);G.bountiesDone++;gainCoins(m.r,el);gainXP(10);
+  addAct(`Mission klar: ${m.t}`,'sage');showT(`🎯 +${m.r}💰`,'gold');renderMissions();
 }
-document.querySelectorAll('.btab').forEach(t=>{
-  t.addEventListener('click',()=>{
-    document.querySelectorAll('.btab').forEach(x=>x.classList.remove('active'));
-    t.classList.add('active');bTab=t.dataset.bt;renderBounties();
-  });
-});
+function createMission(){const t=prompt('Missions-titel:');if(!t)return;const r=parseInt(prompt('Belöning coins:')||'50');COMMUNITY_MISSIONS.push({id:'cm'+Date.now(),brand:null,t,r,rt:'coins',desc:'',tags:['photo']});renderMissions();showT('✅ Mission skapad!');}
+document.querySelectorAll('#missionTabs .mtab').forEach(t=>t.addEventListener('click',()=>{document.querySelectorAll('#missionTabs .mtab').forEach(x=>x.classList.remove('active'));t.classList.add('active');missionTab=t.dataset.bt;renderMissions();}));
 
-// ══ SWISH ══
-let pendingBounty=null;
-function openSwish(amt,id){
-  pendingBounty=id;$('swishAmt').textContent=`${amt} SEK`;$('swishMod').classList.add('open');
-}
-function closeSwish(){$('swishMod').classList.remove('open');pendingBounty=null;}
-function confirmSwish(){
-  $('swishMod').classList.remove('open');
-  const b=[...BRAND_BOUNTIES,...COMMUNITY_BOUNTIES].find(x=>x.id===pendingBounty);
-  if(b){doneBounties.push(b);G.bountiesDone++;gainXP(15);addAct(`Slutförde Brand Mission: ${b.t} 💳`,'p');}
-  showT('💳 Swish skickat! Väntar på verifiering…','gold');renderBounties();
+let swishPending=null;
+function openSwish(amt,id){swishPending=id;$('swishAmt').textContent=`${amt} SEK`;$('swishOv').classList.add('open');}
+function confirmSwish(){$('swishOv').classList.remove('open');const m=[...BRAND_MISSIONS].find(x=>x.id===swishPending);if(m){doneMissions.push(m);G.bountiesDone++;gainXP(15);addAct(`Brand Mission klar: ${m.t} 💳`,'violet');}showT('💳 Swish skickat! Väntar på verifiering...','gold');renderMissions();}
+
+function renderMap(){
+  $('mapDots').innerHTML=MAP_FRIENDS.map(f=>`<div class="map-pin" style="left:${f.x}%;top:${f.y}%;" onclick="showT('${f.a} ${f.n} · ${f.loc}')"><div class="map-pin-dot" style="background:${f.c};"></div><div class="map-pin-lbl" style="color:${f.c};">${f.a} ${f.n}</div></div>`).join('');
+  $('mapYouLbl').textContent=`${G.petEmoji} ${G.name}`;
+  $('mapFriends').innerHTML=MAP_FRIENDS.map(f=>`<div class="friend-row"><div class="fr-ava">${f.a}${f.online?'<div class="fr-online"></div>':''}</div><div style="flex:1;"><div style="font-size:13px;font-weight:600;">${f.n}</div><div style="font-size:11px;color:var(--tx2);">📍 ${f.loc}</div></div><div style="font-size:11px;font-family:var(--fm);color:var(--sky);">${f.d}</div></div>`).join('');
 }
 
-// ══ BATTLE ══
-function renderBattle(){
-  $('battlePicker').style.display='block';$('battleArena').style.display='none';
-  $('oppGrid').innerHTML=OPPONENTS.map(o=>`
-    <div class="opp-card ${o.pvp?'pvp':''}" onclick="startBattle('${o.n}')">
-      <div class="oc-e">${o.e}</div>
-      <div class="oc-n">${o.n}</div>
-      <div class="oc-l">Lv.${o.lv}</div>
-      <div class="oc-r">+${o.r}💰</div>
-      ${o.pvp?`<div class="oc-pvp">⚔️ PvP</div>`:''}
-    </div>
-  `).join('');
-}
-let battle=null;
-function startBattle(name){
-  const o=OPPONENTS.find(x=>x.n===name);if(!o)return;
-  battle={opp:{...o,hp:o.mhp},php:100,log:[]};
-  $('battlePicker').style.display='none';$('battleArena').style.display='block';updBattle();
-}
-function updBattle(){
-  if(!battle)return;
-  $('bHero').innerHTML=`
-    <div class="b-row">
-      <div class="bf"><div class="bf-e">${G.pet}</div><div class="bf-n">${G.name}</div>
-        <div class="hp-wrap"><div class="hp-fill mine" style="width:${battle.php}%"></div></div>
-        <div class="hp-n">❤️${battle.php}/100</div></div>
-      <div class="b-vs">VS</div>
-      <div class="bf"><div class="bf-e">${battle.opp.e}</div><div class="bf-n">${battle.opp.n}</div>
-        <div class="hp-wrap"><div class="hp-fill" style="width:${battle.opp.hp/battle.opp.mhp*100}%"></div></div>
-        <div class="hp-n">❤️${battle.opp.hp}/${battle.opp.mhp}</div></div>
-    </div>`;
-  $('bLog').innerHTML=battle.log.slice(0,6).map(l=>`<div class="ll">${l}</div>`).join('');
-  $('bLog').scrollTop=0;
-  $('bActs').innerHTML=`
-    <button class="btn-p" onclick="bAtk()">⚔️ Attackera</button>
-    <button class="btn-s" onclick="bHeal()">💊 Heala (20⚡)</button>
-    <button class="btn-s" onclick="bSpec()">✨ Special (30⚡)</button>
-    <button class="btn-s" onclick="renderBattle()">🏳️ Ge upp</button>`;
-}
-function bAtk(){if(!battle)return;const d=Math.floor(Math.random()*28)+12;battle.opp.hp=Math.max(0,battle.opp.hp-d);battle.log.unshift(`⚔️ Du slog ${d}!`);if(battle.opp.hp<=0){bWin();return;}const ed=Math.floor(Math.random()*battle.opp.atk)+5;battle.php=Math.max(0,battle.php-ed);battle.log.unshift(`💀 ${battle.opp.n} slog ${ed}!`);if(battle.php<=0){bLose();return;}updBattle();}
-function bHeal(){if(!battle)return;if(G.energy<20){showT('❌ Inte nog energi!','err');return;}G.energy-=20;battle.php=Math.min(100,battle.php+35);battle.log.unshift(`✅ Healade 35HP`);updateHUD();updBattle();}
-function bSpec(){if(!battle)return;if(G.energy<30){showT('❌ Inte nog energi!','err');return;}G.energy-=30;const d=Math.floor(Math.random()*50)+40;battle.opp.hp=Math.max(0,battle.opp.hp-d);battle.log.unshift(`✨ SPECIAL! ${d} massiv skada!`);if(battle.opp.hp<=0){bWin();return;}updateHUD();updBattle();}
-function bWin(){G.battlesWon++;gainCoins(battle.opp.r);gainXP(25);addAct(`Besegrade ${battle.opp.n} ⚔️`,'p');showT(`🏆 VINST! +${battle.opp.r}💰`,'gold');setTimeout(renderBattle,1600);}
-function bLose(){showT('💀 Du förlorade…','err');setTimeout(renderBattle,1500);}
+// PETCARE
+function petPat(){const el=$('pcPet');el.classList.remove('bounce');void el.offsetWidth;el.classList.add('bounce');G.mood=Math.min(100,G.mood+5);showT(`${G.petName} gillar klappningar! 💕`);updateHUD();}
+function pcFeed(){if(G.coins<10){showT('❌ Behöver 10 coins!','err');return;}G.coins-=10;G.hunger=Math.min(100,G.hunger+30);G.mood=Math.min(100,G.mood+5);petPat();addAct(`Matade ${G.petName}`,'amber');showT('🍖 Matad! +30 hunger');updateHUD();}
+function pcTrain(){if(G.petEnergy<20){showT('❌ För lite energi!','err');return;}G.petEnergy-=20;gainXP(15);petPat();addAct(`Tränade ${G.petName}`,'sage');showT('🏋️ +15 XP');}
+function pcSleep(){G.petEnergy=Math.min(100,G.petEnergy+40);G.mood=Math.min(100,G.mood+10);petPat();addAct(`${G.petName} sov`,'sky');showT('😴 +40 energi');updateHUD();}
+function pcPlay(){if(G.petEnergy<10){showT('❌ Inte nog energi!','err');return;}G.petEnergy-=10;G.mood=Math.min(100,G.mood+25);gainCoins(5);gainXP(5);petPat();addAct(`Lekte med ${G.petName}`,'violet');showT('🎮 +5💰 +5XP +25 humör');}
 
-// ══ PROFILE TABS ══
-document.querySelectorAll('.ptab').forEach(t=>{
-  t.addEventListener('click',()=>{
-    document.querySelectorAll('.ptab').forEach(x=>x.classList.remove('active'));
-    t.classList.add('active');
-    ['pet','badges','map','act'].forEach(n=>{const el=$(`ptab-${n}`);if(el)el.style.display='none';});
-    $(`ptab-${t.dataset.ptab}`).style.display='block';
-    if(t.dataset.ptab==='badges')renderBadges();
-    if(t.dataset.ptab==='act')renderAct();
-    if(t.dataset.ptab==='map')renderProfileMap();
-    if(t.dataset.ptab==='pet')renderPetTab();
-  });
-});
-function renderPetTab(){
-  $('ptab-pet').innerHTML=`
-    <div style="background:linear-gradient(135deg,rgba(57,255,20,.07),rgba(0,245,212,.05));border:1px solid rgba(57,255,20,.2);border-radius:16px;padding:14px;display:flex;gap:12px;align-items:center;">
-      <div style="font-size:56px;">${G.pet}</div>
-      <div style="flex:1;">
-        <div style="font-size:16px;font-weight:800;">${G.petName}</div>
-        <div style="font-size:11px;color:var(--g);font-weight:600;margin:3px 0 10px;">Level ${G.level} · ${['Common','Uncommon','Rare','Epic','Legendary'][Math.min(4,Math.floor(G.level/5))]}</div>
-        <div style="display:flex;flex-wrap:wrap;gap:5px;">
-          ${['🔥 Fire Breath','🪽 Flykt','⚡ Blixtnedslag'].map(a=>`<div style="font-size:11px;font-weight:600;padding:4px 10px;border-radius:100px;background:rgba(57,255,20,.1);border:1px solid rgba(57,255,20,.2);color:var(--g);">${a}</div>`).join('')}
-        </div>
-      </div>
-    </div>`;
+function openUpgrade(){
+  $('upgradeGrid').innerHTML=UPGRADES.map(u=>`
+    <div class="upgrade-item" onclick="buyUpgrade('${u.n}',${u.cost},this)">
+      <div class="ui-e">${u.e}</div>
+      <div class="ui-name">${u.n}</div>
+      <div class="ui-desc">${u.desc}</div>
+      <div class="ui-cost">${u.cost} 💰</div>
+    </div>`).join('');
+  $('upgradeMod').classList.add('open');
 }
-function renderBadges(){
-  $('ptab-badges').innerHTML=`<div class="card"><div class="badge-grid">${BADGES_DATA.map(b=>`
-    <div class="badge ${b.check()?'earned':''}" onclick="showT('${b.check()?'✅ '+b.l:'🔒 '+b.l}','${b.check()?'ok':'err'}')">
-      <div class="badge-e" style="${!b.check()?'filter:grayscale(1)opacity(.4)':''}">${b.e}</div>
-      <div class="badge-l">${b.l}</div>
-    </div>
-  `).join('')}</div></div>`;
-}
-function renderAct(){
-  $('ptab-act').innerHTML=`<div class="card">${G.activities.map(a=>`
-    <div class="act-item">
-      <div class="act-dot" style="background:${{'g':'var(--g)','p':'var(--p)','o':'var(--o)','c':'var(--c)','r':'var(--r)'}[a.dot]||'var(--mu)'}"></div>
-      <div class="act-t">${a.t}</div>
-      <div class="act-time">${a.time}</div>
-    </div>
-  `).join('')}</div>`;
-}
-function renderProfileMap(){
-  $('ptab-map').innerHTML=`<div class="card"><div class="ct">🗺️ Din aktivitetskarta</div>
-    <div style="background:var(--l2);border-radius:12px;height:150px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;font-size:12px;color:var(--mu);">
-      <div style="font-size:32px;">🗺️</div>
-      <div>Besök platser för att bygga din karta</div>
-      <div style="font-size:10px;">${G.activities.filter(a=>a.t.includes('Besökte')).length} platser registrerade</div>
-    </div>
-  </div>`;
+function buyUpgrade(name,cost,el){
+  if(G.coins<cost){showT(`❌ Behöver ${cost-G.coins} mer coins!`,'err');return;}
+  G.coins-=cost;gainXP(20);addAct(`Uppgraderade: ${name} ✨`,'violet');
+  showT(`✨ ${name} upplåst!`,'gold');pop(0,el);updateHUD();
 }
 
-// ══ CAM / POST ══
+// PROFILE TABS
+document.querySelectorAll('.prof-tab').forEach(t=>t.addEventListener('click',()=>{
+  document.querySelectorAll('.prof-tab').forEach(x=>x.classList.remove('active'));t.classList.add('active');
+  ['activity','badges','stats'].forEach(n=>{const el=$(`ptab-${n}`);if(el)el.style.display='none';});
+  $(`ptab-${t.dataset.ptab}`).style.display='block';
+  if(t.dataset.ptab==='badges')renderBadges();
+  if(t.dataset.ptab==='stats')renderStats();
+  if(t.dataset.ptab==='activity')renderActivity();
+}));
+function renderActivity(){$('ptab-activity').innerHTML=`<div class="card">${G.activities.map(a=>`<div class="act-item"><div class="act-dot" style="background:var(--${a.dot}||var(--coral))"></div><div class="act-t">${a.t}</div><div class="act-time">${a.time}</div></div>`).join('')}</div>`;}
+function renderBadges(){$('ptab-badges').innerHTML=`<div class="card"><div class="badge-grid">${BADGES_DATA.map(b=>`<div class="badge ${b.check()?'earned':''}" onclick="showT('${b.check()?'✅ '+b.l:'🔒 '+b.l}','${b.check()?'ok':'err'}')"><div class="badge-e" style="${!b.check()?'filter:grayscale(1)opacity(.4)':''}">${b.e}</div><div class="badge-l">${b.l}</div></div>`).join('')}</div></div>`;}
+function renderStats(){$('ptab-stats').innerHTML=`<div class="card"><div class="card-title">📊 Din statistik</div>${[['💰 Coins tjänade totalt',G.coins],['⭐ Längsta streak',G.streak],['🎯 Missions klara',G.bountiesDone],['📸 Inlägg publicerade',G.postsCreated],['⚔️ Battles vunna',G.battlesWon],['🐾 Pet-level',G.level]].map(([l,v])=>`<div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px;"><span style="color:var(--tx2);">${l}</span><span style="font-family:var(--fm);font-weight:700;">${v}</span></div>`).join('')}</div>`;}
+
+// POST
 let selImg=null;
-$('camBtn').addEventListener('click',()=>$('camOv').classList.add('open'));
-$('camX').addEventListener('click',()=>{$('camOv').classList.remove('open');selImg=null;$('camTxt').value='';$('camPrev').style.display='none';});
-function pickImg(){const i=document.createElement('input');i.type='file';i.accept='image/*';i.onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{selImg=ev.target.result;$('camPrev').src=selImg;$('camPrev').style.display='block';};r.readAsDataURL(f);};i.click();}
+$('camBtn').addEventListener('click',()=>$('postMod').classList.add('open'));
+$('postClose').addEventListener('click',()=>{$('postMod').classList.remove('open');selImg=null;$('postTxt').value='';$('postPrev').style.display='none';});
+function pickImg(){const i=document.createElement('input');i.type='file';i.accept='image/*';i.onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{selImg=ev.target.result;$('postPrev').src=selImg;$('postPrev').style.display='block';};r.readAsDataURL(f);};i.click();}
 function publishPost(){
-  const txt=$('camTxt').value.trim();if(!txt&&!selImg){showT('✏️ Skriv något!','err');return;}
-  POSTS.unshift({id:'u'+Date.now(),user:'Du',ava:G.pet,pet:G.pet,lvl:G.level,txt:txt||'🔥',likes:0,t:'just nu'});
-  G.postsCreated++;$('camOv').classList.remove('open');selImg=null;$('camTxt').value='';$('camPrev').style.display='none';
-  gainCoins(5);addAct('Publicerade ett inlägg 📸','g');renderFeed();switchView('feed');showT('✅ Publicerat! +5💰');
+  const txt=$('postTxt').value.trim();if(!txt&&!selImg){showT('✏️ Skriv något!','err');return;}
+  POSTS.unshift({id:'u'+Date.now(),user:'Du',ava:G.petEmoji,pet:G.petEmoji,lvl:G.level,txt:txt||'🌟',likes:0,t:'just nu',img:selImg});
+  G.postsCreated++;$('postMod').classList.remove('open');selImg=null;$('postTxt').value='';$('postPrev').style.display='none';
+  gainCoins(5);addAct('Publicerade ett inlägg 📸','coral');renderFeed();switchView('feed');showT('✅ Publicerat! +5💰','gold');
 }
+function shareProfile(){const txt=`🌟 ${G.name} på VIBE!\nLevel ${G.level} · ${G.streak} dagars streak\nLadda ner VIBE!`;if(navigator.share)navigator.share({title:'VIBE',text:txt});else{navigator.clipboard?.writeText(txt);showT('📋 Kopierat!');}}
 
-// ══ SHARE ══
-function shareProfile(){const txt=`${G.pet} ${G.name} — Level ${G.level} på PETPET!\n🔥 ${G.streak} dagars streak · 💰 ${G.coins} coins\nLadda ner PETPET!`;if(navigator.share)navigator.share({title:'PETPET',text:txt});else{navigator.clipboard?.writeText(txt);showT('📋 Kopierat!');}}
-
-// ══ AI CHAT ══
-$('aiOpen').addEventListener('click',()=>$('aiWin').classList.add('open'));
+// AI
+$('aiCardBtn').addEventListener('click',()=>$('aiWin').classList.add('open'));
 $('aiBack').addEventListener('click',()=>$('aiWin').classList.remove('open'));
 $('aiSnd').addEventListener('click',sendAI);
 $('aiInp').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendAI();}});
@@ -1474,277 +1382,102 @@ async function sendAI(){
   const m=$('aiInp').value.trim();if(!m)return;$('aiInp').value='';addMsg(m,'u');
   const ld=addMsg('✦ Tänker…','ai ld');
   try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
-      model:'claude-sonnet-4-20250514',max_tokens:1000,
-      system:`Du är PetPal AI i appen PETPET – "The Everything Platform". Appen har 7 världar: PETFLO (feed), PETCHAT, PETMAP, PETSHOP, PET BOUNTY (betalda uppdrag med Swish), PETCARE (mata/träna/levla sin pet) och PET PROFILE. Spelarens pet: ${G.pet} (${G.petName}), level ${G.level}, ${G.coins} coins, ${G.streak} dagars streak. Svara alltid på svenska, personligt och entusiastiskt, max 3 meningar, med relevanta emojis och konkreta tips.`,
-      messages:[{role:'user',content:m}]})});
-    const data=await res.json();
-    const txt=data.content?.map(c=>c.text||'').join('')||'Oj, något gick fel!';
-    ld.textContent=txt;ld.classList.remove('ld');
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:`Du är VIBE AI i appen VIBE (The Everything App). Appen kombinerar TikTok-feed, WhatsApp/Discord-chatt, Amazon+Blocket-marketplace, betalda brand missions med Swish, interaktiv karta, levande pet (${G.petEmoji} ${G.petName} level ${G.level}), och AI-kamera. Spelaren: ${G.name}, ${G.coins} coins, ${G.streak} dagars streak. Svara alltid på svenska, kortfattat och personligt med emojis, max 3 meningar.`,messages:[{role:'user',content:m}]})});
+    const data=await res.json();ld.textContent=data.content?.map(c=>c.text||'').join('')||'Oj!';ld.classList.remove('ld');
   }catch(e){ld.textContent='⚠️ Kunde inte nå AI just nu.';}
 }
 
-// ══ PETFOTO ══
-const PF_STYLES = [
-  {id:'normal', n:'Normal',   bg:'🌿', cls:'',       sys:'Analysera och beskriv bilden kreativt och detaljerat på svenska.'},
-  {id:'anime',  n:'Anime',    bg:'🌸', cls:'anime',  sys:'Föreställ dig denna bild i japansk anime-stil med stora ögon, vibranta färger och mangaestetik. Beskriv resultatet på svenska.'},
-  {id:'pixel',  n:'Pixel Art',bg:'👾', cls:'pixel',  sys:'Föreställ dig bilden i retro pixel art-stil, 16-bitars. Beskriv resultatet på svenska.'},
-  {id:'brainrot',n:'Brainrot',bg:'🤪', cls:'brainrot',sys:'Gör om bilden i absurd internet-brainrot-stil med overdramatisk belysning och kaotisk energi. Beskriv på svenska.'},
-  {id:'glow',   n:'Glow Up',  bg:'✨', cls:'glow',   sys:'En dramatisk "glow up" — maximalt glamorös, glittrande och estetisk. Beskriv på svenska.'},
-  {id:'clay',   n:'Clay',     bg:'🏺', cls:'clay',   sys:'Claymation-stil, stop-motion, mjuka texturer och pastellfärger. Beskriv på svenska.'},
-  {id:'cyber',  n:'Cyberpunk',bg:'🤖', cls:'cyber',  sys:'Neonbelyst cyberpunk-estetik, dystopisk framtid. Beskriv på svenska.'},
-  {id:'vhs',    n:'VHS Retro',bg:'📼', cls:'vhs',    sys:'Nostalgisk VHS-effekt med scanlines och 90-talskänsla. Beskriv på svenska.'},
-  {id:'dragon', n:'Draken 🐉',bg:'🐉', cls:'dragon', sys:'Episk fantasy-värld med drakar, eld och magisk glöd. Beskriv på svenska.'},
-];
+// PETFOTO
+function openPetfoto(){$('pfWin').classList.add('open');pfRenderStyles();pfRenderChips();pfRenderSamples();}
+function pfRenderStyles(){$('pfStyleRow').innerHTML=PF_STYLES.map(s=>`<div class="pf-sc ${pfSel===s.id?'sel':''}" onclick="pfPickStyle('${s.id}')"><div class="pf-sc-img"><div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:28px;">${s.bg}</div></div><div class="pf-sc-n">${s.n}</div></div>`).join('');}
+function pfPickStyle(id){pfSel=id;pfRenderStyles();showT(`✅ Stil: ${PF_STYLES.find(x=>x.id===id)?.n}`);}
+function pfClearStyle(){pfSel=null;pfRenderStyles();}
+function pfRenderChips(){$('pfChips').innerHTML=PF_CHIPS.map(c=>`<div class="pf-chip" onclick="pfAppend('${c.t.replace(/'/g,"\\'")}')"> ${c.l}</div>`).join('');}
+function pfAppend(t){const ta=$('pfPrompt');ta.value=(ta.value.trim()?ta.value.trim()+', ':'')+t;ta.focus();}
+function pfRenderSamples(){$('pfSamples').innerHTML=PF_SAMPLES.map(p=>`<div class="pf-sample" onclick="pfSetP('${p.replace(/'/g,"\\'")}')"><p>${p}</p></div>`).join('');}
+function pfSetP(t){$('pfPrompt').value=t;$('pfPrompt').focus();}
+function pfTriggerUpload(){$('pfFile').click();}
+function pfHandleFile(input){const f=input.files[0];if(!f)return;const r=new FileReader();r.onload=e=>{pfImg=e.target.result;$('pfPrev').src=pfImg;$('pfPrev').style.display='block';$('pfOv').style.display='none';$('pfUpload').classList.add('has');$('pfChangeRow').style.display='block';showT('✅ Bild uppladdad!');};r.readAsDataURL(f);}
 
-const PF_CHIPS = [
-  {l:'🎩 Grön hatt', t:'Lägg till en stor grön trollkarlshatt'},
-  {l:'🐉 Drak-stil', t:'Drakestetik med eld och fjäll'},
-  {l:'🌸 Anime',     t:'Konvertera till anime-stil'},
-  {l:'✨ Glow up',   t:'Maximalt glamorös glow up'},
-  {l:'🌌 Rymd',      t:'Placera i ett rymdskepp'},
-  {l:'🏰 Fantasy',   t:'Fantasy-miljö med slott och magi'},
-  {l:'😂 Brainrot',  t:'Absurd brainrot internet-meme stil'},
-];
+const PROC_STEPS=['Analyserar din bild…','Applicerar AI-magi…','Skapar din stil…','Polerar detaljer…','Nästan klart…'];
+let procInt=null,procStep=0;
+function showProc(){const s=PF_STYLES.find(x=>x.id===pfSel);$('procPet').textContent=s?s.bg:G.petEmoji;$('procLbl').textContent=s?`Applicerar ${s.n}…`:'AI analyserar…';$('procBar').style.width='0%';$('procOv').classList.add('show');procStep=0;procInt=setInterval(()=>{procStep++;$('procBar').style.width=Math.min(95,procStep*20)+'%';$('procStep').textContent=PROC_STEPS[Math.min(procStep-1,4)];if(procStep>=5)clearInterval(procInt);},550);}
+function hideProc(){clearInterval(procInt);$('procBar').style.width='100%';setTimeout(()=>$('procOv').classList.remove('show'),380);}
+function pfGetFilter(id){return{anime:'saturate(1.8)contrast(1.1)',pixel:'contrast(1.4)saturate(1.5)',brainrot:'saturate(2)hue-rotate(20deg)',glow:'brightness(1.15)saturate(1.6)',clay:'saturate(.8)',cyber:'hue-rotate(180deg)saturate(2)',vhs:'grayscale(.4)sepia(.3)',dragon:'saturate(1.4)hue-rotate(-10deg)'}[id]||'none';}
 
-const PF_SAMPLES = [
-  'Gör om mig med grön hatt och glittrande ögon',
-  'Sätt mig i en rymdfarkost med draken som pilot',
-  'Cyberpunk-version av mig i neon Tokyo',
-  'Vad ser AI:n i den här bilden?',
-  'Ge mig drakrustning och eldsflammor',
-  'Fota om mig som anime-hjälte',
-  'Gör bakgrunden till ett magiskt slott',
-  'Beskriv stämningen i bilden',
-];
-
-let pfSelStyle = null;
-let pfUploadedImg = null;
-let pfHistory = [];
-let pfLastResult = null;
-let pfGenerating = false;
-
-function openPetfoto() { $('petfotoWin').classList.add('open'); pfRenderStyles(); pfRenderChips(); pfRenderSamples(); }
-function closePetfoto() { $('petfotoWin').classList.remove('open'); }
-
-function pfRenderStyles() {
-  $('pfStyleRow').innerHTML = PF_STYLES.map(s => `
-    <div class="pf-scard ${pfSelStyle===s.id?'sel':''}" onclick="pfSelectStyle('${s.id}')">
-      <div class="pf-scard-img"><div class="sc-bg ${s.cls}">${s.bg}</div></div>
-      <div class="pf-scard-n">${s.n}</div>
-    </div>
-  `).join('');
+async function pfGenerate(){
+  if(pfBusy)return;const prompt=$('pfPrompt').value.trim();const style=PF_STYLES.find(x=>x.id===pfSel);
+  if(!pfImg&&!prompt){showT('📸 Ladda upp bild eller skriv prompt!','err');return;}
+  pfBusy=true;const btn=$('pfGenBtn');btn.disabled=true;btn.textContent='✨ Genererar…';showProc();
+  try{
+    const sys=`Du är PETFOTO AI i appen VIBE. ${style?style.sys:'Analysera och beskriv kreativt.'} ${prompt?`Följ prompten: "${prompt}".`:''} Svara på svenska, kreativt och ungdomligt med emojis. Max 100 ord. Format: 1) Bildbeskriving 2) Stil-transformation 3) Uppmuntran`;
+    const msgs=pfImg?[{role:'user',content:[{type:'image',source:{type:'base64',media_type:pfImg.split(';')[0].split(':')[1],data:pfImg.split(',')[1]}},{type:'text',text:prompt||'Analysera kreativt!'}]}]:[{role:'user',content:prompt}];
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:sys,messages:msgs})});
+    const data=await res.json();const txt=data.content?.map(c=>c.text||'').join('')||'Något gick fel!';
+    hideProc();pfLast={txt,style,img:pfImg};
+    $('pfResStyle').textContent=style?style.n:'AI-analys';
+    $('pfImgArea').innerHTML=pfImg?`<img src="${pfImg}" class="pfr-img" style="filter:${pfGetFilter(style?.id)}">`:`<div class="pfr-ph"><div style="font-size:36px;">${style?.bg||'✨'}</div></div>`;
+    $('pfDesc').innerHTML=txt.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');
+    $('pfResultWrap').style.display='block';
+    pfHist.unshift({...pfLast,id:Date.now()});if(pfHist.length>8)pfHist.pop();pfRenderHist();
+    gainCoins(3);gainXP(5);addAct('Skapade AI-foto ✨','coral');
+    setTimeout(()=>$('pfResultWrap').scrollIntoView({behavior:'smooth',block:'start'}),200);
+    showT('🎉 AI-generation klar!','gold');
+  }catch(e){hideProc();showT('⚠️ Kunde inte nå AI!','err');}
+  finally{pfBusy=false;btn.disabled=false;btn.textContent='✨ Generera med AI';}
 }
-function pfSelectStyle(id) {
-  pfSelStyle = id;
-  pfRenderStyles();
-  showT(`✅ Stil: ${PF_STYLES.find(x=>x.id===id)?.n}`, 'ok');
+function pfRenderHist(){
+  const sec=$('pfHistSec'),row=$('pfHist');
+  if(!pfHist.length){sec.style.display='none';return;}
+  sec.style.display='flex';
+  row.innerHTML=pfHist.map((h,i)=>`<div style="flex-shrink:0;width:52px;height:52px;border-radius:10px;background:var(--card2);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;overflow:hidden;position:relative;" onclick="pfLoadH(${i})">${h.img?`<img src="${h.img}" style="width:100%;height:100%;object-fit:cover;filter:${pfGetFilter(h.style?.id)}">`:`<div style="font-size:20px;">${h.style?.bg||'✨'}</div>`}${i===0?`<div style="position:absolute;bottom:0;right:0;background:var(--coral);color:#fff;font-size:7px;font-weight:800;padding:1px 4px;border-radius:4px;">NY</div>`:''}</div>`).join('')+`<div style="flex-shrink:0;width:52px;height:52px;border-radius:10px;background:var(--card2);border:1.5px dashed rgba(255,107,71,.4);display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;" onclick="pfTriggerUpload()">➕</div>`;
 }
-function pfClearStyle() { pfSelStyle = null; pfRenderStyles(); }
-
-function pfRenderChips() {
-  $('pfChips').innerHTML = PF_CHIPS.map(c =>
-    `<div class="pf-chip" onclick="pfAppendPrompt('${c.t.replace(/'/g,"\\'")}')">${c.l}</div>`
-  ).join('');
-}
-function pfAppendPrompt(t) {
-  const ta = $('pfPromptTA');
-  ta.value = (ta.value.trim() ? ta.value.trim() + ', ' : '') + t;
-  ta.focus();
+function pfLoadH(i){const h=pfHist[i];if(h){$('pfDesc').innerHTML=h.txt.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');$('pfResStyle').textContent=h.style?.n||'AI';$('pfImgArea').innerHTML=h.img?`<img src="${h.img}" class="pfr-img" style="filter:${pfGetFilter(h.style?.id)}">`:`<div class="pfr-ph"><div>${h.style?.bg||'✨'}</div></div>`;$('pfResultWrap').style.display='block';}}
+function pfRegen(){if(pfImg||$('pfPrompt').value.trim())pfGenerate();else showT('✏️ Lägg till bild/prompt!','err');}
+function pfSave(){if(!pfLast)return;if(pfLast.img){const a=document.createElement('a');a.href=pfLast.img;a.download=`vibe_${Date.now()}.jpg`;a.click();showT('💾 Sparad!');}else{navigator.clipboard?.writeText(pfLast.txt);showT('📋 Kopierat!');}}
+function pfPublish(){
+  if(!pfLast)return;
+  const txt=$('pfPrompt').value.trim()||`AI-foto · ${pfLast.style?.n||'PETFOTO'} ✨`;
+  POSTS.unshift({id:'pf'+Date.now(),user:'Du',ava:G.petEmoji,pet:G.petEmoji,lvl:G.level,txt,likes:0,t:'just nu',img:pfLast.img});
+  G.postsCreated++;$('pfWin').classList.remove('open');
+  gainCoins(5);addAct('Publicerade AI-foto 📸','coral');renderFeed();switchView('feed');showT('✅ Publicerat i flödet!','gold');
 }
 
-function pfRenderSamples() {
-  $('pfSamples').innerHTML = PF_SAMPLES.map(p =>
-    `<div class="pf-sample" onclick="pfSetPrompt('${p.replace(/'/g,"\\'")}')"><p>${p}</p></div>`
-  ).join('');
-}
-function pfSetPrompt(t) { $('pfPromptTA').value = t; $('pfPromptTA').focus(); }
-
-function pfTriggerUpload() { $('pfFileInput').click(); }
-function pfHandleFile(input) {
-  const f = input.files[0]; if (!f) return;
-  const r = new FileReader();
-  r.onload = e => {
-    pfUploadedImg = e.target.result;
-    $('pfPrevImg').src = pfUploadedImg; $('pfPrevImg').style.display = 'block';
-    $('pfOv').style.display = 'none';
-    $('pfUpload').classList.add('has-img');
-    $('pfChangeRow').style.display = 'block';
-    showT('✅ Bild uppladdad!', 'ok');
-  };
-  r.readAsDataURL(f);
-}
-
-const PF_PROC_STEPS = ['Analyserar din bild…','Applicerar AI-magi…','Skapar din stil…','Polerar detaljer…','Nästan klart…'];
-let pfProcInt = null, pfProcStep = 0;
-
-function pfShowProc() {
-  const s = PF_STYLES.find(x => x.id === pfSelStyle);
-  $('pfProcPet').textContent = s ? s.bg : G.pet;
-  $('pfProcLbl').textContent = s ? `Applicerar ${s.n}…` : 'AI analyserar…';
-  $('pfProcBar').style.width = '0%';
-  $('pfProc').classList.add('show');
-  pfProcStep = 0;
-  pfProcInt = setInterval(() => {
-    pfProcStep++;
-    $('pfProcBar').style.width = Math.min(95, pfProcStep * 20) + '%';
-    $('pfProcStep').textContent = PF_PROC_STEPS[Math.min(pfProcStep-1, 4)];
-    if (pfProcStep >= 5) clearInterval(pfProcInt);
-  }, 550);
-}
-function pfHideProc() {
-  clearInterval(pfProcInt);
-  $('pfProcBar').style.width = '100%';
-  setTimeout(() => $('pfProc').classList.remove('show'), 380);
-}
-
-function pfGetFilter(id) {
-  return {anime:'saturate(1.8)contrast(1.1)',pixel:'contrast(1.4)saturate(1.5)',brainrot:'saturate(2)hue-rotate(20deg)',glow:'brightness(1.2)saturate(1.6)',clay:'saturate(.8)contrast(.9)',cyber:'hue-rotate(180deg)saturate(2)',vhs:'grayscale(.4)contrast(1.2)sepia(.3)',dragon:'saturate(1.4)hue-rotate(-10deg)'}[id] || 'none';
-}
-
-async function pfGenerate() {
-  if (pfGenerating) return;
-  const prompt = $('pfPromptTA').value.trim();
-  const style = PF_STYLES.find(x => x.id === pfSelStyle);
-  if (!pfUploadedImg && !prompt) { showT('📸 Ladda upp bild eller skriv prompt!', 'err'); return; }
-  pfGenerating = true;
-  const btn = $('pfGenBtn');
-  btn.disabled = true; btn.classList.add('loading'); btn.textContent = '✨ Genererar…';
-  pfShowProc();
-  try {
-    const sys = `Du är PETFOTO AI i appen PETPET — en kreativ bildanalysator och berättare för ungdomar. ${style ? style.sys : 'Analysera och beskriv kreativt.'} ${prompt ? `Följ promoten: "${prompt}". ` : ''} Svara på svenska, kreativt, ungdomligt och engagerande med emojis. Max 100 ord. Format: 1) Bildbeskriving 2) Stil-transformation 3) Uppmuntran`;
-    const msgs = pfUploadedImg ? [{role:'user',content:[{type:'image',source:{type:'base64',media_type:pfUploadedImg.split(';')[0].split(':')[1],data:pfUploadedImg.split(',')[1]}},{type:'text',text:prompt||'Analysera kreativt!'}]}] : [{role:'user',content:prompt}];
-    const res = await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:sys,messages:msgs})});
-    const data = await res.json();
-    const txt = data.content?.map(c=>c.text||'').join('')||'Något gick fel!';
-    pfHideProc();
-    pfShowResult(txt, style);
-  } catch(e) {
-    pfHideProc();
-    showT('⚠️ Kunde inte nå AI!', 'err');
-  } finally {
-    pfGenerating = false;
-    btn.disabled = false; btn.classList.remove('loading'); btn.textContent = '✨ Generera med AI';
-  }
-}
-
-function pfShowResult(txt, style) {
-  pfLastResult = {txt, style, img: pfUploadedImg, time: new Date()};
-  $('pfResultStyle').textContent = style ? style.n : 'AI-analys';
-  $('pfImgArea').innerHTML = pfUploadedImg
-    ? `<img src="${pfUploadedImg}" class="pfr-img" style="filter:${pfGetFilter(style?.id)}">`
-    : `<div class="pfr-placeholder"><div style="font-size:36px;">${style?.bg||'✨'}</div><div style="font-size:12px;color:var(--mu);">Textbaserad</div></div>`;
-  $('pfDescArea').innerHTML = txt.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');
-  $('pfResult').style.display = 'block';
-  pfAddHistory();
-  setTimeout(() => { $('pfResult').scrollIntoView({behavior:'smooth',block:'start'}); }, 200);
-  showT('🎉 AI-generation klar!', 'gold');
-  // give coins + xp
-  gainCoins(3); gainXP(5); addAct(`Skapade AI-foto med PETFOTO ✨`,'g');
-}
-
-function pfAddHistory() {
-  if (!pfLastResult) return;
-  pfHistory.unshift({...pfLastResult, id:Date.now()});
-  if (pfHistory.length > 10) pfHistory.pop();
-  pfRenderHistory();
-}
-function pfRenderHistory() {
-  const sec = $('pfHistSec'), row = $('pfHistRow');
-  if (!pfHistory.length) { sec.style.display='none'; return; }
-  sec.style.display = 'flex';
-  row.innerHTML = pfHistory.map((h,i) => `
-    <div class="pf-hi" onclick="pfLoadHistory(${i})">
-      ${h.img ? `<img src="${h.img}" style="filter:${pfGetFilter(h.style?.id)}">` : `<div style="font-size:20px;">${h.style?.bg||'✨'}</div>`}
-      ${i===0?`<div class="pf-hi-badge">NY</div>`:''}
-    </div>
-  `).join('') + `<div class="pf-hi add" onclick="pfTriggerUpload()"><div>➕</div></div>`;
-}
-function pfLoadHistory(i) { const h=pfHistory[i]; if(h){pfShowResult(h.txt,h.style);} }
-
-function pfRegen() { if(pfUploadedImg||$('pfPromptTA').value.trim()) pfGenerate(); else showT('✏️ Lägg till bild/prompt!','err'); }
-function pfSave() {
-  if (!pfLastResult) return;
-  if (pfLastResult.img) { const a=document.createElement('a');a.href=pfLastResult.img;a.download=`petfoto_${Date.now()}.jpg`;a.click();showT('💾 Sparad!','ok'); }
-  else { navigator.clipboard?.writeText(pfLastResult.txt); showT('📋 Text kopierad!','ok'); }
-}
-function pfPublish() {
-  if (!pfLastResult) return;
-  // Add to feed
-  const txt = $('pfPromptTA').value.trim() || (pfLastResult.style ? `AI-stil: ${pfLastResult.style.n} ✨` : '✨ PETFOTO creation');
-  POSTS.unshift({id:'pf'+Date.now(),user:'Du',ava:G.pet,pet:G.pet,lvl:G.level,txt,likes:0,t:'just nu',pfImg:pfLastResult.img,pfStyle:pfLastResult.style?.n});
-  G.postsCreated++;
-  $('pfPub').classList.add('show');
-}
-function pfClosePub() { $('pfPub').classList.remove('show'); closePetfoto(); switchView('feed'); showT('🔥 Publicerat i PETFLO!','gold'); }
-
-// Override camBtn to open cam overlay (which has PETFOTO shortcut)
-$('camBtn').addEventListener('click', () => $('camOv').classList.add('open'));
-$('camX').addEventListener('click', () => { $('camOv').classList.remove('open'); selImg=null; $('camTxt').value=''; $('camPrev').style.display='none'; });
-
-// Also add petfoto to menu
-MENU_ITEMS.push({v:'petfoto',l:'✨ PETFOTO AI'});
-// petfoto switchView hook
-const _origSwitch = switchView;
-window.switchView = function(name) {
-  if (name === 'petfoto') { openPetfoto(); return; }
-  _origSwitch(name);
-};
-
-// ══ VIEW SWITCH ══
+// ── NAVIGATION ──
 function switchView(name){
+  if(name==='petfoto'){openPetfoto();return;}
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
   document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
   const v=$(`view-${name}`);if(v)v.classList.add('active');
   const b=document.querySelector(`.nb[data-v="${name}"]`);if(b)b.classList.add('active');
-  const renders={feed:renderFeed,chat:renderChat,map:renderMap,shop:()=>renderShop(),bounties:renderBounties,battle:renderBattle,petcare:updateHUD,profile:()=>{updateHUD();renderPetTab();}};
-  if(renders[name])renders[name]();
+  const r={feed:renderFeed,chat:()=>{renderChat();},market:()=>renderMarket(),missions:renderMissions,map:renderMap,petcare:updateHUD,profile:()=>{updateHUD();renderActivity();}};
+  if(r[name])r[name]();
 }
 document.querySelectorAll('.nb[data-v]').forEach(b=>b.addEventListener('click',()=>switchView(b.dataset.v)));
 
-// ══ MENU ══
-$('menuBtn').addEventListener('click',()=>$('menuOv').classList.add('open'));
-$('menuOv').addEventListener('click',e=>{if(e.target===$('menuOv'))$('menuOv').classList.remove('open');});
+// MENU
+$('menuBtn').addEventListener('click',()=>$('menuMod').classList.add('open'));
+$('menuMod').addEventListener('click',e=>{if(e.target===$('menuMod'))$('menuMod').classList.remove('open');});
 $('menuGrid').innerHTML=MENU_ITEMS.map(m=>`<div class="mi" data-v="${m.v}">${m.l}</div>`).join('');
-document.querySelectorAll('#menuGrid .mi').forEach(el=>el.addEventListener('click',()=>{$('menuOv').classList.remove('open');switchView(el.dataset.v);}));
+document.querySelectorAll('#menuGrid .mi').forEach(el=>el.addEventListener('click',()=>{$('menuMod').classList.remove('open');switchView(el.dataset.v);}));
 
-// ══ SAVE/LOAD ══
-function autoSave(){
-  localStorage.setItem('pp4_name',G.name);
-  localStorage.setItem('pp4_pet',G.pet);
-  localStorage.setItem('pp4_level',G.level);
-  localStorage.setItem('pp4_coins',G.coins);
-  localStorage.setItem('pp4_streak',G.streak);
-  localStorage.setItem('pp4_xp',G.exp);
-}
-setInterval(autoSave,5000);
+// PET DRAIN
+setInterval(()=>{if(!$('app')||$('app').style.display==='none')return;G.hunger=Math.max(0,G.hunger-4);G.petEnergy=Math.max(0,G.petEnergy-2);if(G.hunger<25)showT(`⚠️ ${G.petName} är hungrig!`,'err');updateHUD();},180000);
+setInterval(save,8000);
 
-// ══ PET HUNGER DRAIN (every 3 min) ══
-setInterval(()=>{
-  if($('app').style.display==='none')return;
-  G.hunger=Math.max(0,G.hunger-5);
-  G.petEnergy=Math.max(0,G.petEnergy-3);
-  if(G.hunger<30)showT(`⚠️ ${G.petName} är hungrig!`,'err');
-  updateHUD();
-},180000);
+// INIT
+function renderAll(){renderStories();renderFeed();renderChat();renderMarket();renderMissions();renderMap();renderActivity();switchView('feed');}
 
-// ══ INIT ══
-function renderAll(){renderStories();renderFeed();renderChat();renderShop();renderBounties();renderBattle();renderMap();renderPetTab();switchView('feed');}
-
-// Check saved state
-const sn=localStorage.getItem('pp4_name');
+// LOAD SAVED
+const sn=localStorage.getItem('vb_n');
 if(sn){
-  G.name=sn; G.pet=localStorage.getItem('pp4_pet')||'🐉';
-  G.petName=PET_NAMES[G.pet]||'Din pet';
-  G.level=parseInt(localStorage.getItem('pp4_level')||'1');
-  G.coins=parseInt(localStorage.getItem('pp4_coins')||'500');
-  G.streak=parseInt(localStorage.getItem('pp4_streak')||'0');
-  G.exp=parseInt(localStorage.getItem('pp4_xp')||'0');
-  $('onboard').style.display='none';
-  $('app').style.display='flex';
-  updateHUD(); renderAll();
+  G.name=sn;G.petEmoji=localStorage.getItem('vb_p')||'🐉';G.petName=localStorage.getItem('vb_pn')||'Eldraken';
+  G.level=parseInt(localStorage.getItem('vb_l')||'1');G.coins=parseInt(localStorage.getItem('vb_c')||'500');
+  G.streak=parseInt(localStorage.getItem('vb_s')||'0');G.exp=parseInt(localStorage.getItem('vb_x')||'0');
+  $('ob').style.display='none';$('app').style.display='flex';updateHUD();renderAll();
+} else {
+  obInitPetPicker();
 }
 </script>
-
 </body>
 </html>
