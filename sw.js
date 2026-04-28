@@ -1,92 +1,53 @@
-// PETVERSE Service Worker
-const CACHE_NAME = 'petverse-v1';
-const urlsToCache = [
-  '/',
-  '/index.html',
-  '/styles/main.css',
-  '/js/app.js',
-  '/js/utils.js',
-  '/js/storage.js',
-  '/js/pet.js',
-  '/js/shop.js',
-  '/js/bounties.js',
-  '/js/social.js',
-  '/js/world.js',
-  '/js/chat.js',
-  '/js/achievements.js',
-  '/js/notifications.js',
-  '/manifest.json'
+// KARMA Service Worker v2
+const CACHE_NAME = ‘karma-v2’;
+const STATIC = [
+‘/’,
+‘/index.html’,
+‘/styles/main.css’,
+‘/manifest.json’
 ];
 
-// Installera service worker
-self.addEventListener('install', event => {
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(urlsToCache))
-      .then(() => self.skipWaiting())
-  );
+self.addEventListener(‘install’, e => {
+e.waitUntil(
+caches.open(CACHE_NAME).then(c => c.addAll(STATIC)).then(() => self.skipWaiting())
+);
 });
 
-// Aktivera service worker
-self.addEventListener('activate', event => {
-  event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(cacheName => {
-          if (cacheName !== CACHE_NAME) {
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    }).then(() => self.clients.claim())
-  );
+self.addEventListener(‘activate’, e => {
+e.waitUntil(
+caches.keys().then(keys =>
+Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))
+).then(() => self.clients.claim())
+);
 });
 
-// Hantera fetch-förfrågningar
-self.addEventListener('fetch', event => {
-  event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        if (response) {
-          return response;
-        }
-        return fetch(event.request).then(response => {
-          if (!response || response.status !== 200 || response.type !== 'basic') {
-            return response;
-          }
-          const responseToCache = response.clone();
-          caches.open(CACHE_NAME)
-            .then(cache => {
-              cache.put(event.request, responseToCache);
-            });
-          return response;
-        });
-      })
-  );
+self.addEventListener(‘fetch’, e => {
+e.respondWith(
+caches.match(e.request).then(cached => {
+const fresh = fetch(e.request).then(res => {
+if (res && res.status === 200 && res.type === ‘basic’) {
+const clone = res.clone();
+caches.open(CACHE_NAME).then(c => c.put(e.request, clone));
+}
+return res;
+});
+return cached || fresh;
+})
+);
 });
 
-// Hantera push-notiser
-self.addEventListener('push', event => {
-  const data = event.data.json();
-  const options = {
-    body: data.body,
-    icon: '/assets/icon.png',
-    badge: '/assets/badge.png',
-    vibrate: [200, 100, 200],
-    data: {
-      url: data.url || '/'
-    }
-  };
-  
-  event.waitUntil(
-    self.registration.showNotification(data.title, options)
-  );
+self.addEventListener(‘push’, e => {
+const d = e.data?.json() || {};
+e.waitUntil(self.registration.showNotification(d.title || ‘KARMA’, {
+body: d.body || ‘’,
+icon: ‘/assets/icon.png’,
+badge: ‘/assets/badge.png’,
+vibrate: [200, 100, 200],
+data: { url: d.url || ‘/’ }
+}));
 });
 
-// Hantera klick på notiser
-self.addEventListener('notificationclick', event => {
-  event.notification.close();
-  event.waitUntil(
-    clients.openWindow(event.notification.data.url || '/')
-  );
+self.addEventListener(‘notificationclick’, e => {
+e.notification.close();
+e.waitUntil(clients.openWindow(e.notification.data?.url || ‘/’));
 });
